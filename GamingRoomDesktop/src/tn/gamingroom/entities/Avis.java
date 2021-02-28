@@ -21,6 +21,11 @@ public class Avis {
         this.member_id = member_id;
     }
 
+    public Avis(String avis, int member_id) {
+        this.avis = avis;
+        this.member_id = member_id;
+    }
+
 
     public int getId() {
         return id;
