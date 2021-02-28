@@ -17,13 +17,13 @@ import java.util.logging.Logger;
  */
 public class MyConnection {
 
-    String url="jdbc:mysql://localhost:3306/gamingroom";
+    String url="jdbc:mysql://localhost:3306/gamingroom"; //nom de l'API:esm SJBD/l'addresse ip mtas l sjbd wel port/nom bd 
     String login="gamingRoomUser";
     String pwd="!&_UkTz/Cw`*2#[u";
     Connection cnx;
     public static MyConnection instance;
     
-    private MyConnection() {
+    public MyConnection() {
         try {
             cnx = DriverManager.getConnection(url, login, pwd);
             System.out.println("Connexion établie!");

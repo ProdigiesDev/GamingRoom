@@ -13,7 +13,7 @@ import tn.gamingroom.entities.Produits;
  * @author yasmine
  * @param <T>
  */
-public interface IProduits < T> { 
+public interface IProduits <T> { 
     public void ajouterProduit(T p); //  T type generique
     public void supprimerProduit(T p);
     public void updateProduit(T p);
