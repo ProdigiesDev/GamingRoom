@@ -14,5 +14,6 @@ import tn.gamingroom.entities.Evenement;
  */
 public interface IEvenement<Evement> {
     public void ajoutEvenement(Evenement t);
+    public void modifierEvenement(Evenement t);
     
 }
