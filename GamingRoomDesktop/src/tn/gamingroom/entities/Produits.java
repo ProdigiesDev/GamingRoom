@@ -18,8 +18,19 @@ public class Produits {
     private String description;
     private int quantite;
 
+    public Produits() {
+    }
+
     public Produits(int idprod, String image, String libelle, int prix, String description, int quantite) {
         this.idprod = idprod;
+        this.image = image;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.description = description;
+        this.quantite = quantite;
+    }
+
+    public Produits(String image, String libelle, int prix, String description, int quantite) {
         this.image = image;
         this.libelle = libelle;
         this.prix = prix;

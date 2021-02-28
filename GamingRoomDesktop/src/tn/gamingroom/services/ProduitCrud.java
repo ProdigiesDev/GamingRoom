@@ -5,9 +5,14 @@
  */
 package tn.gamingroom.services;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tn.gamingroom.entities.Produits;
 import tn.gamingroom.interfaces.IProduits;
+import tn.gamingroom.outils.MyConnection;
 
 /**
  *
@@ -18,7 +23,17 @@ public class ProduitCrud implements IProduits<Produits> {
     @Override
     public void ajouterProduit(Produits p) {
         
-        
+        try {
+            String requete ="insert into produit(image,libelle,prix,description,quantite)"
+                    +"values('ii','aa',10,'ccc',50)";
+            
+            Statement st=new MyConnection().getCnx().createStatement();
+       st.executeUpdate(requete);
+            System.out.println("Produit ajouté");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+     
         
         
         
