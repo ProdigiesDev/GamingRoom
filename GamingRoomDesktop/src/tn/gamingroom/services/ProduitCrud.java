@@ -29,7 +29,7 @@ public class ProduitCrud implements IProduits<Produits> {
             String requete = "insert into produit(image,libelle,prix,description,quantite)"
                     + "values('" + p.getImage() + "','" + p.getLibelle() + "','" + p.getPrix() + "','" + p.getDescription() + "','" + p.getQuantite() + "')";
 
-            Statement st = new MyConnection().getCnx().createStatement();
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
             st.executeUpdate(requete);
             System.out.println("Produit ajouté");
         } catch (SQLException ex) {
@@ -52,33 +52,27 @@ public class ProduitCrud implements IProduits<Produits> {
     public List<Produits> displayProduit() {
         List<Produits> myList = new ArrayList();
         try {
-            
+
             String requete = "select *from produit"; // statique
-            Statement st = new MyConnection().getCnx().createStatement();
-            ResultSet rs= st.executeQuery(requete);
-            while(rs.next()){
-            Produits p = new Produits();
-            p.setIdprod(rs.getInt(1));
-            p.setImage(rs.getString(2));
-            p.setLibelle(rs.getString(3));
-            p.setPrix(rs.getInt(4));
-            p.setDescription(rs.getString(5));
-            p.setQuantite(rs.getInt(6));
-            myList.add(p);
-            
-            
-            
-            
-            
-            
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                Produits p = new Produits();
+                p.setIdprod(rs.getInt(1));
+                p.setImage(rs.getString(2));
+                p.setLibelle(rs.getString(3));
+                p.setPrix(rs.getInt(4));
+                p.setDescription(rs.getString(5));
+                p.setQuantite(rs.getInt(6));
+                myList.add(p);
+
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-      return myList;
+        return myList;
 
     }
-
 
 }

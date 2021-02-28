@@ -17,13 +17,13 @@ import java.util.logging.Logger;
  */
 public class MyConnection {
 
-    String url="jdbc:mysql://localhost:3306/gamingroom"; //nom de l'API:esm SJBD/l'addresse ip mtas l sjbd wel port/nom bd 
-    String login="gamingRoomUser";
-    String pwd="!&_UkTz/Cw`*2#[u";
+    String url = "jdbc:mysql://localhost:3306/gamingroom"; //nom de l'API:esm SJBD/l'addresse ip mtas l sjbd wel port/nom bd 
+    String login = "gamingRoomUser";
+    String pwd = "!&_UkTz/Cw`*2#[u";
     Connection cnx;
-    public static MyConnection instance;
-    
-    public MyConnection() {
+    public static MyConnection instance;// declarer une var instance statique de meme type que la classe
+
+    private MyConnection() {
         try {
             cnx = DriverManager.getConnection(url, login, pwd);
             System.out.println("Connexion établie!");
@@ -32,16 +32,16 @@ public class MyConnection {
         }
     }
 
-    public Connection getCnx() {
-        return cnx;
-    }
-    
-    
-    public static MyConnection getInstance(){
-        if(instance == null){
+    // methode static 
+    public static MyConnection getInstance() {
+        if (instance == null) {
             instance = new MyConnection();
         }
         return instance;
     }
-    
+
+    public Connection getCnx() {
+        return cnx;
+    }
+
 }
