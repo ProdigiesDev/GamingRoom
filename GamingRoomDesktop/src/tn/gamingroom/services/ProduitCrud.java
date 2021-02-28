@@ -25,7 +25,7 @@ public class ProduitCrud implements IProduits<Produits> {
         
         try {
             String requete ="insert into produit(image,libelle,prix,description,quantite)"
-                    +"values('ii','aa',10,'ccc',50)";
+                    +"values('"+p.getImage()+"','"+p.getLibelle()+"','"+p.getPrix()+"','"+p.getDescription()+"','"+p.getQuantite()+"')";
             
             Statement st=new MyConnection().getCnx().createStatement();
        st.executeUpdate(requete);

@@ -19,7 +19,7 @@ public class MainClass {
         MyConnection mc = new MyConnection();
 
         ProduitCrud pc = new ProduitCrud();
-        Produits p = new Produits();
+        Produits p = new Produits("cle","fff",110,"cool",40);
 
         pc.ajouterProduit(p);
 
