@@ -12,7 +12,7 @@ import tn.gamingroom.entities.Evenement;
  *
  * @author Asus
  */
-public interface IEvenement {
+public interface IEvenement<Evement> {
     public void ajoutEvenement(Evenement t);
     
 }
