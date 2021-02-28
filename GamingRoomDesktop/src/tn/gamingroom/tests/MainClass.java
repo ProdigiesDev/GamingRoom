@@ -20,8 +20,10 @@ public class MainClass {
 
         ProduitCrud pc = new ProduitCrud();
         Produits p = new Produits("cle","fff",110,"cool",40);
-
+        Produits p1 = new Produits("zzzz","yyyy",555,"nnn",70);
+pc.ajouterProduit(p1);
         pc.ajouterProduit(p);
+        System.out.println(pc.displayProduit());
 
     }
 }
