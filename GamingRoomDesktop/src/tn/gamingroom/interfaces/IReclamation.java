@@ -6,13 +6,13 @@
 package tn.gamingroom.interfaces;
 
 import java.util.List;
-import tn.gamingroom.entities.Avis;
+import tn.gamingroom.entities.Reclamation;
 
 /**
  *
  * @author Dah
  */
-public interface IAvis {
-    public void ajouterAvis(Avis avis);
-     public List<Avis> getListAvis();
+public interface IReclamation {
+    public void ajouterReclamation(Reclamation reclamation);
+    public List<Reclamation>  getListReclamation();
 }

@@ -36,7 +36,7 @@ public class AvisCRUD implements IAvis{
     }
 
     @Override
-    public List<Avis> displayAvis() {
+    public List<Avis> getListAvis() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
