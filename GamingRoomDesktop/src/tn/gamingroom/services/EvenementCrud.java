@@ -44,7 +44,7 @@ public class EvenementCrud implements IEvenement<Evenement>{
     @Override
     public void modifierEvenement(Evenement t) {
         try {
-            String requete = "UPDATE personne SET nomevent=? datedeb=? datefin=? image=? categorie_id=? nbremax_participant=? description=? lieu=? lienyoutub WHERE id=?";
+            String requete = "UPDATE evenement SET nomevent=? datedeb=? datefin=? image=? categorie_id=? nbremax_participant=? description=? lieu=? lienyoutub WHERE id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setString(1, t.getNomEvent());
@@ -58,7 +58,21 @@ public class EvenementCrud implements IEvenement<Evenement>{
             pst.setString(2, t.getLienYoutube());
             pst.setInt(2, t.getIdevent());
             pst.executeUpdate();
-            System.out.println("Personne modifiée");
+            System.out.println("Evenement modifiée");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void suppressionEvenement(Evenement t) {
+        try {
+            String requete = "DELETE FROM evenement where id=?";
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requete);
+            pst.setInt(1, t.getId());
+            pst.executeUpdate();
+            System.out.println("Evenement supprimée");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
