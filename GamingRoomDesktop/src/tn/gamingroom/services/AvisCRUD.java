@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.services;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,11 +21,14 @@ import tn.gamingroom.outils.MyConnection;
  */
 public class AvisCRUD implements IAvis{
 
+    
+    private Connection  cnx=MyConnection.getInstance().getCnx();
+    
     @Override
     public void ajouterAvis(Avis avis) {
         try {
             String reqAjouter="insert into avis (avis,member_id) values(?,?)";
-            PreparedStatement ps=MyConnection.getInstance().getCnx().prepareStatement(reqAjouter);
+            PreparedStatement ps=cnx.prepareStatement(reqAjouter);
             ps.setString(1,avis.getAvis());
             ps.setInt(2, avis.getMember_id());
             ps.executeUpdate();

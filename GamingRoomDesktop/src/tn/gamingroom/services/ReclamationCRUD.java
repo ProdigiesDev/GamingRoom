@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.services;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,12 +21,14 @@ import tn.gamingroom.outils.MyConnection;
  * @author Dah
  */
 public class ReclamationCRUD implements IReclamation{
-
+    
+    private Connection  cnx=MyConnection.getInstance().getCnx();
+    
     @Override
     public void ajouterReclamation(Reclamation reclamation) {
         try {
             String reqAjouter="insert into reclamation (sujet,contenue,membre_id) values(?,?,?)";
-            PreparedStatement ps=MyConnection.getInstance().getCnx().prepareStatement(reqAjouter);
+            PreparedStatement ps=cnx.prepareStatement(reqAjouter);
             ps.setString(1, reclamation.getSujet());
             ps.setString(2,reclamation.getContenue());
             ps.setInt(3,reclamation.getMembre_id());
@@ -41,7 +44,7 @@ public class ReclamationCRUD implements IReclamation{
         List<Reclamation> reclamations=new ArrayList();
         try {
             String reqLister="select * from reclamation";
-            Statement statement=MyConnection.getInstance().getCnx().createStatement();
+            Statement statement=cnx.createStatement();
            
             ResultSet rs =  statement.executeQuery(reqLister);
              while(rs.next()){
