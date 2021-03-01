@@ -12,6 +12,7 @@ import tn.gamingroom.outils.MyConnection;
 import tn.gamingroom.services.AvisCRUD;
 import tn.gamingroom.services.JeuxCRUD;
 import tn.gamingroom.services.ReclamationCRUD;
+import tn.gamingroom.services.ScoreCRUD;
 
 /**
  *
@@ -32,7 +33,7 @@ public class TestClass {
         reclamationCRUD.ajouterReclamation(reclamation);
         System.out.println(reclamationCRUD.getListReclamation());
         */
-        
+      /*  
         Jeux j=new Jeux("csgo");
         JeuxCRUD cRUD=new JeuxCRUD();
         cRUD.ajouter(j);
@@ -42,5 +43,10 @@ public class TestClass {
         cRUD.modifier(j2);
         
         System.err.println(cRUD.getAll());
+        */
+      
+        ScoreCRUD scoreCRUD=new ScoreCRUD();
+        System.err.println(scoreCRUD.getScoreByJeuId(4));
+      
     }
 }
