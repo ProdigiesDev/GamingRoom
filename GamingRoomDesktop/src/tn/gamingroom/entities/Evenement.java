@@ -23,6 +23,9 @@ public class Evenement {
     private String lieu;
     private String lienYoutube;
 
+    public Evenement() {
+    }
+
     public Evenement(String nomEvent, String image, int categorie_id, int nbreMax_participant, String description, String lienYoutube) {
         this.nomEvent = nomEvent;
         this.image = image;

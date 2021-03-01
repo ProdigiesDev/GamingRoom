@@ -6,7 +6,11 @@
 package tn.gamingroom.services;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import tn.gamingroom.entities.Evenement;
 import tn.gamingroom.interfaces.IEvenement;
 
@@ -76,6 +80,36 @@ public class EvenementCrud implements IEvenement<Evenement>{
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @Override
+    public List<Evenement> listerEvenement() {
+         List<Evenement> evenementList = new ArrayList<>();
+        try {
+            String requete = "SELECT * FROM evenement";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs =  st.executeQuery(requete);
+            while(rs.next()){
+                Evenement e = new Evenement();
+                e.setIdevent(rs.getInt("idevent"));
+                e.setNomEvent(rs.getString("nomevent"));
+                e.setDateDeb(rs.getDate("datedeb"));
+                e.setDateFin(rs.getDate("datefin"));
+                e.setImage(rs.getString("image"));
+                e.setCategorie_id(rs.getInt("categorie_id"));
+                e.setNbreMax_participant(rs.getInt("nbremax_participant"));
+                e.setDescription(rs.getString("description"));
+                e.setLieu(rs.getString("lieu"));
+                e.setLienYoutube(rs.getString("lienyoutube"));
+                evenementList.add(e);
+                
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return evenementList;
+    }
     }
        
 }
