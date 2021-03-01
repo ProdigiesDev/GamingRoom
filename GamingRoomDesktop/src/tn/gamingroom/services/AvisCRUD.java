@@ -7,10 +7,11 @@ package tn.gamingroom.services;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import tn.gamingroom.entities.Avis;
 import tn.gamingroom.interfaces.IAvis;
 import tn.gamingroom.outils.MyConnection;
@@ -41,7 +42,23 @@ public class AvisCRUD implements IAvis{
 
     @Override
     public List<Avis> getListAvis() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        
+        List<Avis> avis=new ArrayList();
+        
+        try {
+            String req="select * from avis";
+            Statement s = cnx.createStatement();
+            ResultSet resultSet=s.executeQuery(req);
+            while(resultSet.next()){
+                avis.add(new Avis(resultSet.getInt("id"),resultSet.getString("avis"), resultSet.getInt("member_id")));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        
+        return avis;    
     }
     
 }

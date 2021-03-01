@@ -21,11 +21,12 @@ import tn.gamingroom.services.ScoreCRUD;
 public class TestClass {
     
     public static void main(String arg[]){
-        /*
+        
         Avis avis=new Avis("Test avis",1);
         AvisCRUD avisCRUD=new AvisCRUD();
         avisCRUD.ajouterAvis(avis);
-        */
+        System.err.println(avisCRUD.getListAvis());
+        
         
         /*
         Reclamation reclamation=new Reclamation("Test Rec","dah is a great gamer", 1);
@@ -45,8 +46,10 @@ public class TestClass {
         System.err.println(cRUD.getAll());
         */
       
+      /*
         ScoreCRUD scoreCRUD=new ScoreCRUD();
         System.err.println(scoreCRUD.getScoreByJeuId(4));
+        */
       
     }
 }
