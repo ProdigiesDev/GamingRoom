@@ -20,7 +20,7 @@ import tn.gamingroom.outils.MyConnection;
  *
  * @author Dah
  */
-public class AvisCRUD implements IAvis{
+public class AvisService implements IAvis{
 
     
     private Connection  cnx=MyConnection.getInstance().getCnx();

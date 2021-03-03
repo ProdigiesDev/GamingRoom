@@ -21,7 +21,7 @@ import tn.gamingroom.outils.MyConnection;
  *
  * @author Dah
  */
-public class ScoreCRUD implements IScore{
+public class ScoreService implements IScore{
 
     private Connection cnx=MyConnection.getInstance().getCnx();
 
@@ -38,7 +38,7 @@ public class ScoreCRUD implements IScore{
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(ScoreCRUD.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ScoreService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return scores;

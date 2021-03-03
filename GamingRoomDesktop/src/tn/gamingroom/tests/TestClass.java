@@ -9,10 +9,10 @@ import tn.gamingroom.entities.Avis;
 import tn.gamingroom.entities.Jeux;
 import tn.gamingroom.entities.Reclamation;
 import tn.gamingroom.outils.MyConnection;
-import tn.gamingroom.services.AvisCRUD;
-import tn.gamingroom.services.JeuxCRUD;
-import tn.gamingroom.services.ReclamationCRUD;
-import tn.gamingroom.services.ScoreCRUD;
+import tn.gamingroom.services.AvisService;
+import tn.gamingroom.services.JeuxService;
+import tn.gamingroom.services.ReclamationService;
+import tn.gamingroom.services.ScoreService;
 
 /**
  *
@@ -23,7 +23,7 @@ public class TestClass {
     public static void main(String arg[]){
         
         Avis avis=new Avis("Test avis",1);
-        AvisCRUD avisCRUD=new AvisCRUD();
+        AvisService avisCRUD=new AvisService();
         avisCRUD.ajouterAvis(avis);
         System.err.println(avisCRUD.getListAvis());
         

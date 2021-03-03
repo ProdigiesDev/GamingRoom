@@ -22,7 +22,7 @@ import tn.gamingroom.outils.MyConnection;
  *
  * @author Dah
  */
-public class JeuxCRUD implements IJeux{
+public class JeuxService implements IJeux{
 
     
     private Connection  cnx=MyConnection.getInstance().getCnx();

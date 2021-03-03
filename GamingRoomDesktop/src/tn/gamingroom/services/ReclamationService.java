@@ -20,7 +20,7 @@ import tn.gamingroom.outils.MyConnection;
  *
  * @author Dah
  */
-public class ReclamationCRUD implements IReclamation{
+public class ReclamationService implements IReclamation{
     
     private Connection  cnx=MyConnection.getInstance().getCnx();
     
