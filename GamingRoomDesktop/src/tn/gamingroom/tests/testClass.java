@@ -12,8 +12,8 @@ import java.time.format.DateTimeFormatter;
 import tn.gamingroom.entities.Cours;
 import tn.gamingroom.entities.ReacCours;
 import tn.gamingroom.outils.MyConnection;
-import tn.gamingroom.services.CoursCRUD;
-import tn.gamingroom.services.ReacCouCRUD;
+import tn.gamingroom.services.ServiceCours;
+import tn.gamingroom.services.ServiceReacCours;
 
 /**
  *
@@ -30,7 +30,7 @@ public class testClass {
         MyConnection mc = MyConnection.getInstance();
         //MyConnection mc1 = MyConnection.getInstance();
 
-        CoursCRUD coursCrud = new CoursCRUD();
+        ServiceCours coursCrud = new ServiceCours();
         //coursCrud.ajouterCours(c);
         //coursCrud.updateCours(c);
         //coursCrud.supprimerCours(c);
@@ -38,8 +38,10 @@ public class testClass {
         
        //REACTION COURS
         ReacCours r1 = new ReacCours(0, 5, "j'ai aimé ce cours", 1, 1);
-        ReacCouCRUD reactionc=new ReacCouCRUD();
-        reactionc.ajouterReacC(r1);
+        
+        ServiceReacCours reactionc=new ServiceReacCours();
+        //reactionc.ajouterReacC(r1);
+        reactionc.supprimerReacC(r1);
         
         
        

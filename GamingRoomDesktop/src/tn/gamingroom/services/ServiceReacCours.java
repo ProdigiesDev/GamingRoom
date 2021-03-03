@@ -16,7 +16,7 @@ import tn.gamingroom.outils.MyConnection;
  *
  * @author eyatr
  */
-public class ReacCouCRUD implements IReacCours {
+public class ServiceReacCours implements IReacCours {
 
     @Override
     public void ajouterReacC(ReacCours r) {
@@ -40,17 +40,19 @@ public class ReacCouCRUD implements IReacCours {
 
     @Override
     public void supprimerReacC(ReacCours r) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String requeteSP = "DELETE FROM reactioncours where id=?";
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requeteSP);
+            pst.setInt(1, r.getId());
+            pst.executeUpdate();
+            System.out.println("Reaction supprimé");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
+    
 
-    @Override
-    public void updateReacC(ReacCours r) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<ReacCours> displayReacC() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
 }

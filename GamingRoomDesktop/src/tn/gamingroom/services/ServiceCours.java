@@ -19,7 +19,7 @@ import tn.gamingroom.outils.MyConnection;
  *
  * @author eyatr
  */
-public class CoursCRUD implements ICours {
+public class ServiceCours implements ICours {
 
     @Override
     public void ajouterCours(Cours c) {

@@ -18,8 +18,6 @@ public interface IReacCours {
 
     public void supprimerReacC(ReacCours r);
 
-    public void updateReacC(ReacCours r);
-
-    public List<ReacCours> displayReacC();
+    
     
 }
