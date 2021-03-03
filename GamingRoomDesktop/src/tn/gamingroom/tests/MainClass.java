@@ -31,9 +31,9 @@ public class MainClass {
         //  pc.updateProduit(p2);
         //  pc.ajouterProduit(p3);
        // pc.supprimerProduit(p2);
-      //  pc.TrierParId().forEach(e->{System.out.println(e);});
+   // pc.TrierParId().forEach(e->{System.out.println(e);});
         
-        pc.RechercherParType("aa").forEach(e->{System.out.println(e);});
+       pc.RechercherProduit("y").forEach(e->{System.out.println(e);});
         
     }
 }

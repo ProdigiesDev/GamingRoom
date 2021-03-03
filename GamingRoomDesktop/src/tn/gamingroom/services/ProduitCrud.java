@@ -131,12 +131,13 @@ public ArrayList<Produits> TrierParId() {
         
         
         
-   public List<Produits> RechercherParType(String x) {
+   public List<Produits> RechercherProduit(String x) {
         ArrayList<Produits> listOffresTypeX = new ArrayList<>();
         try {
-          String req = "Select * from produit where libelle= ?";
+          String req = "Select * from produit where libelle like '%"+x+"%' or description like '%"+x+"%'";
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(req);
-            st.setString(1, x);
+            //st.setString(1, x);
+          //  st.setString(2, x);
             ResultSet rs = st.executeQuery();
             while(rs.next()){
                 Produits pr = new Produits();

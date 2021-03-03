@@ -20,6 +20,7 @@ public interface IProduits <T> {
     public List<T> displayProduit();
     
     public List<Produits> TrierParId();
-    
+    public List<Produits> RechercherProduit(String x);
+   
     
 }
