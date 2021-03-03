@@ -14,12 +14,18 @@ import tn.gamingroom.entities.Cours;
  */
 public interface ICours {
 
-    public void ajouterCours(Cours t);
+    public void ajouterCours(Cours c);
 
-    public void supprimerCours(Cours t);
+    public void supprimerCours(Cours c);
 
-    public void updateCours(Cours t);
-
+    public void updateCours(Cours c);
+    
+    public List displayCourswithId(int id);
+   
+    public List displayCourswithName(String nomCours);
+    
+    public List trierCoursID();
+   
     public List<Cours> displayCours();
 
 }

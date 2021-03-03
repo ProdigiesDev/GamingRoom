@@ -101,4 +101,63 @@ public class ServiceCours implements ICours {
         return CoursList;
     }
 
+//    
+    
+    @Override
+    public List displayCourswithName(String x) {
+        List<Cours> CoursListx = new ArrayList<>();
+        try {
+            String requete = "Select * from cours where nomCours like '%"+x+"%' or description like '%"+x+"%'";
+            PreparedStatement  pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requete);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Cours c = new Cours();
+                c.setId(rs.getInt("id"));
+                c.setNomCours(rs.getString("nomCours"));
+                c.setDescription(rs.getString("description"));
+                c.setNb_participants(rs.getInt("nb_participant"));
+                c.setMembre_id(rs.getInt("membre_id"));
+                c.setDate_creation(rs.getDate("date_creation"));
+                c.setTags(rs.getString("tags"));
+                c.setCategorie_id(rs.getInt("categorie_id"));
+                CoursListx.add(c);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return CoursListx;
+    }
+
+    @Override
+    public List trierCoursID() {
+        ArrayList<Cours> listCours = new ArrayList<>();
+       try {
+        
+           String requete= "select * from cours ORDER BY id DESC"; 
+           PreparedStatement pst =  MyConnection.getInstance().getCnx().prepareStatement(requete);
+           
+           
+           ResultSet res = pst.executeQuery(requete);
+        Cours c = null;
+        while (res.next()) {
+          
+          c=new Cours(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getInt(5), res.getDate(6),res.getString(7),res.getInt(8));
+            listCours.add(c);
+            
+        } 
+         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+                 return listCours ;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+
 }

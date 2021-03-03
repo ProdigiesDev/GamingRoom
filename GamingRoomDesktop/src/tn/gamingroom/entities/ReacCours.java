@@ -11,7 +11,7 @@ package tn.gamingroom.entities;
  */
 public class ReacCours {
     private int id;
-    private int nb_interaction;
+    private int interaction;
     private String commentaire;
     private int membre_id ;
     private int cour_id  ;
@@ -21,7 +21,7 @@ public class ReacCours {
 
     public ReacCours(int id, int nb_interaction, String commentaire, int membre_id, int cour_id) {
         this.id = id;
-        this.nb_interaction = nb_interaction;
+        this.interaction = interaction;
         this.commentaire = commentaire;
         this.membre_id = membre_id;
         this.cour_id = cour_id;
@@ -36,11 +36,11 @@ public class ReacCours {
     }
 
     public int getNb_interaction() {
-        return nb_interaction;
+        return interaction;
     }
 
     public void setNb_interaction(int nb_interaction) {
-        this.nb_interaction = nb_interaction;
+        this.interaction = nb_interaction;
     }
 
     public String getCommentaire() {
@@ -69,7 +69,7 @@ public class ReacCours {
 
     @Override
     public String toString() {
-        return "ReacCours{" + "id=" + id + ", nb_interaction=" + nb_interaction + ", commentaire=" + commentaire + ", membre_id=" + membre_id + ", cour_id=" + cour_id + '}';
+        return "ReacCours{" + "id=" + id + ", nb_interaction=" + interaction + ", commentaire=" + commentaire + ", membre_id=" + membre_id + ", cour_id=" + cour_id + '}';
     }
     
     

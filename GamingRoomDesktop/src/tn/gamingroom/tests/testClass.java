@@ -26,14 +26,21 @@ public class testClass {
         //DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         DateTimeFormatter f = DateTimeFormatter.ofPattern("01-02-2021");
         Date d = new Date(System.currentTimeMillis());
-        Cours c = new Cours(0, "FreeFire", "FreeFire game", 23, 1, d, "xx", 1);
+        Cours c = new Cours("FreeFire", "FreeFire game", 23, 1, d, "xx", 1);
+        Cours c1= new Cours("lol", "lol game", 23, 1, d, "xx", 1);
+
         MyConnection mc = MyConnection.getInstance();
         //MyConnection mc1 = MyConnection.getInstance();
 
         ServiceCours coursCrud = new ServiceCours();
-        //coursCrud.ajouterCours(c);
+        //coursCrud.ajouterCours(c1);
         //coursCrud.updateCours(c);
-        //coursCrud.supprimerCours(c);
+        //c1.setId(27);
+        //System.out.println(coursCrud.displayCourswithId(27));
+        //System.out.println(coursCrud.displayCourswithName("l"));
+        System.out.println(coursCrud.trierCoursID());
+        
+        //coursCrud.supprimerCours(c1);
         //System.out.println(coursCrud.displayCours());
         
        //REACTION COURS
@@ -41,8 +48,7 @@ public class testClass {
         
         ServiceReacCours reactionc=new ServiceReacCours();
         //reactionc.ajouterReacC(r1);
-        reactionc.supprimerReacC(r1);
-        
+        //reactionc.supprimerReacC(r1);
         
        
 

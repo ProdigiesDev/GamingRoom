@@ -41,6 +41,17 @@ public class Cours {
         this.tags = tags;
         this.categorie_id = categorie_id;
     }
+
+    public Cours(String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, int categorie_id) {
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.membre_id = membre_id;
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.categorie_id = categorie_id;
+    }
+    
     
 
     public int getId() {

@@ -21,7 +21,7 @@ public class ServiceReacCours implements IReacCours {
     @Override
     public void ajouterReacC(ReacCours r) {
         try {
-            String requetereac = "INSERT INTO reactioncours(nb_interaction,commentaire,membre_id,cour_id)"
+            String requetereac = "INSERT INTO reactioncours(interaction,commentaire,membre_id,cour_id)"
                     + "VALUES (?,?,?,?)";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requetereac);
