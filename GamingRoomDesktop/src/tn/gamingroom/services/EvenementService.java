@@ -11,19 +11,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tn.gamingroom.entities.Evenement;
 import tn.gamingroom.interfaces.IEvenement;
+import tn.gamingroom.outils.MyConnection;
 
 /**
  *
  * @author Asus
  */
-public class EvenementCrud implements IEvenement<Evenement>{
+public class EvenementService implements IEvenement{
 
     @Override
     public void ajoutEvenement(Evenement t) {
         try {
-            String requete= "INSERT INTO evenement(nomevent,datedeb,datefin,image,categorie_id,nbremax_participant,description,lieu,lienyoutub)"
+            String requete = "INSERT INTO evenement(nomevent,datedeb,datefin,image,categorie_id,nbremax_participant,description,lieu,lienyoutub)"
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
@@ -36,10 +39,10 @@ public class EvenementCrud implements IEvenement<Evenement>{
             pst.setString(2, t.getDescription());
             pst.setString(2, t.getLieu());
             pst.setString(2, t.getLienYoutube());
-            
+
             pst.executeUpdate();
             System.out.println("Evenement inserée");
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -71,10 +74,10 @@ public class EvenementCrud implements IEvenement<Evenement>{
     @Override
     public void suppressionEvenement(Evenement t) {
         try {
-            String requete = "DELETE FROM evenement where id=?";
+            String requete = "DELETE FROM evenement where idE=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
-            pst.setInt(1, t.getId());
+            pst.setInt(1, t.getIdevent());
             pst.executeUpdate();
             System.out.println("Evenement supprimée");
         } catch (SQLException ex) {
@@ -84,13 +87,13 @@ public class EvenementCrud implements IEvenement<Evenement>{
 
     @Override
     public List<Evenement> listerEvenement() {
-         List<Evenement> evenementList = new ArrayList<>();
+        List<Evenement> evenementList = new ArrayList<>();
         try {
             String requete = "SELECT * FROM evenement";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
-            ResultSet rs =  st.executeQuery(requete);
-            while(rs.next()){
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
                 Evenement e = new Evenement();
                 e.setIdevent(rs.getInt("idevent"));
                 e.setNomEvent(rs.getString("nomevent"));
@@ -103,13 +106,13 @@ public class EvenementCrud implements IEvenement<Evenement>{
                 e.setLieu(rs.getString("lieu"));
                 e.setLienYoutube(rs.getString("lienyoutube"));
                 evenementList.add(e);
-                
+
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return evenementList;
     }
-    }
-       
+
+    
 }

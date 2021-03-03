@@ -12,10 +12,10 @@ import tn.gamingroom.entities.Evenement;
  *
  * @author Asus
  */
-public interface IEvenement<Evement> {
+public interface IEvenement {
     public void ajoutEvenement(Evenement t);
     public void modifierEvenement(Evenement t);
     public void suppressionEvenement(Evenement t);
     public List<Evenement> listerEvenement();
-    
+    public void sinscrirEvenement(int idE,int idM);
 }

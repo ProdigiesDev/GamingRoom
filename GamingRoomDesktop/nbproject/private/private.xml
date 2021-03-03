@@ -5,7 +5,9 @@
         <group>
             <file>file:/C:/Users/Asus/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/GamingRoomDesktop/src/tn/gamingroom/entities/Evenement.java</file>
             <file>file:/C:/Users/Asus/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/GamingRoomDesktop/src/tn/gamingroom/interfaces/IEvenement.java</file>
-            <file>file:/C:/Users/Asus/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/GamingRoomDesktop/src/tn/gamingroom/services/EvenementCrud.java</file>
+            <file>file:/C:/Users/Asus/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/GamingRoomDesktop/src/tn/gamingroom/outils/MyConnection.java</file>
+            <file>file:/C:/Users/Asus/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/GamingRoomDesktop/test/Test.java</file>
+            <file>file:/C:/Users/Asus/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/GamingRoomDesktop/src/tn/gamingroom/services/EvenementService.java</file>
         </group>
     </open-files>
 </project-private>
