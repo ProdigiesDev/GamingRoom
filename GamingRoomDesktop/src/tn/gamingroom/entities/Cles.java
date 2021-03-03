@@ -18,6 +18,11 @@ public class Cles {
     public Cles() {
     }
 
+    public Cles(String code, int produit_id) {
+        this.code = code;
+        this.produit_id = produit_id;
+    }
+
     public Cles(int idcle, String code, int produit_id) {
         this.idcle = idcle;
         this.code = code;

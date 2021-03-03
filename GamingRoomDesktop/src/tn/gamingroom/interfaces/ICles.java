@@ -5,10 +5,17 @@
  */
 package tn.gamingroom.interfaces;
 
+import java.util.List;
+
 /**
  *
  * @author yasmine
  */
-public interface ICles {
+public interface ICles<T> {
+    
+       public void ajouterCle(T c); //  T type generique
+    public void supprimerCle(T c);
+    public void updateCle(T c);
+    public List<T> displayCle();
     
 }

@@ -5,8 +5,10 @@
  */
 package tn.gamingroom.tests;
 
+import tn.gamingroom.entities.Cles;
 import tn.gamingroom.entities.Produits;
 import tn.gamingroom.outils.MyConnection;
+import tn.gamingroom.services.CleService;
 import tn.gamingroom.services.ProduitCrud;
 
 /**
@@ -33,7 +35,29 @@ public class MainClass {
        // pc.supprimerProduit(p2);
    // pc.TrierParId().forEach(e->{System.out.println(e);});
         
-       pc.RechercherProduit("y").forEach(e->{System.out.println(e);});
+     //  pc.RechercherProduit("y").forEach(e->{System.out.println(e);});
+       
+       
+        CleService cs=new CleService();
+        Cles c1=new Cles(7,"ppppppp", 5);
+        Cles c=new Cles(9,"yassmine", 7);
+        Cles c3=new Cles(4, "zszszszszszsz", 0);
+     
+        //cs.ajouterCle(c);
+        //cs.ajouterCle(c1);
+       // cs.supprimerCle(c1);
+      //cs.supprimerCle(c3);
+       //cs.updateCle(c);
+       
+       
+       
+       
+       
+       
+       
+       
+       
+   
         
     }
 }
