@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.services;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -40,16 +41,47 @@ public class ProduitCrud implements IProduits<Produits> {
 
     @Override
     public void supprimerProduit(Produits p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try {
+            String requete = "delete from produit where idprod=?";
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
+            pst.setInt(1, p.getIdprod());
+            pst.executeUpdate();
+            System.out.println("produit supprimé");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     @Override
     public void updateProduit(Produits p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try {
+ 
+            String requete = "UPDATE produit SET libelle='" + p.getLibelle()
+                    +"',image='"+p.getImage()
+                    + "',prix='" + p.getPrix()
+                    + "',description='" + p.getDescription()
+                    + "',quantite='" + p.getQuantite()
+                    + "' WHERE idprod=" + p.getIdprod();
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requete);
+            int rowsUpdated = pst.executeUpdate(requete);
+            if (rowsUpdated > 0) {
+                System.out.println("La modification de produit" + p.getIdprod() + " a été éffectué avec succée ");
+                System.out.println("Produit Modifié");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 
-    @Override
-    public List<Produits> displayProduit() {
+
+
+@Override
+        public List<Produits> displayProduit() {
         List<Produits> myList = new ArrayList();
         try {
 
@@ -74,5 +106,69 @@ public class ProduitCrud implements IProduits<Produits> {
         return myList;
 
     }
-
+public ArrayList<Produits> TrierParId() {
+       ArrayList<Produits> listProduit = new ArrayList<>();
+       try {
+        
+           String requete= "select * from produit ORDER BY idprod DESC"; 
+           PreparedStatement pst =  MyConnection.getInstance().getCnx().prepareStatement(requete);
+           
+           
+           ResultSet res = pst.executeQuery(requete);
+        Produits pr = null;
+        while (res.next()) {
+          //  pr = new Offres(res.getInt(1),res.getString(2),res.getString(3),res.getString(4));
+          pr=new Produits(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getString(5), res.getInt(6));
+            listProduit.add(pr);
+            
+        } 
+         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+                 return listProduit ;
+    
+}
+        
+        
+        
+   public List<Produits> RechercherParType(String x) {
+        ArrayList<Produits> listOffresTypeX = new ArrayList<>();
+        try {
+          String req = "Select * from produit where libelle= ?";
+            PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(req);
+            st.setString(1, x);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                Produits pr = new Produits();
+               pr.setIdprod(rs.getInt(1));
+                pr.setImage(rs.getString(2));
+                pr.setLibelle(rs.getString(3));
+                pr.setPrix(rs.getInt(4));
+                pr.setDescription(rs.getString(5));
+                pr.setQuantite(rs.getInt(6));
+                
+                
+                
+                listOffresTypeX.add(pr);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        if  (listOffresTypeX.isEmpty()) {
+            System.out.println("Il y a aucun produit de ce libelle");
+        }
+        return listOffresTypeX;
+    }     
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 }

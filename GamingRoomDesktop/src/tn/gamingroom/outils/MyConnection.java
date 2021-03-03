@@ -33,6 +33,12 @@ public class MyConnection {
     }
 
     // methode static 
+    
+    
+    
+      public Connection getCnx() {
+        return cnx;
+    }
     public static MyConnection getInstance() {
         if (instance == null) {
             instance = new MyConnection();
@@ -40,8 +46,6 @@ public class MyConnection {
         return instance;
     }
 
-    public Connection getCnx() {
-        return cnx;
-    }
+  
 
 }

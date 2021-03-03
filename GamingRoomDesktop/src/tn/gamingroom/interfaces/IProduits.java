@@ -19,7 +19,7 @@ public interface IProduits <T> {
     public void updateProduit(T p);
     public List<T> displayProduit();
     
-    
+    public List<Produits> TrierParId();
     
     
 }

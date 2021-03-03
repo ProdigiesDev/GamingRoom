@@ -30,6 +30,8 @@ public class Produits {
         this.quantite = quantite;
     }
 
+ 
+
     public Produits(String image, String libelle, int prix, String description, int quantite) {
         this.image = image;
         this.libelle = libelle;
