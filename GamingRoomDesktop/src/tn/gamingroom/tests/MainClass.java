@@ -48,7 +48,8 @@ public class MainClass {
        // cs.supprimerCle(c1);
       //cs.supprimerCle(c3);
        //cs.updateCle(c);
-       
+        System.out.println(cs.displayCle(5));
+           
        
        
        

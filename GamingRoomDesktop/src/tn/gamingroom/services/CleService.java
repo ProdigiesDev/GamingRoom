@@ -6,8 +6,10 @@
 package tn.gamingroom.services;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,20 +25,18 @@ public class CleService implements ICles<Cles> {
 
     @Override
     public void ajouterCle(Cles c) {
-        
+
         try {
             String requete = "insert into cle(code,produit_id)"
-                    + "values('" + c.getCode() + "','" + c.getProduit_id() +"' )";
+                    + "values('" + c.getCode() + "','" + c.getProduit_id() + "' )";
 
             Statement st = MyConnection.getInstance().getCnx().createStatement();
             st.executeUpdate(requete);
             System.out.println("clé ajouté");
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());        }
-        
-        
-    
-        
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     @Override
@@ -46,17 +46,16 @@ public class CleService implements ICles<Cles> {
             String requete = "delete from cle where idcle=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
             pst.setInt(1, c.getIdcle());
-            int res=pst.executeUpdate();
-            if(res>0){
+            int res = pst.executeUpdate();
+            if (res > 0) {
                 System.out.println("clé supprimé");
 
+            } else {
+                System.out.println("clé non supprimé");
             }
-            else
-            {
-                System.out.println("clé non supprimé");}
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());        }
-
+            System.out.println(ex.getMessage());
+        }
 
     }
 
@@ -72,19 +71,33 @@ public class CleService implements ICles<Cles> {
             pst.executeUpdate();
             System.out.println("clé modifiée");
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());        }
-
-
-
-
-
-
+            System.out.println(ex.getMessage());
+        }
 
     }
+  @Override
+    public List<Cles> displayCle(int prod_id) {
+        
+          List<Cles> myList = new ArrayList();
+        
+        try {
+          
+            String requete = "select *from cle where produit_id =" + prod_id; // statique
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                Cles c = new Cles();
+                c.setIdcle(rs.getInt(1));
+                c.setCode(rs.getString(2));
+                c.setProduit_id(rs.getInt(3));
 
-    @Override
-    public List<Cles> displayCle() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                myList.add(c);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return myList;
     }
-    
 }
