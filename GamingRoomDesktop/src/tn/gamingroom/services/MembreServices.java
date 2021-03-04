@@ -32,7 +32,7 @@ public class MembreServices implements IMembre<Membre>{
             ps.setString(1, m.getNom());
             ps.setString(2, m.getPrenom());
             ps.setDate(3, m.getDate_naissance());
-            ps.setString(4,m.getGenre());
+            ps.setString(4,m.getGenre().toString());
             ps.setString(5, m.getTel());
             ps.setString(6, m.getEmail());
             ps.setString(7, BCrypt.hashpw(m.getPassword(), BCrypt.gensalt()));
@@ -54,7 +54,7 @@ public class MembreServices implements IMembre<Membre>{
             ps.setString(1, m.getNom());
             ps.setString(2, m.getPrenom());
             ps.setDate(3, m.getDate_naissance());
-            ps.setString(4,m.getGenre());
+            ps.setString(4,m.getGenre().toString());
             ps.setString(5, m.getTel());
             ps.setString(6, m.getEmail());
             ps.setString(7, m.getPassword());
@@ -93,7 +93,7 @@ public class MembreServices implements IMembre<Membre>{
             pst.setString(1, m.getNom());
             pst.setString(2, m.getPrenom());
             pst.setDate(3, m.getDate_naissance());
-            pst.setString(4, m.getGenre());
+            pst.setString(4, m.getGenre().toString());
             pst.setString(5, m.getTel());
             pst.setString(6, m.getEmail());
             pst.setString(7, m.getPassword());
@@ -141,7 +141,7 @@ public class MembreServices implements IMembre<Membre>{
                 m.setNom(rs.getString("nom"));
                 m.setPrenom(rs.getString("prenom"));
                 m.setDate_naissance(rs.getDate("date_naissance"));
-                m.setGenre(rs.getString("genre"));
+                m.setGenre(Membre.Genre.valueOf(rs.getString("genre")));
                 m.setTel(rs.getString("numero_tel"));
                 m.setEmail(rs.getString("email"));
                 m.setPassword(rs.getString("password"));
@@ -174,7 +174,7 @@ public class MembreServices implements IMembre<Membre>{
                 m.setNom(rs.getString("nom"));
                 m.setPrenom(rs.getString("prenom"));
                 m.setDate_naissance(rs.getDate("date_naissance"));
-                m.setGenre(rs.getString("genre"));
+                m.setGenre(Membre.Genre.valueOf(rs.getString("genre")));
                 m.setTel(rs.getString("numero_tel"));
                 m.setEmail(rs.getString("email"));
                 m.setPassword(rs.getString("password"));
@@ -205,7 +205,7 @@ public class MembreServices implements IMembre<Membre>{
                 m.setNom(rs.getString("nom"));
                 m.setPrenom(rs.getString("prenom"));
                 m.setDate_naissance(rs.getDate("date_naissance"));
-                m.setGenre(rs.getString("genre"));
+                m.setGenre(Membre.Genre.valueOf(rs.getString("genre")));
                 m.setTel(rs.getString("numero_tel"));
                 m.setEmail(rs.getString("email"));
                 m.setPassword(rs.getString("password"));
