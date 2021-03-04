@@ -257,7 +257,7 @@ public class Membre {
 
     @Override
     public String toString() {
-        return "Membre{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", date_naissance=" + date_naissance + ", genre=" + genre + ", tel=" + tel + ", email=" + email + ", password=" + password + ", image=" + image + ", role=" + role + ", point=" + point +  ", description=" + description + ", active=" + active + ", ban_duration=" + ban_duration + ", last_timeban=" + last_timeban + '}';
+        return "Membre{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", date_naissance=" + date_naissance + ", genre=" + genre + ", tel=" + tel + ", email=" + email + ", password=" + password + ", image=" + image + ", role=" + role + ", point=" + point +  ", description=" + description + ", active=" + active + ", ban_duration=" + ban_duration + ", last_timeban=" + last_timeban + '}'+"\n";
     }
     
     

@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.interfaces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,8 +16,10 @@ import java.util.List;
 public interface ICategorie <C> {
     
     public void ajouterCategorie(C c);
-     public void sumprimerCategorie(C c);
+     public void supprimerCategorie(C c);
      public void modifierCategorie(C c);
      public List<C> DisplayCategorie();
      public List<C> RechercherCategorie(String x);
+     public ArrayList<C> TrierParIdCat();
+     public ArrayList<C> TrierParNomCat();
 }

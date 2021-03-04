@@ -7,8 +7,10 @@ package tn.gamingroom.tests;
 
 import java.sql.Date;
 import java.time.format.DateTimeFormatter;
+import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Membre;
 import tn.gamingroom.outils.MyConnection;
+import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.MembreServices;
 
 /**
@@ -51,13 +53,35 @@ public class GestionMembreTest {
         //System.out.println(ps.TrierParId());
 //        System.out.println(ps.RechercherMembres("Trifi"));
         
-        Membre mm = ps.Login("farah.ayari@esprit.tn","123456");
-        if( mm != null){
-            System.out.println("Welcome back "+mm.getPrenom());
-        }
-        else{
-            System.out.println("Verifier vos informations");
-        }
+//        Membre mm = ps.Login("farah.ayari@esprit.tn","123456");
+//        if( mm != null){
+//            System.out.println("Welcome back "+mm.getPrenom());
+//        }
+//        else{
+//            System.out.println("Verifier vos informations");
+//        }
+
+        CategorieServices cs = new CategorieServices();
+        
+        Categorie cat1 = new Categorie("Action");
+        Categorie cat2 = new Categorie("Adventure");
+        Categorie cat3 = new Categorie("Sport");
+        Categorie cat4 = new Categorie(4,"Puzzle");
+//        
+//        cs.ajouterCategorie(cat1);
+//        cs.ajouterCategorie(cat2);
+//        cs.ajouterCategorie(cat3);
+//        cs.ajouterCategorie(cat4);
+        
+         System.out.println(cs.DisplayCategorie());
+//        cs.supprimerCategorie(cat4);
+         System.out.println(cs.TrierParIdCat());
+         System.out.println(cs.TrierParNomCat());
+         System.out.println(cs.RechercherCategorie("Action"));
+        
+        
+
+
 }
         
     
