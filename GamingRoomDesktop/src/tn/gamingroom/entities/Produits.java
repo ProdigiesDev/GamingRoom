@@ -16,29 +16,30 @@ public class Produits {
     private String libelle;
     private int prix;
     private String description;
-    private int quantite;
+
 
     public Produits() {
     }
 
-    public Produits(int idprod, String image, String libelle, int prix, String description, int quantite) {
+    public Produits(int idprod, String image, String libelle, int prix, String description) {
         this.idprod = idprod;
         this.image = image;
         this.libelle = libelle;
         this.prix = prix;
         this.description = description;
-        this.quantite = quantite;
     }
 
- 
-
-    public Produits(String image, String libelle, int prix, String description, int quantite) {
+    public Produits(String image, String libelle, int prix, String description) {
         this.image = image;
         this.libelle = libelle;
         this.prix = prix;
         this.description = description;
-        this.quantite = quantite;
     }
+
+ 
+ 
+
+   
 
     public int getIdprod() {
         return idprod;
@@ -60,9 +61,7 @@ public class Produits {
         return description;
     }
 
-    public int getQuantite() {
-        return quantite;
-    }
+   
 
     public void setIdprod(int idprod) {
         this.idprod = idprod;
@@ -84,14 +83,14 @@ public class Produits {
         this.description = description;
     }
 
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
-    }
-
     @Override
     public String toString() {
-        return "Produits{" + "idprod=" + idprod + ", image=" + image + ", libelle=" + libelle + ", prix=" + prix + ", description=" + description + ", quantite=" + quantite + '}';
+        return "Produits{" + "idprod=" + idprod + ", image=" + image + ", libelle=" + libelle + ", prix=" + prix + ", description=" + description + '}';
     }
+
+   
+
+ 
 
     
     

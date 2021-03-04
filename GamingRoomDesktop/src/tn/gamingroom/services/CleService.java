@@ -40,12 +40,12 @@ public class CleService implements ICles<Cles> {
     }
 
     @Override
-    public void supprimerCle(Cles c) {
+    public void supprimerCle(int idcle) {
 
         try {
             String requete = "delete from cle where idcle=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
-            pst.setInt(1, c.getIdcle());
+            pst.setInt(1, idcle);
             int res = pst.executeUpdate();
             if (res > 0) {
                 System.out.println("clé supprimé");

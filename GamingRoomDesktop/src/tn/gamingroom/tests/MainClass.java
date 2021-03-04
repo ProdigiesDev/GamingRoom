@@ -22,43 +22,37 @@ public class MainClass {
         // MyConnection mc2 = MyConnection.getInstance();
         // System.out.println(mc.hashCode()+"__"+mc2.hashCode());
         ProduitCrud pc = new ProduitCrud();
-        Produits p = new Produits("cle", "fff", 11, "cool", 40);
-        Produits p2 = new Produits(2, "sarra.pnj", "ines", 150, "yass", 555);
-        Produits p3 = new Produits(4, "ines.pnj", "noussa", 222, "tunis", 333);
 
-//        Produits p1 = new Produits("zzzz","yyyy",555,"nnn",70);
-          //pc.ajouterProduit(p1);
-        //  pc.ajouterProduit(p);
-//        System.out.println(pc.displayProduit());
-        //  pc.updateProduit(p2);
-        //  pc.ajouterProduit(p3);
-       // pc.supprimerProduit(p2);
-   // pc.TrierParId().forEach(e->{System.out.println(e);});
+        Produits pr = new Produits("yasmine.pnj", "xxxx", 12, "zzzzz");
+        Produits pr1 = new Produits("sonia.pnj", "xyxyxy", 10, "yyyyy");
+        Produits pr2 = new Produits("ines.pnj", "ykykykyky", 100, "fde");
+
+        //  pc.ajouterProduit(pr);
+        //   pc.ajouterProduit(pr1);
+        //   pc.ajouterProduit(pr2);
+        // System.out.println(pc.displayProduit());
+        Produits pr3 = new Produits(5, "yass.pnj", "hhhhh", 14, "aaaaa");
+        Produits pr4 = new Produits(7, "yass.pnj", "hhhhh", 14, "aaaaa");
+
+        //  pc.updateProduit(pr3);
+        //pc.supprimerProduit(pr3);
+        //  pc.TrierParId().forEach(e->{System.out.println(e);});
+        // pc.RechercherProduit("y").forEach(e->{System.out.println(e);});
+        CleService cs = new CleService();
+        Cles c1 = new Cles(1, "1gf52-8fs76-1x66s-78954-0134", 1);
+        Cles c2 = new Cles( "mk5L5-8JsJJ-1x66s-7MP4g-0134d", 2);
+        Cles c3 = new Cles(8, "MKL85-YASSK-12345-852kY-yaskh", 2);
+        Cles c = new Cles(2, "yassmine", 2);
+//        boolean verifierCode=c3.getCode().matches("^((([0-9]|[a-zA-Z]){5})-){4}(([0-9]|[a-zA-Z]){5})$");
+//        if(verifierCode){
+//            cs.ajouterCle(c3);
+//        }
+//        else{
+//            System.out.println("Code invalide");
+//        }
         
-     //  pc.RechercherProduit("y").forEach(e->{System.out.println(e);});
-       
-       
-        CleService cs=new CleService();
-        Cles c1=new Cles(7,"ppppppp", 5);
-        Cles c=new Cles(9,"yassmine", 7);
-        Cles c3=new Cles(4, "zszszszszszsz", 0);
-     
-        //cs.ajouterCle(c);
-        //cs.ajouterCle(c1);
-       // cs.supprimerCle(c1);
-      //cs.supprimerCle(c3);
-       //cs.updateCle(c);
-        System.out.println(cs.displayCle(5));
-           
-       
-       
-       
-       
-       
-       
-       
-       
-   
-        
+      // cs.supprimerCle(12);
+       System.out.println(cs.displayCle(2));
+      //cs.updateCle(c3);
     }
 }

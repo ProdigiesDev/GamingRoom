@@ -27,8 +27,8 @@ public class ProduitCrud implements IProduits<Produits> {
     public void ajouterProduit(Produits p) {
 
         try {
-            String requete = "insert into produit(image,libelle,prix,description,quantite)"
-                    + "values('" + p.getImage() + "','" + p.getLibelle() + "','" + p.getPrix() + "','" + p.getDescription() + "','" + p.getQuantite() + "')";
+            String requete = "insert into produit(image,libelle,prix,description)"
+                    + "values('" + p.getImage() + "','" + p.getLibelle() + "','" + p.getPrix() + "','" + p.getDescription() + "')";
 
             Statement st = MyConnection.getInstance().getCnx().createStatement();
             st.executeUpdate(requete);
@@ -63,7 +63,7 @@ public class ProduitCrud implements IProduits<Produits> {
                     +"',image='"+p.getImage()
                     + "',prix='" + p.getPrix()
                     + "',description='" + p.getDescription()
-                    + "',quantite='" + p.getQuantite()
+                 
                     + "' WHERE idprod=" + p.getIdprod();
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
@@ -95,7 +95,7 @@ public class ProduitCrud implements IProduits<Produits> {
                 p.setLibelle(rs.getString(3));
                 p.setPrix(rs.getInt(4));
                 p.setDescription(rs.getString(5));
-                p.setQuantite(rs.getInt(6));
+            
                 myList.add(p);
 
             }
@@ -117,8 +117,9 @@ public ArrayList<Produits> TrierParId() {
            ResultSet res = pst.executeQuery(requete);
         Produits pr = null;
         while (res.next()) {
-          //  pr = new Offres(res.getInt(1),res.getString(2),res.getString(3),res.getString(4));
-          pr=new Produits(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getString(5), res.getInt(6));
+       
+       
+        pr=new Produits(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getString(5));
             listProduit.add(pr);
             
         } 
@@ -146,7 +147,7 @@ public ArrayList<Produits> TrierParId() {
                 pr.setLibelle(rs.getString(3));
                 pr.setPrix(rs.getInt(4));
                 pr.setDescription(rs.getString(5));
-                pr.setQuantite(rs.getInt(6));
+             
                 
                 
                 
