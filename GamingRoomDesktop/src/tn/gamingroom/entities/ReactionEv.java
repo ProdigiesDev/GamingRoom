@@ -16,6 +16,11 @@ public class ReactionEv {
     public int interaction;
     public String commentaire;
 
+    public ReactionEv(int id) {
+        this.id = id;
+    }
+    
+
     public ReactionEv(int evenement_id, int membre_id) {
         this.evenement_id = evenement_id;
         this.membre_id = membre_id;
