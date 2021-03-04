@@ -30,19 +30,19 @@ public class EvenementService implements IEvenement {
     @Override
     public void ajoutEvenement(Evenement t) {
         try {
-            String requete = "INSERT INTO evenement(nomevent,datedeb,datefin,image,categorie_id,nbremax_participant,description,lieu,lienyoutub)"
+            String requete = "INSERT INTO evenement(nomevent,datedeb,datefin,image,categorie_id,nbremax_participant,description,lieu,lienyoutube)"
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setString(1, t.getNomEvent());
             pst.setDate(2, t.getDateDeb());
-            pst.setDate(2, t.getDateFin());
-            pst.setString(2, t.getImage());
-            pst.setInt(2, t.getCategorie_id());
-            pst.setInt(2, t.getNbreMax_participant());
-            pst.setString(2, t.getDescription());
-            pst.setString(2, t.getLieu());
-            pst.setString(2, t.getLienYoutube());
+            pst.setDate(3, t.getDateFin());
+            pst.setString(4, t.getImage());
+            pst.setInt(5, t.getCategorie_id());
+            pst.setInt(6, t.getNbreMax_participant());
+            pst.setString(7, t.getDescription());
+            pst.setString(8, t.getLieu());
+            pst.setString(9, t.getLienYoutube());
 
             pst.executeUpdate();
             System.out.println("Evenement inserée");
@@ -120,16 +120,16 @@ public class EvenementService implements IEvenement {
 
     @Override
     public void reagirEvenement(ReactionEv rE) {
-         try {
-            String requetereac = "INSERT INTO reactionev(interaction,commentaire,evenement_id,membre_id)"
+        try {
+            String requette = "INSERT INTO reactionev(interaction,commentaire,evenement_id,membre_id)"
                     + "VALUES (?,?,?,?)";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
-                    .prepareStatement(requetereac);
+                    .prepareStatement(requette);
             pst.setInt(1, rE.getInteraction());
             pst.setString(2, rE.getCommentaire());
             pst.setInt(3, rE.getEvenement_id());
             pst.setInt(4, rE.getMembre_id());
-            
+
             pst.executeUpdate();
             System.out.println("Réaction ajouté");
 
@@ -138,19 +138,81 @@ public class EvenementService implements IEvenement {
         }
     }
 
-
     @Override
     public void supprimerReacC(ReactionEv rE) {
         try {
-            String requeteSP = "DELETE FROM reactionev where id=?";
+            String requette = "DELETE FROM reactionev where id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
-                    .prepareStatement(requeteSP);
+                    .prepareStatement(requette);
             pst.setInt(1, rE.getId());
             pst.executeUpdate();
             System.out.println("Reaction supprimé");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+   
+
+    @Override
+    public List<Evenement> chercherEvenement(String s) {
+        ArrayList<Evenement> events = new ArrayList<>();
+        try {
+            String requette = "select * from evenement where nomevent like '%" + s + "%' or categorie_id =(select nomcategorie from categorie where nomcategorie ='" + s + "') or lieu like '%" + s + "%'";
+
+            PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requette);
+            //st.setString(1, x);
+            //  st.setString(2, x);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Evenement e = new Evenement();
+                e.setIdevent(rs.getInt("idevent"));
+                e.setNomEvent(rs.getString("nomevent"));
+                e.setDateDeb(rs.getDate("datedeb"));
+                e.setDateFin(rs.getDate("datefin"));
+                e.setImage(rs.getString("image"));
+                e.setCategorie_id(rs.getInt("categorie_id"));
+                e.setNbreMax_participant(rs.getInt("nbremax_participant"));
+                e.setDescription(rs.getString("description"));
+                e.setLieu(rs.getString("lieu"));
+                e.setLienYoutube(rs.getString("lienyoutube"));
+                events.add(e);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        if (events.isEmpty()) {
+            System.out.println("Il y a aucun produit de ce libelle");
+        }
+        return events;
+    }
+
+    @Override
+    public Evenement getById(int id) {
+        Evenement e = new Evenement();
+        try {
+            String requete = "SELECT * FROM evenement where id=" + id;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                e.setIdevent(rs.getInt("idevent"));
+                e.setNomEvent(rs.getString("nomevent"));
+                e.setDateDeb(rs.getDate("datedeb"));
+                e.setDateFin(rs.getDate("datefin"));
+                e.setImage(rs.getString("image"));
+                e.setCategorie_id(rs.getInt("categorie_id"));
+                e.setNbreMax_participant(rs.getInt("nbremax_participant"));
+                e.setDescription(rs.getString("description"));
+                e.setLieu(rs.getString("lieu"));
+                e.setLienYoutube(rs.getString("lienyoutube"));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return e;
     }
 
 }

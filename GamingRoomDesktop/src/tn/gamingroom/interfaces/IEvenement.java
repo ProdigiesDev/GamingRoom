@@ -21,4 +21,6 @@ public interface IEvenement {
     public void sinscrirEvenement(int idE,int idM);
     public void reagirEvenement(ReactionEv rE);
     public void supprimerReacC(ReactionEv rE);
+    public List chercherEvenement(String s);
+    public Evenement getById(int id);
 }
