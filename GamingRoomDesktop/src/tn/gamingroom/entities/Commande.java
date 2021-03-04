@@ -13,21 +13,25 @@ import java.sql.Date;
  */
 public class Commande {
     int idcommande;
+    int memberid;
     Date datecommande;
-    int quantite;
-    String statu;
+    String etat;
 
-    public Commande(int idcommande, Date datecommande, int quantite, String statu) {
+    public Commande(int idcommande, int memberid, Date datecommande, String etat) {
         this.idcommande = idcommande;
+        this.memberid = memberid;
         this.datecommande = datecommande;
-        this.quantite = quantite;
-        this.statu = statu;
+        this.etat = etat;
     }
 
-    public Commande(Date datecommande, int quantite, String statu) {
+    public Commande(int memberid, Date datecommande, String etat) {
+        this.memberid = memberid;
         this.datecommande = datecommande;
-        this.quantite = quantite;
-        this.statu = statu;
+        this.etat = etat;
+    }
+
+    public Commande() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getIdcommande() {
@@ -38,6 +42,14 @@ public class Commande {
         this.idcommande = idcommande;
     }
 
+    public int getMemberid() {
+        return memberid;
+    }
+
+    public void setMemberid(int memberid) {
+        this.memberid = memberid;
+    }
+
     public Date getDatecommande() {
         return datecommande;
     }
@@ -46,27 +58,20 @@ public class Commande {
         this.datecommande = datecommande;
     }
 
-    public int getQuantite() {
-        return quantite;
+    public String getEtat() {
+        return etat;
     }
 
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
-    }
-
-    public String getStatu() {
-        return statu;
-    }
-
-    public void setStatu(String statu) {
-        this.statu = statu;
+    public void setEtat(String statu) {
+        this.etat = etat;
     }
 
     @Override
     public String toString() {
-        return "Commande{" + "idcommande=" + idcommande + ", datecommande=" + datecommande + ", quantite=" + quantite + ", statu=" + statu + '}';
+        return "Commande{" + "idcommande=" + idcommande + ", memberid=" + memberid + ", datecommande=" + datecommande + ", etat=" + etat + '}';
     }
-    
+
+   
     
 }
 
