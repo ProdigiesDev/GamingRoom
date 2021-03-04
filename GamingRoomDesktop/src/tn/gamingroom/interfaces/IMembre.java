@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.interfaces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ public interface IMembre<T> {
      public List<T> DisplayMembres();
      public T Login(String a,String b);
      public List<T> RechercherMembres(String x);
+     public ArrayList<T> TrierParId();
 
     
 }

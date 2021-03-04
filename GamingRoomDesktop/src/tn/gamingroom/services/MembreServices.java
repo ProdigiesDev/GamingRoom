@@ -42,7 +42,7 @@ public class MembreServices implements IMembre<Membre>{
             ps.executeUpdate();
             System.out.println("Membre ajouté ");
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class MembreServices implements IMembre<Membre>{
             ps.setString(4,m.getGenre().toString());
             ps.setString(5, m.getTel());
             ps.setString(6, m.getEmail());
-            ps.setString(7, m.getPassword());
+            ps.setString(7, BCrypt.hashpw(m.getPassword(), BCrypt.gensalt()));
             ps.setString(8, m.getImage());
             ps.setString(9, m.getRole().toString());
             ps.setString(10, m.getDescription());
@@ -65,7 +65,7 @@ public class MembreServices implements IMembre<Membre>{
             ps.executeUpdate();
             System.out.println("Coach ajouté ");
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
     }
 
@@ -79,7 +79,7 @@ public class MembreServices implements IMembre<Membre>{
             pst.executeUpdate();
             System.out.println("Membre supprimé");
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
     }
 
@@ -102,7 +102,7 @@ public class MembreServices implements IMembre<Membre>{
             pst.executeUpdate();
             System.out.println("Modification membre avec succées");
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
     }
 
@@ -120,7 +120,7 @@ public class MembreServices implements IMembre<Membre>{
             pst.executeUpdate();
             System.out.println("Modification membre avec succées");
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         
     }
@@ -152,7 +152,7 @@ public class MembreServices implements IMembre<Membre>{
                 membreList.add(m);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         return membreList;
     }
@@ -186,7 +186,7 @@ public class MembreServices implements IMembre<Membre>{
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(MembreServices.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         }
         return null;
     }
@@ -195,7 +195,7 @@ public class MembreServices implements IMembre<Membre>{
     public List<Membre> RechercherMembres(String x) {
         ArrayList<Membre> ListMembre = new ArrayList<>();
         try {
-          String requete = "Select * from membre where email like '%"+x+"%' or nom like '%"+x+"%' or prenom like '%"+x+"%' or role '%"+x+"%'";
+          String requete = "Select * from membre where email like '%"+x+"%' or nom like '%"+x+"%' or prenom like '%"+x+"%'";
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requete);
             ResultSet rs = st.executeQuery();
             while(rs.next()){
@@ -219,12 +219,49 @@ public class MembreServices implements IMembre<Membre>{
             }
             
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         if  (ListMembre.isEmpty()) {
             System.out.println("NOT FOUND");
         }
         return ListMembre;
+    }
+
+    @Override
+    public ArrayList<Membre> TrierParId() {
+
+        ArrayList<Membre> ListMembre = new ArrayList<>();
+       try {
+        
+           String requete= "select * from membre where role != 'Admin' ORDER BY id DESC "; 
+           PreparedStatement pst =  MyConnection.getInstance().getCnx().prepareStatement(requete);
+           
+           
+           ResultSet rs = pst.executeQuery(requete);
+ 
+        while (rs.next()) {
+          Membre m = new Membre();
+                
+                m.setId(rs.getInt("id"));
+                m.setNom(rs.getString("nom"));
+                m.setPrenom(rs.getString("prenom"));
+                m.setDate_naissance(rs.getDate("date_naissance"));
+                m.setGenre(Membre.Genre.valueOf(rs.getString("genre")));
+                m.setTel(rs.getString("numero_tel"));
+                m.setEmail(rs.getString("email"));
+                m.setPassword(rs.getString("password"));
+                m.setImage(rs.getString("image"));
+                m.setRole(Membre.Role.valueOf(rs.getString("role")));
+                m.setBan_duration(rs.getInt("ban_duration"));
+                m.setLast_timeban(rs.getDate("last_timeban"));
+                
+                
+                ListMembre.add(m);
+        } 
+         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+                 return ListMembre ;
     }
     
     
