@@ -10,9 +10,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import tn.gamingroom.entities.Cours;
+import tn.gamingroom.entities.ParticipantsCours;
 import tn.gamingroom.entities.ReacCours;
 import tn.gamingroom.outils.MyConnection;
 import tn.gamingroom.services.ServiceCours;
+import tn.gamingroom.services.ServiceParticipantsCours;
 import tn.gamingroom.services.ServiceReacCours;
 
 /**
@@ -27,7 +29,7 @@ public class testClass {
         DateTimeFormatter f = DateTimeFormatter.ofPattern("01-02-2021");
         Date d = new Date(System.currentTimeMillis());
         Cours c = new Cours("FreeFire", "FreeFire game", 23, 1, d, "xx", 1);
-        Cours c1= new Cours("lol", "lol game", 23, 1, d, "xx", 1);
+        Cours c1= new Cours("lol", "lol game", 23, 2, d, "xx", 1);
 
         MyConnection mc = MyConnection.getInstance();
         //MyConnection mc1 = MyConnection.getInstance();
@@ -38,7 +40,7 @@ public class testClass {
         //c1.setId(27);
         //System.out.println(coursCrud.displayCourswithId(27));
         //System.out.println(coursCrud.displayCourswithName("l"));
-        System.out.println(coursCrud.trierCoursID());
+        //System.out.println(coursCrud.trierCoursID());
         
         //coursCrud.supprimerCours(c1);
         //System.out.println(coursCrud.displayCours());
@@ -49,6 +51,12 @@ public class testClass {
         ServiceReacCours reactionc=new ServiceReacCours();
         //reactionc.ajouterReacC(r1);
         //reactionc.supprimerReacC(r1);
+        
+        //Participants cours
+        ParticipantsCours p1= new ParticipantsCours(2,4);
+        ServiceParticipantsCours pc = new ServiceParticipantsCours();
+        //pc.ajouterParticipant(p1);
+        System.out.println(pc.DisplayParticipants());
         
        
 

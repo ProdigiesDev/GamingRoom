@@ -20,9 +20,9 @@ public interface ICours {
 
     public void updateCours(Cours c);
     
-    public List displayCourswithId(int id);
+    
    
-    public List displayCourswithName(String nomCours);
+    public List searchCours(String nomCours);
     
     public List trierCoursID();
    

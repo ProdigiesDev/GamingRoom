@@ -25,7 +25,7 @@ public class ServiceCours implements ICours {
     public void ajouterCours(Cours c) {
         
         try {
-            String requete = "INSERT INTO cours(nomCours,description,nb_participant,"
+            String requete = "INSERT INTO cour(nomCours,description,nb_participant,"
                   + "membre_id,date_creation,tags,categorie_id)"
                     + "VALUES (?,?,?,?,?,?,?)";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
@@ -104,7 +104,7 @@ public class ServiceCours implements ICours {
 //    
     
     @Override
-    public List displayCourswithName(String x) {
+    public List searchCours(String x) {
         List<Cours> CoursListx = new ArrayList<>();
         try {
             String requete = "Select * from cours where nomCours like '%"+x+"%' or description like '%"+x+"%'";
