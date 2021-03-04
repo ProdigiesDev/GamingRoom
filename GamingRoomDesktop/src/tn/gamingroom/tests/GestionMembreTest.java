@@ -25,9 +25,9 @@ public class GestionMembreTest {
         
 
         
-        Membre m = new Membre("Farhat","sonia",d,"Femme","51852630","sonia.farhat@esprit.tn","123456","sonia.jpg",Membre.Role.Membre,true);
+        Membre m = new Membre("Farhat","sonia",d,Membre.Genre.Femme,"51852630","sonia.farhat@esprit.tn","123456","sonia.jpg",Membre.Role.Membre,true);
         
-        Membre m1 = new Membre("Manita","Yasmine",d,"Femme","51852630","sonia.farhat@esprit.tn","123456","sonia.jpg",Membre.Role.Membre,true);
+        Membre m1 = new Membre("Manita","Yasmine",d,Membre.Genre.Femme,"51852630","sonia.farhat@esprit.tn","123456","sonia.jpg",Membre.Role.Membre,true);
         //m.setId(2);
        ps.ajouterMembre(m);
         //pc.sumprimerMembres(m);
