@@ -11,21 +11,21 @@ import java.sql.Date;
  *
  * @author Asus
  */
-public class notification {
+public class Notification {
     public int id;
     public int to;
     public String title;
     public String body;
     public Date date;
 
-    public notification(int to, String title, String body, Date date) {
+    public Notification(int to, String title, String body, Date date) {
         this.to = to;
         this.title = title;
         this.body = body;
         this.date = date;
     }
 
-    public notification(int id, int to, String title, String body, Date date) {
+    public Notification(int id, int to, String title, String body, Date date) {
         this.id = id;
         this.to = to;
         this.title = title;

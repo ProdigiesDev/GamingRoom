@@ -9,38 +9,38 @@ package tn.gamingroom.entities;
  *
  * @author Asus
  */
-public class reactionEv {
+public class ReactionEv {
     public int id;
     public int evenement_id;
     public int membre_id;
     public int interaction;
     public String commentaire;
 
-    public reactionEv(int evenement_id, int membre_id) {
+    public ReactionEv(int evenement_id, int membre_id) {
         this.evenement_id = evenement_id;
         this.membre_id = membre_id;
     }
 
-    public reactionEv(int evenement_id, int membre_id, int interaction) {
+    public ReactionEv(int evenement_id, int membre_id, int interaction) {
         this.evenement_id = evenement_id;
         this.membre_id = membre_id;
         this.interaction = interaction;
     }
 
-    public reactionEv(int evenement_id, int membre_id, String commentaire) {
+    public ReactionEv(int evenement_id, int membre_id, String commentaire) {
         this.evenement_id = evenement_id;
         this.membre_id = membre_id;
         this.commentaire = commentaire;
     }
 
-    public reactionEv(int evenement_id, int membre_id, int interaction, String commentaire) {
+    public ReactionEv(int evenement_id, int membre_id, int interaction, String commentaire) {
         this.evenement_id = evenement_id;
         this.membre_id = membre_id;
         this.interaction = interaction;
         this.commentaire = commentaire;
     }
 
-    public reactionEv(int id, int evenement_id, int membre_id, int interaction, String commentaire) {
+    public ReactionEv(int id, int evenement_id, int membre_id, int interaction, String commentaire) {
         this.id = id;
         this.evenement_id = evenement_id;
         this.membre_id = membre_id;

@@ -14,18 +14,18 @@ import tn.gamingroom.services.EvenementService;
  *
  * @author Asus
  */
-public class Test {
+public class evenementTest {
 
     public static void main(String[] args) {
 //        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-mm-aaaa");
         Date d = new Date(System.currentTimeMillis());
-
+        EvenementService es = new EvenementService();
         Evenement e = new Evenement();
         MyConnection mc = MyConnection.getInstance();
         //MyConnection mc1 = MyConnection.getInstance();
-        EvenementService es = new EvenementService();
-        es.sinscrirEvenement(1, 3);
-                 
+
+    
+
     }
 
 }

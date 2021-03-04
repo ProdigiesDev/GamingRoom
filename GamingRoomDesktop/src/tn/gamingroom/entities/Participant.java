@@ -9,7 +9,7 @@ package tn.gamingroom.entities;
  *
  * @author Asus
  */
-public class participant {
+public class Participant {
     
     public int id;
     public int evenement_id;
@@ -17,20 +17,20 @@ public class participant {
     public String duel;
     public int round;
 
-    public participant(int evenement_id, int member_id, String duel) {
+    public Participant(int evenement_id, int member_id, String duel) {
         this.evenement_id = evenement_id;
         this.member_id = member_id;
         this.duel = duel;
     }
 
-    public participant(int evenement_id, int member_id, String duel, int round) {
+    public Participant(int evenement_id, int member_id, String duel, int round) {
         this.evenement_id = evenement_id;
         this.member_id = member_id;
         this.duel = duel;
         this.round = round;
     }
 
-    public participant(int id, int evenement_id, int member_id, String duel, int round) {
+    public Participant(int id, int evenement_id, int member_id, String duel, int round) {
         this.id = id;
         this.evenement_id = evenement_id;
         this.member_id = member_id;

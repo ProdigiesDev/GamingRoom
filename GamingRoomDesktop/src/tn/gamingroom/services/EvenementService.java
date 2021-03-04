@@ -10,10 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.gamingroom.entities.Evenement;
+import tn.gamingroom.entities.ReactionEv;
 import tn.gamingroom.interfaces.IEvenement;
 import tn.gamingroom.outils.MyConnection;
 
@@ -21,7 +25,7 @@ import tn.gamingroom.outils.MyConnection;
  *
  * @author Asus
  */
-public class EvenementService implements IEvenement{
+public class EvenementService implements IEvenement {
 
     @Override
     public void ajoutEvenement(Evenement t) {
@@ -114,5 +118,24 @@ public class EvenementService implements IEvenement{
         return evenementList;
     }
 
-    
+    @Override
+    public void reagirEvenement(int idE, int idM, ReactionEv rE) {
+         try {
+            String requetereac = "INSERT INTO reactionev(interaction,commentaire,evenement_id,membre_id)"
+                    + "VALUES (?,?,?,?)";
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requetereac);
+            pst.setInt(1, rE.getInteraction());
+            pst.setString(2, rE.getCommentaire());
+            pst.setInt(3, rE.getEvenement_id());
+            pst.setInt(4, rE.getMembre_id());
+            
+            pst.executeUpdate();
+            System.out.println("Réaction ajouté");
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
 }
