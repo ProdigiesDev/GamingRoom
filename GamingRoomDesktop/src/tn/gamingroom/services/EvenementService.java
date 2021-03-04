@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.services;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.gamingroom.entities.Evenement;
+import tn.gamingroom.entities.Notification;
 import tn.gamingroom.entities.ReactionEv;
 import tn.gamingroom.interfaces.IEvenement;
 import tn.gamingroom.outils.MyConnection;
@@ -255,7 +257,6 @@ public class EvenementService implements IEvenement {
 
     private boolean repartitionDual(int idE) {
         try {
-            System.out.println("ideE" + idE);
             List<Integer> randomMember = new ArrayList<>();
             String requete = "select member_id from participant where evenement_id=" + idE;
             Statement st2 = MyConnection.getInstance().getCnx()
@@ -297,9 +298,23 @@ public class EvenementService implements IEvenement {
                     pst.setString(1, entry.getValue());
                     pst.setInt(2, entry.getKey());
                     pst.setInt(3, idE);
-                    pst.executeUpdate();
+                    int b = pst.executeUpdate();
+                    if (b <= 0) {
+                        System.out.println("Un probème est survenu!");
+                        return false;
+                    } else {
+                        //Notifier les participant que la répartition est fait
+                        requete = "select m.prenom,m.nom from membre m, participant p where m.id=p.member_id and p.member_id <> " + entry.getKey() + " and p.duel ='" + entry.getValue() + "' ";
+                        Statement st3 = MyConnection.getInstance().getCnx()
+                                .createStatement();
+                        ResultSet rs3 = st3.executeQuery(requete);
+                        while (rs3.next()) {
+                            NotificationService nS = new NotificationService();
+                            nS.ajoutEvenement(new Notification(entry.getKey(), "Duel evenement :" + this.findById(idE).getNomEvent(), "Votre adversaire est : " + rs3.getString("prenom") + " " + rs3.getString("nom")));
+                        }
 
-                    //lehne n3ayt laka notifier hata ngedha ahhaa
+                    }
+
                 } catch (SQLException ex) {
                     Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -309,6 +324,35 @@ public class EvenementService implements IEvenement {
             Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    @Override
+    public List<Evenement> triEvenement() {
+        ArrayList<Evenement> evenementList = new ArrayList<>();
+        try {
+
+            String requete = "select * from evenement ORDER BY datedeb";
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
+
+            ResultSet rs = pst.executeQuery(requete);
+            while (rs.next()) {
+                Evenement e = new Evenement();
+                e.setIdevent(rs.getInt("idevent"));
+                e.setNomEvent(rs.getString("nomevent"));
+                e.setDateDeb(rs.getDate("datedeb"));
+                e.setDateFin(rs.getDate("datefin"));
+                e.setImage(rs.getString("image"));
+                e.setCategorie_id(rs.getInt("categorie_id"));
+                e.setNbreMax_participant(rs.getInt("nbremax_participant"));
+                e.setDescription(rs.getString("description"));
+                e.setLieu(rs.getString("lieu"));
+                e.setLienYoutube(rs.getString("lienyoutube"));
+                evenementList.add(e);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return evenementList;
     }
 
 }
