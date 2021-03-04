@@ -19,13 +19,14 @@ public interface ICours {
     public void supprimerCours(Cours c);
 
     public void updateCours(Cours c);
-    
-    
-   
+
     public List searchCours(String nomCours);
-    
+
     public List trierCoursID();
-   
+    
+       public List displayprefcours(int membre_id);
+    
+
     public List<Cours> displayCours();
 
 }

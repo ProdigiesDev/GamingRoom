@@ -15,4 +15,5 @@ import tn.gamingroom.entities.ParticipantsCours;
 public interface IParticipantsCours {
     public void ajouterParticipant(ParticipantsCours p);
     public List<ParticipantsCours> DisplayParticipants ();
+ 
 }

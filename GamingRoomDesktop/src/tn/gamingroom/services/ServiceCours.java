@@ -152,6 +152,57 @@ public class ServiceCours implements ICours {
                  return listCours ;
     }
     
+    @Override
+    public List<Cours> displayprefcours(int membre_id) {
+        List<Cours> CoursList = new ArrayList<>();
+        try {
+            String requeteDs = "select * from cour where categorie_id in ( select categorie_id from categori_membre where membre_id='"+membre_id+"' )";
+            //String requeteDs = "select * from cour where not EXISTS (select * from cours where idcat in (select id from categori_membre where membre_id=2)";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requeteDs);
+            //ResultSet rs1 = st.executeQuery(requeteDs1);
+            while (rs.next()) {
+                Cours c = new Cours();
+                c.setId(rs.getInt("id"));
+                c.setNomCours(rs.getString("nomCours"));
+                c.setDescription(rs.getString("description"));
+                c.setNb_participants(rs.getInt("nb_participant"));
+                c.setMembre_id(rs.getInt("membre_id"));
+                c.setDate_creation(rs.getDate("date_creation"));
+                c.setTags(rs.getString("tags"));
+                c.setCategorie_id(rs.getInt("categorie_id"));
+                CoursList.add(c);
+            }
+            
+            
+            requeteDs = "select * from cour where id not in( select id from cour where categorie_id in ( select categorie_id from categori_membre where membre_id='"+membre_id+"' ) ) ";
+            st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            rs = st.executeQuery(requeteDs);
+            while (rs.next()) {
+                Cours c = new Cours();
+                c.setId(rs.getInt("id"));
+                c.setNomCours(rs.getString("nomCours"));
+                c.setDescription(rs.getString("description"));
+                c.setNb_participants(rs.getInt("nb_participant"));
+                c.setMembre_id(rs.getInt("membre_id"));
+                c.setDate_creation(rs.getDate("date_creation"));
+                c.setTags(rs.getString("tags"));
+                c.setCategorie_id(rs.getInt("categorie_id"));
+                CoursList.add(c);
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return CoursList;
+    }
+    
+     
+
+    
+    
     
     
     

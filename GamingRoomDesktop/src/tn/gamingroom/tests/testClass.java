@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.tests;
 
+import java.lang.reflect.Array;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,30 +25,31 @@ import tn.gamingroom.services.ServiceReacCours;
 public class testClass {
 
     public static void main(String[] args) {
-        //COURS
-        //DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         DateTimeFormatter f = DateTimeFormatter.ofPattern("01-02-2021");
         Date d = new Date(System.currentTimeMillis());
+        MyConnection mc = MyConnection.getInstance();
+        //DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+
+        //COURS
+        
         Cours c = new Cours("FreeFire", "FreeFire game", 23, 1, d, "xx", 1);
         Cours c1= new Cours("lol", "lol game", 23, 2, d, "xx", 1);
-
-        MyConnection mc = MyConnection.getInstance();
-        //MyConnection mc1 = MyConnection.getInstance();
-
+        Cours c2= new Cours("lol", "lol game", 23, 2, d, "xx", 1);
+        Cours c3= new Cours("lol", "lol game", 23, 2, d, "xx", 1);
         ServiceCours coursCrud = new ServiceCours();
         //coursCrud.ajouterCours(c1);
         //coursCrud.updateCours(c);
+        //coursCrud.supprimerCours(c1);
         //c1.setId(27);
         //System.out.println(coursCrud.displayCourswithId(27));
         //System.out.println(coursCrud.displayCourswithName("l"));
         //System.out.println(coursCrud.trierCoursID());
-        
-        //coursCrud.supprimerCours(c1);
         //System.out.println(coursCrud.displayCours());
+        
+        
         
        //REACTION COURS
         ReacCours r1 = new ReacCours(0, 5, "j'ai aimé ce cours", 1, 1);
-        
         ServiceReacCours reactionc=new ServiceReacCours();
         //reactionc.ajouterReacC(r1);
         //reactionc.supprimerReacC(r1);
@@ -56,8 +58,13 @@ public class testClass {
         ParticipantsCours p1= new ParticipantsCours(2,4);
         ServiceParticipantsCours pc = new ServiceParticipantsCours();
         //pc.ajouterParticipant(p1);
-        System.out.println(pc.DisplayParticipants());
+        //System.out.println(pc.DisplayParticipants());
         
+        //cours selon préference
+        System.out.println(coursCrud.displayprefcours(2));
+        
+        
+       
        
 
     }
