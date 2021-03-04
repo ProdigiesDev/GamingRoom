@@ -23,4 +23,5 @@ public interface IEvenement {
     public void supprimerReacC(ReactionEv rE);
     public List chercherEvenement(String s);
     public Evenement findById(int id);
+    public List<Evenement> triEvenement();
 }

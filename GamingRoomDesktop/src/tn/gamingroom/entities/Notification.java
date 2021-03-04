@@ -18,6 +18,14 @@ public class Notification {
     public String body;
     public Date date;
 
+    public Notification(int to, String title, String body) {
+        this.to = to;
+        this.title = title;
+        this.body = body;
+    }
+    
+    
+
     public Notification(int to, String title, String body, Date date) {
         this.to = to;
         this.title = title;

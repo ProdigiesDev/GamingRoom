@@ -45,7 +45,9 @@ public class evenementTest {
 //////////////////////////////////////////////////////Chercher Ev
         //System.out.println(es.chercherEvenement("aventure"));
 /////////////////////////////////////////////////////inscription Ev        
-        es.sinscrirEvenement(2, 6);
+       // es.sinscrirEvenement(2, 6);
+/////////////////////////////////////////////////////tri ev
+        System.out.println(es.triEvenement());
 
     }
 
