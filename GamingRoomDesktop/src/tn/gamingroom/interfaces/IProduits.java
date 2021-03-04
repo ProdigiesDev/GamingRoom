@@ -22,5 +22,5 @@ public interface IProduits <T> {
     public List<Produits> TrierParId();
     public List<Produits> RechercherProduit(String x);
    
-    
+    public List<Integer> bestProductsSelled();
 }

@@ -164,8 +164,37 @@ public ArrayList<Produits> TrierParId() {
     }     
         
         
+    public List<Integer> bestProductsSelled(){
+        List<Integer> integers=new ArrayList<>();
+        try {
+          String req = "Select produit_id,sum(quantityDemande) from panier group by produit_id";//kol produit 9adeh be3na totale
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
         
+            ResultSet rs = st.executeQuery(req);
+            int max=0;
+            
+            //n5arjou l valeur maximum mta akber quantité be3néha 
+            while(rs.next()){
+                int qt=rs.getInt(2);
+                if(qt>max)
+                    max=qt;
+            }
+            //taatina l produit eli aandhom qt max 
+            req = "Select p.idprod,sum(quantityDemande) from produit p, panier pa where p.idprod=pa.produit_id group by  p.idprod   having sum(quantityDemande) = "+max;
+            
+           
+             rs = st.executeQuery(req);
+            while(rs.next()){
+                integers.add(rs.getInt(1));// nekhdou biha f liste mta l prod(id)
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
         
+        return integers;
+    } 
+        // kol produit kadeh aandou qt totale weli aandou  qt total= kaber qt totla houma eli yokherjou
         
         
         
