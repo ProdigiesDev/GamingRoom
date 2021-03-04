@@ -47,7 +47,9 @@ public class evenementTest {
 /////////////////////////////////////////////////////inscription Ev        
        // es.sinscrirEvenement(2, 6);
 /////////////////////////////////////////////////////tri ev
-        System.out.println(es.triEvenement());
+       // System.out.println(es.triEvenement());
+////////////////////////////////////////////////upComingEvents
+        System.out.println(es.upComingEvents());
 
     }
 

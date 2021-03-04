@@ -24,4 +24,5 @@ public interface IEvenement {
     public List chercherEvenement(String s);
     public Evenement findById(int id);
     public List<Evenement> triEvenement();
+    public List<Evenement> upComingEvents();
 }

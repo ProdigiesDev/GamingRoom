@@ -355,4 +355,33 @@ public class EvenementService implements IEvenement {
         return evenementList;
     }
 
+    @Override
+    public List<Evenement> upComingEvents() {
+        ArrayList<Evenement> evenementList = new ArrayList<>();
+        try {
+
+            String requete = "select * from evenement where datedeb "+java.time.LocalDate.now();
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
+
+            ResultSet rs = pst.executeQuery(requete);
+            while (rs.next()) {
+                Evenement e = new Evenement();
+                e.setIdevent(rs.getInt("idevent"));
+                e.setNomEvent(rs.getString("nomevent"));
+                e.setDateDeb(rs.getDate("datedeb"));
+                e.setDateFin(rs.getDate("datefin"));
+                e.setImage(rs.getString("image"));
+                e.setCategorie_id(rs.getInt("categorie_id"));
+                e.setNbreMax_participant(rs.getInt("nbremax_participant"));
+                e.setDescription(rs.getString("description"));
+                e.setLieu(rs.getString("lieu"));
+                e.setLienYoutube(rs.getString("lienyoutube"));
+                evenementList.add(e);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return evenementList;
+    }
+
 }
