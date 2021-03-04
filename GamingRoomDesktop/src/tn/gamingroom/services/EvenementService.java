@@ -119,7 +119,7 @@ public class EvenementService implements IEvenement {
     }
 
     @Override
-    public void reagirEvenement(int idE, int idM, ReactionEv rE) {
+    public void reagirEvenement(ReactionEv rE) {
          try {
             String requetereac = "INSERT INTO reactionev(interaction,commentaire,evenement_id,membre_id)"
                     + "VALUES (?,?,?,?)";
@@ -133,6 +133,21 @@ public class EvenementService implements IEvenement {
             pst.executeUpdate();
             System.out.println("Réaction ajouté");
 
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+
+    @Override
+    public void supprimerReacC(ReactionEv rE) {
+        try {
+            String requeteSP = "DELETE FROM reactionev where id=?";
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requeteSP);
+            pst.setInt(1, rE.getId());
+            pst.executeUpdate();
+            System.out.println("Reaction supprimé");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

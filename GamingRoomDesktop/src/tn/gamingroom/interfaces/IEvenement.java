@@ -19,5 +19,6 @@ public interface IEvenement {
     public void suppressionEvenement(Evenement t);
     public List<Evenement> listerEvenement();
     public void sinscrirEvenement(int idE,int idM);
-    public void reagirEvenement(int idE,int idM,ReactionEv rE);
+    public void reagirEvenement(ReactionEv rE);
+    public void supprimerReacC(ReactionEv rE);
 }
