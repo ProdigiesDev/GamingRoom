@@ -17,11 +17,15 @@ public class Membre {
         Membre,
         Coach 
     }
+    public enum Genre{
+        Femme,
+        Homme
+    }
     private int id;
     private String nom;
     private String prenom;
     private Date date_naissance;
-    private String genre;
+    private Genre genre;
     private String tel;
     private String email;
     private String password;
@@ -36,7 +40,7 @@ public class Membre {
     public Membre() {
     }
 
-    public Membre(int id, String nom, String prenom, Date date_naissance, String genre, String tel, String email, String password, String image, Role role, int point, String description, boolean active, int ban_duration, Date last_timeban) {
+    public Membre(int id, String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, int point, String description, boolean active, int ban_duration, Date last_timeban) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -54,7 +58,7 @@ public class Membre {
         this.last_timeban = last_timeban;
     }
 
-    public Membre(String nom, String prenom, Date date_naissance, String genre, String tel, String email, String password, String image, Role role, int point, String description, boolean active, int ban_duration, Date last_timeban) {
+    public Membre(String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, int point, String description, boolean active, int ban_duration, Date last_timeban) {
         this.nom = nom;
         this.prenom = prenom;
         this.date_naissance = date_naissance;
@@ -71,7 +75,7 @@ public class Membre {
         this.last_timeban = last_timeban;
     }
 
-    public Membre(int id, String nom, String prenom, Date date_naissance, String genre, String tel, String email, String password, String image, Role role, boolean active) {
+    public Membre(int id, String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, boolean active) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -85,7 +89,7 @@ public class Membre {
         this.active = active;
     }
 
-    public Membre(String nom, String prenom, Date date_naissance, String genre, String tel, String email, String password, String image, Role role, boolean active) {
+    public Membre(String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, boolean active) {
         this.nom = nom;
         this.prenom = prenom;
         this.date_naissance = date_naissance;
@@ -98,7 +102,7 @@ public class Membre {
         this.active = active;
     }
 
-    public Membre(int id, String nom, String prenom, Date date_naissance, String genre, String tel, String email, String password, String image, Role role, String description, boolean active) {
+    public Membre(int id, String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, String description, boolean active) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -113,7 +117,7 @@ public class Membre {
         this.active = active;
     }
 
-    public Membre(String nom, String prenom, Date date_naissance, String genre, String tel, String email, String password, String image, Role role, String description, boolean active) {
+    public Membre(String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, String description, boolean active) {
         this.nom = nom;
         this.prenom = prenom;
         this.date_naissance = date_naissance;
@@ -145,7 +149,7 @@ public class Membre {
         return date_naissance;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
@@ -206,7 +210,7 @@ public class Membre {
         this.date_naissance = date_naissance;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 
