@@ -25,8 +25,7 @@ public class ServiceCours implements ICours {
     public void ajouterCours(Cours c) {
         
         try {
-            String requete = "INSERT INTO cour(nomCours,description,nb_participant,"
-                  + "membre_id,date_creation,tags,categorie_id)"
+            String requete = "INSERT INTO cour(nomCours,description,nb_participant ,membre_id,date_creation,tags,categorie_id)"
                     + "VALUES (?,?,?,?,?,?,?)";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
@@ -49,7 +48,7 @@ public class ServiceCours implements ICours {
     @Override
     public void supprimerCours(Cours c) {
         try {
-            String requeteSP = "DELETE FROM cours where id=?";
+            String requeteSP = "DELETE FROM cour where id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requeteSP);
             pst.setInt(1, c.getId());
@@ -63,7 +62,7 @@ public class ServiceCours implements ICours {
     @Override
     public void updateCours(Cours c) {
         try {
-            String requeteUp = "UPDATE cours SET nomCours=? WHERE id=?";
+            String requeteUp = "UPDATE cour SET nomCours=? WHERE id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requeteUp);
             pst.setString(1, c.getNomCours());
@@ -79,7 +78,7 @@ public class ServiceCours implements ICours {
     public List<Cours> displayCours() {
         List<Cours> CoursList = new ArrayList<>();
         try {
-            String requeteDs = "SELECT * FROM cours";
+            String requeteDs = "SELECT * FROM cour";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requeteDs);
@@ -107,7 +106,7 @@ public class ServiceCours implements ICours {
     public List searchCours(String x) {
         List<Cours> CoursListx = new ArrayList<>();
         try {
-            String requete = "Select * from cours where nomCours like '%"+x+"%' or description like '%"+x+"%'";
+            String requete = "Select * from cour where nomCours like '%"+x+"%' or description like '%"+x+"%'";
             PreparedStatement  pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             ResultSet rs = pst.executeQuery();
@@ -134,7 +133,7 @@ public class ServiceCours implements ICours {
         ArrayList<Cours> listCours = new ArrayList<>();
        try {
         
-           String requete= "select * from cours ORDER BY id DESC"; 
+           String requete= "select * from cour ORDER BY id DESC"; 
            PreparedStatement pst =  MyConnection.getInstance().getCnx().prepareStatement(requete);
            
            
@@ -151,6 +150,34 @@ public class ServiceCours implements ICours {
         }
                  return listCours ;
     }
+    
+    
+    @Override
+    public Cours findById(int id) {
+        Cours c = new Cours();
+        try {
+            String requete = "SELECT * FROM cour where id=" + id;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                c.setId(rs.getInt("id"));
+                c.setNomCours(rs.getString("nomCours"));
+                c.setDescription(rs.getString("description"));
+                c.setNb_participants(rs.getInt("nb_participant"));
+                c.setMembre_id(rs.getInt("membre_id"));
+                c.setDate_creation(rs.getDate("date_creation"));
+                c.setTags(rs.getString("tags"));
+                c.setCategorie_id(rs.getInt("categorie_id"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return c;
+    }
+    
+    
+    
     
     @Override
     public List<Cours> displayprefcours(int membre_id) {
@@ -174,7 +201,6 @@ public class ServiceCours implements ICours {
                 c.setCategorie_id(rs.getInt("categorie_id"));
                 CoursList.add(c);
             }
-            
             
             requeteDs = "select * from cour where id not in( select id from cour where categorie_id in ( select categorie_id from categori_membre where membre_id='"+membre_id+"' ) ) ";
             st = MyConnection.getInstance().getCnx()

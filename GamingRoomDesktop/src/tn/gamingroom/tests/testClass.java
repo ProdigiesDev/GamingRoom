@@ -25,43 +25,79 @@ import tn.gamingroom.services.ServiceReacCours;
 public class testClass {
 
     public static void main(String[] args) {
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("01-02-2021");
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("00-00-0000");
         Date d = new Date(System.currentTimeMillis());
         MyConnection mc = MyConnection.getInstance();
         //DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
         //COURS
-        
-        Cours c = new Cours("FreeFire", "FreeFire game", 23, 1, d, "xx", 1);
-        Cours c1= new Cours("lol", "lol game", 23, 2, d, "xx", 1);
-        Cours c2= new Cours("lol", "lol game", 23, 2, d, "xx", 1);
-        Cours c3= new Cours("lol", "lol game", 23, 2, d, "xx", 1);
+        Cours c1 = new Cours("FreeFire", "FreeFire game", 23, 1, d, "Action", 1);
+        Cours c2= new Cours("MMORPG ", "MMORPG  game", 26, 2, d, "Action", 2);
+        Cours c3= new Cours("FIFA", "FIFA game", 15, 3, d, "Action", 3);
+        Cours c4= new Cours("LOL", "LOL game", 23, 4, d, "Action", 4);
         ServiceCours coursCrud = new ServiceCours();
+        /////////////////////////////Ajouter Cours////////////////////
         //coursCrud.ajouterCours(c1);
-        //coursCrud.updateCours(c);
+        //coursCrud.ajouterCours(c2);
+        //coursCrud.ajouterCours(c3);
+        //coursCrud.ajouterCours(c4);
+        
+        /////////////////////////////Modifier Cours////////////////////
+//        Cours c5= coursCrud.findById(15);
+//        Cours c6= new Cours (c5.getId(),"GTA", c5.getDescription(),c5.getNb_participants(),c5.getMembre_id(),c5.getDate_creation(),c5.getTags(),c5.getCategorie_id());
+//        coursCrud.updateCours(c6);
+        
+        /////////////////////////////Supprimer Cours////////////////////
+        //c1.setId(10);
         //coursCrud.supprimerCours(c1);
-        //c1.setId(27);
-        //System.out.println(coursCrud.displayCourswithId(27));
-        //System.out.println(coursCrud.displayCourswithName("l"));
-        //System.out.println(coursCrud.trierCoursID());
+        
+        //////////////////Afficher liste des cours///////////////
         //System.out.println(coursCrud.displayCours());
+          
+        //////////////////Chercher cours selon nom et description ///////////////
+        //System.out.println(coursCrud.searchCours("MMORPG"));
+        
+        ////////////////////Trier cours avec ordre decroissant////////////////
+        //System.out.println(coursCrud.trierCoursID());
+        
+        
+        ///////////////////////////Find cours By Id///////////////////
+        //System.out.println(coursCrud.findById(15));
+        
+        //cours selon préference
+        System.out.println(coursCrud.displayprefcours(1));
+        
+        
+        
+        
         
         
         
        //REACTION COURS
-        ReacCours r1 = new ReacCours(0, 5, "j'ai aimé ce cours", 1, 1);
+        ReacCours r1 = new ReacCours(1, "j'ai aimé ce cours", 1, 1);
+        ReacCours r2 = new ReacCours(-1, "J'ai pas aimé ce cours", 2, 3);
+        ReacCours r3 = new ReacCours(1, "Merci coach pour ce cours", 4, 4);
         ServiceReacCours reactionc=new ServiceReacCours();
-        //reactionc.ajouterReacC(r1);
-        //reactionc.supprimerReacC(r1);
+        /////////////////Ajouter Reaction Cours////////////////
+        //reactionc.ajouterReacC(r2);
         
+       /////////////////Supprimer Reaction Cours////////////////
+        //r2.setId(15);
+        //reactionc.supprimerReacC(r2);
+        
+        
+
         //Participants cours
-        ParticipantsCours p1= new ParticipantsCours(2,4);
+        ParticipantsCours p1= new ParticipantsCours(1,2);
+        ParticipantsCours p2= new ParticipantsCours(2,3);
+        ParticipantsCours p3= new ParticipantsCours(3,4);
+        
+        
         ServiceParticipantsCours pc = new ServiceParticipantsCours();
         //pc.ajouterParticipant(p1);
         //System.out.println(pc.DisplayParticipants());
         
-        //cours selon préference
-        System.out.println(coursCrud.displayprefcours(2));
+        
         
         
        

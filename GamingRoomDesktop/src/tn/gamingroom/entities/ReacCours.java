@@ -19,6 +19,15 @@ public class ReacCours {
     public ReacCours() {
     }
 
+    public ReacCours(int interaction, String commentaire, int membre_id, int cour_id) {
+        this.interaction = interaction;
+        this.commentaire = commentaire;
+        this.membre_id = membre_id;
+        this.cour_id = cour_id;
+    }
+    
+    
+
     public ReacCours(int id, int nb_interaction, String commentaire, int membre_id, int cour_id) {
         this.id = id;
         this.interaction = interaction;

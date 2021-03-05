@@ -24,7 +24,9 @@ public interface ICours {
 
     public List trierCoursID();
     
-       public List displayprefcours(int membre_id);
+    public List displayprefcours(int membre_id);
+    
+    public Cours findById(int id);
     
 
     public List<Cours> displayCours();
