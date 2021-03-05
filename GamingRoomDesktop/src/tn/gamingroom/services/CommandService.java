@@ -30,11 +30,10 @@ public class CommandService implements ICommande{
     public int ajouterCommand(Commande c) {
         int nb=0;
         try {
-            String reqAjouter="insert into commande(datecommande,membreid) values (?,?) ";
+            String reqAjouter="insert into commande (membreid) values (?)";
             PreparedStatement ps = cnx.prepareStatement(reqAjouter);
-            ps.setDate(1, c.getDatecommande());
-            ps.setInt(2, c.getMemberid());
-            
+            ps.setInt(1, c.getMemberid());
+            nb=ps.executeUpdate();
         } catch (SQLException ex) {
            ex.printStackTrace();
         } 
@@ -47,9 +46,9 @@ public class CommandService implements ICommande{
             int nbModifier=0;
         try {
             
-            String req="Update commande set statu = ?";
+            String req="Update commande set etat = ?";
             PreparedStatement ps = cnx.prepareStatement(req);
-            ps.setString(1, c.getEtat());
+            ps.setString(1, c.getEtat().toString());
             nbModifier = ps.executeUpdate();  
            } catch (SQLException ex) {
             ex.printStackTrace();
@@ -58,15 +57,15 @@ public class CommandService implements ICommande{
         } 
 
     @Override
-    public List<Commande> consulterMonCommande(int memberid) {
+    public List<Commande> consulterMesCommande(int memberid) {
         List<Commande> commandes=new ArrayList();
         try {
-            String reqLister="select * from commande where memberid =" + memberid ;
+            String reqLister="select * from commande where membreid =" + memberid ;
             Statement statement= cnx.createStatement();
             
             ResultSet rs= statement.executeQuery(reqLister);
             while (rs.next()){
-                commandes.add(new Commande(rs.getInt("idcommande"),rs.getDate("datecommande"),rs.getString("etat")));
+                commandes.add(new Commande(rs.getInt("idcommande"),rs.getInt("membreid"),rs.getDate("datecommande"),Commande.Statu.valueOf(rs.getString("etat"))));
                         }
             System.out.println("getListCommande");
         } catch (SQLException ex) {
@@ -88,7 +87,7 @@ public class CommandService implements ICommande{
                 c.setIdcommande(rs.getInt(1));
                 c.setMemberid(rs.getInt(2));
                 c.setDatecommande(rs.getDate(3));
-                c.setEtat(rs.getString(4));
+                c.setEtat(Commande.Statu.valueOf(rs.getString(4)));
                 listCommandes.add(c);
             }
         } catch (SQLException ex) {
@@ -111,6 +110,9 @@ public class CommandService implements ICommande{
         }
         return nb;
     }
+
+    
+    
 
     
 }

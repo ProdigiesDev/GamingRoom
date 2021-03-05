@@ -16,7 +16,7 @@ public interface ICommande {
     public int ajouterCommand(Commande c);
     public int modifierCommand(Commande c);
     public int supprimerCommand(int idcommand);
-    public List<Commande> consulterMonCommande(int memberid);
+    public List<Commande> consulterMesCommande(int memberid);
     public List<Commande> consulterCommande();
     
 }

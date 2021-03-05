@@ -28,7 +28,7 @@ public class PanierService implements IPanier {
     public int ajouterProd(Panier p) {
         int nb=0;
         try {
-            String requete = "insert into produit( produit_id, commande_id, quantityDemande) values(?,?,?)";
+            String requete = "insert into panier ( produit_id, commande_id, quantityDemande) values(?,?,?)";
                    
             PreparedStatement pst = cnx.prepareStatement(requete);
             pst.setInt(1,p.getProduit_id());
@@ -36,7 +36,7 @@ public class PanierService implements IPanier {
             pst.setInt(3,p.getQuantityDemande());
             nb=pst.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return nb;
     }
@@ -60,9 +60,10 @@ public class PanierService implements IPanier {
     public int modifierQuantity(Panier p) {
         int nbModifier=0;
         try {
-            String req="Update panier set quantityDemande = ?";
+            String req="Update panier set quantityDemande = ? where id=?";
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setInt(1,p.getQuantityDemande());
+            ps.setInt(2,p.getId());
             nbModifier = ps.executeUpdate();  
            } catch (SQLException ex) {
             ex.printStackTrace();
@@ -72,16 +73,17 @@ public class PanierService implements IPanier {
     }
 
     @Override
-    public List<Panier> consulterPanier(int commande_id) {
+    public List<Panier> consulterPanier(int member_id) {
             System.out.println("consulterPanier");
         List<Panier> panier=new ArrayList<>();
         try {
-            String reqLister="select * from panier where commande_id =" + commande_id ;
+            
+            String reqLister="select p.* from panier p,commande c where  c.idcommande=p.commande_id and c.etat='EnCours' and c.membreid =" + member_id ;
             Statement statement= cnx.createStatement();
             ResultSet rs= statement.executeQuery(reqLister);
             while (rs.next()){
-                panier.add(new Panier(rs.getInt("id"),rs.getInt("produit_id"),rs.getInt("commande_id"),rs.getInt("quantityDemande")));
-                        }
+                panier.add(new Panier(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4)));
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

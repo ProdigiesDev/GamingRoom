@@ -17,6 +17,8 @@ import java.util.logging.Logger;
  */
 public class MyConnection {
 
+    
+
     String url="jdbc:mysql://localhost:3306/gamingroom";
     String login="gamingRoomUser";
     String pwd="!&_UkTz/Cw`*2#[u";

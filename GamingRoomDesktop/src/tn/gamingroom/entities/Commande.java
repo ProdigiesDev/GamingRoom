@@ -15,23 +15,26 @@ public class Commande {
     int idcommande;
     int memberid;
     Date datecommande;
-    String etat;
+    Statu etat;
 
-    public Commande(int idcommande, int memberid, Date datecommande, String etat) {
+    public Commande() {
+    }
+
+    public Commande(int memberid) {
+        this.memberid = memberid;
+    }
+    
+    public Commande(int idcommande, int memberid, Date datecommande, Statu etat) {
         this.idcommande = idcommande;
         this.memberid = memberid;
         this.datecommande = datecommande;
         this.etat = etat;
     }
 
-    public Commande(int memberid, Date datecommande, String etat) {
+    public Commande(int memberid, Date datecommande, Statu etat) {
         this.memberid = memberid;
         this.datecommande = datecommande;
         this.etat = etat;
-    }
-
-    public Commande() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getIdcommande() {
@@ -58,20 +61,27 @@ public class Commande {
         this.datecommande = datecommande;
     }
 
-    public String getEtat() {
+    public Statu getEtat() {
         return etat;
     }
 
-    public void setEtat(String statu) {
+    public void setEtat(Statu etat) {
         this.etat = etat;
     }
 
+    
+
     @Override
     public String toString() {
-        return "Commande{" + "idcommande=" + idcommande + ", memberid=" + memberid + ", datecommande=" + datecommande + ", etat=" + etat + '}';
+        return "Commande{" + "idcommande=" + idcommande + ", memberid=" + memberid + ", datecommande=" + datecommande + ", statu=" + etat + '}';
     }
 
    
+    public enum Statu{
+        EnCours,
+        Valider,
+        EnAttente
+    }
     
 }
 
