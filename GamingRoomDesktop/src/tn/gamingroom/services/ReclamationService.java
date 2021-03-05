@@ -25,25 +25,27 @@ public class ReclamationService implements IReclamation{
     private Connection  cnx=MyConnection.getInstance().getCnx();
     
     @Override
-    public void ajouterReclamation(Reclamation reclamation) {
+    public int  ajouterReclamation(Reclamation reclamation) {
+        int nb=0;
         try {
             String reqAjouter="insert into reclamation (sujet,contenue,membre_id) values(?,?,?)";
             PreparedStatement ps=cnx.prepareStatement(reqAjouter);
             ps.setString(1, reclamation.getSujet());
             ps.setString(2,reclamation.getContenue());
             ps.setInt(3,reclamation.getMembre_id());
-            ps.executeUpdate();
+            nb=ps.executeUpdate();
             System.out.println("Reclamation ajouter");
         } catch (SQLException ex) {
             ex.printStackTrace();       
         }
+        return nb;
     }
 
     @Override
     public List<Reclamation> getListReclamation() {
         List<Reclamation> reclamations=new ArrayList();
         try {
-            String reqLister="select * from reclamation";
+            String reqLister="select * from reclamation order by id desc";
             Statement statement=cnx.createStatement();
            
             ResultSet rs =  statement.executeQuery(reqLister);

@@ -15,6 +15,10 @@ public class Avis {
     private String avis;
     private int member_id;
 
+    public Avis() {
+    }
+
+    
     public Avis(int id, String avis, int member_id) {
         this.id = id;
         this.avis = avis;
@@ -25,6 +29,7 @@ public class Avis {
         this.avis = avis;
         this.member_id = member_id;
     }
+
 
 
     public int getId() {

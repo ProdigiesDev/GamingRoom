@@ -6,6 +6,7 @@
 package tn.gamingroom.services;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,6 +43,38 @@ public class ScoreService implements IScore{
         }
         
         return scores;
+    }
+
+    @Override
+    public int updateScore(Score s) {
+        System.out.println("Inside Modifier Jeux");
+        int nbModifier=0;
+        try {
+            String req="update score set score = ?  where id= ?";
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setInt(1,s.getScore());
+            ps.setInt(2,s.getId());
+            nbModifier = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return nbModifier;
+    }
+
+    @Override
+    public int ajouterScore(Score s) {
+        int nb=0;
+        try {
+            String reqAjouter="insert into score (score,jeux_id,membre_id) values(?,?,?)";
+            PreparedStatement ps=cnx.prepareStatement(reqAjouter);
+            ps.setInt(1,s.getScore());
+            ps.setInt(2,s.getJeux_id());
+            ps.setInt(3, s.getMemebre_id());
+            nb=ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();       
+        }
+        return nb;
     }
     
 }

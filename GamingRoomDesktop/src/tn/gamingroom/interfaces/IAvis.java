@@ -13,6 +13,6 @@ import tn.gamingroom.entities.Avis;
  * @author Dah
  */
 public interface IAvis {
-    public void ajouterAvis(Avis avis);
+    public int ajouterAvis(Avis avis);
      public List<Avis> getListAvis();
 }

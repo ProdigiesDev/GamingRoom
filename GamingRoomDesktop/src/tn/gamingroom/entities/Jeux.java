@@ -13,18 +13,45 @@ public class Jeux {
     
     private int id;
     private String nom;
-
-    public Jeux(String nom) {
-        this.nom = nom;
+    private String descriString;
+    private Type type_plateforme;
+    public Jeux() {
     }
 
-    public Jeux(int id, String nom) {
+    public Jeux(String nom, String descriString, Type type_plateforme) {
+        this.nom = nom;
+        this.descriString = descriString;
+        this.type_plateforme = type_plateforme;
+    }
+
+    public Jeux(int id, String nom, String descriString, Type type_plateforme) {
         this.id = id;
         this.nom = nom;
+        this.descriString = descriString;
+        this.type_plateforme = type_plateforme;
     }
+
+    public String getDescriString() {
+        return descriString;
+    }
+
+    public void setDescriString(String descriString) {
+        this.descriString = descriString;
+    }
+
+    
+    
 
     public int getId() {
         return id;
+    }
+
+    public Type getType_plateforme() {
+        return type_plateforme;
+    }
+
+    public void setType_plateforme(Type type_plateforme) {
+        this.type_plateforme = type_plateforme;
     }
 
     public void setId(int id) {
@@ -41,8 +68,14 @@ public class Jeux {
 
     @Override
     public String toString() {
-        return "Jeux{" + "id=" + id + ", nom=" + nom + '}';
+        return "Jeux{" + "id=" + id + ", nom=" + nom + ", descriString=" + descriString + ", type_plateforme=" + type_plateforme + '}';
     }
+
     
+    public enum Type{
+        Desktop,
+        Mobile,
+        Web
+    }
     
 }

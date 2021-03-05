@@ -16,6 +16,9 @@ public class Reclamation {
     private String contenue;
     private int membre_id;
 
+    public Reclamation() {
+    }
+
     public Reclamation(int id, String sujet, String contenue, int membre_id) {
         this.id = id;
         this.sujet = sujet;

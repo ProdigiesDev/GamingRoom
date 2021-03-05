@@ -26,18 +26,18 @@ public class AvisService implements IAvis{
     private Connection  cnx=MyConnection.getInstance().getCnx();
     
     @Override
-    public void ajouterAvis(Avis avis) {
+    public int ajouterAvis(Avis avis) {
+        int nb=0;
         try {
             String reqAjouter="insert into avis (avis,member_id) values(?,?)";
             PreparedStatement ps=cnx.prepareStatement(reqAjouter);
             ps.setString(1,avis.getAvis());
             ps.setInt(2, avis.getMember_id());
-            ps.executeUpdate();
-            System.out.println("Avis ajouter");
+            nb=ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();       
         }
-;
+        return nb;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class AvisService implements IAvis{
         List<Avis> avis=new ArrayList();
         
         try {
-            String req="select * from avis";
+            String req="select * from avis order by id desc";
             Statement s = cnx.createStatement();
             ResultSet resultSet=s.executeQuery(req);
             while(resultSet.next()){

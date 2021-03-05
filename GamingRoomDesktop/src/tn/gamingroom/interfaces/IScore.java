@@ -13,5 +13,7 @@ import tn.gamingroom.entities.Score;
  * @author Dah
  */
 public interface IScore {
+    int ajouterScore(Score s);
+    int updateScore(Score s);
     List<Score> getScoreByJeuId(int jeux_id);
 }

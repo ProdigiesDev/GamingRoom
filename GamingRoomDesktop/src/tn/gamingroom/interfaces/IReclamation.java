@@ -13,6 +13,6 @@ import tn.gamingroom.entities.Reclamation;
  * @author Dah
  */
 public interface IReclamation {
-    public void ajouterReclamation(Reclamation reclamation);
+    public int ajouterReclamation(Reclamation reclamation);
     public List<Reclamation>  getListReclamation();
 }

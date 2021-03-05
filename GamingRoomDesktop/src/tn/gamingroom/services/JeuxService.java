@@ -29,12 +29,14 @@ public class JeuxService implements IJeux{
     
     @Override
     public int ajouter(Jeux jeux) {
-         System.err.println("Inside ajouter Jeux");
+         System.out.println("Inside ajouter Jeux");
         int nbInsert=0;
         try {        
-            String req="insert into jeux (nom) values(?)";
+            String req="insert into jeux (nom,description,type_plateforme) values(?,?,?)";
             PreparedStatement ps=cnx.prepareStatement(req);
             ps.setString(1,jeux.getNom());
+            ps.setString(2,jeux.getDescriString());
+            ps.setString(3,Jeux.Type.Desktop.toString() );
            nbInsert = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -45,7 +47,7 @@ public class JeuxService implements IJeux{
     @Override
     public int supprimer(int id) {
         
-        System.err.println("Inside supprimer Jeux");
+        System.out.println("Inside supprimer Jeux");
         
         String req="delete from jeux where id="+id;
         int nbDelete=0;
@@ -62,13 +64,15 @@ public class JeuxService implements IJeux{
 
     @Override
     public int modifier(Jeux jeux) {
-        System.err.println("Inside Modifier Jeux");
+        System.out.println("Inside Modifier Jeux");
         int nbModifier=0;
         try {
-            String req="update jeux set nom = ? where id= ?";
+            String req="update jeux set nom = ? , description=?, type_plateforme=? where id= ?";
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1,jeux.getNom());
-            ps.setInt(2,jeux.getId());
+            ps.setString(2,jeux.getDescriString());
+            ps.setString(3,jeux.getType_plateforme().toString());
+            ps.setInt(4,jeux.getId());
             nbModifier = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -82,11 +86,11 @@ public class JeuxService implements IJeux{
         List<Jeux> jeux=new ArrayList();
         
         try {
-            String req="select * from jeux";
+            String req="select * from jeux order by id desc";
             Statement s = cnx.createStatement();
             ResultSet resultSet=s.executeQuery(req);
             while(resultSet.next()){
-                jeux.add(new Jeux(resultSet.getInt("id"),resultSet.getString("nom")));
+                jeux.add(new Jeux(resultSet.getInt("id"),resultSet.getString("nom"),resultSet.getString("description"),Jeux.Type.valueOf(resultSet.getString("type_plateforme"))));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
