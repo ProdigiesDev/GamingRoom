@@ -22,6 +22,7 @@ public interface IMembre<T> {
      public T Login(String a,String b);
      public List<T> RechercherMembres(String x);
      public ArrayList<T> TrierParId();
+     public void fPwd(int id);
 
     
 }

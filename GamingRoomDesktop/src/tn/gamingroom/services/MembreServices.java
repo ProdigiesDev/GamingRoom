@@ -5,10 +5,13 @@
  */
 package tn.gamingroom.services;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,22 +20,23 @@ import org.mindrot.jbcrypt.BCrypt;
 import tn.gamingroom.entities.Membre;
 import tn.gamingroom.interfaces.IMembre;
 import tn.gamingroom.outils.MyConnection;
+import java.util.Scanner;
 
 /**
  *
  * @author Sonia
  */
-public class MembreServices implements IMembre<Membre>{
+public class MembreServices implements IMembre<Membre> {
 
     @Override
     public void ajouterMembre(Membre m) {
         try {
-            String requete="INSERT INTO membre (nom,prenom,date_naissance,genre,numero_tel,email,password,image,role,active)" +"VALUES(?,?,?,?,?,?,?,?,?,?)";
+            String requete = "INSERT INTO membre(nom,prenom,date_naissance,genre,numero_tel,email,password,image,role,active)" + "VALUES(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setString(1, m.getNom());
             ps.setString(2, m.getPrenom());
             ps.setDate(3, m.getDate_naissance());
-            ps.setString(4,m.getGenre().toString());
+            ps.setString(4, m.getGenre().toString());
             ps.setString(5, m.getTel());
             ps.setString(6, m.getEmail());
             ps.setString(7, BCrypt.hashpw(m.getPassword(), BCrypt.gensalt()));
@@ -48,13 +52,13 @@ public class MembreServices implements IMembre<Membre>{
 
     @Override
     public void ajouterCoach(Membre m) {
-         try {
-            String requete="INSERT INTO membre (nom,prenom,date_naissance,genre,numero_tel,email,password,image,role,description,active)" +"VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        try {
+            String requete = "INSERT INTO membre (nom,prenom,date_naissance,genre,numero_tel,email,password,image,role,description,active)" + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setString(1, m.getNom());
             ps.setString(2, m.getPrenom());
             ps.setDate(3, m.getDate_naissance());
-            ps.setString(4,m.getGenre().toString());
+            ps.setString(4, m.getGenre().toString());
             ps.setString(5, m.getTel());
             ps.setString(6, m.getEmail());
             ps.setString(7, BCrypt.hashpw(m.getPassword(), BCrypt.gensalt()));
@@ -71,7 +75,7 @@ public class MembreServices implements IMembre<Membre>{
 
     @Override
     public void sumprimerMembres(Membre m) {
-         try {
+        try {
             String requete = "DELETE FROM membre where id=? AND role != 'Admin'";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
@@ -82,7 +86,6 @@ public class MembreServices implements IMembre<Membre>{
             System.err.println(ex.getMessage());
         }
     }
-
 
     @Override
     public void modifierMembres(Membre m) {
@@ -108,7 +111,7 @@ public class MembreServices implements IMembre<Membre>{
 
     @Override
     public void modifierMembreParAdmin(Membre m) {
-         try {
+        try {
             String requete = "UPDATE personne SET point=?,active=?,ban_duration=?,last_timeban=? WHERE id=? AND role != 'Admin' ";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
@@ -122,10 +125,8 @@ public class MembreServices implements IMembre<Membre>{
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-        
+
     }
-     
-   
 
     @Override
     public List<Membre> DisplayMembres() {
@@ -134,8 +135,8 @@ public class MembreServices implements IMembre<Membre>{
             String requete = "SELECT * FROM membre where role != 'Admin'";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
-            ResultSet rs =  st.executeQuery(requete);
-            while(rs.next()){
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
                 Membre m = new Membre();
                 m.setId(rs.getInt("id"));
                 m.setNom(rs.getString("nom"));
@@ -161,15 +162,15 @@ public class MembreServices implements IMembre<Membre>{
     public Membre Login(String email, String password) {
 
         try {
-            String requete = "Select * from membre where email='"+email+"' ";
+            String requete = "Select * from membre where email='" + email + "' ";
             Statement st = MyConnection.getInstance().getCnx().createStatement();
-            ResultSet rs =  st.executeQuery(requete);
-            if(rs.next()){
-                String pswd=rs.getString("password");
-                if(! BCrypt.checkpw(password, pswd)){
-                   return null; 
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                String pswd = rs.getString("password");
+                if (!BCrypt.checkpw(password, pswd)) {
+                    return null;
                 }
-                 Membre m = new Membre();
+                Membre m = new Membre();
                 m.setId(rs.getInt("id"));
                 m.setNom(rs.getString("nom"));
                 m.setPrenom(rs.getString("prenom"));
@@ -184,7 +185,7 @@ public class MembreServices implements IMembre<Membre>{
                 m.setLast_timeban(rs.getDate("last_timeban"));
                 return m;
             }
-            
+
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
@@ -195,12 +196,12 @@ public class MembreServices implements IMembre<Membre>{
     public List<Membre> RechercherMembres(String x) {
         ArrayList<Membre> ListMembre = new ArrayList<>();
         try {
-          String requete = "Select * from membre where email like '%"+x+"%' or nom like '%"+x+"%' or prenom like '%"+x+"%'";
+            String requete = "Select * from membre where email like '%" + x + "%' or nom like '%" + x + "%' or prenom like '%" + x + "%'";
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requete);
             ResultSet rs = st.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Membre m = new Membre();
-                
+
                 m.setId(rs.getInt("id"));
                 m.setNom(rs.getString("nom"));
                 m.setPrenom(rs.getString("prenom"));
@@ -213,15 +214,14 @@ public class MembreServices implements IMembre<Membre>{
                 m.setRole(Membre.Role.valueOf(rs.getString("role")));
                 m.setBan_duration(rs.getInt("ban_duration"));
                 m.setLast_timeban(rs.getDate("last_timeban"));
-                
-                
+
                 ListMembre.add(m);
             }
-            
+
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-        if  (ListMembre.isEmpty()) {
+        if (ListMembre.isEmpty()) {
             System.out.println("NOT FOUND");
         }
         return ListMembre;
@@ -231,17 +231,16 @@ public class MembreServices implements IMembre<Membre>{
     public ArrayList<Membre> TrierParId() {
 
         ArrayList<Membre> ListMembre = new ArrayList<>();
-       try {
-        
-           String requete= "select * from membre where role != 'Admin' ORDER BY id DESC "; 
-           PreparedStatement pst =  MyConnection.getInstance().getCnx().prepareStatement(requete);
-           
-           
-           ResultSet rs = pst.executeQuery(requete);
- 
-        while (rs.next()) {
-          Membre m = new Membre();
-                
+        try {
+
+            String requete = "select * from membre where role != 'Admin' ORDER BY id DESC ";
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
+
+            ResultSet rs = pst.executeQuery(requete);
+
+            while (rs.next()) {
+                Membre m = new Membre();
+
                 m.setId(rs.getInt("id"));
                 m.setNom(rs.getString("nom"));
                 m.setPrenom(rs.getString("prenom"));
@@ -254,16 +253,60 @@ public class MembreServices implements IMembre<Membre>{
                 m.setRole(Membre.Role.valueOf(rs.getString("role")));
                 m.setBan_duration(rs.getInt("ban_duration"));
                 m.setLast_timeban(rs.getDate("last_timeban"));
-                
-                
+
                 ListMembre.add(m);
-        } 
-         } catch (SQLException ex) {
+            }
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-                 return ListMembre ;
+        return ListMembre;
     }
-    
-    
-    
+
+    @Override
+    public void fPwd(int id) {
+        Scanner myObj = new Scanner(System.in);  
+        System.out.println("Enter votre num tel");
+
+        String tel = myObj.nextLine();
+
+        System.out.println("Enter votre email");
+
+        String email = myObj.nextLine();
+
+        try {
+            String requete = "SELECT password,email FROM membre where email= '" + email + "' and numero_tel='" + tel + "'";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                System.out.println("Enter Un nouveau mdp");
+
+                String mdp1 = myObj.nextLine();
+                System.out.println("ReEnter votre mdp");
+
+                String mdp2 = myObj.nextLine();
+                if (mdp1.equals(mdp2)) {
+                    try {
+                        requete = "update membre set password = ? where email=?";
+                        PreparedStatement ps2 = new MyConnection().getCnx().prepareStatement(requete);
+
+                        ps2.setString(2, rs.getString("email"));
+                        ps2.setString(1, BCrypt.hashpw(mdp1, BCrypt.gensalt()));
+
+                        int b = ps2.executeUpdate();
+                        if (b > 0) {
+                            System.out.println("PWD changé");
+                        }else
+                            System.out.println("Réessayer");
+
+                    } catch (SQLException ex) {
+                        System.err.println(ex.getMessage());
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+
 }
