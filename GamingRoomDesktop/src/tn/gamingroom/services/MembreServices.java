@@ -29,7 +29,8 @@ import java.util.Scanner;
 public class MembreServices implements IMembre<Membre> {
 
     @Override
-    public void ajouterMembre(Membre m) {
+    public int ajouterMembre(Membre m) {
+        int nbAjoutMembre=0;
         try {
             String requete = "INSERT INTO membre(nom,prenom,date_naissance,genre,numero_tel,email,password,image,role,active)" + "VALUES(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
@@ -43,15 +44,17 @@ public class MembreServices implements IMembre<Membre> {
             ps.setString(8, m.getImage());
             ps.setString(9, m.getRole().toString());
             ps.setBoolean(10, true);
-            ps.executeUpdate();
+            nbAjoutMembre=ps.executeUpdate();
             System.out.println("Membre ajouté ");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return nbAjoutMembre;
     }
 
     @Override
-    public void ajouterCoach(Membre m) {
+    public int ajouterCoach(Membre m) {
+        int nbAjoutCoach=0;
         try {
             String requete = "INSERT INTO membre (nom,prenom,date_naissance,genre,numero_tel,email,password,image,role,description,active)" + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
@@ -66,29 +69,33 @@ public class MembreServices implements IMembre<Membre> {
             ps.setString(9, m.getRole().toString());
             ps.setString(10, m.getDescription());
             ps.setBoolean(11, false);
-            ps.executeUpdate();
+            nbAjoutCoach=ps.executeUpdate();
             System.out.println("Coach ajouté ");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return nbAjoutCoach;
     }
 
     @Override
-    public void sumprimerMembres(Membre m) {
+    public int sumprimerMembres(Membre m) {
+        int nbSuppMembre=0;
         try {
             String requete = "DELETE FROM membre where id=? AND role != 'Admin'";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setInt(1, m.getId());
-            pst.executeUpdate();
+            nbSuppMembre=pst.executeUpdate();
             System.out.println("Membre supprimé");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return nbSuppMembre;
     }
 
     @Override
-    public void modifierMembres(Membre m) {
+    public int modifierMembres(Membre m) {
+        int nbModifierMembre=0;
         try {
             String requete = "UPDATE membre SET nom=?,prenom=?,date_naissance=?,genre=?,numero_tel=?,email=?,password=?,image=? WHERE id=? and role != 'Admin'";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
@@ -102,15 +109,17 @@ public class MembreServices implements IMembre<Membre> {
             pst.setString(7, m.getPassword());
             pst.setString(8, m.getImage());
             pst.setInt(9, m.getId());
-            pst.executeUpdate();
+            nbModifierMembre=pst.executeUpdate();
             System.out.println("Modification membre avec succées");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return nbModifierMembre;
     }
 
     @Override
-    public void modifierMembreParAdmin(Membre m) {
+    public int modifierMembreParAdmin(Membre m) {
+        int nbModifierParAdmin=0;
         try {
             String requete = "UPDATE personne SET point=?,active=?,ban_duration=?,last_timeban=? WHERE id=? AND role != 'Admin' ";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
@@ -120,11 +129,12 @@ public class MembreServices implements IMembre<Membre> {
             pst.setInt(3, m.getBan_duration());
             pst.setDate(4, m.getLast_timeban());
             pst.setInt(5, m.getId());
-            pst.executeUpdate();
+            nbModifierParAdmin=pst.executeUpdate();
             System.out.println("Modification membre avec succées");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return nbModifierParAdmin;
 
     }
 
@@ -263,38 +273,26 @@ public class MembreServices implements IMembre<Membre> {
     }
 
     @Override
-    public void fPwd(int id) {
-        Scanner myObj = new Scanner(System.in);  
-        System.out.println("Enter votre num tel");
-
-        String tel = myObj.nextLine();
-
-        System.out.println("Enter votre email");
-
-        String email = myObj.nextLine();
-
+    public int forgotPassword(int id,String email,String newpassword) {
+        int res=0;
+        
         try {
-            String requete = "SELECT password,email FROM membre where email= '" + email + "' and numero_tel='" + tel + "'";
+            String requete = "SELECT password,email FROM membre where email= '" + email + "' ";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requete);
             if (rs.next()) {
-                System.out.println("Enter Un nouveau mdp");
-
-                String mdp1 = myObj.nextLine();
-                System.out.println("ReEnter votre mdp");
-
-                String mdp2 = myObj.nextLine();
-                if (mdp1.equals(mdp2)) {
+               
+               
                     try {
                         requete = "update membre set password = ? where email=?";
                         PreparedStatement ps2 = new MyConnection().getCnx().prepareStatement(requete);
 
                         ps2.setString(2, rs.getString("email"));
-                        ps2.setString(1, BCrypt.hashpw(mdp1, BCrypt.gensalt()));
+                        ps2.setString(1, BCrypt.hashpw(newpassword, BCrypt.gensalt()));
 
-                        int b = ps2.executeUpdate();
-                        if (b > 0) {
+                        res = ps2.executeUpdate();
+                        if ( res > 0) {
                             System.out.println("PWD changé");
                         }else
                             System.out.println("Réessayer");
@@ -302,11 +300,12 @@ public class MembreServices implements IMembre<Membre> {
                     } catch (SQLException ex) {
                         System.err.println(ex.getMessage());
                     }
-                }
+                
             }
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return res;
     }
 
 }

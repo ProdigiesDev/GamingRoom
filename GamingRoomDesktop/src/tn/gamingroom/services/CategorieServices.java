@@ -24,44 +24,50 @@ import tn.gamingroom.outils.MyConnection;
 public class CategorieServices implements ICategorie<Categorie> {
 
     @Override
-    public void ajouterCategorie(Categorie c) {
+    public int ajouterCategorie(Categorie c) {
+        int nbAjoutCat=0;
         try {
             String requete= "INSERT INTO categorie(nomcategorie) VALUES (?)";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setString(1, c.getNomcat());
             
-            ps.executeUpdate();
+            nbAjoutCat=ps.executeUpdate();
             System.out.println("Categorie ajoutée");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return nbAjoutCat;
     }
 
     @Override
-    public void supprimerCategorie(Categorie c) {
+    public int supprimerCategorie(Categorie c) {
+        int nbSuppCat=0;
         try {
             String requete ="DELETE FROM categorie WHERE idcat=?";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setInt(1, c.getIdcat());
-            ps.executeUpdate();
+            nbSuppCat=ps.executeUpdate();
             System.out.println("Catégorie supprimée avec succés");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return nbSuppCat;
     }
 
     @Override
-    public void modifierCategorie(Categorie c) {
+    public int modifierCategorie(Categorie c) {
+        int nbModifCat=0;
         try {
             String requete ="UPDATE membre SET nomcategorie=?";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setString(1, c.getNomcat());
             
-            ps.executeUpdate();
+            nbModifCat=ps.executeUpdate();
             System.out.println("Catégorie modifiée avec succés");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return nbModifCat;
     }
 
     @Override

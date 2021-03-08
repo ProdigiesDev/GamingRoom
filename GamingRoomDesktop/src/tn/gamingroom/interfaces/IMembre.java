@@ -13,16 +13,16 @@ import java.util.List;
  * @author Sonia
  */
 public interface IMembre<T> {
-     public void ajouterMembre(T m);
-     public void ajouterCoach(T m);
-     public void sumprimerMembres(T m);
-     public void modifierMembres(T m);
-     public void modifierMembreParAdmin(T m);
+     public int ajouterMembre(T m);
+     public int ajouterCoach(T m);
+     public int sumprimerMembres(T m);
+     public int modifierMembres(T m);
+     public int modifierMembreParAdmin(T m);
      public List<T> DisplayMembres();
      public T Login(String a,String b);
      public List<T> RechercherMembres(String x);
      public ArrayList<T> TrierParId();
-     public void fPwd(int id);
+     public int forgotPassword(int id,String email,String newpassword);
 
     
 }

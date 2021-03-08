@@ -14,9 +14,9 @@ import tn.gamingroom.entities.CategorieMembre;
  */
 public interface ICategorieMembre {
     
-    public void AffecterCategorieMembre(CategorieMembre cm);
-    public void SuprimerCategorieMembre(CategorieMembre cm);
-    public void ModifierCategorieMembre(CategorieMembre cm);
+    public int AffecterCategorieMembre(CategorieMembre cm);
+    public int SuprimerCategorieMembre(CategorieMembre cm);
+    public int ModifierCategorieMembre(CategorieMembre cm);
     public List<String> DisplayCategorie(int id_membre);
     
     
