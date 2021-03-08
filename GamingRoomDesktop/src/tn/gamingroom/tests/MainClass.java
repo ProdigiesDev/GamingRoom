@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.tests;
 
+import java.util.Random;
 import tn.gamingroom.entities.Cles;
 import tn.gamingroom.entities.Produits;
 import tn.gamingroom.outils.MyConnection;
@@ -52,25 +53,30 @@ public class MainClass {
         
       
         CleService cs = new CleService();
-        Cles c1 = new Cles(1, "1gf52-8fs76-1x66s-78954-0134", 1);
-        Cles c2 = new Cles("mk5L5-8JsJJ-1x66s-7MP4g-0134d", 2);
-        Cles c4 = new Cles("MKK-88888-1xPMs-7MP4g-0134d", 2);
-        Cles c3 = new Cles(8, "MKL85-YASSK-YAskh-962kY-yaskh", 2);
-      
-        
+      //  Cles c1 = new Cles(1,cs.testtest() , 1);
+     Cles c2 = new Cles(cs.testtest(), 2);
+//        Cles c4 = new Cles("MKK-88888-1xPMs-7MP4g-0134d", 2);
+//        Cles c3 = new Cles(8, "MKL85-YASSK-YAskh-962kY-yaskh", 2);
+//      
+//        
 
-//        boolean verifierCode = c4.getCode().matches("^((([0-9]|[a-zA-Z]){5})-){4}(([0-9]|[a-zA-Z]){5})$");
-//        if (verifierCode) {
-//            cs.ajouterCle(c4);
-//        } else {
-//            System.out.println("Code invalide");
-//        }
+        boolean verifierCode = c2.getCode().matches("^((([0-9]|[a-zA-Z]){5})-){4}(([0-9]|[a-zA-Z]){5})$");
+        if (verifierCode) {
+            cs.ajouterCle(c2);
+        } else {
+            System.out.println("Code invalide");
+        }
 
-    
+ 
       // cs.supprimerCle(20);
      // System.out.println(cs.displayCle());
        // cs.updateCle(c3);
         
+System.out.println(cs.testtest());
+
+   
       
     }
+
+    
 }

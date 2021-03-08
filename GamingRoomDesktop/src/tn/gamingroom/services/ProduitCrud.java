@@ -25,63 +25,58 @@ public class ProduitCrud implements IProduits<Produits> {
 
     @Override
     public int ajouterProduit(Produits p) {
-int nbProd=0;
+        int nbProd = 0;
         try {
             String requete = "insert into produit(image,libelle,prix,description)"
                     + "values('" + p.getImage() + "','" + p.getLibelle() + "','" + p.getPrix() + "','" + p.getDescription() + "')";
 
             Statement st = MyConnection.getInstance().getCnx().createStatement();
-            st.executeUpdate(requete);
+           nbProd=  st.executeUpdate(requete);
             System.out.println("Produit ajouté");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-return nbProd;
+        return nbProd;
     }
 
     @Override
     public int supprimerProduit(Produits p) {
-int nbProd=0;
+        int nbProd = 0;
         try {
             String requete = "delete from produit where idprod=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
             pst.setInt(1, p.getIdprod());
-            pst.executeUpdate();
+            
+           nbProd= pst.executeUpdate();
             System.out.println("produit supprimé");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-return  nbProd=0;
+        return nbProd ;
     }
 
     @Override
     public int updateProduit(Produits p) {
-int nbProd=0;
+        int rowsUpdated = 0;
         try {
- 
+
             String requete = "UPDATE produit SET libelle='" + p.getLibelle()
-                    +"',image='"+p.getImage()
+                    + "',image='" + p.getImage()
                     + "',prix='" + p.getPrix()
                     + "',description='" + p.getDescription()
-                 
                     + "' WHERE idprod=" + p.getIdprod();
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
-            int rowsUpdated = pst.executeUpdate(requete);
-            if (rowsUpdated > 0) {
-                System.out.println("La modification de produit" + p.getIdprod() + " a été éffectué avec succée ");
-                System.out.println("Produit Modifié");
-            }
+             rowsUpdated = pst.executeUpdate(requete);
+           
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-return nbProd;
+        return rowsUpdated;
     }
 
-
-
-@Override
-        public List<Produits> displayProduit() {
+    @Override
+    public List<Produits> displayProduit() {
         List<Produits> myList = new ArrayList();
         try {
 
@@ -95,7 +90,7 @@ return nbProd;
                 p.setLibelle(rs.getString(3));
                 p.setPrix(rs.getInt(4));
                 p.setDescription(rs.getString(5));
-            
+
                 myList.add(p);
 
             }
@@ -106,98 +101,86 @@ return nbProd;
         return myList;
 
     }
-public ArrayList<Produits> TrierParId() {
-       ArrayList<Produits> listProduit = new ArrayList<>();
-       try {
-        
-           String requete= "select * from produit ORDER BY idprod DESC"; 
-           PreparedStatement pst =  MyConnection.getInstance().getCnx().prepareStatement(requete);
-           
-           
-           ResultSet res = pst.executeQuery(requete);
-        Produits pr = null;
-        while (res.next()) {
-       
-       
-        pr=new Produits(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getString(5));
-            listProduit.add(pr);
-            
-        } 
-         } catch (SQLException ex) {
+
+    public ArrayList<Produits> TrierParId() {
+        ArrayList<Produits> listProduit = new ArrayList<>();
+        try {
+
+            String requete = "select * from produit ORDER BY idprod DESC";
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
+
+            ResultSet res = pst.executeQuery(requete);
+            Produits pr = null;
+            while (res.next()) {
+
+                pr = new Produits(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getString(5));
+                listProduit.add(pr);
+
+            }
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-                 return listProduit ;
-    
-}
-        
-        
-        
-   public List<Produits> RechercherProduit(String x) {
+        return listProduit;
+
+    }
+
+    public List<Produits> RechercherProduit(String x) {
         ArrayList<Produits> listOffresTypeX = new ArrayList<>();
         try {
-          String req = "Select * from produit where libelle like '%"+x+"%' or description like '%"+x+"%'";
+            String req = "Select * from produit where libelle like '%" + x + "%' or description like '%" + x + "%'";
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(req);
-       
+
             ResultSet rs = st.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Produits pr = new Produits();
-          
-               pr.setIdprod(rs.getInt(1));
+
+                pr.setIdprod(rs.getInt(1));
                 pr.setImage(rs.getString(2));
                 pr.setLibelle(rs.getString(3));
                 pr.setPrix(rs.getInt(4));
                 pr.setDescription(rs.getString(5));
-             
-                
-                
-                
+
                 listOffresTypeX.add(pr);
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        if  (listOffresTypeX.isEmpty()) {
+        if (listOffresTypeX.isEmpty()) {
             System.out.println("Il y a aucun produit de ce libelle");
         }
         return listOffresTypeX;
-    }     
-        
-        
-    public List<Integer> bestProductsSelled(){
-        List<Integer> integers=new ArrayList<>();
+    }
+
+    public List<Integer> bestProductsSelled() {
+        List<Integer> integers = new ArrayList<>();
         try {
-          String req = "Select produit_id,sum(quantityDemande) from panier group by produit_id";//kol produit 9adeh be3na totale
+            String req = "Select produit_id,sum(quantityDemande) from panier group by produit_id";//kol produit 9adeh be3na totale
             Statement st = MyConnection.getInstance().getCnx().createStatement();
-        
+
             ResultSet rs = st.executeQuery(req);
-            int max=0;
-            
+            int max = 0;
+
             //n5arjou l valeur maximum mta akber quantité be3néha 
-            while(rs.next()){
-                int qt=rs.getInt(2);
-                if(qt>max)
-                    max=qt;
+            while (rs.next()) {
+                int qt = rs.getInt(2);
+                if (qt > max) {
+                    max = qt;
+                }
             }
             //taatina l produit eli aandhom qt max 
-  req = "Select p.idprod,sum(quantityDemande) from produit p, panier pa where p.idprod=pa.produit_id group by  p.idprod   having sum(quantityDemande) = "+max;
-            
-           
-             rs = st.executeQuery(req);
-            while(rs.next()){
+            req = "Select p.idprod,sum(quantityDemande) from produit p, panier pa where p.idprod=pa.produit_id group by  p.idprod   having sum(quantityDemande) = " + max;
+
+            rs = st.executeQuery(req);
+            while (rs.next()) {
                 integers.add(rs.getInt(1));// nekhdou biha f liste mta l prod(id)
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         return integers;
-    } 
-       
-        
-        
-        
-        
-        
+    }
+
 }

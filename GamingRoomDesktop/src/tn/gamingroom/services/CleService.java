@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.gamingroom.entities.Cles;
@@ -100,4 +101,37 @@ return nbCle;
 
         return myList;
     }
+    
+    public String testtest(){
+        String s="";
+        for(int i=0;i<5;i++){
+            s=s+this.getSaltString();
+            if(i!=4)
+                s=s+"-";
+        }
+        return s;
+    }
+
+    public String getSaltString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 5) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
