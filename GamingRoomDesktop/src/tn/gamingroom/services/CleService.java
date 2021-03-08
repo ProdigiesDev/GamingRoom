@@ -24,29 +24,29 @@ import tn.gamingroom.outils.MyConnection;
 public class CleService implements ICles<Cles> {
 
     @Override
-    public void ajouterCle(Cles c) {
-
+    public int ajouterCle(Cles c) {
+int nbCle=0;
         try {
             String requete = "insert into cle(code,produit_id)"
                     + "values('" + c.getCode() + "','" + c.getProduit_id() + "' )";
 
             Statement st = MyConnection.getInstance().getCnx().createStatement();
-            st.executeUpdate(requete);
+          nbCle=  st.executeUpdate(requete);
             System.out.println("clé ajouté");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+return nbCle;
     }
 
     @Override
-    public void supprimerCle(int idcle) {
-
+    public int supprimerCle(int idcle) {
+int res=0;
         try {
             String requete = "delete from cle where idcle=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
             pst.setInt(1, idcle);
-            int res = pst.executeUpdate();
+            res = pst.executeUpdate();
             if (res > 0) {
                 System.out.println("clé supprimé");
 
@@ -56,24 +56,24 @@ public class CleService implements ICles<Cles> {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+return res;
     }
 
     @Override
-    public void updateCle(Cles c) {
-
+    public int updateCle(Cles c) {
+int nbCle=0;
         try {
             String requete = "UPDATE cle SET code=? WHERE idcle=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setString(1, c.getCode());
             pst.setInt(2, c.getIdcle());
-            pst.executeUpdate();
+           nbCle= pst.executeUpdate();
             System.out.println("clé modifiée");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+return nbCle;
     }
   @Override
     public List<Cles> displayCle() {

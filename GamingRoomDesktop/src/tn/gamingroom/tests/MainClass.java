@@ -68,7 +68,7 @@ public class MainClass {
 
     
       // cs.supprimerCle(20);
-      System.out.println(cs.displayCle());
+     // System.out.println(cs.displayCle());
        // cs.updateCle(c3);
         
       

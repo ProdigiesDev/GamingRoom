@@ -24,8 +24,8 @@ import tn.gamingroom.outils.MyConnection;
 public class ProduitCrud implements IProduits<Produits> {
 
     @Override
-    public void ajouterProduit(Produits p) {
-
+    public int ajouterProduit(Produits p) {
+int nbProd=0;
         try {
             String requete = "insert into produit(image,libelle,prix,description)"
                     + "values('" + p.getImage() + "','" + p.getLibelle() + "','" + p.getPrix() + "','" + p.getDescription() + "')";
@@ -36,12 +36,12 @@ public class ProduitCrud implements IProduits<Produits> {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+return nbProd;
     }
 
     @Override
-    public void supprimerProduit(Produits p) {
-
+    public int supprimerProduit(Produits p) {
+int nbProd=0;
         try {
             String requete = "delete from produit where idprod=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
@@ -51,12 +51,12 @@ public class ProduitCrud implements IProduits<Produits> {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+return  nbProd=0;
     }
 
     @Override
-    public void updateProduit(Produits p) {
-
+    public int updateProduit(Produits p) {
+int nbProd=0;
         try {
  
             String requete = "UPDATE produit SET libelle='" + p.getLibelle()
@@ -75,7 +75,7 @@ public class ProduitCrud implements IProduits<Produits> {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+return nbProd;
     }
 
 
