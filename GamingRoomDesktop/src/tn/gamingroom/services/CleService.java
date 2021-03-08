@@ -76,13 +76,13 @@ public class CleService implements ICles<Cles> {
 
     }
   @Override
-    public List<Cles> displayCle(int prod_id) {
+    public List<Cles> displayCle() {
         
           List<Cles> myList = new ArrayList();
         
         try {
           
-            String requete = "select *from cle where produit_id =" + prod_id; // statique
+            String requete = "select *from cle";  // statique
             Statement st = MyConnection.getInstance().getCnx().createStatement();
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {

@@ -16,7 +16,7 @@ public interface ICles<T> {
        public void ajouterCle(T c); //  T type generique
     public void supprimerCle(int idcle);
     public void updateCle(T c);
-    public List<T> displayCle(int prod_id);
+    public List<T> displayCle();
     
     
 }

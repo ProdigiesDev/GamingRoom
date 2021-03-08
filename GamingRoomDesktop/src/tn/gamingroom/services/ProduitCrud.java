@@ -137,11 +137,11 @@ public ArrayList<Produits> TrierParId() {
         try {
           String req = "Select * from produit where libelle like '%"+x+"%' or description like '%"+x+"%'";
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(req);
-            //st.setString(1, x);
-          //  st.setString(2, x);
+       
             ResultSet rs = st.executeQuery();
             while(rs.next()){
                 Produits pr = new Produits();
+          
                pr.setIdprod(rs.getInt(1));
                 pr.setImage(rs.getString(2));
                 pr.setLibelle(rs.getString(3));
@@ -180,7 +180,7 @@ public ArrayList<Produits> TrierParId() {
                     max=qt;
             }
             //taatina l produit eli aandhom qt max 
-            req = "Select p.idprod,sum(quantityDemande) from produit p, panier pa where p.idprod=pa.produit_id group by  p.idprod   having sum(quantityDemande) = "+max;
+  req = "Select p.idprod,sum(quantityDemande) from produit p, panier pa where p.idprod=pa.produit_id group by  p.idprod   having sum(quantityDemande) = "+max;
             
            
              rs = st.executeQuery(req);
@@ -194,9 +194,7 @@ public ArrayList<Produits> TrierParId() {
         
         return integers;
     } 
-        // kol produit kadeh aandou qt totale weli aandou  qt total= kaber qt totla houma eli yokherjou
-        
-        
+       
         
         
         
