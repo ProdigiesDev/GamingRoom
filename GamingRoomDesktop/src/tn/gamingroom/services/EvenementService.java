@@ -143,6 +143,29 @@ public class EvenementService implements IEvenement {
             System.out.println(ex.getMessage());
         }
     }
+    
+     @Override
+    public List<ReactionEv> listerReaction() {
+        List<ReactionEv> reactionList = new ArrayList<>();
+        try {
+            String requete = "SELECT * FROM reactionev";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                ReactionEv e = new ReactionEv();
+                e.setInteraction(rs.getInt("interaction"));
+                e.setCommentaire(rs.getString("commentaire"));
+                e.setEvenement_id(rs.getInt("evenement_id"));
+                e.setMembre_id(rs.getInt("membre_id"));
+                reactionList.add(e);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return reactionList;
+    }
 
     @Override
     public void supprimerReacC(ReactionEv rE) {
@@ -360,7 +383,7 @@ public class EvenementService implements IEvenement {
         ArrayList<Evenement> evenementList = new ArrayList<>();
         try {
 
-            String requete = "select * from evenement where datedeb "+java.time.LocalDate.now();
+            String requete = "select * from evenement where datedeb >"+java.time.LocalDate.now();
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
 
             ResultSet rs = pst.executeQuery(requete);

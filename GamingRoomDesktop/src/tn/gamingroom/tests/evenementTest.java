@@ -1,3 +1,5 @@
+package tn.gamingroom.tests;
+
 
 import java.sql.Date;
 import static java.sql.JDBCType.NULL;
@@ -26,29 +28,34 @@ public class evenementTest {
         MyConnection mc = MyConnection.getInstance();
         //MyConnection mc1 = MyConnection.getInstance();
 /////////////////////////////////////////////////////////////////Ajour
-        // es.ajoutEvenement(e);
-        Evenement eAvM = es.findById(1);
-///////////////////////////////////////////////////////////////Modif        
-        Evenement eApM = new Evenement(2, eAvM.getNomEvent(), eAvM.getDateDeb(), eAvM.getDateFin(), "qsxqkpsjxsqic", eAvM.getCategorie_id(), 4, "k,scpskd,cks", eAvM.getLieu(), eAvM.getLienYoutube());
-        //es.modifierEvenement(eApM);
+        //es.ajoutEvenement(e);
+        //System.out.println(es.listerEvenement());
+///////////////////////////////////////////////////////////////Modif     
+//        Evenement eAvM = es.findById(1);
+//        Evenement eApM = new Evenement(1, eAvM.getNomEvent(), eAvM.getDateDeb(), eAvM.getDateFin(), "qsxqkpsjxsqic", eAvM.getCategorie_id(), 4, "k,scpskd,cks", eAvM.getLieu(), eAvM.getLienYoutube());
+//        es.modifierEvenement(eApM);
+//        System.out.println(es.listerEvenement());
 ///////////////////////////////////////////////////////////Suppression        
-        Evenement eSupp = es.findById(7);
-        //es.suppressionEvenement(eSupp);
+//        Evenement eSupp = es.findById(6);
+//        es.suppressionEvenement(eSupp);
 //////////////////////////////////////////////////////Liste        
        // System.out.println(es.listerEvenement());
 ///////////////////////////////////////////////////////Reaction Ajout
         ReactionEv rE=new ReactionEv(2, 4, "très bien");
-        //es.reagirEvenement(rE);
+       // es.reagirEvenement(rE);
+       System.out.println(es.listerEvenement());
 //////////////////////////////////////////////////////supprimer reaction
         ReactionEv rRs=new ReactionEv(6);
         //es.supprimerReacC(rRs);
+        //System.out.println(es.listerEvenement());
 //////////////////////////////////////////////////////Chercher Ev
         //System.out.println(es.chercherEvenement("aventure"));
 /////////////////////////////////////////////////////inscription Ev        
-       // es.sinscrirEvenement(2, 6);
+        //es.sinscrirEvenement(2, 6);
 /////////////////////////////////////////////////////tri ev
-       // System.out.println(es.triEvenement());
+      // System.out.println(es.triEvenement());
 ////////////////////////////////////////////////upComingEvents
+        //
         System.out.println(es.upComingEvents());
 
     }

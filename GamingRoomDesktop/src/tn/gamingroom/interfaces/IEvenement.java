@@ -25,4 +25,5 @@ public interface IEvenement {
     public Evenement findById(int id);
     public List<Evenement> triEvenement();
     public List<Evenement> upComingEvents();
+    public List<ReactionEv> listerReaction();
 }
