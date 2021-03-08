@@ -14,13 +14,13 @@ import tn.gamingroom.entities.ReactionEv;
  * @author Asus
  */
 public interface IEvenement {
-    public void ajoutEvenement(Evenement t);
-    public void modifierEvenement(Evenement t);
-    public void suppressionEvenement(Evenement t);
+    public int ajoutEvenement(Evenement t);
+    public int modifierEvenement(Evenement t);
+    public int suppressionEvenement(Evenement t);
     public List<Evenement> listerEvenement();
-    public void sinscrirEvenement(int idE,int idM);
-    public void reagirEvenement(ReactionEv rE);
-    public void supprimerReacC(ReactionEv rE);
+    public int sinscrirEvenement(int idE,int idM);
+    public int reagirEvenement(ReactionEv rE);
+    public int supprimerReacC(ReactionEv rE);
     public List chercherEvenement(String s);
     public Evenement findById(int id);
     public List<Evenement> triEvenement();

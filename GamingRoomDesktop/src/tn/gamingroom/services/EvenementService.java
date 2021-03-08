@@ -30,7 +30,8 @@ import tn.gamingroom.outils.MyConnection;
 public class EvenementService implements IEvenement {
 
     @Override
-    public void ajoutEvenement(Evenement t) {
+    public int ajoutEvenement(Evenement t) {
+        int nbModif=0;
         try {
             String requete = "INSERT INTO evenement(nomevent,datedeb,datefin,image,categorie_id,nbremax_participant,description,lieu,lienyoutube)"
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
@@ -45,17 +46,18 @@ public class EvenementService implements IEvenement {
             pst.setString(7, t.getDescription());
             pst.setString(8, t.getLieu());
             pst.setString(9, t.getLienYoutube());
-
-            pst.executeUpdate();
+            nbModif=pst.executeUpdate();
             System.out.println("Evenement inserée");
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return nbModif;
     }
 
     @Override
-    public void modifierEvenement(Evenement t) {
+    public int modifierEvenement(Evenement t) {
+        int nbModif=0;
         try {
             String requete = "UPDATE evenement SET nomevent=? , datedeb=? , datefin=? , image=? , categorie_id=? , nbremax_participant=? , description=? , lieu=? , lienyoutube=? WHERE idevent=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
@@ -70,22 +72,24 @@ public class EvenementService implements IEvenement {
             pst.setString(8, t.getLieu());
             pst.setString(9, t.getLienYoutube());
             pst.setInt(10, t.getIdevent());
-            pst.executeUpdate();
+            nbModif=pst.executeUpdate();
             System.out.println("Evenement modifiée");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return nbModif;
     }
 
     @Override
-    public void suppressionEvenement(Evenement t) {
+    public int suppressionEvenement(Evenement t) {
+        int nbModif=0;
         try {
             String requete = "DELETE FROM evenement where idevent=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setInt(1, t.getIdevent());
-            int b = pst.executeUpdate();
-            if (b <= 0) {
+            nbModif = pst.executeUpdate();
+            if (nbModif <= 0) {
                 System.out.println("Verifiez vos données");
             } else {
                 System.out.println("Evenement supprimée");
@@ -93,6 +97,7 @@ public class EvenementService implements IEvenement {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return nbModif;
     }
 
     @Override
@@ -125,7 +130,8 @@ public class EvenementService implements IEvenement {
     }
 
     @Override
-    public void reagirEvenement(ReactionEv rE) {
+    public int reagirEvenement(ReactionEv rE) {
+        int nbModif=0;
         try {
             String requette = "INSERT INTO reactionev(interaction,commentaire,evenement_id,membre_id)"
                     + "VALUES (?,?,?,?)";
@@ -136,12 +142,13 @@ public class EvenementService implements IEvenement {
             pst.setInt(3, rE.getEvenement_id());
             pst.setInt(4, rE.getMembre_id());
 
-            pst.executeUpdate();
+            nbModif=pst.executeUpdate();
             System.out.println("Réaction ajouté");
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return nbModif;
     }
     
      @Override
@@ -168,14 +175,15 @@ public class EvenementService implements IEvenement {
     }
 
     @Override
-    public void supprimerReacC(ReactionEv rE) {
+    public int supprimerReacC(ReactionEv rE) {
+        int nbModif=0;
         try {
             String requette = "DELETE FROM reactionev where id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requette);
             pst.setInt(1, rE.getId());
-            int b = pst.executeUpdate();
-            if (b <= 0) {
+            nbModif = pst.executeUpdate();
+            if (nbModif <= 0) {
                 System.out.println("Verifiez vos données");
             } else {
                 System.out.println("Reaction supprimé");
@@ -183,6 +191,7 @@ public class EvenementService implements IEvenement {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return nbModif;
     }
 
     @Override
@@ -245,7 +254,8 @@ public class EvenementService implements IEvenement {
     }
 
     @Override
-    public void sinscrirEvenement(int idE, int idM) {
+    public int sinscrirEvenement(int idE, int idM) {
+        int nbModif=0;
         try {
             String requete = "SELECT COUNT(p.evenement_id) as nbE, e.nbremax_participant as nbMaxE FROM participant p, evenement e where p.evenement_id=" + idE + " and e.idevent= " + idE;
             Statement st = MyConnection.getInstance().getCnx()
@@ -261,10 +271,11 @@ public class EvenementService implements IEvenement {
                     pst.setInt(1, idE);
                     pst.setInt(2, idM);
                     pst.setInt(3, 1);
-                    pst.executeUpdate();
+                    nbModif=pst.executeUpdate();
                     System.out.println("inscription effectuée");
                 } else {
                     if (!this.repartitionDual(idE)) {
+                        nbModif=1;
                         System.out.println("Evenement saturé");
                     }
 
@@ -276,6 +287,7 @@ public class EvenementService implements IEvenement {
         } catch (SQLException ex) {
             Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return nbModif;
     }
 
     private boolean repartitionDual(int idE) {
