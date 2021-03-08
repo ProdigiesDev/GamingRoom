@@ -19,7 +19,8 @@ import tn.gamingroom.outils.MyConnection;
 public class ServiceReacCours implements IReacCours {
 
     @Override
-    public void ajouterReacC(ReacCours r) {
+    public int ajouterReacC(ReacCours r) {
+        int nb_ajout=0;
         try {
             String requetereac = "INSERT INTO reactioncours(interaction,commentaire,membre_id,cour_id)"
                     + "VALUES (?,?,?,?)";
@@ -29,27 +30,36 @@ public class ServiceReacCours implements IReacCours {
             pst.setString(2, r.getCommentaire());
             pst.setInt(3, r.getMembre_id());
             pst.setInt(4, r.getCour_id());
-            pst.executeUpdate();
+            nb_ajout=pst.executeUpdate();
             System.out.println("Réaction ajouté");
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return nb_ajout;
 
     }
 
     @Override
-    public void supprimerReacC(ReacCours r) {
+    public int supprimerReacC(ReacCours r) {
+        int nb_supp=0;
         try {
             String requeteSP = "DELETE FROM reactioncours where id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requeteSP);
             pst.setInt(1, r.getId());
-            pst.executeUpdate();
-            System.out.println("Reaction supprimé");
+            nb_supp=pst.executeUpdate();
+            
+            if (nb_supp <= 0) {
+                System.out.println("Verifiez vos données");
+            } else {
+                System.out.println("Reaction supprimé");
+            }
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return nb_supp;
     }
     
 

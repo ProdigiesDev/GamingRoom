@@ -43,19 +43,19 @@ public class testClass {
         //coursCrud.ajouterCours(c4);
         
         /////////////////////////////Modifier Cours////////////////////
-//        Cours c5= coursCrud.findById(15);
+//        Cours c5= coursCrud.findById(1);
 //        Cours c6= new Cours (c5.getId(),"GTA", c5.getDescription(),c5.getNb_participants(),c5.getMembre_id(),c5.getDate_creation(),c5.getTags(),c5.getCategorie_id());
 //        coursCrud.updateCours(c6);
         
         /////////////////////////////Supprimer Cours////////////////////
-        //c1.setId(10);
-        //coursCrud.supprimerCours(c1);
-        
+//        c1.setId(3);
+//        coursCrud.supprimerCours(c1);
+//        
         //////////////////Afficher liste des cours///////////////
         //System.out.println(coursCrud.displayCours());
           
         //////////////////Chercher cours selon nom et description ///////////////
-        //System.out.println(coursCrud.searchCours("MMORPG"));
+       // System.out.println(coursCrud.searchCours("MMORPG"));
         
         ////////////////////Trier cours avec ordre decroissant////////////////
         //System.out.println(coursCrud.trierCoursID());
@@ -65,7 +65,7 @@ public class testClass {
         //System.out.println(coursCrud.findById(15));
         
         //cours selon préference
-        System.out.println(coursCrud.displayprefcours(1));
+        //System.out.println(coursCrud.displayprefcours(2));
         
         
         
@@ -79,11 +79,11 @@ public class testClass {
         ReacCours r3 = new ReacCours(1, "Merci coach pour ce cours", 4, 4);
         ServiceReacCours reactionc=new ServiceReacCours();
         /////////////////Ajouter Reaction Cours////////////////
-        //reactionc.ajouterReacC(r2);
+        //reactionc.ajouterReacC(r1);
         
        /////////////////Supprimer Reaction Cours////////////////
         //r2.setId(15);
-        //reactionc.supprimerReacC(r2);
+        //reactionc.supprimerReacC(r1);
         
         
 
@@ -94,7 +94,10 @@ public class testClass {
         
         
         ServiceParticipantsCours pc = new ServiceParticipantsCours();
+        
+        /////////Ajouter Participant//////////
         //pc.ajouterParticipant(p1);
+        //////////////Afficher les participants///////////
         //System.out.println(pc.DisplayParticipants());
         
         

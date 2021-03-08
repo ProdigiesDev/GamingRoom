@@ -14,9 +14,9 @@ import tn.gamingroom.entities.ReacCours;
  * @author eyatr
  */
 public interface IReacCours {
-    public void ajouterReacC(ReacCours r);
+    public int ajouterReacC(ReacCours r);
 
-    public void supprimerReacC(ReacCours r);
+    public int supprimerReacC(ReacCours r);
 
     
     
