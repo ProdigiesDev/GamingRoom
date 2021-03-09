@@ -39,7 +39,11 @@ public class ServiceCours implements ICours {
             pst.setInt(7, c.getCategorie_id());
             nb_ajouter=pst.executeUpdate();
             
-            System.out.println("Cours ajouté");
+            if (nb_ajouter <= 0) {
+                System.out.println("Verifiez vos données");
+            } else {
+                System.out.println("Cours ajouté");
+            }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

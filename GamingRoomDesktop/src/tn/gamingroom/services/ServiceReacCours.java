@@ -31,7 +31,11 @@ public class ServiceReacCours implements IReacCours {
             pst.setInt(3, r.getMembre_id());
             pst.setInt(4, r.getCour_id());
             nb_ajout=pst.executeUpdate();
-            System.out.println("Réaction ajouté");
+            if (nb_ajout <= 0) {
+                System.out.println("Verifiez vos données");
+            } else {
+                System.out.println("Réaction ajouté");
+            }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
