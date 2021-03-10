@@ -159,6 +159,40 @@ public class ProduitCrud implements IProduits<Produits> {
         return listOffresTypeX;
     }
 
+    public Produits getByID(int x ){
+    
+    
+    try {
+
+            String requete = "select *from produit where idprod='"+x+"'"; // statique
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                Produits p = new Produits();
+                p.setIdprod(rs.getInt(1));
+                p.setImage(rs.getString(2));
+                p.setLibelle(rs.getString(3));
+                p.setPrix(rs.getInt(4));
+                p.setDescription(rs.getString(5));
+                return p;
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    
+    
+        return null;
+    
+    }
+    
+    
+    
+    
+    
+    
+    
     public List<Integer> bestProductsSelled() {
         List<Integer> integers = new ArrayList<>();
         try {

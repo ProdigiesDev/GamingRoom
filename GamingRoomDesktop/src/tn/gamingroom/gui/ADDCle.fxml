@@ -11,18 +11,18 @@
 
 <AnchorPane id="AnchorPane" prefHeight="749.0" prefWidth="1057.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.ADDCleController">
    <children>
-      <VBox layoutX="-2.0" prefHeight="770.0" prefWidth="281.0" style="-fx-background-color: #3F2863;">
+      <VBox layoutX="-2.0" prefHeight="770.0" prefWidth="281.0" style="-fx-background-color: #5b0a50;">
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Label graphicTextGap="10.0" layoutX="37.0" layoutY="81.0" prefHeight="39.0" prefWidth="211.0" text="GamingRoom" textFill="#f8f1f1">
                      <font>
-                        <Font size="27.0" />
+                        <Font name="System Bold" size="31.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#interface2" prefHeight="78.0" prefWidth="280.0" style="-fx-background-color: #3F2863;" text="Produits" textFill="#fffbfb">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#interface2" prefHeight="78.0" prefWidth="280.0" style="-fx-background-color: #5b0a50;" text="Produits" textFill="#fffbfb">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -30,7 +30,7 @@
                   <Font name="System Bold Italic" size="39.0" />
                </font>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#interfaceCle" prefHeight="78.0" prefWidth="280.0" style="-fx-background-color: #3F2863;" text="Clés" textFill="#fffbfb">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#interfaceCle" prefHeight="78.0" prefWidth="280.0" style="-fx-background-color: #5b0a50;" text="Clés" textFill="#fffbfb">
                <padding>
                   <Insets left="50.0" />
                </padding>

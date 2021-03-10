@@ -7,24 +7,36 @@ package tn.gamingroom.gui;
 
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import static java.util.Collections.list;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.SortType;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Produits;
 import tn.gamingroom.outils.MyConnection;
@@ -65,6 +77,16 @@ public class AjoutProduitController implements Initializable {
     private JFXTextField tfdesc;
     @FXML
     private Button btnTri;
+    @FXML
+    private JFXTextField tfid;
+    @FXML
+    private Button btnannuler;
+    @FXML
+    private Button btnBest;
+    @FXML
+    private TextField tfrech;
+    @FXML
+    private Button btnload;
 
     /**
      * Initializes the controller class.
@@ -73,59 +95,178 @@ public class AjoutProduitController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         showProduct();
-    }    
+
+    }
 
     @FXML
     private void ajouterProduit(ActionEvent event) {
-        
-      //  Save Person IN DATABASE
-            String resImage = tfimage.getText();
-            String resLibelle = tflibelle.getText();
-        
-            int resPrix = Integer.parseInt( tfprix.getText() );
-            String resDesc = tfdesc.getText();
-    
-            Produits pl=new Produits( resImage, resLibelle, resPrix, resDesc);
-                    
-            
-            ProduitCrud pcd = new ProduitCrud();
-            pcd.ajouterProduit(pl);
-            JOptionPane.showMessageDialog(null, "produit ajouté");
-            
 
+        //  Save Person IN DATABASE
+        String resImage = tfimage.getText();
+        String resLibelle = tflibelle.getText();
 
-//     Produits c = new Produits();
-//             ProduitCrud pcd = new ProduitCrud();
-//
-//            c.setImage(tfimage.getText());
-//            c.setLibelle(tflibelle.getText());
-//            c.setPrix(Integer.parseInt(tfprix.getText()));
-//        
-//            c.setDescription(tfdesc .getText());
-//      JOptionPane.showMessageDialog(null, "produit ajouté");
+        int resPrix = Integer.parseInt(tfprix.getText());
+        String resDesc = tfdesc.getText();
+        int resID = Integer.parseInt(tfid.getText());
+        // Produits pl=new Produits( resImage, resLibelle, resPrix, resDesc);
 
-        
+        Produits p1 = new Produits(resID, resImage, resLibelle, resPrix, resLibelle);
+
+        ProduitCrud pcd = new ProduitCrud();
+        pcd.ajouterProduit(p1);
+        JOptionPane.showMessageDialog(null, "produit ajouté");
+        showProduct();
+
+    }
+
+    public void showProduct() {
+        ProduitCrud crud = new ProduitCrud();
+        ObservableList<Produits> list = FXCollections.observableArrayList(crud.displayProduit());
+
+        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
+        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
+        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
+        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
+        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
+        tvbox.setItems(list);
+    }
+
+    @FXML
+    private void clean(ActionEvent event) {
+
+        tfimage.setText(null);
+        tflibelle.setText(null);
+        tfdesc.setText(null);
+        tfprix.setText(null);
+        tfid.setText(null);
+
+    }
+
+    @FXML
+    private void bestProductsSelled(ActionEvent event) {
+        ProduitCrud pcd = new ProduitCrud();
+        List<Integer> integers=pcd.bestProductsSelled();
+        System.out.println(integers);
+        List<Produits> produitses=new ArrayList<>();
+        integers.forEach(i->{
+            produitses.add(pcd.getByID(i));
+        });
+         ObservableList<Produits> list = FXCollections.observableArrayList(produitses);
+
+        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
+        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
+        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
+        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
+        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
+        tvbox.setItems(list);
         
     }
-    
-public void showProduct(){
-    ProduitCrud crud=new ProduitCrud();
-    ObservableList <Produits> list=FXCollections.observableArrayList(crud.displayProduit());
 
-    colid.setCellValueFactory(new PropertyValueFactory<Produits,Integer>("idprod"));
-    colimage.setCellValueFactory(new PropertyValueFactory<Produits,String>("image"));
-    collibelle.setCellValueFactory(new PropertyValueFactory<Produits,String>("libelle"));
-    colprix.setCellValueFactory(new PropertyValueFactory<Produits,Integer>("prix"));
-    coldesc.setCellValueFactory(new PropertyValueFactory<Produits,String>("description"));
-    tvbox.setItems(list);
-}
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    @FXML
+    private void getSelected(MouseEvent event) {
+
+        int index = tvbox.getSelectionModel().getSelectedIndex();
+
+        if (index <= -1) {
+
+            return;
+
+        }
+        tfimage.setText(colimage.getCellData(index).toString());
+        tflibelle.setText(collibelle.getCellData(index).toString());
+        tfprix.setText(colprix.getCellData(index).toString());
+        tfdesc.setText(coldesc.getCellData(index).toString());
+        tfid.setText(colid.getCellData(index).toString());
+
+    }
+
+    @FXML
+    private void updateTable(ActionEvent event) {
+
+        String Value1 = tfimage.getText();
+        String Value2 = tflibelle.getText();
+        int Value3 = Integer.parseInt(tfprix.getText());
+        String Value4 = tfdesc.getText();
+        int Value5 = Integer.parseInt(tfid.getText());
+        Produits p2 = new Produits(Value5, Value1, Value2, Value3, Value4);
+
+        ProduitCrud pcd = new ProduitCrud();
+        int x = pcd.updateProduit(p2);
+        if (x > 0) {
+            JOptionPane.showMessageDialog(null, "produit modifié");
+            showProduct();
+
+        } else {
+            System.out.println("produit non modifié");
+        }
+
+    }
+
+    @FXML
+    private void supprimer(ActionEvent event) {
+
+        ProduitCrud pcd = new ProduitCrud();
+        Produits p = new Produits();
+
+        p = this.tvbox.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Confirmation de Suppression !");
+        alert.setContentText("Voulez-Vous Vraiment Supprimer");
+
+        Optional<ButtonType> btn = alert.showAndWait();
+        if (btn.get() == ButtonType.OK) {
+            pcd.supprimerProduit(p);
+            this.showProduct();
+            System.out.println("suppression avec succées");
+        } else {
+            alert.close();
+        }
+
+        clean(event);
+
+    }
+
+    @FXML
+    private void TrierParId(ActionEvent event) {
+        ProduitCrud crud = new ProduitCrud();
+        ObservableList<Produits> list = FXCollections.observableArrayList(crud.TrierParId());
+
+        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
+        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
+        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
+        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
+        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
+        tvbox.setItems(list);
+
+    }
+
+    @FXML
+    private void RechercherProduit(KeyEvent event) {
+
+        ProduitCrud crud = new ProduitCrud();
+        ObservableList<Produits> list = FXCollections.observableArrayList(crud.RechercherProduit(tfrech.getText()));
+
+        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
+        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
+        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
+        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
+        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
+        tvbox.setItems(list);
+
+    }
+
+    @FXML
+    private void loadTable(ActionEvent event) {
+
+        ProduitCrud crud = new ProduitCrud();
+        ObservableList<Produits> list = FXCollections.observableArrayList(crud.displayProduit());
+
+        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
+        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
+        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
+        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
+        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
+        tvbox.setItems(list);
+    }
 }
