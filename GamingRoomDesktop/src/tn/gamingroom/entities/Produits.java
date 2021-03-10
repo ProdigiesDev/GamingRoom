@@ -12,10 +12,12 @@ package tn.gamingroom.entities;
 public class Produits {
 
     private int idprod;
-    private String image;
+
+       private String image;
     private String libelle;
     private int prix;
     private String description;
+ 
 
 
     public Produits() {
@@ -36,6 +38,7 @@ public class Produits {
         this.description = description;
     }
 
+   
  
  
 

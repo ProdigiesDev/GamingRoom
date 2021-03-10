@@ -77,6 +77,7 @@ public class ProduitCrud implements IProduits<Produits> {
 
     @Override
     public List<Produits> displayProduit() {
+        
         List<Produits> myList = new ArrayList();
         try {
 
@@ -102,6 +103,12 @@ public class ProduitCrud implements IProduits<Produits> {
 
     }
 
+    
+    
+    
+    
+    
+    
     public ArrayList<Produits> TrierParId() {
         ArrayList<Produits> listProduit = new ArrayList<>();
         try {
