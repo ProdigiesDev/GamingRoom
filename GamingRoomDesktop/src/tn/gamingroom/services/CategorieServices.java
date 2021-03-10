@@ -82,6 +82,7 @@ public class CategorieServices implements ICategorie<Categorie> {
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        System.out.println(CatList);
         return CatList;
     }
 
