@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Avis.AjouterAvisController">
+   <children>
+      <ImageView fitHeight="692.0" fitWidth="1286.0" layoutX="-46.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/C:/Users/Dah/Desktop/demo/images/713011.jpg" />         
+         </image>
+      </ImageView>
+      <Pane layoutX="263.0" layoutY="177.0" opacity="0.54" prefHeight="407.0" prefWidth="600.0" style="-fx-background-color: black;">
+         <children>
+            <JFXTextArea fx:id="txtAvis" focusColor="#6f1075" layoutX="130.0" layoutY="116.0" onKeyPressed="#onChangeAvis" prefHeight="160.0" prefWidth="334.0" />
+           
+            <Text fx:id="errAvis" fill="#ee0018" layoutX="130.0" layoutY="310.0" stroke="#f8001d" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" wrappingWidth="340.99999260902405">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Text>
+            <JFXButton fx:id="btnenv" layoutX="428.0" layoutY="348.0" onAction="#ajouterAvis" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #6f1075;" text="Envoyer" textFill="#f5f3f3" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="24.0" prefHeight="22.0" prefWidth="387.0" text="Vous pouvez nous envoyer votre avis" textFill="#f8f7f7">
+                  <font>
+                  <Font name="Yu Gothic Regular" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="25.0" layoutY="167.0" prefHeight="22.0" prefWidth="76.0" text="Message" textFill="#f8f7f7">
+               <font>
+                  <Font name="Yu Gothic Regular" size="13.0" />
+               </font>
+            </Label>
+
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
