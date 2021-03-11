@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="693.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="tn.gamingroom.gui.InfoCoursController">
+    <stylesheets>
+        <URL value="@infocours.css" />
+    </stylesheets>
+   <children>
+      <TextField fx:id="nom" layoutX="163.0" layoutY="44.0" />
+      <TextField fx:id="desc" layoutX="164.0" layoutY="103.0" />
+      <TextField fx:id="cate" layoutX="163.0" layoutY="169.0" />
+      <Label layoutX="60.0" layoutY="47.0" text="Nom du cours" />
+      <Label layoutX="60.0" layoutY="104.0" text="Categorie" />
+      <Label layoutX="60.0" layoutY="177.0" text="Déscription" />
+      <Label layoutX="60.0" layoutY="245.0" text="Commentaire" />
+      <TextField fx:id="cate1" layoutX="163.0" layoutY="240.0" />
+      <FontAwesomeIconView fill="#c208cf" glyphName="HEART" layoutX="120.0" layoutY="328.0" size="30" wrappingWidth="27.000003576278687" />
+      <TextField layoutX="163.0" layoutY="300.0" prefHeight="31.0" prefWidth="36.0" />
+      <TableView layoutX="164.0" layoutY="341.0" prefHeight="80.0" prefWidth="200.0">
+        <columns>
+          <TableColumn prefWidth="199.0" text="Commentaires" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

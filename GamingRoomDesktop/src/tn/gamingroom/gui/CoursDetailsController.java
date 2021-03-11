@@ -5,11 +5,42 @@
  */
 package tn.gamingroom.gui;
 
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
+import javax.swing.JOptionPane;
+import tn.gamingroom.entities.Cours;
+import tn.gamingroom.services.ServiceCours;
 
 /**
  * FXML Controller class
@@ -19,28 +50,272 @@ import javafx.scene.control.TableColumn;
 public class CoursDetailsController implements Initializable {
 
     @FXML
-    private TableColumn<?, ?> cid;
+    private TableColumn<Cours, Integer> cid;
     @FXML
-    private TableColumn<?, ?> cnom;
+    private TableColumn<Cours, String> cnom;
     @FXML
-    private TableColumn<?, ?> cdes;
+    private TableColumn<Cours, String> cdes;
     @FXML
-    private TableColumn<?, ?> cnb;
+    private TableColumn<Cours, Integer> cnb;
     @FXML
-    private TableColumn<?, ?> cmem;
+    private TableColumn<Cours, Integer> cmem;
     @FXML
-    private TableColumn<?, ?> cdate;
+    private TableColumn<Cours, Date> cdate;
     @FXML
-    private TableColumn<?, ?> cmoc;
+    private TableColumn<Cours, String> cmoc;
     @FXML
-    private TableColumn<?, ?> ccat;
+    private TableColumn<Cours, Integer> ccat;
+    @FXML
+    private TableView<Cours> tableCours;
+    @FXML
+    private Button btnaj;
+    @FXML
+    private Label titre;
+    @FXML
+    private Button btnup;
+    @FXML
+    private Button btns;
+    @FXML
+    private JFXTextField ides;
+    @FXML
+    private JFXTextField icl;
+    @FXML
+    private JFXDatePicker idate;
+    @FXML
+    private JFXTextField inb;
+    @FXML
+    private JFXTextField icat;
+    @FXML
+    private JFXTextField inom;
+    @FXML
+    private Label iid;
+    @FXML
+    private JFXTextField id;
+    @FXML
+    private Button btnclean;
+    @FXML
+    private JFXTextField imem;
+    @FXML
+    private TextField search;
+    @FXML
+    private Button btntri;
+    @FXML
+    private TableColumn<?, ?> btn;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
-}
+
+        ServiceCours s = new ServiceCours();
+
+        ObservableList<Cours> listCours = FXCollections.observableArrayList(s.displayCours());
+        cnom.setCellValueFactory(new PropertyValueFactory<Cours, String>("nomCours"));
+        cid.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("Id"));
+        cdes.setCellValueFactory(new PropertyValueFactory<Cours, String>("description"));
+        cdate.setCellValueFactory(new PropertyValueFactory<Cours, Date>("date_creation"));
+        cmoc.setCellValueFactory(new PropertyValueFactory<Cours, String>("tags"));
+        cmem.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("membre_id"));
+        cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
+        ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
+        tableCours.setItems(listCours);
+
+    }
+
+    @FXML
+    private void ajouterC(ActionEvent event) {
+
+        //try {
+        Cours c = new Cours();
+        ServiceCours s = new ServiceCours();
+
+        c.setNomCours(inom.getText());
+        c.setDescription(ides.getText());
+        c.setNb_participants(Integer.parseInt(inb.getText()));
+        //c.setDate_creation(Date.valueOf(idate.getText()));
+        c.setTags(icl.getText());
+        c.setCategorie_id(Integer.parseInt(icat.getText()));
+        c.setMembre_id(Integer.parseInt(imem.getText()));
+
+        int nb = s.ajouterCours(c);
+        if (nb == 0) {
+            JOptionPane.showMessageDialog(null, "Erreur cours non ajouteé");
+        } else {
+
+            ConsulterCours();
+        }
+
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("AjoutCours.fxml"));
+//            //System.out.println(getClass().getResource("AjoutCours.fxml"));
+//            Parent root = loader.load();
+//            AjoutCoursController aj = loader.getController();
+//            titre.getScene().setRoot(root);
+//        } catch (IOException ex) {
+//            System.out.println(ex.getMessage());
+    }
+
+    @FXML
+    private void modifierC(ActionEvent event) {
+
+        String Value1 = ides.getText();
+        String Value2 = inom.getText();
+        int Value3 = Integer.parseInt(id.getText());
+        String Value4 = icl.getText();
+        int Value5 = Integer.parseInt(inb.getText());
+        int Value6 = Integer.parseInt(icat.getText());
+        //Date Value7 = Date.valueOf(idate.getValue());
+
+        Cours c2 = new Cours(Value3, Value2, Value1, Value5, Value4, Value6);
+
+        ServiceCours s = new ServiceCours();
+        int x = s.updateCours(c2);
+        if (x > 0) {
+            JOptionPane.showMessageDialog(null, "Cours modifié");
+            ConsulterCours();
+
+        } else {
+            System.out.println("cours non modifié");
+        }
+
+    }
+
+    @FXML
+    private void supprimer(ActionEvent event) {
+        ServiceCours s = new ServiceCours();
+        Cours c = new Cours();
+
+        c = this.tableCours.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Confirmation de Suppression !");
+        alert.setContentText("Voulez-Vous Vraiment Supprimer");
+
+        Optional<ButtonType> btn = alert.showAndWait();
+        if (btn.get() == ButtonType.OK) {
+            s.supprimerCours(c);
+            this.ConsulterCours();
+            System.out.println("suppression avec succées");
+        } else {
+            alert.close();
+        }
+    }
+
+    private void ConsulterCours() {
+        ServiceCours s = new ServiceCours();
+        List<Cours> lc = s.displayCours();
+
+        ObservableList<Cours> list
+                = FXCollections.observableArrayList(lc);
+
+        ObservableList<Cours> listCours = FXCollections.observableArrayList(s.displayCours());
+        cnom.setCellValueFactory(new PropertyValueFactory<Cours, String>("nomCours"));
+        cid.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("Id"));
+        cdes.setCellValueFactory(new PropertyValueFactory<Cours, String>("description"));
+        cdate.setCellValueFactory(new PropertyValueFactory<Cours, Date>("date_creation"));
+        cmoc.setCellValueFactory(new PropertyValueFactory<Cours, String>("tags"));
+        cmem.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("membre_id"));
+        cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
+        ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
+        tableCours.setItems(list);
+
+    }
+
+    @FXML
+    private void getSelected(MouseEvent event) {
+        int index = tableCours.getSelectionModel().getSelectedIndex();
+        if (index <= -1) {
+            return;
+        }
+        id.setText(cid.getCellData(index).toString());
+        inom.setText(cnom.getCellData(index).toString());
+        icat.setText(ccat.getCellData(index).toString());
+        //idate.(cdate.getCellData(index).toString());
+        icl.setText(cmoc.getCellData(index).toString());
+        ides.setText(cdes.getCellData(index).toString());
+        inb.setText(cnb.getCellData(index).toString());
+    }
+
+    @FXML
+    private void clean(ActionEvent event) {
+        inom.setText(null);
+        icat.setText(null);
+        //tfdate.setText(null);
+        // i.setText(null);
+        inb.setText(null);
+        ides.setText(null);
+        icl.setText(null);
+    }
+
+    @FXML
+    private void searchCours(KeyEvent event) {
+        ServiceCours s = new ServiceCours();
+        ObservableList<Cours> list = FXCollections.observableArrayList(s.searchCours(search.getText()));
+
+        cnom.setCellValueFactory(new PropertyValueFactory<Cours, String>("nomCours"));
+        cid.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("Id"));
+        cdes.setCellValueFactory(new PropertyValueFactory<Cours, String>("description"));
+        cdate.setCellValueFactory(new PropertyValueFactory<Cours, Date>("date_creation"));
+        cmoc.setCellValueFactory(new PropertyValueFactory<Cours, String>("tags"));
+        cmem.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("membre_id"));
+        cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
+        ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
+        tableCours.setItems(list);
+    }
+
+    @FXML
+    private void trierC(ActionEvent event) {
+        ServiceCours s = new ServiceCours();
+        ObservableList<Cours> list = FXCollections.observableArrayList(s.trierCoursID());
+
+        cnom.setCellValueFactory(new PropertyValueFactory<Cours, String>("nomCours"));
+        cid.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("Id"));
+        cdes.setCellValueFactory(new PropertyValueFactory<Cours, String>("description"));
+        cdate.setCellValueFactory(new PropertyValueFactory<Cours, Date>("date_creation"));
+        cmoc.setCellValueFactory(new PropertyValueFactory<Cours, String>("tags"));
+        cmem.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("membre_id"));
+        cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
+        ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
+        tableCours.setItems(list);
+
+    }
+
+    private void addButtonToTable() {
+//        TableColumn<Cours, Void> btn = new TableColumn("");
+//
+//        Callback<TableColumn<Cours, Void>, TableCell<Cours, Void>> cellFactory = new Callback<TableColumn<Cours, Void>, TableCell<Cours, Void>>() {
+//            @Override
+//            public TableCell<Cours, Void> call(final TableColumn<Cours, Void> param) {
+//                final TableCell<Cours, Void> cell = new TableCell<Cours, Void>() {
+//
+//                    private final Button btn = new Button("Supprimer");
+//
+//                    {
+//                        btn.setOnAction(event -> {
+//                            Cours c = getTableView().getItems().get(getIndex());
+//                            ServiceCours coursService = new ServiceCours();
+//                            coursService.supprimerCours(c);
+//                            ConsulterCours();
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void updateItem(Void item, boolean empty) {
+//                        super.updateItem(item, empty);
+//                        if (empty) {
+//                            setGraphic(null);
+//                        } else {
+//                            setGraphic(btn);
+//                        }
+//                    }
+//                };
+//                return cell;
+//            }
+//        };
+//
+//        btn.setCellFactory(cellFactory);
+//
+//        tableCours.getColumns().add(btn);
+   }
+
+    }

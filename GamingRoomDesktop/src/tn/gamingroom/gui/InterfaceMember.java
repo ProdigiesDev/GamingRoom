@@ -6,8 +6,6 @@
 package tn.gamingroom.gui;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,14 +20,13 @@ import javafx.stage.Stage;
  *
  * @author eyatr
  */
-public class CoursHomePage extends Application {
+public class InterfaceMember extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("coursDetails.fxml"));
-            Scene scene = new Scene(root, 1250, 600);
+            Parent root = FXMLLoader.load(getClass().getResource("coursMembreint.fxml"));
+            Scene scene = new Scene(root, 900, 460);
             
             primaryStage.setTitle("GamingRoom");
             primaryStage.setScene(scene);
@@ -40,6 +37,7 @@ public class CoursHomePage extends Application {
             ex.printStackTrace();
         }
     }
+    
 
     /**
      * @param args the command line arguments

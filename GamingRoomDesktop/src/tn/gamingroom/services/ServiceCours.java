@@ -80,12 +80,16 @@ public class ServiceCours implements ICours {
         int nb_up=0;
         try {
             
-            String requeteUp = "UPDATE cour SET nomCours=? WHERE id=?";
+            String requeteUp = "UPDATE cour SET nomCours=?, description=? ,tags=? ,categorie_id=? ,nb_participant=? WHERE id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requeteUp);
             pst.setString(1, c.getNomCours());
-            pst.setInt(2, c.getId());
-            pst.executeUpdate();
+            pst.setInt(6, c.getId());
+            pst.setString(2, c.getDescription());
+            pst.setString(3, c.getTags());
+            pst.setInt(4, c.getCategorie_id());
+            pst.setInt(5, c.getNb_participants());
+            nb_up=pst.executeUpdate();
             if (nb_up <= 0) {
                 System.out.println("Verifiez vos données");
             } else {

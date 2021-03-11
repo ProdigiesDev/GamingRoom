@@ -31,6 +31,25 @@ public class Cours {
         this.categorie_id = categorie_id;
     }
 
+    public Cours(int id, String nomCours, String description, int nb_participants, String tags, int categorie_id) {
+        this.id = id;
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.tags = tags;
+        this.categorie_id = categorie_id;
+    }
+
+    public Cours(int id, String nomCours, String description, int nb_participants, Date date_creation, String tags, int categorie_id) {
+        this.id = id;
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.categorie_id = categorie_id;
+    }
+
     public Cours(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, int categorie_id) {
         this.id = id;
         this.nomCours = nomCours;
