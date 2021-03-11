@@ -27,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -38,8 +39,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
+import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Cours;
+import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.ServiceCours;
 
 /**
@@ -83,7 +87,6 @@ public class CoursDetailsController implements Initializable {
     private JFXDatePicker idate;
     @FXML
     private JFXTextField inb;
-    @FXML
     private JFXTextField icat;
     @FXML
     private JFXTextField inom;
@@ -101,6 +104,8 @@ public class CoursDetailsController implements Initializable {
     private Button btntri;
     @FXML
     private TableColumn<?, ?> btn;
+    @FXML
+    private ComboBox<Categorie> combocat;
 
     /**
      * Initializes the controller class.
@@ -120,6 +125,25 @@ public class CoursDetailsController implements Initializable {
         cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
         ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
         tableCours.setItems(listCours);
+        
+        //catégorie combo
+         CategorieServices cs = new CategorieServices();
+        ObservableList l = FXCollections.observableArrayList(cs.DisplayCategorie());
+        combocat.setItems(l);
+
+        combocat.setConverter(new StringConverter<Categorie>() {
+            @Override
+            public String toString(Categorie object) {
+                return object.getNomcat();
+            }
+
+            @Override
+            public Categorie fromString(String string) {
+                return null;
+            }
+        });
+        
+        
 
     }
 
@@ -129,15 +153,16 @@ public class CoursDetailsController implements Initializable {
         //try {
         Cours c = new Cours();
         ServiceCours s = new ServiceCours();
+         Categorie categorie =  combocat.getValue();
+         
 
         c.setNomCours(inom.getText());
         c.setDescription(ides.getText());
         c.setNb_participants(Integer.parseInt(inb.getText()));
         //c.setDate_creation(Date.valueOf(idate.getText()));
         c.setTags(icl.getText());
-        c.setCategorie_id(Integer.parseInt(icat.getText()));
+        c.setCategorie_id(categorie.getIdcat());
         c.setMembre_id(Integer.parseInt(imem.getText()));
-
         int nb = s.ajouterCours(c);
         if (nb == 0) {
             JOptionPane.showMessageDialog(null, "Erreur cours non ajouteé");
