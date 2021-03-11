@@ -28,7 +28,7 @@ public class ReacCours {
     
     
 
-    public ReacCours(int id, int nb_interaction, String commentaire, int membre_id, int cour_id) {
+    public ReacCours(int id, int interaction, String commentaire, int membre_id, int cour_id) {
         this.id = id;
         this.interaction = interaction;
         this.commentaire = commentaire;

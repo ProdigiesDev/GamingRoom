@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="tn.gamingroom.gui.CoursMembreintController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.CoursMembreintController">
     <stylesheets>
         <URL value="@coursmembreint.css" />
     </stylesheets>
@@ -20,7 +20,7 @@
             <Image url="file:/C:/Users/eyatr/Desktop/AjoutEvenement.jpg" />
          </image>
       </ImageView>
-      <TableView fx:id="tbCours" layoutX="234.0" layoutY="130.0" prefHeight="267.0" prefWidth="420.0">
+      <TableView fx:id="tbCours" layoutX="234.0" layoutY="130.0" onMouseClicked="#getSelect" prefHeight="267.0" prefWidth="420.0">
         <columns>
           <TableColumn fx:id="cimg" prefWidth="75.0" text="Image" />
           <TableColumn fx:id="cnom" prefWidth="110.0" text="Nom du cours" />
@@ -28,7 +28,7 @@
             <TableColumn fx:id="cdes" prefWidth="110.0" text="Déscription" />
         </columns>
       </TableView>
-      <Label layoutX="297.0" layoutY="17.0" prefHeight="64.0" prefWidth="480.0" text="Gaming Courses " textFill="#a21dab">
+      <Label fx:id="titre" layoutX="297.0" layoutY="17.0" prefHeight="64.0" prefWidth="480.0" text="Gaming Courses " textFill="#a21dab">
          <font>
             <Font name="Bauhaus 93" size="56.0" />
          </font>
