@@ -28,12 +28,12 @@
             <JFXButton fx:id="btnenv" layoutX="428.0" layoutY="348.0" onAction="#ajouterAvis" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #6f1075;" text="Envoyer" textFill="#f5f3f3" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="24.0" prefHeight="22.0" prefWidth="387.0" text="Vous pouvez nous envoyer votre avis" textFill="#f8f7f7">
                   <font>
-                  <Font name="Yu Gothic Regular" size="19.0" />
+                  <Font name="Comic Sans MS" size="19.0" />
                </font>
             </Label>
             <Label layoutX="25.0" layoutY="167.0" prefHeight="22.0" prefWidth="76.0" text="Message" textFill="#f8f7f7">
                <font>
-                  <Font name="Yu Gothic Regular" size="13.0" />
+                  <Font name="Comic Sans MS" size="18.0" />
                </font>
             </Label>
 

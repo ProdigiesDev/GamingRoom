@@ -36,7 +36,7 @@ public class JeuxService implements IJeux{
             PreparedStatement ps=cnx.prepareStatement(req);
             ps.setString(1,jeux.getNom());
             ps.setString(2,jeux.getDescriString());
-            ps.setString(3,Jeux.Type.Desktop.toString() );
+            ps.setString(3,jeux.getType_plateforme().toString() );
            nbInsert = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -6,6 +6,7 @@
 package tn.gamingroom.gui;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -26,9 +27,11 @@ public class Home extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+        
         try {
            // Parent root=FXMLLoader.load(getClass().getResource("Reclamation/listReclamation.fxml"));
-             Parent root=FXMLLoader.load(getClass().getResource("Avis/ListAvis.fxml"));
+             Parent root=FXMLLoader.load(getClass().getResource("Avis/AjouterAvis.fxml"));
+            // Parent root=FXMLLoader.load(getClass().getResource("Jeux/ListerJeux.fxml"));
             
             Scene scene = new Scene(root);
             

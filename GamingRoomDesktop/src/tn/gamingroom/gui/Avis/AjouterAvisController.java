@@ -15,7 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Avis;
+import tn.gamingroom.outils.Outils;
 import tn.gamingroom.services.AvisService;
 
 /**
@@ -38,6 +40,8 @@ public class AjouterAvisController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        txtAvis.setStyle("-fx-text-fill: white; ");
     }    
 
     @FXML
@@ -52,9 +56,19 @@ public class AjouterAvisController implements Initializable {
             errAvis.setVisible(true);
             return;
         }
+        
+        if(Outils.containsBadWords(avisTXT)){
+           JOptionPane.showMessageDialog(null,"Cet Avis ne respecte pas nos standards de la communauté en matière de contenus indésirables");
+           return ;
+        }
         Avis avis=new Avis(avisTXT,member_id);
         AvisService avisService=new AvisService();
-        avisService.ajouterAvis(avis);
+        int nb=avisService.ajouterAvis(avis);
+        if(nb == 0)
+            JOptionPane.showMessageDialog(null,"Une erreur s'est produite, veuillez réessayer plus tard");
+        else    
+            JOptionPane.showMessageDialog(null,"Votre avis a été reçu");
+        
         
     }
 

@@ -18,7 +18,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Reclamation;
+import tn.gamingroom.outils.Outils;
 import tn.gamingroom.services.ReclamationService;
 
 /**
@@ -47,6 +49,10 @@ public class ReclamationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        
+        txtSujet.setStyle("-fx-text-fill: white; ");
+        txtBody.setStyle("-fx-text-fill: white; ");
+        
     }    
 
     @FXML
@@ -69,8 +75,15 @@ public class ReclamationController implements Initializable {
             errSujet.setVisible(true);
         }
         
+        
+        
         if( sujet.length() == 0 ||  body.length() == 0 )
             return;
+        
+        if(Outils.containsBadWords(body)){
+           JOptionPane.showMessageDialog(null,"Ce Message ne respecte pas nos standards de la communauté en matière de contenus indésirables");
+           return ;
+        }
         
         Reclamation reclamation=new Reclamation();
         
@@ -84,9 +97,11 @@ public class ReclamationController implements Initializable {
         ReclamationService reclamationService=new  ReclamationService();
         int nb=reclamationService.ajouterReclamation(reclamation) ;
         
-        if(nb == 0){
-            
-        }
+        
+        if(nb == 0)
+            JOptionPane.showMessageDialog(null,"Une erreur s'est produite, veuillez réessayer plus tard");
+        else    
+            JOptionPane.showMessageDialog(null,"Votre réclamation a été ajoutée avec succès");
         
     }
 
