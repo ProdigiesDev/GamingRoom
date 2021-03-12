@@ -15,11 +15,12 @@ import java.util.List;
  */
 public interface ICategorie <C> {
     
-    public void ajouterCategorie(C c);
-     public void supprimerCategorie(C c);
-     public void modifierCategorie(C c);
+     public int ajouterCategorie(C c);
+     public int supprimerCategorie(C c);
+     public int modifierCategorie(C c);
      public List<C> DisplayCategorie();
      public List<C> RechercherCategorie(String x);
      public ArrayList<C> TrierParIdCat();
      public ArrayList<C> TrierParNomCat();
+ 
 }

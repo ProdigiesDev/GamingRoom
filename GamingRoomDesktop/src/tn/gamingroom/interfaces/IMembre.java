@@ -23,6 +23,9 @@ public interface IMembre<T> {
      public List<T> RechercherMembres(String x);
      public ArrayList<T> TrierParId();
      public int forgotPassword(int id,String email,String newpassword);
+     public int lastId();
+     public int getPointParid(int id);
+     public String autotext();
 
     
 }
