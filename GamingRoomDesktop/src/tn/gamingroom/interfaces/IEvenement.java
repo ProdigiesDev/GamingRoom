@@ -16,7 +16,7 @@ import tn.gamingroom.entities.ReactionEv;
 public interface IEvenement {
     public int ajoutEvenement(Evenement t);
     public int modifierEvenement(Evenement t);
-    public int suppressionEvenement(Evenement t);
+    public int suppressionEvenement(int t);
     public List<Evenement> listerEvenement();
     public int sinscrirEvenement(int idE,int idM);
     public int reagirEvenement(ReactionEv rE);

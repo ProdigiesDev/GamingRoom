@@ -81,13 +81,13 @@ public class EvenementService implements IEvenement {
     }
 
     @Override
-    public int suppressionEvenement(Evenement t) {
+    public int suppressionEvenement(int t) {
         int nbModif=0;
         try {
             String requete = "DELETE FROM evenement where idevent=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
-            pst.setInt(1, t.getIdevent());
+            pst.setInt(1, t);
             nbModif = pst.executeUpdate();
             if (nbModif <= 0) {
                 System.out.println("Verifiez vos données");
