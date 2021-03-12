@@ -30,7 +30,7 @@ public class MembreServices implements IMembre<Membre> {
 
     @Override
     public int ajouterMembre(Membre m) {
-        int nbAjoutMembre=0;
+       int nbAjoutMembre=0;
         try {
             String requete = "INSERT INTO membre(nom,prenom,date_naissance,genre,numero_tel,email,password,image,role,active)" + "VALUES(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
@@ -44,12 +44,14 @@ public class MembreServices implements IMembre<Membre> {
             ps.setString(8, m.getImage());
             ps.setString(9, m.getRole().toString());
             ps.setBoolean(10, true);
-            nbAjoutMembre=ps.executeUpdate();
+            nbAjoutMembre=
+                    ps.executeUpdate();
+            
             System.out.println("Membre ajouté ");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-        return nbAjoutMembre;
+       return nbAjoutMembre;
     }
 
     @Override
@@ -121,7 +123,7 @@ public class MembreServices implements IMembre<Membre> {
     public int modifierMembreParAdmin(Membre m) {
         int nbModifierParAdmin=0;
         try {
-            String requete = "UPDATE personne SET point=?,active=?,ban_duration=?,last_timeban=? WHERE id=? AND role != 'Admin' ";
+            String requete = "UPDATE membre SET point=?,active=?,ban_duration=?,last_timeban=? WHERE id=? AND role != 'Admin' ";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setInt(1, m.getPoint());
@@ -158,6 +160,7 @@ public class MembreServices implements IMembre<Membre> {
                 m.setPassword(rs.getString("password"));
                 m.setImage(rs.getString("image"));
                 m.setRole(Membre.Role.valueOf(rs.getString("role")));
+                m.setActive(rs.getBoolean("active"));
                 m.setBan_duration(rs.getInt("ban_duration"));
                 m.setLast_timeban(rs.getDate("last_timeban"));
                 membreList.add(m);
@@ -307,5 +310,68 @@ public class MembreServices implements IMembre<Membre> {
         }
         return res;
     }
+
+    @Override
+    public int lastId() {
+        int id=0;
+  try {
+            String requete = "SELECT nvl(max(id),0) FROM membre ";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            
+            if (rs.next()) {
+               
+               id=rs.getInt(1);
+                   
+                    }
+                
+            
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        } 
+            return id;
+    }
+
+    @Override
+    public String autotext() {
+        String text=" ";
+        try {
+            
+            String requete = "Select * from membre";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while(rs.next()){
+            text=rs.getString("email");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return text;
+        
+    }
+
+    @Override
+    public int getPointParid(int id) {
+        int point = 0;
+        try {
+            
+            String requete = "select point from membre where id = '"+id+"'";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                point=rs.getInt("point");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MembreServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          return point;  
+    }
+
+    
+
+   
 
 }

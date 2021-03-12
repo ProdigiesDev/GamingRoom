@@ -58,9 +58,10 @@ public class CategorieServices implements ICategorie<Categorie> {
     public int modifierCategorie(Categorie c) {
         int nbModifCat=0;
         try {
-            String requete ="UPDATE membre SET nomcategorie=?";
+            String requete ="UPDATE categorie SET nomcategorie=? where idcat=?";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setString(1, c.getNomcat());
+            ps.setInt(2, c.getIdcat());
             
             nbModifCat=ps.executeUpdate();
             System.out.println("Catégorie modifiée avec succés");
@@ -122,7 +123,7 @@ public class CategorieServices implements ICategorie<Categorie> {
         ArrayList<Categorie> ListCategorie = new ArrayList<>();
        try {
         
-           String requete= "select * from categorie ORDER BY idcat ASC "; 
+           String requete= "select * from categorie ORDER BY idcat DESC "; 
            PreparedStatement pst =  MyConnection.getInstance().getCnx().prepareStatement(requete);
            
            
@@ -170,6 +171,8 @@ public class CategorieServices implements ICategorie<Categorie> {
         }
                  return ListCategorie ;
     }
+
+    
     
 
    
