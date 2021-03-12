@@ -6,12 +6,15 @@
 package tn.gamingroom.entities;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
  * @author Sonia
  */
 public class Membre {
+
+   
     public enum Role{
         Admin,
         Membre,
@@ -39,6 +42,12 @@ public class Membre {
 
     public Membre() {
     }
+
+    public Membre(int id, int point) {
+        this.id = id;
+        this.point = point;
+    }
+    
 
     public Membre(int id, String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, int point, String description, boolean active, int ban_duration, Date last_timeban) {
         this.id = id;
@@ -75,6 +84,19 @@ public class Membre {
         this.last_timeban = last_timeban;
     }
 
+    public Membre(int id, String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, Role role, boolean active) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.date_naissance = date_naissance;
+        this.genre = genre;
+        this.tel = tel;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.active = active;
+    }
+
     public Membre(int id, String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, boolean active) {
         this.id = id;
         this.nom = nom;
@@ -88,6 +110,9 @@ public class Membre {
         this.role = role;
         this.active = active;
     }
+
+  
+    
 
     public Membre(String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, boolean active) {
         this.nom = nom;
@@ -117,6 +142,20 @@ public class Membre {
         this.active = active;
     }
 
+    public Membre(int id, String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, Role role, String description, boolean active) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.date_naissance = date_naissance;
+        this.genre = genre;
+        this.tel = tel;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.description = description;
+        this.active = active;
+    }
+    
     public Membre(String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, String description, boolean active) {
         this.nom = nom;
         this.prenom = prenom;
