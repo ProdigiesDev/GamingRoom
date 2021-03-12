@@ -16,7 +16,6 @@ public class Commande {
     int memberid;
     Date datecommande;
     Statu etat;
-
     public Commande() {
     }
 
@@ -37,6 +36,8 @@ public class Commande {
         this.etat = etat;
     }
 
+    
+    
     public int getIdcommande() {
         return idcommande;
     }

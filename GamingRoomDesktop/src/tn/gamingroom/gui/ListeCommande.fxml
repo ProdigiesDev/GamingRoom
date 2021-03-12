@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="626.0" prefWidth="1013.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.ListeCommandeController">
+    <stylesheets>
+        <URL value="@Design.css" />
+    </stylesheets>
+   <children>
+      <Pane prefHeight="115.0" prefWidth="1011.0" style="-fx-background-color: #6f1075;" stylesheets="@Design.css">
+         <children>
+            <Text fill="#eeeeee" layoutX="25.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mes Commandes">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <TableView fx:id="listTable" layoutY="115.0" prefHeight="511.0" prefWidth="606.0" style="-fx-background-image: C:\ProdigiesDev\GamingRoomDesktop\src\tn\gamingroom\gui\AjoutEvenement.jpg; -fx-opacity: 10px;">
+        <columns>
+          <TableColumn fx:id="colCom" prefWidth="190.0" text="Commande N°" />
+          <TableColumn fx:id="colDate" prefWidth="178.0" text="Date de création" />
+            <TableColumn fx:id="colNet" prefWidth="138.0" text="Net à payer" />
+            <TableColumn fx:id="colEtat" prefWidth="100.0" text="État" />
+        </columns>
+      </TableView>
+      <ImageView fx:id="backIm" fitHeight="477.0" fitWidth="1011.0" layoutX="2.0" layoutY="151.0" opacity="0.21" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/C:/Users/Admin/Desktop/AjoutEvenement.jpg" />
+         </image>
+         <effect>
+            <Bloom />
+         </effect>
+      </ImageView>
+   </children>
+</AnchorPane>

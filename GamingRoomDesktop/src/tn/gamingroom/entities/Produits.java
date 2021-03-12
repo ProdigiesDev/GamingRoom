@@ -35,10 +35,6 @@ public class Produits {
         this.prix = prix;
         this.description = description;
     }
-
- 
- 
-
    
 
     public int getIdprod() {
