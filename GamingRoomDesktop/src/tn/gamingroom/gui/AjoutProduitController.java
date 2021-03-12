@@ -6,6 +6,7 @@
 package tn.gamingroom.gui;
 
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +26,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -37,6 +40,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Produits;
 import tn.gamingroom.outils.MyConnection;
@@ -95,6 +99,7 @@ public class AjoutProduitController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         showProduct();
+     
 
     }
 
@@ -179,7 +184,6 @@ public class AjoutProduitController implements Initializable {
         tfid.setText(colid.getCellData(index).toString());
 
     }
-
     @FXML
     private void updateTable(ActionEvent event) {
 
@@ -268,5 +272,26 @@ public class AjoutProduitController implements Initializable {
         colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
         coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
         tvbox.setItems(list);
+    }
+
+    @FXML
+    private void backToList(ActionEvent event) {
+        
+        
+        
+        
+         try {
+            Parent dashboard ;
+            dashboard = FXMLLoader.load(getClass().getResource("ADDCle.fxml"));
+            
+            
+            Scene dashboardScene = new Scene(dashboard);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(dashboardScene);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(AjoutCleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }

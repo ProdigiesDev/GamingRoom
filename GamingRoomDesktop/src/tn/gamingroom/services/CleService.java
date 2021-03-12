@@ -27,6 +27,7 @@ public class CleService implements ICles<Cles> {
     @Override
     public int ajouterCle(Cles c) {
 int nbCle=0;
+        c.setCode(createKey());
         try {
             String requete = "insert into cle(code,produit_id)"
                     + "values('" + c.getCode() + "','" + c.getProduit_id() + "' )";
@@ -102,7 +103,7 @@ return nbCle;
         return myList;
     }
     
-    public String testtest(){
+    public String createKey(){
         String s="";
         for(int i=0;i<5;i++){
             s=s+this.getSaltString();

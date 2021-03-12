@@ -54,7 +54,7 @@ public class MainClass {
       
         CleService cs = new CleService();
       //  Cles c1 = new Cles(1,cs.testtest() , 1);
-     Cles c2 = new Cles(cs.testtest(), 2);
+     Cles c2 = new Cles(cs.createKey(), 2);
 //        Cles c4 = new Cles("MKK-88888-1xPMs-7MP4g-0134d", 2);
 //        Cles c3 = new Cles(8, "MKL85-YASSK-YAskh-962kY-yaskh", 2);
 //      
@@ -72,7 +72,7 @@ public class MainClass {
      // System.out.println(cs.displayCle());
        // cs.updateCle(c3);
         
-System.out.println(cs.testtest());
+System.out.println(cs.createKey());
 
    
       
