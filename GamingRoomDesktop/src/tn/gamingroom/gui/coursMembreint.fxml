@@ -15,12 +15,12 @@
         <URL value="@coursmembreint.css" />
     </stylesheets>
    <children>
-      <ImageView fitHeight="497.0" fitWidth="1041.0" layoutY="-22.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="583.0" fitWidth="972.0" layoutY="-22.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/C:/Users/eyatr/Desktop/AjoutEvenement.jpg" />
+            <Image url="file:/C:/Users/eyatr/Downloads/wp5147454-pink-retro-gaming-wallpapers.jpg" />
          </image>
       </ImageView>
-      <TableView fx:id="tbCours" layoutX="234.0" layoutY="130.0" onMouseClicked="#getSelect" prefHeight="267.0" prefWidth="420.0">
+      <TableView fx:id="tbCours" layoutX="200.0" layoutY="142.0" onMouseClicked="#getSelect" prefHeight="267.0" prefWidth="420.0">
         <columns>
           <TableColumn fx:id="cimg" prefWidth="75.0" text="Image" />
           <TableColumn fx:id="cnom" prefWidth="110.0" text="Nom du cours" />
@@ -28,11 +28,11 @@
             <TableColumn fx:id="cdes" prefWidth="110.0" text="Déscription" />
         </columns>
       </TableView>
-      <Label fx:id="titre" layoutX="297.0" layoutY="17.0" prefHeight="64.0" prefWidth="480.0" text="Gaming Courses " textFill="#a21dab">
+      <Label fx:id="titre" layoutX="297.0" layoutY="17.0" prefHeight="64.0" prefWidth="480.0" text="Gaming Courses " textFill="#6f1075" underline="true">
          <font>
             <Font name="Bauhaus 93" size="56.0" />
          </font>
       </Label>
-      <TextField fx:id="prefer" layoutX="235.0" layoutY="99.0" onKeyPressed="#preferCours" />
+      <TextField fx:id="prefer" layoutX="202.0" layoutY="109.0" onKeyPressed="#preferCours" />
    </children>
 </AnchorPane>

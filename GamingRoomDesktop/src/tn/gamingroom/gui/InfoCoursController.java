@@ -8,14 +8,20 @@ package tn.gamingroom.gui;
 import com.jfoenix.controls.JFXButton;
 import com.sun.xml.internal.bind.v2.runtime.property.PropertyFactory;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -52,13 +58,15 @@ public class InfoCoursController implements Initializable {
 
     Cours c;
     
-    int memberId=4;
+    int memberId=3;
     @FXML
     private TableView<ReacCours> tablCom;
     @FXML
     private JFXButton btnAdd;
     @FXML
     private Text nbInter;
+    @FXML
+    private Button back;
     
     /**
      * Initializes the controller class.
@@ -122,6 +130,20 @@ public class InfoCoursController implements Initializable {
         Integer[] nbLikes=serviceReacCours.getNbInteraction(this.c.getId());
         nbInter.setText(String.valueOf(nbLikes[0]));
         
+    }
+
+    @FXML
+    private void back(ActionEvent event) {
+        try {
+            Parent root = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("coursMembreint.fxml"));
+            root = loader.load();
+            CoursMembreintController pct = loader.getController();
+            
+            nom.getScene().setRoot(root);
+        } catch (IOException ex) {
+            Logger.getLogger(InfoCoursController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
     

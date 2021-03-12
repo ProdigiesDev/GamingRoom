@@ -19,8 +19,10 @@ public class Cours {
     private int membre_id;
     private Date date_creation;
     private String tags;
+    private String image;
     private int categorie_id;
-
+    
+    
     public Cours(int id, String nomCours, String description, int nb_participants, int membre_id, String tags, int categorie_id) {
         this.id = id;
         this.nomCours = nomCours;
@@ -28,6 +30,18 @@ public class Cours {
         this.nb_participants = nb_participants;
         this.membre_id = membre_id;
         this.tags = tags;
+        this.categorie_id = categorie_id;
+    }
+
+    public Cours(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, String image, int categorie_id) {
+        this.id = id;
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.membre_id = membre_id;
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.image = image;
         this.categorie_id = categorie_id;
     }
 
@@ -139,6 +153,15 @@ public class Cours {
     public void setCategorie_id(int categorie_id) {
         this.categorie_id = categorie_id;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
     
     @Override
     public String toString() {

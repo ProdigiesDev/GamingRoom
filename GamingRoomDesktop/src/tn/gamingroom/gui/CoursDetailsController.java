@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -34,6 +36,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -43,6 +46,7 @@ import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Cours;
+import tn.gamingroom.entities.Courslm;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.ServiceCours;
 
@@ -103,8 +107,6 @@ public class CoursDetailsController implements Initializable {
     @FXML
     private Button btntri;
     @FXML
-    private TableColumn<?, ?> btn;
-    @FXML
     private ComboBox<Categorie> combocat;
 
     /**
@@ -116,6 +118,13 @@ public class CoursDetailsController implements Initializable {
         ServiceCours s = new ServiceCours();
 
         ObservableList<Cours> listCours = FXCollections.observableArrayList(s.displayCours());
+        id.setStyle("-fx-text-fill: white; ");
+        inom.setStyle("-fx-text-fill: white; ");
+        icl.setStyle("-fx-text-fill: white; ");
+        ides.setStyle("-fx-text-fill: white; ");
+        inb.setStyle("-fx-text-fill: white; ");
+        imem.setStyle("-fx-text-fill: white; ");
+        idate.setStyle("-fx-text-fill: white; ");
         cnom.setCellValueFactory(new PropertyValueFactory<Cours, String>("nomCours"));
         cid.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("Id"));
         cdes.setCellValueFactory(new PropertyValueFactory<Cours, String>("description"));
@@ -124,6 +133,7 @@ public class CoursDetailsController implements Initializable {
         cmem.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("membre_id"));
         cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
         ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
+       
         tableCours.setItems(listCours);
         
         //catégorie combo
@@ -152,17 +162,18 @@ public class CoursDetailsController implements Initializable {
 
         //try {
         Cours c = new Cours();
-        ServiceCours s = new ServiceCours();
-         Categorie categorie =  combocat.getValue();
+       ServiceCours s = new ServiceCours();
+       Categorie categorie =  combocat.getValue();
          
 
         c.setNomCours(inom.getText());
         c.setDescription(ides.getText());
         c.setNb_participants(Integer.parseInt(inb.getText()));
-        //c.setDate_creation(Date.valueOf(idate.getText()));
+        c.setDate_creation(Date.valueOf(idate.getValue()));
         c.setTags(icl.getText());
         c.setCategorie_id(categorie.getIdcat());
         c.setMembre_id(Integer.parseInt(imem.getText()));
+
         int nb = s.ajouterCours(c);
         if (nb == 0) {
             JOptionPane.showMessageDialog(null, "Erreur cours non ajouteé");
@@ -188,10 +199,10 @@ public class CoursDetailsController implements Initializable {
         int Value3 = Integer.parseInt(id.getText());
         String Value4 = icl.getText();
         int Value5 = Integer.parseInt(inb.getText());
-        int Value6 = Integer.parseInt(icat.getText());
-        //Date Value7 = Date.valueOf(idate.getValue());
+        Categorie cat = combocat.getValue();
+        Date Value7 = Date.valueOf(idate.getValue());
 
-        Cours c2 = new Cours(Value3, Value2, Value1, Value5, Value4, Value6);
+        Cours c2 = new Cours(Value3, Value2, Value1, Value5, Value4, cat.getIdcat());
 
         ServiceCours s = new ServiceCours();
         int x = s.updateCours(c2);
@@ -248,25 +259,31 @@ public class CoursDetailsController implements Initializable {
 
     @FXML
     private void getSelected(MouseEvent event) {
-        int index = tableCours.getSelectionModel().getSelectedIndex();
-        if (index <= -1) {
+        Cours c=tableCours.getSelectionModel().getSelectedItem();
+        CategorieServices categorieServices=new CategorieServices();
+        if (c==null) {
             return;
         }
-        id.setText(cid.getCellData(index).toString());
-        inom.setText(cnom.getCellData(index).toString());
-        icat.setText(ccat.getCellData(index).toString());
-        //idate.(cdate.getCellData(index).toString());
-        icl.setText(cmoc.getCellData(index).toString());
-        ides.setText(cdes.getCellData(index).toString());
-        inb.setText(cnb.getCellData(index).toString());
+        id.setText(String.valueOf(c.getId()));
+        imem.setText(String.valueOf(c.getMembre_id()));
+        inom.setText(c.getNomCours());
+        combocat.setValue(categorieServices.getCategorieById(c.getCategorie_id()));
+        Date d=c.getDate_creation(); 
+        System.out.println(d);
+        idate.setValue(LocalDate.of(d.getYear(), d.getMonth(), d.getDay()));
+        icl.setText(c.getTags());
+        ides.setText(c.getDescription());
+        inb.setText(String.valueOf(c.getNb_participants()));
+        //inb.setText(img.getCellData(index).toString());
     }
 
     @FXML
     private void clean(ActionEvent event) {
         inom.setText(null);
-        icat.setText(null);
-        //tfdate.setText(null);
-        // i.setText(null);
+        id.setText(null);
+        combocat.getSelectionModel().select(null);
+        idate.setValue(null);
+        imem.setText(null);
         inb.setText(null);
         ides.setText(null);
         icl.setText(null);

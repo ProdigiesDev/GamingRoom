@@ -26,7 +26,7 @@ public class InterfaceMember extends Application {
     public void start(Stage primaryStage) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("coursMembreint.fxml"));
-            Scene scene = new Scene(root, 900, 460);
+            Scene scene = new Scene(root, 900, 510);
             
             primaryStage.setTitle("GamingRoom");
             primaryStage.setScene(scene);
