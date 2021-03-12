@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.DashboardAdminController">
+   <children>
+      <TabPane layoutX="31.0" layoutY="15.0" prefHeight="621.0" prefWidth="850.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="MEMBER">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="603.0" prefWidth="908.0">
+                     <children>
+                        <TableView fx:id="table_memb" layoutX="13.0" layoutY="286.0" onMouseClicked="#getSelectedMember" prefHeight="264.0" prefWidth="831.0" style="-fx-background-color: #D5C4F4;" styleClass="dash" stylesheets="@dashboard.css">
+                          <columns>
+                            <TableColumn fx:id="colonne_id" prefWidth="41.0" text="ID" />
+                            <TableColumn fx:id="colonne_name" prefWidth="75.0" text="NAME" />
+                              <TableColumn fx:id="colonne_bday" prefWidth="86.0" text="BDAY" />
+                              <TableColumn fx:id="colonne_gender" prefWidth="87.0" text="GENDER" />
+                              <TableColumn fx:id="colonne_tel" prefWidth="84.0" text="TEL" />
+                              <TableColumn fx:id="colonne_email" prefWidth="127.0" text="EMAIL" />
+                              <TableColumn fx:id="colonne_role" prefWidth="71.0" text="ROLE" />
+                              <TableColumn fx:id="colonne_pt" prefWidth="51.0" text="POINT" />
+                              <TableColumn fx:id="colonne_active" prefWidth="38.0" text="A" />
+                              <TableColumn fx:id="colonne_ban" prefWidth="62.0" text="BAN DUR" />
+                              <TableColumn fx:id="colonne_lastban" prefWidth="108.0" text="LAST BAN" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="37.0" layoutY="14.0" text="MEMBER" textFill="#6f1075">
+                           <font>
+                              <Font name="Calibri Bold" size="46.0" />
+                           </font>
+                        </Label>
+                        <Pane layoutX="31.0" layoutY="73.0" prefHeight="5.0" prefWidth="775.0" style="-fx-background-color: #6f1075;" />
+                        <TextField fx:id="tfsearchmember" layoutX="14.0" layoutY="250.0" onKeyPressed="#rechercherMember" prefHeight="25.0" prefWidth="225.0" promptText="search" style="-fx-background-color: #E0DDE7;">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                        <FontAwesomeIcon glyphName="SEARCH" layoutX="214.0" layoutY="267.0" />
+                        <JFXTextField fx:id="tfidmember" focusColor="#4b3489" labelFloat="true" layoutX="358.0" layoutY="93.0" prefHeight="25.0" prefWidth="220.0" promptText="Id member" unFocusColor="#4b3489" />
+                        <JFXTextField fx:id="tfpoint" editable="false" focusColor="#4b3489" labelFloat="true" layoutX="359.0" layoutY="135.0" prefHeight="26.0" prefWidth="53.0" unFocusColor="#4b3489" />
+                        <JFXButton fx:id="btnsortm" layoutX="275.0" layoutY="245.0" onAction="#trierMembre" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="SORT BY ID" textFill="WHITE" />
+                        <JFXButton fx:id="btnUpdateMember" layoutX="652.0" layoutY="179.0" onAction="#modiferPointMembre" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="UPDATE" textFill="WHITE" />
+                        <FontAwesomeIcon fill="#b34dbc" glyphName="PLUS" layoutX="429.0" layoutY="158.0" onMouseClicked="#AjouterdesPoint" size="1.5em" />
+                        <Label layoutX="460.0" layoutY="142.0" text="ADD Points" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="PENCIL" layoutX="734.0" layoutY="200.0" size="1.5em" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="SORT" layoutX="365.0" layoutY="266.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="CATEGORY">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXTextField fx:id="textcatid" focusColor="#4b3489" labelFloat="true" layoutX="53.0" layoutY="155.0" prefHeight="25.0" prefWidth="220.0" promptText="Id" unFocusColor="#4b3489" />
+                        <JFXTextField fx:id="textcatname" focusColor="#4b3489" labelFloat="true" layoutX="53.0" layoutY="241.0" prefHeight="25.0" prefWidth="225.0" promptText="Category name" unFocusColor="#4b3489" />
+                        <JFXButton fx:id="btnaddCat" layoutX="173.0" layoutY="316.0" onAction="#ajouterCategorie" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="ADD" textFill="WHITE" />
+                        <JFXButton fx:id="btnupdateCat" layoutX="174.0" layoutY="360.0" onAction="#modifierCategorie" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="UPDATE" textFill="WHITE" />
+                        <TableView fx:id="tableCat" layoutX="434.0" layoutY="134.0" onMouseClicked="#getSelectedCat" prefHeight="258.0" prefWidth="247.0" style="-fx-background-color: #D5C4F4;" stylesheets="@dashboard.css">
+                          <columns>
+                            <TableColumn fx:id="colonne_idcat" prefWidth="99.0" text="ID" />
+                            <TableColumn fx:id="colonne_namecat" prefWidth="147.0" text="NAME CATEGORY" />
+                          </columns>
+                        </TableView>
+                        <TextField fx:id="textsearchcat" layoutX="507.0" layoutY="97.0" onKeyPressed="#RechercherCategorie" prefHeight="5.0" prefWidth="145.0" promptText="search" style="-fx-background-color: #E0DDE7;">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></TextField>
+                        <FontAwesomeIcon glyphName="SEARCH" layoutX="631.0" layoutY="113.0" />
+                        <JFXButton fx:id="btndeleteCat" layoutX="694.0" layoutY="222.0" onAction="#supprimerCategorie" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="DELETE" textFill="WHITE" />
+                        <JFXButton fx:id="btnsort" layoutX="694.0" layoutY="278.0" onAction="#trierCategorie_parId" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="SORT BY ID" textFill="WHITE" />
+                        <JFXButton fx:id="btn_clean" layoutX="293.0" layoutY="210.0" onAction="#Clean" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="Clean" textFill="WHITE" />
+                        <Label layoutX="37.0" layoutY="14.0" text="CATEGORY" textFill="#6f1075">
+                           <font>
+                              <Font name="Calibri Bold" size="46.0" />
+                           </font>
+                        </Label>
+                        <Pane layoutX="31.0" layoutY="73.0" prefHeight="5.0" prefWidth="775.0" style="-fx-background-color: #6f1075;" />
+                        <Pane layoutX="31.0" layoutY="514.0" prefHeight="5.0" prefWidth="775.0" style="-fx-background-color: #6f1075;" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="REMOVE" layoutX="374.0" layoutY="233.0" size="1.5em" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="PLUS" layoutX="255.0" layoutY="339.0" size="1.5em" text="" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="PENCIL" layoutX="255.0" layoutY="381.0" size="1.5em" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="TRASH" layoutX="776.0" layoutY="244.0" size="1.5em" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="SORT" layoutX="784.0" layoutY="298.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
