@@ -29,9 +29,9 @@ public class Home extends Application {
     public void start(Stage primaryStage) {
         
         try {
-           // Parent root=FXMLLoader.load(getClass().getResource("Reclamation/listReclamation.fxml"));
-             Parent root=FXMLLoader.load(getClass().getResource("Avis/AjouterAvis.fxml"));
-            // Parent root=FXMLLoader.load(getClass().getResource("Jeux/ListerJeux.fxml"));
+            //Parent root=FXMLLoader.load(getClass().getResource("Reclamation/AjouterReclamation.fxml"));
+            // Parent root=FXMLLoader.load(getClass().getResource("Avis/AjouterAvis.fxml"));
+             Parent root=FXMLLoader.load(getClass().getResource("Chat/chat.fxml"));
             
             Scene scene = new Scene(root);
             

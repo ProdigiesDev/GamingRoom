@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.services;
 
+import java.lang.reflect.Member;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -307,6 +308,35 @@ public class MembreServices implements IMembre<Membre> {
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+    }
+
+    @Override
+    public Membre getById(int id) {
+        try {
+            String requete = "SELECT * FROM membre where id = "+id;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                Membre m = new Membre();
+                m.setId(rs.getInt("id"));
+                m.setNom(rs.getString("nom"));
+                m.setPrenom(rs.getString("prenom"));
+                m.setDate_naissance(rs.getDate("date_naissance"));
+                m.setGenre(Membre.Genre.valueOf(rs.getString("genre")));
+                m.setTel(rs.getString("numero_tel"));
+                m.setEmail(rs.getString("email"));
+                m.setPassword(rs.getString("password"));
+                m.setImage(rs.getString("image"));
+                m.setRole(Membre.Role.valueOf(rs.getString("role")));
+                m.setBan_duration(rs.getInt("ban_duration"));
+                m.setLast_timeban(rs.getDate("last_timeban"));
+                return m;
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return null;
     }
 
 }

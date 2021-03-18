@@ -52,7 +52,6 @@ public class AjouterJeuxController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
-        
         txtNom.setStyle("-fx-text-fill: white; ");
         txtDesc.setStyle("-fx-text-fill: white; ");
         List<Jeux.Type> listPlat = new ArrayList();
@@ -78,6 +77,8 @@ public class AjouterJeuxController implements Initializable {
         String nom=txtNom.getText();
         String description=txtDesc.getText();
         
+        JeuxService jeuxService=new JeuxService();
+        
         if(nom.length() == 0)
         {
             errNom.setText("Nom est obligatoire");
@@ -93,12 +94,16 @@ public class AjouterJeuxController implements Initializable {
         if(nom.length() == 0 || description.length() == 0)
             return;
         
+        if(jeuxService.search(nom, comboPlat.getValue().toString()).size() > 0){
+            JOptionPane.showMessageDialog(null,"Jeu avec le même nom déjà existé");
+            return ;
+        }
+        
         jeux.setNom(nom);
         jeux.setDescriString(description);
         jeux.setType_plateforme(comboPlat.getValue());
         
         
-        JeuxService jeuxService=new JeuxService();
         
         if(jeux.getId()==0){
             int nb=jeuxService.ajouter(jeux);

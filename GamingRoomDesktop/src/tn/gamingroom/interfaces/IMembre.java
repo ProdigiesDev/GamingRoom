@@ -7,6 +7,7 @@ package tn.gamingroom.interfaces;
 
 import java.util.ArrayList;
 import java.util.List;
+import tn.gamingroom.entities.Membre;
 
 /**
  *
@@ -23,6 +24,6 @@ public interface IMembre<T> {
      public List<T> RechercherMembres(String x);
      public ArrayList<T> TrierParId();
      public void fPwd(int id);
-
+     public Membre getById(int id);
     
 }

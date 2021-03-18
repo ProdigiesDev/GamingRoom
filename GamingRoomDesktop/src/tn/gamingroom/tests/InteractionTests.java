@@ -65,7 +65,7 @@ public class InteractionTests {
             String text=avi.getAvis().replaceAll(" ","%20");
             HashMap<String,String> headers=new HashMap();
             headers.put("Accept", "application/json");
-            HttpURLConnection conn=ApiCall.callApi("https://api.meaningcloud.com/sentiment-2.1?verbose=y&key="+Env.keyMeaningcloudApi+"&lang=en&txt="+text+"&model=general", headers);
+            HttpURLConnection conn=ApiCall.callApi("https://api.meaningcloud.com/sentiment-2.1?verbose=y&key="+Env.getKeyMeaningcloudApi()+"&lang=en&txt="+text+"&model=general", headers);
             try {
                if (conn.getResponseCode() != 200) {
                    throw new RuntimeException("Failed : HTTP Error code : "

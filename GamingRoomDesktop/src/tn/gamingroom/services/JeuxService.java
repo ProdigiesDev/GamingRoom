@@ -101,5 +101,27 @@ public class JeuxService implements IJeux{
         
         
     }
+
+    @Override
+    public List<Jeux> search(String name, String plat) {
+        List<Jeux> jeux=new ArrayList();
+        
+        try {
+            String req="select * from jeux where nom = ? and  type_plateforme  = ?  order by id desc";
+            PreparedStatement s = cnx.prepareStatement(req);
+            s.setString(1, name);
+            s.setString(2, plat);
+            ResultSet resultSet=s.executeQuery(req);
+            while(resultSet.next()){
+                jeux.add(new Jeux(resultSet.getInt("id"),resultSet.getString("nom"),resultSet.getString("description"),Jeux.Type.valueOf(resultSet.getString("type_plateforme"))));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        
+        return jeux;
+        
+    }
     
 }

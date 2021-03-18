@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -134,7 +135,7 @@ public class ListerJeuxController implements Initializable {
                 ajouterJeuxController.editInterface(jeux);
                 ajouterJeuxController.setJeux(jeux);
                 listJeux.getScene().setRoot(root);
-                  
+                
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             } catch (IOException ex) {
                 Logger.getLogger(ListerJeuxController.class.getName()).log(Level.SEVERE, null, ex);
