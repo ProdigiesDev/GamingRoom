@@ -20,7 +20,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="tableview" layoutX="332.0" layoutY="72.0" onMouseClicked="#selected" prefHeight="617.0" prefWidth="732.0">
+      <TableView fx:id="tableview" layoutX="337.0" layoutY="53.0" onMouseClicked="#selected" prefHeight="599.0" prefWidth="732.0">
         <columns>
           <TableColumn fx:id="colid" prefWidth="75.0" text="id" />
           <TableColumn fx:id="colcode" prefWidth="406.0" text="code" />
@@ -47,7 +47,8 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="tfrechProd" layoutX="543.0" layoutY="18.0" onKeyPressed="#RechercherProduit_ID" prefHeight="31.0" prefWidth="310.0" />
-      <FontAwesomeIcon glyphName="SEARCH" layoutX="551.0" layoutY="38.0" />
+      <TextField fx:id="tfrechProd" layoutX="741.0" layoutY="18.0" onKeyPressed="#RechercherProduit_ID" prefHeight="31.0" prefWidth="314.0" />
+      <FontAwesomeIcon glyphName="SEARCH" layoutX="741.0" layoutY="38.0" wrappingWidth="8.928571701049805" />
+      <Button fx:id="btnload" layoutX="891.0" layoutY="667.0" mnemonicParsing="false" onAction="#LoadTableCle" prefHeight="31.0" prefWidth="127.0" text="Load Table " />
    </children>
 </AnchorPane>

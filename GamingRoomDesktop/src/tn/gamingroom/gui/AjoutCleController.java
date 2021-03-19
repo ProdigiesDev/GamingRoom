@@ -67,6 +67,8 @@ public class AjoutCleController implements Initializable {
     private TableColumn<Cles, Integer> colproduitid;
     @FXML
     private TextField tfrechProd;
+    @FXML
+    private Button btnload;
 
     /**
      * Initializes the controller class.
@@ -237,6 +239,23 @@ public class AjoutCleController implements Initializable {
 
         colid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("idcle"));
         colcode.setCellValueFactory(new PropertyValueFactory<Cles, String>("code"));
+        colproduitid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("produit_id"));
+       
+        tableview.setItems(list);
+        
+        
+        
+        
+    }
+
+    @FXML
+    private void LoadTableCle(ActionEvent event) {
+        
+          CleService crud = new CleService();
+        ObservableList<Cles> list = FXCollections.observableArrayList(crud.displayCle());
+
+        colid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("idcle"));
+           colcode.setCellValueFactory(new PropertyValueFactory<Cles, String>("code"));
         colproduitid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("produit_id"));
        
         tableview.setItems(list);
