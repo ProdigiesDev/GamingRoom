@@ -126,13 +126,43 @@ return nbCle;
 
     }
     
+      public List<Cles> Rechercher_Produit_ID(int x ){
+          
+             ArrayList<Cles> listOffresTypeX = new ArrayList<>();
+               try {
+            String req = "Select * from cle where produit_id='"+x+"'";
+            PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(req);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Cles c = new Cles();
+
+                c.setIdcle(rs.getInt(1));
+                c.setCode(rs.getString(2));
+             
+                c.setProduit_id(rs.getInt(3));
+           
+
+                listOffresTypeX.add(c);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        if (listOffresTypeX.isEmpty()) {
+            System.out.println("Il y a aucun cle avec cet ID");
+        }
+        return listOffresTypeX;
+    }
+          
+          
+          
+      }
     
     
     
     
     
     
+  
     
-    
-    
-}

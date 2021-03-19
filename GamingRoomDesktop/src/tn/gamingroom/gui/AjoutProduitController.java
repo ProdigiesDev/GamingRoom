@@ -97,6 +97,11 @@ public class AjoutProduitController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tfimage.setStyle("-fx-text-fill: white;");
+        tflibelle.setStyle("-fx-text-fill: white;");
+        tfprix.setStyle("-fx-text-fill: white;");
+        tfdesc.setStyle("-fx-text-fill: white;");
+        tfid.setStyle("-fx-text-fill: white;");
         // TODO
         showProduct();
      

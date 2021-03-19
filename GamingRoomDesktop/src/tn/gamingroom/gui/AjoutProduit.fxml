@@ -8,44 +8,10 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="665.0" prefWidth="1061.0" style="-fx-background-color: #c264c2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutProduitController">
    <children>
-      <VBox layoutX="14.0" layoutY="23.0" prefHeight="266.0" prefWidth="205.0" spacing="23.0">
-         <children>
-            <Label text="Image" textFill="#f1eef0">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font></Label>
-            <Label text="Libelle" textFill="#f1eef0">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font></Label>
-            <Label text="Prix" textFill="#f1eef0">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font></Label>
-            <Label text="Description" textFill="#f1eef0">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font></Label>
-            <Label text="ID" textFill="#f1eef0">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <VBox layoutX="236.0" layoutY="4.0" prefHeight="182.0" prefWidth="183.0" spacing="10.0" style="-fx-alignment: #610d54;">
-         <children>
-            <JFXTextField fx:id="tfimage" focusColor="#f1eef0" />
-            <JFXTextField fx:id="tflibelle" focusColor="#f1eef0" />
-            <JFXTextField fx:id="tfprix" focusColor="#f1eef0" />
-            <JFXTextField fx:id="tfdesc" focusColor="#f1eef0" prefHeight="139.0" prefWidth="183.0" />
-         </children>
-      </VBox>
       <TableView fx:id="tvbox" layoutX="523.0" layoutY="95.0" onMouseClicked="#getSelected" prefHeight="444.0" prefWidth="543.0" style="-fx-background-color: #9d1889;">
         <columns>
           <TableColumn fx:id="colid" prefWidth="52.0" text="ID" />
@@ -55,38 +21,37 @@
             <TableColumn fx:id="coldesc" prefWidth="192.0" text="Description" />
         </columns>
       </TableView>
-      <Button fx:id="btnajouter" graphicTextGap="9.0" layoutY="421.0" mnemonicParsing="false" onAction="#ajouterProduit" prefHeight="31.0" prefWidth="152.0" style="-fx-border-color: #610d54;" text="Ajouter" textFill="#830f70">
+      <Button fx:id="btnajouter" graphicTextGap="9.0" layoutY="421.0" mnemonicParsing="false" onAction="#ajouterProduit" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #dadada; -fx-background-radius: 0px;" text="Ajouter" textFill="#830f70">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnmodifier" layoutX="166.0" layoutY="421.0" mnemonicParsing="false" onAction="#updateTable" prefHeight="41.0" prefWidth="169.0" style="-fx-border-color: #610d54;" text="Modifier" textFill="#830f70">
+      <Button fx:id="btnmodifier" layoutX="166.0" layoutY="421.0" mnemonicParsing="false" onAction="#updateTable" prefHeight="41.0" prefWidth="169.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Modifier" textFill="#830f70">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnsupp" layoutX="353.0" layoutY="421.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="41.0" prefWidth="161.0" style="-fx-border-color: #610d54;" text="Supprimer" textFill="#610d54">
+      <Button fx:id="btnsupp" layoutX="353.0" layoutY="421.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Supprimer" textFill="#610d54">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
       <TextField fx:id="tfrech" layoutX="642.0" layoutY="48.0" onKeyPressed="#RechercherProduit" prefHeight="31.0" prefWidth="327.0" style="-fx-border-color: #5b0a50;" />
-      <Button fx:id="btnTri" graphicTextGap="9.0" layoutX="514.0" layoutY="569.0" mnemonicParsing="false" onAction="#TrierParId" prefHeight="31.0" prefWidth="152.0" style="-fx-border-color: #610d54;" text="Tri Par ID" textFill="#5b0a50fc">
+      <Button fx:id="btnTri" graphicTextGap="9.0" layoutX="514.0" layoutY="569.0" mnemonicParsing="false" onAction="#TrierParId" prefHeight="31.0" prefWidth="152.0" style="-fx-border-color: #dadada; -fx-border-radius: 0px;" text="Tri Par ID" textFill="#5b0a50fc">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <JFXTextField fx:id="tfid" focusColor="#f1eef0" layoutX="236.0" layoutY="211.0" />
-      <Button fx:id="btnannuler" layoutX="396.0" layoutY="271.0" mnemonicParsing="false" onAction="#clean" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: #610d54;" text="Annuler" textFill="#5b0a50">
+      <Button fx:id="btnannuler" layoutX="328.0" layoutY="271.0" mnemonicParsing="false" onAction="#clean" prefHeight="37.0" prefWidth="144.0" style="-fx-background-color: #dadada;" text="Vider les champs" textFill="#5b0a50">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font></Button>
-      <Button fx:id="btnBest" layoutX="677.0" layoutY="569.0" mnemonicParsing="false" onAction="#bestProductsSelled" prefHeight="41.0" prefWidth="194.0" style="-fx-border-color: #610d54;" text="BestProductsSelled" textFill="#5b0a50">
+      <Button fx:id="btnBest" layoutX="677.0" layoutY="569.0" mnemonicParsing="false" onAction="#bestProductsSelled" prefHeight="41.0" prefWidth="194.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="BestProductsSelled" textFill="#5b0a50">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnload" layoutX="874.0" layoutY="570.0" mnemonicParsing="false" onAction="#loadTable" prefHeight="39.0" prefWidth="183.0" text="Load Table" textFill="#5b0a50">
+      <Button fx:id="btnload" layoutX="874.0" layoutY="570.0" mnemonicParsing="false" onAction="#loadTable" prefHeight="39.0" prefWidth="183.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Load Table" textFill="#5b0a50">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Button>
@@ -95,10 +60,40 @@
       <FontAwesomeIcon glyphName="EDIT" layoutX="177.0" layoutY="452.0" size="2em" wrappingWidth="20.999999523162842" />
       <FontAwesomeIcon glyphName="SORT" layoutX="524.0" layoutY="600.0" size="2em" />
       <FontAwesomeIcon glyphName="TABLE" layoutX="881.0" layoutY="600.0" size="2em" wrappingWidth="36.00002187490463" />
-      <Button layoutX="987.0" layoutY="8.0" mnemonicParsing="false" onAction="#backToList" text="BACK" textFill="#610d54">
+      <Button layoutX="987.0" layoutY="8.0" mnemonicParsing="false" onAction="#backToList" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="BACK" textFill="#610d54">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
+      <JFXTextField fx:id="tfimage" layoutX="204.0" layoutY="24.0" style="-fx-region-border: white;" />
+      <JFXTextField fx:id="tflibelle" layoutX="204.0" layoutY="72.0" />
+      <JFXTextField fx:id="tfprix" layoutX="204.0" layoutY="125.0" />
+      <JFXTextField fx:id="tfdesc" layoutX="198.0" layoutY="180.0" />
+      <JFXTextField fx:id="tfid" layoutX="198.0" layoutY="223.0" />
+      <Label layoutX="15.0" layoutY="42.0" text="Image" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="13.0" layoutY="90.0" text="Libelle" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="143.0" text="Prix" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="198.0" text="Description" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="22.0" layoutY="241.0" text="ID" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

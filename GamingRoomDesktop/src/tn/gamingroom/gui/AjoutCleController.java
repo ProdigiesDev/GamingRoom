@@ -65,13 +65,15 @@ public class AjoutCleController implements Initializable {
     private TableColumn<Cles, String> colcode;
     @FXML
     private TableColumn<Cles, Integer> colproduitid;
+    @FXML
+    private TextField tfrechProd;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+              nbCle.setStyle("-fx-text-fill: white;");
         ProduitCrud crud=new ProduitCrud();
         List<Produits> produitses=crud.displayProduit();
         Callback<ListView<Produits>, ListCell<Produits>> factory = lv -> new ListCell<Produits>() {
@@ -225,5 +227,22 @@ public class AjoutCleController implements Initializable {
 
         tableview.getColumns().add(colBtn);
 
+    }
+
+    @FXML
+    private void RechercherProduit_ID(KeyEvent event) {
+        
+         CleService crud = new CleService();
+  ObservableList<Cles> list = FXCollections.observableArrayList(crud.Rechercher_Produit_ID(Integer.parseInt(tfrechProd.getText())));
+
+        colid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("idcle"));
+        colcode.setCellValueFactory(new PropertyValueFactory<Cles, String>("code"));
+        colproduitid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("produit_id"));
+       
+        tableview.setItems(list);
+        
+        
+        
+        
     }
 }

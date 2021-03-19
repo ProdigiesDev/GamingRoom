@@ -17,6 +17,7 @@ public interface ICles<T> {
     public int supprimerCle(int idcle);
     public int updateCle(T c);
     public List<T> displayCle();
+      public List<T> Rechercher_Produit_ID(int x );
     
     
 }
