@@ -114,8 +114,18 @@ public class AjoutProduitController implements Initializable {
         //  Save Person IN DATABASE
         String resImage = tfimage.getText();
         String resLibelle = tflibelle.getText();
-
-        int resPrix = Integer.parseInt(tfprix.getText());
+  int resPrix=0;
+  try{
+      
+       resPrix = Integer.parseInt(tfprix.getText());
+      
+  }catch(Exception ex){
+  tfprix.setText("");
+  JOptionPane.showMessageDialog(null,"Il faut ajouter un entier");
+            return;
+  
+  }
+      resPrix = Integer.parseInt(tfprix.getText());
         String resDesc = tfdesc.getText();
         int resID = Integer.parseInt(tfid.getText());
         // Produits pl=new Produits( resImage, resLibelle, resPrix, resDesc);

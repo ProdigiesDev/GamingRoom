@@ -147,10 +147,7 @@ public class AjoutCleController implements Initializable {
     
     
 }
-      @FXML
-    private void selected(MouseEvent event) {
-        
-    }
+
 
     private void supprimerCle(ActionEvent event) {
         
