@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -10,15 +11,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="665.0" prefWidth="1061.0" style="-fx-background-color: #c264c2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutProduitController">
+<AnchorPane id="AnchorPane" prefHeight="679.0" prefWidth="1213.0" style="-fx-background-color: #c264c2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutProduitController">
    <children>
-      <TableView fx:id="tvbox" layoutX="523.0" layoutY="95.0" onMouseClicked="#getSelected" prefHeight="444.0" prefWidth="543.0" style="-fx-background-color: #9d1889;">
+      <TableView fx:id="tvbox" layoutX="523.0" layoutY="95.0" onMouseClicked="#getSelected" prefHeight="444.0" prefWidth="692.0" style="-fx-background-color: #9d1889;">
         <columns>
           <TableColumn fx:id="colid" prefWidth="52.0" text="ID" />
             <TableColumn fx:id="colimage" prefWidth="105.0" text="Image" />
             <TableColumn fx:id="collibelle" prefWidth="111.0" text="Libelle" />
             <TableColumn fx:id="colprix" prefWidth="72.0" text="Prix" />
-            <TableColumn fx:id="coldesc" prefWidth="192.0" text="Description" />
+            <TableColumn fx:id="coldesc" prefWidth="139.0" text="Description" />
+            <TableColumn fx:id="colcat" prefWidth="139.0" text="Categorie" />
         </columns>
       </TableView>
       <Button fx:id="btnajouter" graphicTextGap="9.0" layoutY="421.0" mnemonicParsing="false" onAction="#ajouterProduit" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #dadada; -fx-background-radius: 0px;" text="Ajouter" textFill="#830f70">
@@ -42,7 +44,7 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnannuler" layoutX="328.0" layoutY="271.0" mnemonicParsing="false" onAction="#clean" prefHeight="37.0" prefWidth="144.0" style="-fx-background-color: #dadada;" text="Vider les champs" textFill="#5b0a50">
+      <Button fx:id="btnannuler" layoutX="341.0" layoutY="340.0" mnemonicParsing="false" onAction="#clean" prefHeight="37.0" prefWidth="144.0" style="-fx-background-color: #dadada;" text="Vider les champs" textFill="#5b0a50">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font></Button>
@@ -69,7 +71,7 @@
       <JFXTextField fx:id="tflibelle" layoutX="204.0" layoutY="72.0" />
       <JFXTextField fx:id="tfprix" layoutX="204.0" layoutY="125.0" />
       <JFXTextField fx:id="tfdesc" layoutX="198.0" layoutY="180.0" />
-      <JFXTextField fx:id="tfid" layoutX="198.0" layoutY="223.0" />
+      <JFXTextField fx:id="tfid" editable="false" layoutX="198.0" layoutY="223.0" />
       <Label layoutX="15.0" layoutY="42.0" text="Image" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -91,6 +93,12 @@
          </font>
       </Label>
       <Label layoutX="22.0" layoutY="241.0" text="ID" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="listCat" layoutX="139.0" layoutY="286.0" prefWidth="150.0" />
+      <Label layoutX="7.0" layoutY="288.0" text="Categorie" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

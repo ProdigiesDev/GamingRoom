@@ -158,7 +158,7 @@ public class AjoutCleController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Confirmation de Suppression !");
-        alert.setContentText("Voulez-Vous Vraiment Supprimer");
+        alert.setContentText("Voulez-Vous Vraiment Supprimer?");
 
         Optional<ButtonType> btn = alert.showAndWait();
         if (btn.get() == ButtonType.OK) {

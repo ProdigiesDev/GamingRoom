@@ -11,25 +11,20 @@ package tn.gamingroom.entities;
  */
 public class Produits {
 
-    private int idprod;
+ 
 
+    private int idprod;
+     private int id_cat;
        private String image;
     private String libelle;
     private int prix;
     private String description;
  
-
+    private String nomCat;
 
     public Produits() {
     }
 
-    public Produits(int idprod, String image, String libelle, int prix, String description) {
-        this.idprod = idprod;
-        this.image = image;
-        this.libelle = libelle;
-        this.prix = prix;
-        this.description = description;
-    }
 
     public Produits(String image, String libelle, int prix, String description) {
         this.image = image;
@@ -38,8 +33,42 @@ public class Produits {
         this.description = description;
     }
 
+    public Produits(int id_cat, String image, String libelle, int prix, String description) {
+        this.id_cat = id_cat;
+        this.image = image;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.description = description;
+        this.nomCat = nomCat;
+    }
+
+    public Produits(int idprod, int id_cat, String image, String libelle, int prix, String description, String nomCat) {
+        this.idprod = idprod;
+        this.id_cat = id_cat;
+        this.image = image;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.description = description;
+        this.nomCat = nomCat;
+    }
+
    
- 
+    public Produits(int idprod, int id_cat, String image, String libelle, int prix, String description) {
+        this.idprod = idprod;
+        this.id_cat = id_cat;
+        this.image = image;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.description = description;
+    }
+
+    public String getNomCat() {
+        return nomCat;
+    }
+
+    public void setNomCat(String nomCat) {
+        this.nomCat = nomCat;
+    }
  
 
    
@@ -84,6 +113,14 @@ public class Produits {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getId_cat() {
+        return id_cat;
+    }
+
+    public void setId_cat(int id_cat) {
+        this.id_cat = id_cat;
     }
 
     @Override

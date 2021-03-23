@@ -166,6 +166,23 @@ public class CategorieServices implements ICategorie<Categorie> {
     }
     
 
-   
+    public Categorie getById(int x) {
+        try {
+            String requete = "Select * from categorie where idcat=" + x;
+            PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requete);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Categorie c = new Categorie();
+
+                c.setIdcat(rs.getInt("idcat"));
+                c.setNomcat(rs.getString("nomcategorie"));
+                return c;
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return null;
+    }
     
 }

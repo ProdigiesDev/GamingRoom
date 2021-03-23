@@ -32,7 +32,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.SortType;
 import javafx.scene.control.TableView;
@@ -41,9 +44,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javax.swing.JOptionPane;
+import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Produits;
 import tn.gamingroom.outils.MyConnection;
+import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.ProduitCrud;
 
 /**
@@ -91,6 +97,10 @@ public class AjoutProduitController implements Initializable {
     private TextField tfrech;
     @FXML
     private Button btnload;
+    @FXML
+    private ComboBox<Categorie> listCat;
+    @FXML
+    private TableColumn<Produits, String> colcat;
 
     /**
      * Initializes the controller class.
@@ -102,52 +112,70 @@ public class AjoutProduitController implements Initializable {
         tfprix.setStyle("-fx-text-fill: white;");
         tfdesc.setStyle("-fx-text-fill: white;");
         tfid.setStyle("-fx-text-fill: white;");
+        
+        
+        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
+        colcat.setCellValueFactory(new PropertyValueFactory<Produits, String>("nomCat"));
+        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
+        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
+        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
+        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
+        
         // TODO
+        CategorieServices crud = new CategorieServices();
+        List<Categorie> categories = crud.DisplayCategorie();
+        Callback<ListView<Categorie>, ListCell<Categorie>> factory = lv -> new ListCell<Categorie>() {
+
+            @Override
+            protected void updateItem(Categorie item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getNomcat());
+            }
+
+        };
+        listCat.setCellFactory(factory);
+        listCat.setButtonCell(factory.call(null));
+        listCat.setItems(FXCollections.observableArrayList(categories));
+        //  addButtonToTable();
         showProduct();
-     
 
     }
 
     @FXML
     private void ajouterProduit(ActionEvent event) {
 
-        //  Save Person IN DATABASE
+        //  Save produit IN DATABASE
         String resImage = tfimage.getText();
         String resLibelle = tflibelle.getText();
-  int resPrix=0;
-  try{
-      
-       resPrix = Integer.parseInt(tfprix.getText());
-      
-  }catch(Exception ex){
-  tfprix.setText("");
-  JOptionPane.showMessageDialog(null,"Il faut ajouter un entier");
+        Categorie rescategorie = listCat.getValue();
+        int resPrix = 0;
+        try {
+
+            resPrix = Integer.parseInt(tfprix.getText());
+
+        } catch (Exception ex) {
+            tfprix.setText("");
+            JOptionPane.showMessageDialog(null, "Il faut ajouter un entier");
             return;
-  
-  }
-      resPrix = Integer.parseInt(tfprix.getText());
+
+        }
+        resPrix = Integer.parseInt(tfprix.getText());
         String resDesc = tfdesc.getText();
-        int resID = Integer.parseInt(tfid.getText());
-        // Produits pl=new Produits( resImage, resLibelle, resPrix, resDesc);
-
-        Produits p1 = new Produits(resID, resImage, resLibelle, resPrix, resLibelle);
-
+        Produits p2 = new Produits( rescategorie.getIdcat(), resImage, resLibelle, resPrix, resLibelle);
         ProduitCrud pcd = new ProduitCrud();
-        pcd.ajouterProduit(p1);
-        JOptionPane.showMessageDialog(null, "produit ajouté");
+        if (pcd.ajouterProduit(p2) > 0) {
+            JOptionPane.showMessageDialog(null, "produit ajouté");
+        }
         showProduct();
 
     }
 
     public void showProduct() {
         ProduitCrud crud = new ProduitCrud();
-        ObservableList<Produits> list = FXCollections.observableArrayList(crud.displayProduit());
-
-        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
-        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
-        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
-        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
-        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
+        List<Produits> produitses=crud.displayProduit();
+        
+        ObservableList<Produits> list = FXCollections.observableArrayList(produitses);
+        
         tvbox.setItems(list);
     }
 
@@ -165,21 +193,16 @@ public class AjoutProduitController implements Initializable {
     @FXML
     private void bestProductsSelled(ActionEvent event) {
         ProduitCrud pcd = new ProduitCrud();
-        List<Integer> integers=pcd.bestProductsSelled();
+        List<Integer> integers = pcd.bestProductsSelled();
         System.out.println(integers);
-        List<Produits> produitses=new ArrayList<>();
-        integers.forEach(i->{
+        List<Produits> produitses = new ArrayList<>();
+        integers.forEach(i -> {
             produitses.add(pcd.getByID(i));
         });
-         ObservableList<Produits> list = FXCollections.observableArrayList(produitses);
+        ObservableList<Produits> list = FXCollections.observableArrayList(produitses);
 
-        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
-        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
-        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
-        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
-        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
         tvbox.setItems(list);
-        
+
     }
 
     @FXML
@@ -199,6 +222,7 @@ public class AjoutProduitController implements Initializable {
         tfid.setText(colid.getCellData(index).toString());
 
     }
+
     @FXML
     private void updateTable(ActionEvent event) {
 
@@ -207,7 +231,7 @@ public class AjoutProduitController implements Initializable {
         int Value3 = Integer.parseInt(tfprix.getText());
         String Value4 = tfdesc.getText();
         int Value5 = Integer.parseInt(tfid.getText());
-        Produits p2 = new Produits(Value5, Value1, Value2, Value3, Value4);
+        Produits p2 = new Produits(Value5,0, Value1, Value2, Value3, Value4);
 
         ProduitCrud pcd = new ProduitCrud();
         int x = pcd.updateProduit(p2);
@@ -231,7 +255,7 @@ public class AjoutProduitController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Confirmation de Suppression !");
-        alert.setContentText("Voulez-Vous Vraiment Supprimer");
+        alert.setContentText("Voulez-Vous Vraiment Supprimer?");
 
         Optional<ButtonType> btn = alert.showAndWait();
         if (btn.get() == ButtonType.OK) {
@@ -291,22 +315,18 @@ public class AjoutProduitController implements Initializable {
 
     @FXML
     private void backToList(ActionEvent event) {
-        
-        
-        
-        
-         try {
-            Parent dashboard ;
+
+        try {
+            Parent dashboard;
             dashboard = FXMLLoader.load(getClass().getResource("ADDCle.fxml"));
-            
-            
+
             Scene dashboardScene = new Scene(dashboard);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(dashboardScene);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(AjoutCleController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 }

@@ -20,7 +20,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="tableview" layoutX="337.0" layoutY="53.0" onMouseClicked="#selected" prefHeight="599.0" prefWidth="732.0">
+      <TableView fx:id="tableview" layoutX="337.0" layoutY="53.0" prefHeight="599.0" prefWidth="732.0">
         <columns>
           <TableColumn fx:id="colid" prefWidth="75.0" text="id" />
           <TableColumn fx:id="colcode" prefWidth="406.0" text="code" />
@@ -49,6 +49,10 @@
       </Label>
       <TextField fx:id="tfrechProd" layoutX="741.0" layoutY="18.0" onKeyPressed="#RechercherProduit_ID" prefHeight="31.0" prefWidth="314.0" />
       <FontAwesomeIcon glyphName="SEARCH" layoutX="741.0" layoutY="38.0" wrappingWidth="8.928571701049805" />
-      <Button fx:id="btnload" layoutX="891.0" layoutY="667.0" mnemonicParsing="false" onAction="#LoadTableCle" prefHeight="31.0" prefWidth="127.0" text="Load Table " />
+      <Button fx:id="btnload" layoutX="887.0" layoutY="663.0" mnemonicParsing="false" onAction="#LoadTableCle" prefHeight="31.0" prefWidth="127.0" style="-fx-background-color: #dadada; -fx-border-radius: 0 px;" text="Load Table " textFill="#610d54">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

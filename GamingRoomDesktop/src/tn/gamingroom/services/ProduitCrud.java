@@ -27,11 +27,12 @@ public class ProduitCrud implements IProduits<Produits> {
     public int ajouterProduit(Produits p) {
         int nbProd = 0;
         try {
-            String requete = "insert into produit(image,libelle,prix,description)"
-                    + "values('" + p.getImage() + "','" + p.getLibelle() + "','" + p.getPrix() + "','" + p.getDescription() + "')";
+            String requete = "insert into produit(id_cat,image,libelle,prix,description)"
+                    + "values(" + p.getId_cat()+ ",+'" + p.getImage() + "','" + p.getLibelle() + "'," + p.getPrix() + ",'" + p.getDescription() + "')";
 
             Statement st = MyConnection.getInstance().getCnx().createStatement();
            nbProd=  st.executeUpdate(requete);
+            System.out.println("nbProd "+nbProd);
             System.out.println("Produit ajouté");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -81,17 +82,18 @@ public class ProduitCrud implements IProduits<Produits> {
         List<Produits> myList = new ArrayList();
         try {
 
-            String requete = "select *from produit"; // statique
+            String requete = "select p.*,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat"; // statique
             Statement st = MyConnection.getInstance().getCnx().createStatement();
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
                 Produits p = new Produits();
                 p.setIdprod(rs.getInt(1));
-                p.setImage(rs.getString(2));
-                p.setLibelle(rs.getString(3));
-                p.setPrix(rs.getInt(4));
-                p.setDescription(rs.getString(5));
-
+                p.setImage(rs.getString(3));
+                p.setLibelle(rs.getString(4));
+                p.setPrix(rs.getInt(5));
+                p.setDescription(rs.getString(6));
+                p.setId_cat(rs.getInt(2));
+                p.setNomCat(rs.getString(7));
                 myList.add(p);
 
             }
@@ -113,14 +115,14 @@ public class ProduitCrud implements IProduits<Produits> {
         ArrayList<Produits> listProduit = new ArrayList<>();
         try {
 
-            String requete = "select * from produit ORDER BY idprod DESC";
+            String requete = "select p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat ORDER BY idprod DESC";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
 
             ResultSet res = pst.executeQuery(requete);
             Produits pr = null;
             while (res.next()) {
 
-                pr = new Produits(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getString(5));
+                pr = new Produits(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getString(6),res.getString(7));
                 listProduit.add(pr);
 
             }
@@ -134,7 +136,7 @@ public class ProduitCrud implements IProduits<Produits> {
     public List<Produits> RechercherProduit(String x) {
         ArrayList<Produits> listOffresTypeX = new ArrayList<>();
         try {
-            String req = "Select * from produit where libelle like '%" + x + "%' or description like '%" + x + "%'";
+            String req = "Select p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat and ( libelle like '%" + x + "%' or description like '%" + x + "%' )";
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(req);
 
             ResultSet rs = st.executeQuery();
@@ -142,10 +144,12 @@ public class ProduitCrud implements IProduits<Produits> {
                 Produits pr = new Produits();
 
                 pr.setIdprod(rs.getInt(1));
-                pr.setImage(rs.getString(2));
-                pr.setLibelle(rs.getString(3));
-                pr.setPrix(rs.getInt(4));
-                pr.setDescription(rs.getString(5));
+                pr.setImage(rs.getString(3));
+                pr.setLibelle(rs.getString(4));
+                pr.setPrix(rs.getInt(5));
+                pr.setDescription(rs.getString(6));
+                pr.setId_cat(rs.getInt(2));
+                pr.setNomCat(rs.getString(7));
 
                 listOffresTypeX.add(pr);
             }
@@ -164,16 +168,18 @@ public class ProduitCrud implements IProduits<Produits> {
     
     try {
 
-            String requete = "select *from produit where idprod='"+x+"'"; // statique
+            String requete = "select  p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat and idprod='"+x+"'"; // statique
             Statement st = MyConnection.getInstance().getCnx().createStatement();
             ResultSet rs = st.executeQuery(requete);
             if (rs.next()) {
                 Produits p = new Produits();
                 p.setIdprod(rs.getInt(1));
-                p.setImage(rs.getString(2));
-                p.setLibelle(rs.getString(3));
-                p.setPrix(rs.getInt(4));
-                p.setDescription(rs.getString(5));
+                p.setImage(rs.getString(3));
+                p.setLibelle(rs.getString(4));
+                p.setPrix(rs.getInt(5));
+                p.setDescription(rs.getString(6));
+                p.setId_cat(rs.getInt(2));
+                p.setNomCat(rs.getString(7));
                 return p;
 
             }
