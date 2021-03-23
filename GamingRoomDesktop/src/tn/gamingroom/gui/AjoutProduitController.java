@@ -305,11 +305,6 @@ public class AjoutProduitController implements Initializable {
         ProduitCrud crud = new ProduitCrud();
         ObservableList<Produits> list = FXCollections.observableArrayList(crud.displayProduit());
 
-        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
-        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
-        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
-        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
-        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
         tvbox.setItems(list);
     }
 
