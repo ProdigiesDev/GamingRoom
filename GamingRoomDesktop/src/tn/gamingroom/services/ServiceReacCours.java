@@ -39,12 +39,14 @@ public class ServiceReacCours implements IReacCours {
                 System.out.println("Verifiez vos données");
             } else {
                 System.out.println("Réaction ajouté");
+                
             }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return nb_ajout;
+        
 
     }
 
@@ -127,10 +129,13 @@ public class ServiceReacCours implements IReacCours {
     
     public Integer[] getNbInteraction(int id){
         Integer[]  nbReaIntegers=new Integer[2];
-        
+        nbReaIntegers[0]=0;
+        nbReaIntegers[1]=0;
          try {
             String reqnbLike = "SELECT count(*) FROM reactioncours where  interaction=1 and cour_id ="+id;
             String reqdsnbLike = "SELECT count(*) FROM reactioncours where  interaction=-1 and cour_id ="+id;
+            //String reqnbcmnt= "SELECT count(*) FROM reactioncours where  commentaire=? and cour_id ="+id;
+            
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(reqnbLike);

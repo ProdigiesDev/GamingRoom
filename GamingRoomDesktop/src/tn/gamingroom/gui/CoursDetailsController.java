@@ -175,11 +175,22 @@ public class CoursDetailsController implements Initializable {
         c.setMembre_id(Integer.parseInt(imem.getText()));
 
         int nb = s.ajouterCours(c);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Confirmation d'ajout !");
+        alert.setContentText("Voulez-Vous Vraiment Ajouter");
+
+        Optional<ButtonType> btn = alert.showAndWait();
+        JOptionPane.showMessageDialog(null, "Cours ajouté");
+        clean();
+        
         if (nb == 0) {
             JOptionPane.showMessageDialog(null, "Erreur cours non ajouteé");
         } else {
-
+            
             ConsulterCours();
+            
+            
         }
 
 //            FXMLLoader loader = new FXMLLoader(getClass().getResource("AjoutCours.fxml"));
@@ -206,6 +217,12 @@ public class CoursDetailsController implements Initializable {
 
         ServiceCours s = new ServiceCours();
         int x = s.updateCours(c2);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Confirmation de Modifiation !");
+        alert.setContentText("Voulez-Vous Vraiment Modifer");
+
+        Optional<ButtonType> btn = alert.showAndWait();
         if (x > 0) {
             JOptionPane.showMessageDialog(null, "Cours modifié");
             ConsulterCours();
@@ -278,7 +295,7 @@ public class CoursDetailsController implements Initializable {
     }
 
     @FXML
-    private void clean(ActionEvent event) {
+    private void clean() {
         inom.setText(null);
         id.setText(null);
         combocat.getSelectionModel().select(null);

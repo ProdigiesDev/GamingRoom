@@ -28,8 +28,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Cours;
 import tn.gamingroom.entities.ReacCours;
+import tn.gamingroom.outils.Outils;
 import tn.gamingroom.services.ServiceCours;
 import tn.gamingroom.services.ServiceReacCours;
 
@@ -58,7 +60,7 @@ public class InfoCoursController implements Initializable {
 
     Cours c;
     
-    int memberId=3;
+    int memberId=2;
     @FXML
     private TableView<ReacCours> tablCom;
     @FXML
@@ -67,6 +69,11 @@ public class InfoCoursController implements Initializable {
     private Text nbInter;
     @FXML
     private Button back;
+    @FXML
+    private FontAwesomeIconView dislike;
+    
+    @FXML
+    private Text nbInternegng;
     
     /**
      * Initializes the controller class.
@@ -85,7 +92,7 @@ public class InfoCoursController implements Initializable {
         nom.setText(c.getNomCours());
         des.setText(c.getDescription());
         initTable();
-        initNbInter();
+        initNbInteraction();
         
     }
      
@@ -100,6 +107,12 @@ public class InfoCoursController implements Initializable {
     @FXML
     private void ajouterCommentaire(ActionEvent event) {
         String commentaire=com.getText();
+           
+        if(Outils.containsBadWords(commentaire)){
+            JOptionPane.showMessageDialog(null,"Ce Message ne respecte pas nos standards de la communauté en matière de contenus indésirables");
+           return ;
+        }
+        
         ReacCours cours=new ReacCours(0,commentaire,memberId,c.getId());
         ServiceReacCours serviceReacCours=new ServiceReacCours();
         serviceReacCours.ajouterReacC(cours);
@@ -111,26 +124,22 @@ public class InfoCoursController implements Initializable {
         ServiceReacCours serviceReacCours=new ServiceReacCours();
                                       
         ReacCours rc=serviceReacCours.getFirstReactionById(this.c.getId(),memberId);
-        
+        int nb=0;
         if(rc==null){
             ReacCours cours=new ReacCours(1,"",memberId,c.getId());
-            serviceReacCours.ajouterReacC(cours);
+            nb=serviceReacCours.ajouterReacC(cours);
         }
-        else{
-            
-        rc.setNb_interaction(1);
-        serviceReacCours.updateReacC(rc);
+        else if(rc.getNb_interaction()==-1){
+            rc.setNb_interaction(1);
+            nb=serviceReacCours.updateReacC(rc);
+           
         }
-        initNbInter();
+         if(nb>0){
+               initNbInteraction();
+            }
     }
      
      
-    void initNbInter(){
-        ServiceReacCours serviceReacCours=new ServiceReacCours();
-        Integer[] nbLikes=serviceReacCours.getNbInteraction(this.c.getId());
-        nbInter.setText(String.valueOf(nbLikes[0]));
-        
-    }
 
     @FXML
     private void back(ActionEvent event) {
@@ -144,6 +153,37 @@ public class InfoCoursController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(InfoCoursController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void reacneg(MouseEvent event) {
+        ServiceReacCours serviceReacCours=new ServiceReacCours();
+                                      
+        ReacCours rc=serviceReacCours.getFirstReactionById(this.c.getId(),memberId);
+        int nb=0;
+        if(rc==null){
+            ReacCours cours=new ReacCours(-1,"",memberId,c.getId());
+           nb= serviceReacCours.ajouterReacC(cours);
+            
+            
+            
+        }
+        else if(rc.getNb_interaction()==1){
+
+            rc.setNb_interaction(-1);
+             nb=serviceReacCours.updateReacC(rc);
+            
+        }
+        if(nb>0){
+               initNbInteraction();
+            }
+    }
+    void initNbInteraction(){
+        ServiceReacCours serviceReacCours=new ServiceReacCours();
+        Integer[] nbLikes=serviceReacCours.getNbInteraction(this.c.getId());
+        nbInter.setText(String.valueOf(nbLikes[0]));
+        nbInternegng.setText(String.valueOf(nbLikes[1]));
+        
     }
 }
     
