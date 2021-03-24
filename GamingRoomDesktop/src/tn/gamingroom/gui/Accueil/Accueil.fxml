@@ -76,8 +76,11 @@
                </font>
             </Label>
             <FontAwesomeIcon fill="WHITE" glyphName="FACEBOOK" size="4em" x="200.0" y="930.0" />
-            <FontAwesomeIcon fill="WHITE" glyphName="TWITCH" layoutX="10.0" layoutY="10.0" size="4em" x="400.0" y="920.0" />
+            <FontAwesomeIcon fill="WHITE" glyphName="TWITCH" layoutX="10.0" layoutY="10.0" size="4em" x="415.0" y="920.0" />
             <FontAwesomeIcon fill="WHITE" glyphName="YOUTUBE" layoutX="10.0" layoutY="10.0" size="4em" x="300.0" y="920.0" />
+            <Pane layoutX="165.0" layoutY="872.0" opacity="0.4" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: rgba(8,3,37);" />
+            <Pane layoutX="400.0" layoutY="870.0" opacity="0.4" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: rgba(8,3,37);" />
+            <Pane layoutX="279.0" layoutY="870.0" opacity="0.4" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: rgba(8,3,37);" />
    </children>
 </AnchorPane>
 </content>
