@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.gui;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -31,12 +32,13 @@ public class Home extends Application {
         try {
             //Parent root=FXMLLoader.load(getClass().getResource("Reclamation/AjouterReclamation.fxml"));
             // Parent root=FXMLLoader.load(getClass().getResource("Avis/AjouterAvis.fxml"));
-             Parent root=FXMLLoader.load(getClass().getResource("Chat/chat.fxml"));
-            
+            // Parent root=FXMLLoader.load(getClass().getResource("Chat/chat.fxml"));
+             Parent root=FXMLLoader.load(getClass().getResource("Accueil/Accueil.fxml"));
+       
             Scene scene = new Scene(root);
-            
             primaryStage.setTitle("GamingRoom");
             primaryStage.setScene(scene);
+            //primaryStage.setMaximized(true);
             primaryStage.show();
         } catch (IOException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);

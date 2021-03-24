@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane prefHeight="1040.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Accueil.AccueilController">
+<content>
+<AnchorPane id="AnchorPane" fx:id="parentControl" prefHeight="1040.0" prefWidth="669.0">
+   <children>
+      <ImageView fitHeight="308.0" fitWidth="751.0" pickOnBounds="true" preserveRatio="true" styleClass="bgimage">
+         <image>
+            <Image url="file:/C:/Users/Dah/Desktop/demo/images/banner-bg.jpg" />
+         </image>
+      </ImageView>
+      <Pane opacity="0.4" prefHeight="308.0" prefWidth="669.0" style="-fx-background-color: rgb(22, 9, 98);" />
+      <Pane prefHeight="79.0" prefWidth="669.0" styleClass="navbar" stylesheets="@accueil.css">
+         <children>
+            <ImageView fitHeight="79.0" fitWidth="134.0" layoutX="31.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../images/logo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="215.0" layoutY="30.0" text="Cours" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="287.0" layoutY="30.0" text="Events" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="354.0" layoutY="30.0" text="Store" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <FontAwesomeIcon fill="WHITE" glyphName="SHOPPING_CART" layoutX="522.0" layoutY="49.0" size="2em" />
+            <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" layoutX="582.0" layoutY="48.0" size="2em" />
+         </children>
+      </Pane>
+      <Label layoutX="20.0" layoutY="100.0" prefHeight="52.0" prefWidth="254.0" text="GamingRoom" textFill="WHITE">
+         <font>
+            <Font name="Palatino Linotype" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="150.0" prefHeight="118.0" prefWidth="379.0" style="-fx-font-style: italic;" text="GamingRoom GamingRoom GamingRoom GamingRoom" textFill="WHITE">
+         <font>
+            <Font name="Palatino Linotype" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="272.0" fitWidth="669.0" layoutY="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../images/footer-bg.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutY="799.0" opacity="0.4" prefHeight="245.0" prefWidth="669.0" style="-fx-background-color: rgb(22, 9, 98);">
+         <children>
+            <Pane layoutY="169.0" prefHeight="79.0" prefWidth="669.0" style="-fx-background-color: rgba(8,3,37);" />
+         </children>
+      </Pane>
+            <Label layoutX="250.0" layoutY="990.0" text="© 2021. All rights reserved" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="200.0" layoutY="830.0" text="Connect socially with  US" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <FontAwesomeIcon fill="WHITE" glyphName="FACEBOOK" size="4em" x="200.0" y="930.0" />
+            <FontAwesomeIcon fill="WHITE" glyphName="TWITCH" layoutX="10.0" layoutY="10.0" size="4em" x="400.0" y="920.0" />
+            <FontAwesomeIcon fill="WHITE" glyphName="YOUTUBE" layoutX="10.0" layoutY="10.0" size="4em" x="300.0" y="920.0" />
+   </children>
+</AnchorPane>
+</content>
+</ScrollPane>
