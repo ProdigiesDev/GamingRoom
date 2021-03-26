@@ -5,6 +5,7 @@
  */
 package tn.gamingroom.gui;
 
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
 import java.io.IOException;
@@ -90,7 +91,6 @@ public class AjoutProduitController implements Initializable {
     private Button btnmodifier;
     @FXML
     private Button btnsupp;
-    @FXML
     private JFXTextField tfdesc;
     @FXML
     private Button btnTri;
@@ -108,13 +108,16 @@ public class AjoutProduitController implements Initializable {
     private ComboBox<Categorie> listCat;
     @FXML
     private TableColumn<Produits, String> colcat;
-private FileChooser fileChooser;
- private File file;
- Stage stage;
+    private FileChooser fileChooser;
+    private File file;
+    Stage stage;
     @FXML
     private Button imagePath;
     @FXML
     private ImageView prodImage;
+    @FXML
+    private JFXTextArea textareaProd;
+
     /**
      * Initializes the controller class.
      */
@@ -122,17 +125,16 @@ private FileChooser fileChooser;
     public void initialize(URL url, ResourceBundle rb) {
         tflibelle.setStyle("-fx-text-fill: white;");
         tfprix.setStyle("-fx-text-fill: white;");
-        tfdesc.setStyle("-fx-text-fill: white;");
+      textareaProd.setStyle("-fx-text-fill: white;");
         tfid.setStyle("-fx-text-fill: white;");
-        
-        
+
         colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
         colcat.setCellValueFactory(new PropertyValueFactory<Produits, String>("nomCat"));
         colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
         collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
         colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
         coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
-        
+
         // TODO
         CategorieServices crud = new CategorieServices();
         List<Categorie> categories = crud.DisplayCategorie();
@@ -148,10 +150,10 @@ private FileChooser fileChooser;
         listCat.setCellFactory(factory);
         listCat.setButtonCell(factory.call(null));
         listCat.setItems(FXCollections.observableArrayList(categories));
-        //  addButtonToTable();
+
         showProduct();
- fileChooser = new FileChooser();
- fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files","*.jpg","*.jpeg"));
+        fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg"));
     }
 
     @FXML
@@ -173,22 +175,22 @@ private FileChooser fileChooser;
 
         }
         resPrix = Integer.parseInt(tfprix.getText());
-        String resDesc = tfdesc.getText();
-        Produits p2 = new Produits( rescategorie.getIdcat(), resImage, resLibelle, resPrix, resLibelle);
+        String resDesc = textareaProd.getText();
+        Produits p2 = new Produits(rescategorie.getIdcat(), resImage, resLibelle, resPrix, resLibelle);
         ProduitCrud pcd = new ProduitCrud();
-         if (file != null) {
-                        try {
-                            String fileName=file.getName();
-                            int doitIndex=fileName.lastIndexOf(".");
-                            String imageName=fileName.substring(0,doitIndex)+new java.util.Date().getTime()+"."+fileName.substring(doitIndex+1);
-                            String newImagePath=Env.getImagePath()+"produits\\"+imageName;
-                            File dest = new File(newImagePath);
-                            Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                            p2.setImage(imageName);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                    }
+        if (file != null) {
+            try {
+                String fileName = file.getName();
+                int doitIndex = fileName.lastIndexOf(".");
+                String imageName = fileName.substring(0, doitIndex) + new java.util.Date().getTime() + "." + fileName.substring(doitIndex + 1);
+                String newImagePath = Env.getImagePath() + "produits\\" + imageName;
+                File dest = new File(newImagePath);
+                Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                p2.setImage(imageName);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
         if (pcd.ajouterProduit(p2) > 0) {
             JOptionPane.showMessageDialog(null, "produit ajouté");
         }
@@ -198,10 +200,10 @@ private FileChooser fileChooser;
 
     public void showProduct() {
         ProduitCrud crud = new ProduitCrud();
-        List<Produits> produitses=crud.displayProduit();
-        
+        List<Produits> produitses = crud.displayProduit();
+
         ObservableList<Produits> list = FXCollections.observableArrayList(produitses);
-        
+
         tvbox.setItems(list);
     }
 
@@ -209,7 +211,7 @@ private FileChooser fileChooser;
     private void clean(ActionEvent event) {
 
         tflibelle.setText(null);
-        tfdesc.setText(null);
+      textareaProd.setText(null);
         tfprix.setText(null);
         tfid.setText(null);
 
@@ -242,7 +244,7 @@ private FileChooser fileChooser;
         }
         tflibelle.setText(collibelle.getCellData(index).toString());
         tfprix.setText(colprix.getCellData(index).toString());
-        tfdesc.setText(coldesc.getCellData(index).toString());
+        textareaProd.setText(coldesc.getCellData(index).toString());
         tfid.setText(colid.getCellData(index).toString());
 
     }
@@ -253,9 +255,9 @@ private FileChooser fileChooser;
         String Value1 = "";
         String Value2 = tflibelle.getText();
         int Value3 = Integer.parseInt(tfprix.getText());
-        String Value4 = tfdesc.getText();
+        String Value4 = textareaProd.getText();
         int Value5 = Integer.parseInt(tfid.getText());
-        Produits p2 = new Produits(Value5,0, Value1, Value2, Value3, Value4);
+        Produits p2 = new Produits(Value5, 0, Value1, Value2, Value3, Value4);
 
         ProduitCrud pcd = new ProduitCrud();
         int x = pcd.updateProduit(p2);
@@ -344,25 +346,37 @@ private FileChooser fileChooser;
             window.setScene(dashboardScene);
             window.show();
         } catch (IOException ex) {
-            Logger.getLogger(AjoutCleController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
 
     }
 
     @FXML
     private void loadImage(ActionEvent event) {
-        
-          file = fileChooser.showOpenDialog(stage);
+
+        file = fileChooser.showOpenDialog(stage);
         try {
             prodImage.setImage(new Image(file.toURI().toURL().toExternalForm()));
         } catch (MalformedURLException ex) {
-            Logger.getLogger(AjoutProduitController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
 
-                   
+    }
+
+    @FXML
+    private void statistique(ActionEvent event) {
+            
+        try {
+            Parent stat ;
+            stat = FXMLLoader.load(getClass().getResource("statistique.fxml"));
+            
+            
+            Scene dashboardScene = new Scene(stat);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(dashboardScene);
+            window.show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());        }
+    
     }
 }
-        
-        
-    
-

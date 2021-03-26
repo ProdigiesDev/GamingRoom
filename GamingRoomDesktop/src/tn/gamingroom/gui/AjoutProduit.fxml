@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
@@ -70,7 +71,6 @@
       </Button>
       <JFXTextField fx:id="tflibelle" layoutX="204.0" layoutY="72.0" />
       <JFXTextField fx:id="tfprix" layoutX="204.0" layoutY="125.0" />
-      <JFXTextField fx:id="tfdesc" layoutX="198.0" layoutY="180.0" />
       <JFXTextField fx:id="tfid" editable="false" layoutX="198.0" layoutY="223.0" />
       <Label layoutX="15.0" layoutY="42.0" text="Image" textFill="WHITE">
          <font>
@@ -103,11 +103,18 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="imagePath" layoutX="413.0" layoutY="40.0" mnemonicParsing="false" onAction="#loadImage" text="ajouter Image " textFill="#5b0a50">
+      <Button fx:id="imagePath" layoutX="367.0" layoutY="40.0" mnemonicParsing="false" onAction="#loadImage" prefHeight="39.0" prefWidth="183.0" text="ajouter Image " textFill="#5b0a50">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
       <ImageView fx:id="prodImage" fitHeight="69.0" fitWidth="200.0" layoutX="189.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
+      <JFXTextArea fx:id="textareaProd" layoutX="139.0" layoutY="157.0" prefHeight="62.0" prefWidth="340.0" />
+      <FontAwesomeIcon glyphName="IMAGE" layoutX="373.0" layoutY="69.0" wrappingWidth="23.57143521308899" />
+      <Button layoutX="1071.0" layoutY="570.0" mnemonicParsing="false" onAction="#statistique" prefHeight="39.0" prefWidth="128.0" text="Statistique" textFill="#5b0a50">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
