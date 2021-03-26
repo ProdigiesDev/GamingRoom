@@ -42,6 +42,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.SortType;
 import javafx.scene.control.TableView;
@@ -82,7 +83,7 @@ public class AjoutProduitController implements Initializable {
     @FXML
     private TableColumn<Produits, String> collibelle;
     @FXML
-    private TableColumn<Produits, Integer> colprix;
+    private TableColumn<Produits, Double> colprix;
     @FXML
     private TableColumn<Produits, String> coldesc;
     @FXML
@@ -117,6 +118,12 @@ public class AjoutProduitController implements Initializable {
     private ImageView prodImage;
     @FXML
     private JFXTextArea textareaProd;
+    @FXML
+    private JFXTextField MaxPrix;
+    @FXML
+    private JFXTextField MinPrix;
+    @FXML
+    private Button btnSearchPrix;
 
     /**
      * Initializes the controller class.
@@ -125,14 +132,14 @@ public class AjoutProduitController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         tflibelle.setStyle("-fx-text-fill: white;");
         tfprix.setStyle("-fx-text-fill: white;");
-      textareaProd.setStyle("-fx-text-fill: white;");
+        textareaProd.setStyle("-fx-text-fill: white;");
         tfid.setStyle("-fx-text-fill: white;");
 
         colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
         colcat.setCellValueFactory(new PropertyValueFactory<Produits, String>("nomCat"));
         colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
         collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
-        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
+        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Double>("prix"));
         coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
 
         // TODO
@@ -163,10 +170,10 @@ public class AjoutProduitController implements Initializable {
         String resImage = "";
         String resLibelle = tflibelle.getText();
         Categorie rescategorie = listCat.getValue();
-        int resPrix = 0;
+        double resPrix = 0;
         try {
 
-            resPrix = Integer.parseInt(tfprix.getText());
+            resPrix = Double.parseDouble(tfprix.getText());
 
         } catch (Exception ex) {
             tfprix.setText("");
@@ -174,22 +181,26 @@ public class AjoutProduitController implements Initializable {
             return;
 
         }
-        resPrix = Integer.parseInt(tfprix.getText());
+        resPrix =Double.parseDouble(tfprix.getText());
         String resDesc = textareaProd.getText();
-        Produits p2 = new Produits(rescategorie.getIdcat(), resImage, resLibelle, resPrix, resLibelle);
+        Produits p2 = new Produits(rescategorie.getIdcat(), resImage, resLibelle, resPrix, resDesc);
         ProduitCrud pcd = new ProduitCrud();
         if (file != null) {
             try {
-                String fileName = file.getName();
-                int doitIndex = fileName.lastIndexOf(".");
-                String imageName = fileName.substring(0, doitIndex) + new java.util.Date().getTime() + "." + fileName.substring(doitIndex + 1);
-                String newImagePath = Env.getImagePath() + "produits\\" + imageName;
-                File dest = new File(newImagePath);
+                String fileName = file.getName();// 5dhina esm l fichier eli khtarneh 
+                int doitIndex = fileName.lastIndexOf(".");//lindice mta l pts
+                String imageName = fileName.substring(0, doitIndex) + new java.util.Date().getTime() + "." + fileName.substring(doitIndex + 1);//taatini esm image jdid+.+extension taa image kdima
+                String newImagePath = Env.getImagePath() + "produits\\" + imageName;//path
+                File dest = new File(newImagePath);//sna3na fich bel path taa limage
                 Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 p2.setImage(imageName);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        }else 
+        {
+           JOptionPane.showMessageDialog(null, "Il faut choisir une image");   
+        return ;
         }
         if (pcd.ajouterProduit(p2) > 0) {
             JOptionPane.showMessageDialog(null, "produit ajouté");
@@ -211,7 +222,7 @@ public class AjoutProduitController implements Initializable {
     private void clean(ActionEvent event) {
 
         tflibelle.setText(null);
-      textareaProd.setText(null);
+        textareaProd.setText(null);
         tfprix.setText(null);
         tfid.setText(null);
 
@@ -254,7 +265,7 @@ public class AjoutProduitController implements Initializable {
 
         String Value1 = "";
         String Value2 = tflibelle.getText();
-        int Value3 = Integer.parseInt(tfprix.getText());
+        double Value3 = Double.parseDouble(tfprix.getText());
         String Value4 = textareaProd.getText();
         int Value5 = Integer.parseInt(tfid.getText());
         Produits p2 = new Produits(Value5, 0, Value1, Value2, Value3, Value4);
@@ -304,7 +315,7 @@ public class AjoutProduitController implements Initializable {
         colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
         colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
         collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
-        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
+        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Double>("prix"));
         coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
         tvbox.setItems(list);
 
@@ -319,7 +330,7 @@ public class AjoutProduitController implements Initializable {
         colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
         colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
         collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
-        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("prix"));
+        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Double>("prix"));
         coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
         tvbox.setItems(list);
 
@@ -354,29 +365,68 @@ public class AjoutProduitController implements Initializable {
     @FXML
     private void loadImage(ActionEvent event) {
 
-        file = fileChooser.showOpenDialog(stage);
+        file = fileChooser.showOpenDialog(stage);//ykhalini nekhtar fichier
         try {
-            prodImage.setImage(new Image(file.toURI().toURL().toExternalForm()));
-        } catch (MalformedURLException ex) {
-            System.out.println(ex.getMessage());
+            prodImage.setImage(new Image(file.toURI().toURL().toExternalForm()));//path image (ligne mtaa file)
+        } catch (Exception ex) {
+           ex.printStackTrace();
         }
 
     }
 
     @FXML
     private void statistique(ActionEvent event) {
-            
+
         try {
-            Parent stat ;
+            Parent stat;
             stat = FXMLLoader.load(getClass().getResource("statistique.fxml"));
-            
-            
+
             Scene dashboardScene = new Scene(stat);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(dashboardScene);
             window.show();
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());        }
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+    @FXML
+    private void SearchPrice(ActionEvent event) {
+        double maxprice;
+        double minprice;
+
+        try {
+
+            maxprice = Double.parseDouble(MaxPrix.getText());
+            minprice = Double.parseDouble(MinPrix.getText());
+            double price = minprice;
+            
+            if (maxprice < minprice) {
+
+                minprice = maxprice;
+                maxprice = price;
+                MaxPrix.setText(String.valueOf(maxprice));//tconverti double ->chaine
+                MinPrix.setText(String.valueOf(minprice));
+                ProduitCrud crud = new ProduitCrud();
+                initTable(crud.RechercherPrix(minprice, maxprice));
+                
+            }
+
+        } catch (Exception ex) {
+
+            MaxPrix.setText("");
+            MinPrix.setText("");
+            JOptionPane.showMessageDialog(null, "Il faut ajouter un entier");
+            return;
+
+        }
+    }
     
+    void initTable(List<Produits> produitses){
+        ProduitCrud crud = new ProduitCrud();
+        ObservableList<Produits> list = FXCollections.observableArrayList(produitses);
+
+        tvbox.setItems(list);
     }
 }

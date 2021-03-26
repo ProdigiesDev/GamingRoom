@@ -90,7 +90,7 @@ public class ProduitCrud implements IProduits<Produits> {
                 p.setIdprod(rs.getInt(1));
                 p.setImage(rs.getString(3));
                 p.setLibelle(rs.getString(4));
-                p.setPrix(rs.getInt(5));
+                p.setPrix(rs.getDouble(5));
                 p.setDescription(rs.getString(6));
                 p.setId_cat(rs.getInt(2));
                 p.setNomCat(rs.getString(7));
@@ -116,7 +116,7 @@ public class ProduitCrud implements IProduits<Produits> {
             Produits pr = null;
             while (res.next()) {
 
-                pr = new Produits(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getString(6), res.getString(7));
+                pr = new Produits(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getDouble(5), res.getString(6), res.getString(7));
                 listProduit.add(pr);
 
             }
@@ -140,7 +140,7 @@ public class ProduitCrud implements IProduits<Produits> {
                 pr.setIdprod(rs.getInt(1));
                 pr.setImage(rs.getString(3));
                 pr.setLibelle(rs.getString(4));
-                pr.setPrix(rs.getInt(5));
+                pr.setPrix(rs.getDouble(5));
                 pr.setDescription(rs.getString(6));
                 pr.setId_cat(rs.getInt(2));
                 pr.setNomCat(rs.getString(7));
@@ -169,7 +169,7 @@ public class ProduitCrud implements IProduits<Produits> {
                 p.setIdprod(rs.getInt(1));
                 p.setImage(rs.getString(3));
                 p.setLibelle(rs.getString(4));
-                p.setPrix(rs.getInt(5));
+                p.setPrix(rs.getDouble(5));
                 p.setDescription(rs.getString(6));
                 p.setId_cat(rs.getInt(2));
                 p.setNomCat(rs.getString(7));
@@ -216,4 +216,39 @@ public class ProduitCrud implements IProduits<Produits> {
         return integers;
     }
 
+    public List<Produits> RechercherPrix(double minPrice,double maxPrice){
+      
+       ArrayList<Produits> listOffresTypeX = new ArrayList<>();
+        try {
+            String req="Select p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat and  prix >= "+minPrice+" and prix <= "+maxPrice;
+            PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(req);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Produits pr = new Produits();
+
+                pr.setIdprod(rs.getInt(1));
+                pr.setImage(rs.getString(3));
+                pr.setLibelle(rs.getString(4));
+                pr.setPrix(rs.getDouble(5));
+                pr.setDescription(rs.getString(6));
+                pr.setId_cat(rs.getInt(2));
+                pr.setNomCat(rs.getString(7));
+
+                listOffresTypeX.add(pr);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        if (listOffresTypeX.isEmpty()) {
+            System.out.println("Il y a aucun produit de ce libelle");
+        }
+        return listOffresTypeX;
+    }
+    
+    
+    
+    
+    
 }
