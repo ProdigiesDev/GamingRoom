@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
  * @author eyatr
  */
 public class Courslm {
+
     private int id;
     private String nomCours;
     private String description;
@@ -22,8 +23,22 @@ public class Courslm {
     private String tags;
     private ImageView image;
     private int categorie_id;
-
+    private String categorieNom;
+    private String imagename;
     public Courslm() {
+    }
+
+    public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView image, int categorie_id, String categorieNom) {
+        this.id = id;
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.membre_id = membre_id;
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.image = image;
+        this.categorie_id = categorie_id;
+        this.categorieNom = categorieNom;
     }
 
     public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView image, int categorie_id) {
@@ -35,12 +50,35 @@ public class Courslm {
         this.date_creation = date_creation;
         this.tags = tags;
         this.image = image;
+
         this.categorie_id = categorie_id;
+    }
+
+    public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, String image) {
+        this.id = id;
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.membre_id = membre_id;
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.categorieNom = categorieNom;
+        this.categorie_id = categorie_id;
+    }
+
+    public String getImagename() {
+        return imagename;
+    }
+
+    public void setImagename(String imagename) {
+        this.imagename = imagename;
     }
 
     public int getId() {
         return id;
     }
+    
+    
 
     public void setId(int id) {
         this.id = id;
@@ -109,5 +147,5 @@ public class Courslm {
     public void setCategorie_id(int categorie_id) {
         this.categorie_id = categorie_id;
     }
-    
+
 }

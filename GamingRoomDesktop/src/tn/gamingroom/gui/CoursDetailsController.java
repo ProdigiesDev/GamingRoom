@@ -8,12 +8,17 @@ package tn.gamingroom.gui;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -36,17 +41,21 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Cours;
 import tn.gamingroom.entities.Courslm;
+import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.ServiceCours;
 
@@ -57,24 +66,23 @@ import tn.gamingroom.services.ServiceCours;
  */
 public class CoursDetailsController implements Initializable {
 
+    private TableColumn<Courslm, Integer> cid;
     @FXML
-    private TableColumn<Cours, Integer> cid;
+    private TableColumn<Courslm, String> cnom;
     @FXML
-    private TableColumn<Cours, String> cnom;
+    private TableColumn<Courslm, String> cdes;
     @FXML
-    private TableColumn<Cours, String> cdes;
+    private TableColumn<Courslm, Integer> cnb;
     @FXML
-    private TableColumn<Cours, Integer> cnb;
+    private TableColumn<Courslm, Integer> cmem;
     @FXML
-    private TableColumn<Cours, Integer> cmem;
+    private TableColumn<Courslm, Date> cdate;
     @FXML
-    private TableColumn<Cours, Date> cdate;
+    private TableColumn<Courslm, String> cmoc;
     @FXML
-    private TableColumn<Cours, String> cmoc;
+    private TableColumn<Courslm, Integer> ccat;
     @FXML
-    private TableColumn<Cours, Integer> ccat;
-    @FXML
-    private TableView<Cours> tableCours;
+    private TableView<Courslm> tableCours;
     @FXML
     private Button btnaj;
     @FXML
@@ -89,15 +97,13 @@ public class CoursDetailsController implements Initializable {
     private JFXTextField icl;
     @FXML
     private JFXDatePicker idate;
-    @FXML
+     @FXML
     private JFXTextField inb;
+    @FXML
     private JFXTextField icat;
     @FXML
     private JFXTextField inom;
-    @FXML
-    private Label iid;
-    @FXML
-    private JFXTextField id;
+
     @FXML
     private Button btnclean;
     @FXML
@@ -108,37 +114,48 @@ public class CoursDetailsController implements Initializable {
     private Button btntri;
     @FXML
     private ComboBox<Categorie> combocat;
+    @FXML
+    private Label alert;
+    @FXML
+    private Button ajoutimage;
+    private FileChooser fileChooser;
+    private File file;
+    Stage stage;
+    @FXML
+    private TableColumn<Courslm, ImageView> cimage;
+    @FXML
+    private ImageView imagevc;
+    String image;
+    
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        ServiceCours s = new ServiceCours();
-
-        ObservableList<Cours> listCours = FXCollections.observableArrayList(s.displayCours());
-        id.setStyle("-fx-text-fill: white; ");
+        
         inom.setStyle("-fx-text-fill: white; ");
         icl.setStyle("-fx-text-fill: white; ");
         ides.setStyle("-fx-text-fill: white; ");
         inb.setStyle("-fx-text-fill: white; ");
         imem.setStyle("-fx-text-fill: white; ");
         idate.setStyle("-fx-text-fill: white; ");
-        cnom.setCellValueFactory(new PropertyValueFactory<Cours, String>("nomCours"));
-        cid.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("Id"));
-        cdes.setCellValueFactory(new PropertyValueFactory<Cours, String>("description"));
-        cdate.setCellValueFactory(new PropertyValueFactory<Cours, Date>("date_creation"));
-        cmoc.setCellValueFactory(new PropertyValueFactory<Cours, String>("tags"));
-        cmem.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("membre_id"));
-        cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
-        ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
-       
-        tableCours.setItems(listCours);
+        cnom.setCellValueFactory(new PropertyValueFactory<Courslm, String>("nomCours"));
+
+        cdes.setCellValueFactory(new PropertyValueFactory<Courslm, String>("description"));
+        cdate.setCellValueFactory(new PropertyValueFactory<Courslm, Date>("date_creation"));
+        cmoc.setCellValueFactory(new PropertyValueFactory<Courslm, String>("tags"));
+        cmem.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("membre_id"));
+        cnb.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("nb_participants"));
+        ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
+        cimage.setCellValueFactory(new PropertyValueFactory<Courslm, ImageView>("image"));
         
+        this.initTable(null);
+
         //catégorie combo
-         CategorieServices cs = new CategorieServices();
-        ObservableList l = FXCollections.observableArrayList(cs.DisplayCategorie());
+        CategorieServices csc = new CategorieServices();
+        ObservableList l = FXCollections.observableArrayList(csc.DisplayCategorie());
         combocat.setItems(l);
 
         combocat.setConverter(new StringConverter<Categorie>() {
@@ -152,8 +169,6 @@ public class CoursDetailsController implements Initializable {
                 return null;
             }
         });
-        
-        
 
     }
 
@@ -161,10 +176,15 @@ public class CoursDetailsController implements Initializable {
     private void ajouterC(ActionEvent event) {
 
         //try {
+        
+        //TODO fil verifNb lazem ykon integer 
+        boolean verif = verifcat() || verifdate() || verifdes() || verifmem() || verifmo() || verifmo() || verifnb() || verifnom();
+        if (verif) {
+            return;
+        }
         Cours c = new Cours();
-       ServiceCours s = new ServiceCours();
-       Categorie categorie =  combocat.getValue();
-         
+        ServiceCours s = new ServiceCours();
+        Categorie categorie = combocat.getValue();
 
         c.setNomCours(inom.getText());
         c.setDescription(ides.getText());
@@ -172,25 +192,41 @@ public class CoursDetailsController implements Initializable {
         c.setDate_creation(Date.valueOf(idate.getValue()));
         c.setTags(icl.getText());
         c.setCategorie_id(categorie.getIdcat());
+        //TODO hethi lazem titbadil dynamique ki tkamil sonia
         c.setMembre_id(Integer.parseInt(imem.getText()));
-
+        String nomImage = moveImage();
+        c.setImage(nomImage);
+        System.out.println(c.getImage());
+        if (nomImage.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Veuillez insérer une image");
+            return;
+        }
         int nb = s.ajouterCours(c);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Confirmation d'ajout !");
         alert.setContentText("Voulez-Vous Vraiment Ajouter");
 
-        Optional<ButtonType> btn = alert.showAndWait();
-        JOptionPane.showMessageDialog(null, "Cours ajouté");
-        clean();
-        
         if (nb == 0) {
             JOptionPane.showMessageDialog(null, "Erreur cours non ajouteé");
         } else {
+            Optional<ButtonType> btn = alert.showAndWait();
+            JOptionPane.showMessageDialog(null, "Cours ajouté");
+            Courslm cmm= new Courslm();
             
-            ConsulterCours();
-            
-            
+
+        cmm.setNomCours(inom.getText());
+        cmm.setDescription(ides.getText());
+        cmm.setNb_participants(Integer.parseInt(inb.getText()));
+        cmm.setDate_creation(Date.valueOf(idate.getValue()));
+        cmm.setTags(icl.getText());
+        cmm.setCategorie_id(categorie.getIdcat());
+        cmm.setMembre_id(Integer.parseInt(imem.getText()));
+        
+        c.setImage(nomImage);
+
+        clean();
+
         }
 
 //            FXMLLoader loader = new FXMLLoader(getClass().getResource("AjoutCours.fxml"));
@@ -205,16 +241,34 @@ public class CoursDetailsController implements Initializable {
     @FXML
     private void modifierC(ActionEvent event) {
 
+        
+        Courslm c = this.tableCours.getSelectionModel().getSelectedItem();
+        if(c==null){
+            JOptionPane.showMessageDialog(null, "a5tar cours");
+            return;
+        }
+        
+        //TODO fil verifNb lazem ykon integer 
+        boolean verif = verifcat() || verifdate() || verifdes() || verifmem() || verifmo() || verifmo() || verifnb() || verifnom();
+        if (verif) {
+            return;
+        }
         String Value1 = ides.getText();
         String Value2 = inom.getText();
-        int Value3 = Integer.parseInt(id.getText());
+
         String Value4 = icl.getText();
         int Value5 = Integer.parseInt(inb.getText());
         Categorie cat = combocat.getValue();
         Date Value7 = Date.valueOf(idate.getValue());
+        String nomImage = moveImage();
 
-        Cours c2 = new Cours(Value3, Value2, Value1, Value5, Value4, cat.getIdcat());
+        if (nomImage.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Veuillez insérer une image");
+            return;
+        }
 
+        Cours c2 = new Cours(Value2, Value1, Value5, Value7, Value4, nomImage, cat.getIdcat());
+        c2.setId(c.getId());
         ServiceCours s = new ServiceCours();
         int x = s.updateCours(c2);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -225,10 +279,12 @@ public class CoursDetailsController implements Initializable {
         Optional<ButtonType> btn = alert.showAndWait();
         if (x > 0) {
             JOptionPane.showMessageDialog(null, "Cours modifié");
-            ConsulterCours();
+            this.initTable(null);
 
         } else {
             System.out.println("cours non modifié");
+            
+            JOptionPane.showMessageDialog(null, "cours non modifié");
         }
 
     }
@@ -236,9 +292,13 @@ public class CoursDetailsController implements Initializable {
     @FXML
     private void supprimer(ActionEvent event) {
         ServiceCours s = new ServiceCours();
-        Cours c = new Cours();
+        Courslm c = new Courslm();
 
         c = this.tableCours.getSelectionModel().getSelectedItem();
+        if(c==null){
+            JOptionPane.showMessageDialog(null, "a5tar cours");
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Confirmation de Suppression !");
@@ -246,135 +306,218 @@ public class CoursDetailsController implements Initializable {
 
         Optional<ButtonType> btn = alert.showAndWait();
         if (btn.get() == ButtonType.OK) {
-            s.supprimerCours(c);
-            this.ConsulterCours();
+            s.supprimerCours(c.getId());
+            this.tableCours.getItems().remove(c);
+            
             System.out.println("suppression avec succées");
         } else {
             alert.close();
         }
     }
 
-    private void ConsulterCours() {
-        ServiceCours s = new ServiceCours();
-        List<Cours> lc = s.displayCours();
-
-        ObservableList<Cours> list
-                = FXCollections.observableArrayList(lc);
-
-        ObservableList<Cours> listCours = FXCollections.observableArrayList(s.displayCours());
-        cnom.setCellValueFactory(new PropertyValueFactory<Cours, String>("nomCours"));
-        cid.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("Id"));
-        cdes.setCellValueFactory(new PropertyValueFactory<Cours, String>("description"));
-        cdate.setCellValueFactory(new PropertyValueFactory<Cours, Date>("date_creation"));
-        cmoc.setCellValueFactory(new PropertyValueFactory<Cours, String>("tags"));
-        cmem.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("membre_id"));
-        cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
-        ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
-        tableCours.setItems(list);
-
-    }
-
     @FXML
     private void getSelected(MouseEvent event) {
-        Cours c=tableCours.getSelectionModel().getSelectedItem();
-        CategorieServices categorieServices=new CategorieServices();
-        if (c==null) {
+        Courslm c = tableCours.getSelectionModel().getSelectedItem();
+        CategorieServices categorieServices = new CategorieServices();
+        if (c == null) {
             return;
         }
-        id.setText(String.valueOf(c.getId()));
+        //id.setText(String.valueOf(c.getId()));
         imem.setText(String.valueOf(c.getMembre_id()));
         inom.setText(c.getNomCours());
         combocat.setValue(categorieServices.getCategorieById(c.getCategorie_id()));
-        Date d=c.getDate_creation(); 
+        Date d = c.getDate_creation();
         System.out.println(d);
         idate.setValue(LocalDate.of(d.getYear(), d.getMonth(), d.getDay()));
         icl.setText(c.getTags());
         ides.setText(c.getDescription());
         inb.setText(String.valueOf(c.getNb_participants()));
+        file = new File(Env.getImagePath() + "cours\\" + c.getImagename());
+        imagevc.setImage(c.getImage().getImage());
         //inb.setText(img.getCellData(index).toString());
     }
 
     @FXML
     private void clean() {
         inom.setText(null);
-        id.setText(null);
+        //id.setText(null);
         combocat.getSelectionModel().select(null);
         idate.setValue(null);
         imem.setText(null);
         inb.setText(null);
         ides.setText(null);
         icl.setText(null);
+        imagevc.setImage(null);
     }
 
     @FXML
     private void searchCours(KeyEvent event) {
         ServiceCours s = new ServiceCours();
-        ObservableList<Cours> list = FXCollections.observableArrayList(s.searchCours(search.getText()));
+        ObservableList<Courslm> list = FXCollections.observableArrayList(s.searchCours(search.getText()));
 
-        cnom.setCellValueFactory(new PropertyValueFactory<Cours, String>("nomCours"));
-        cid.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("Id"));
-        cdes.setCellValueFactory(new PropertyValueFactory<Cours, String>("description"));
-        cdate.setCellValueFactory(new PropertyValueFactory<Cours, Date>("date_creation"));
-        cmoc.setCellValueFactory(new PropertyValueFactory<Cours, String>("tags"));
-        cmem.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("membre_id"));
-        cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
-        ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
         tableCours.setItems(list);
     }
 
     @FXML
     private void trierC(ActionEvent event) {
         ServiceCours s = new ServiceCours();
-        ObservableList<Cours> list = FXCollections.observableArrayList(s.trierCoursID());
-
-        cnom.setCellValueFactory(new PropertyValueFactory<Cours, String>("nomCours"));
-        cid.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("Id"));
-        cdes.setCellValueFactory(new PropertyValueFactory<Cours, String>("description"));
-        cdate.setCellValueFactory(new PropertyValueFactory<Cours, Date>("date_creation"));
-        cmoc.setCellValueFactory(new PropertyValueFactory<Cours, String>("tags"));
-        cmem.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("membre_id"));
-        cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
-        ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
+        ObservableList<Courslm> list = FXCollections.observableArrayList(s.trierCoursID());
+        String nomImage = moveImage();
         tableCours.setItems(list);
+        
 
     }
 
-    private void addButtonToTable() {
-//        TableColumn<Cours, Void> btn = new TableColumn("");
-//
-//        Callback<TableColumn<Cours, Void>, TableCell<Cours, Void>> cellFactory = new Callback<TableColumn<Cours, Void>, TableCell<Cours, Void>>() {
-//            @Override
-//            public TableCell<Cours, Void> call(final TableColumn<Cours, Void> param) {
-//                final TableCell<Cours, Void> cell = new TableCell<Cours, Void>() {
-//
-//                    private final Button btn = new Button("Supprimer");
-//
-//                    {
-//                        btn.setOnAction(event -> {
-//                            Cours c = getTableView().getItems().get(getIndex());
-//                            ServiceCours coursService = new ServiceCours();
-//                            coursService.supprimerCours(c);
-//                            ConsulterCours();
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void updateItem(Void item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        if (empty) {
-//                            setGraphic(null);
-//                        } else {
-//                            setGraphic(btn);
-//                        }
-//                    }
-//                };
-//                return cell;
-//            }
-//        };
-//
-//        btn.setCellFactory(cellFactory);
-//
-//        tableCours.getColumns().add(btn);
-   }
+    private boolean verifnom() {
+        alert.setStyle("-fx-text-fill: white; ");
+        if (inom.getText().isEmpty()) {
+            alert.setText("Veuillez remplir ce champs");
+            return true;
+        } else if (inom.getText().length() > 20) {
+            alert.setText("Nom trop long");
+            return true;
+        } else {
+            alert.setText("");
+            return false;
+        }
+    }
+
+    private boolean verifmo() {
+        alert.setStyle("-fx-text-fill: white; ");
+        if (icl.getText().isEmpty()) {
+            alert.setText("Veuillez remplir ce champs");
+            return true;
+        } else {
+            alert.setText("");
+            return false;
+        }
+    }
+
+    private boolean verifnb() {
+        alert.setStyle("-fx-text-fill: white; ");
+        if (inb.getText().isEmpty()) {
+            alert.setText("Veuillez remplir ce champs");
+            return true;
+        } else {
+            alert.setText("");
+            return false;
+        }
+    }
+
+    private boolean verifdate() {
+        alert.setStyle("-fx-text-fill: white; ");
+
+        if (idate.getValue() == null) {
+
+            alert.setText("Veuillez remplir ce champs");
+            return true;
+        } else {
+            alert.setText("");
+            return false;
+        }
+    }
+
+    private boolean verifmem() {
+        alert.setStyle("-fx-text-fill: white; ");
+        if (imem.getText().isEmpty()) {
+            alert.setText("Veuillez remplir ce champs");
+            return true;
+        } else {
+            alert.setText("");
+            return false;
+        }
+    }
+
+    private boolean verifdes() {
+        alert.setStyle("-fx-text-fill: white; ");
+        if (ides.getText().isEmpty()) {
+            alert.setText("Veuillez remplir ce champs");
+            return true;
+        } else {
+            alert.setText("");
+            return false;
+        }
+    }
+
+    private boolean verifcat() {
+        alert.setStyle("-fx-text-fill: white; ");
+        if (combocat.getItems().isEmpty()) {
+            alert.setText("Veuillez remplir ce champs");
+            return true;
+        } else {
+            alert.setText("");
+            return false;
+        }
+    }
+
+    @FXML
+    private void ajouterim(ActionEvent event) {
+        //nakhtar fichier
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", ".png", ".jpg", ".jpeg"));
+
+        file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            image = file.getAbsolutePath();
+            Image imageForFile;
+            try {
+                imageForFile = new Image(file.toURI().toURL().toExternalForm());
+                imagevc.setImage(imageForFile);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            alert.setText("veuillez insere une image");
+        }
 
     }
+
+    private String moveImage() {
+        if (file != null) {
+            try {
+                String fileName = file.getName();
+                int doitIndex = fileName.lastIndexOf(".");
+                String imageName = fileName.substring(0, doitIndex) + new java.util.Date().getTime() + "." + fileName.substring(doitIndex + 1);
+                String imageNameTodb = Env.getImagePath() + "cours\\" + imageName;
+                File dest = new File(imageNameTodb);
+                Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                return imageName;
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return "";
+    }
+
+    private void initTable(List<Cours> listcours) {
+        ServiceCours es = new ServiceCours();
+        CategorieServices cs = new CategorieServices();
+        if(listcours==null){
+            listcours=es.displayCours();
+        }
+        List<Courslm> lIm = new ArrayList<Courslm>();
+        listcours.forEach(e -> {
+
+            try {
+                File f = new File(Env.getImagePath() + "cours\\" + e.getImage());
+                Image img = new Image(f.toURI().toURL().toExternalForm());
+                ImageView i = new ImageView(img);
+                i.setFitHeight(50);
+                i.setFitWidth(70);
+                Courslm addCours=new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat());
+                addCours.setImagename(e.getImage());
+                lIm.add(addCours);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+        System.out.println("ev " + lIm);
+
+        ObservableList<Courslm> listCoursIm = FXCollections.observableArrayList(lIm);
+
+        tableCours.setItems(listCoursIm);
+    }
+}

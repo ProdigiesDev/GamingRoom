@@ -69,6 +69,8 @@ public class CoursMembreintController implements Initializable {
         ccat.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("categorie_id"));
         tbCours.setItems(listCours);
         // TODO
+        
+        
     }
 
     @FXML

@@ -21,56 +21,52 @@
             <Image url="file:/C:/Users/eyatr/Desktop/AjoutEvenement.jpg" />
          </image>
       </ImageView>
-      <Pane layoutX="14.0" layoutY="72.0" opacity="0.67" prefHeight="456.0" prefWidth="334.0" style="-fx-background-color: BLACK;">
+      <Pane layoutX="14.0" layoutY="76.0" prefHeight="492.0" prefWidth="344.0" style="-fx-background-color: BLACK;">
          <children>
-            <Label layoutX="18.0" layoutY="83.0" prefHeight="32.0" prefWidth="47.0" text="Nom" textFill="#FFFFFF">
+            <Label layoutX="18.0" layoutY="161.0" prefHeight="32.0" prefWidth="47.0" text="Nom" textFill="#FFFFFF">
                <font>
                   <Font name="Bauhaus 93" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="16.0" layoutY="364.0" prefHeight="32.0" prefWidth="245.0" text="Nombre de participants" textFill="#FFFFFF">
+            <Label layoutX="16.0" layoutY="394.0" prefHeight="32.0" prefWidth="245.0" text="Nombre de participants" textFill="#FFFFFF">
                <font>
                   <Font name="Bauhaus 93" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="18.0" layoutY="132.0" prefHeight="32.0" prefWidth="157.0" text="Catégorie du cours" textFill="#FFFFFF">
+            <Label layoutX="18.0" layoutY="213.0" prefHeight="32.0" prefWidth="157.0" text="Catégorie du cours" textFill="#FFFFFF">
                <font>
                   <Font name="Bauhaus 93" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="18.0" layoutY="189.0" prefHeight="32.0" prefWidth="141.0" text="Date de création" textFill="#FFFFFF">
+            <Label layoutX="18.0" layoutY="267.0" prefHeight="32.0" prefWidth="141.0" text="Date de création" textFill="#FFFFFF">
                <font>
                   <Font name="Bauhaus 93" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="18.0" layoutY="247.0" prefHeight="32.0" prefWidth="103.0" text="Mots clés" textFill="#FFFFFF">
+            <Label layoutX="18.0" layoutY="311.0" prefHeight="32.0" prefWidth="103.0" text="Mots clés" textFill="#FFFFFF">
                <font>
                   <Font name="Bauhaus 93" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="18.0" layoutY="299.0" prefHeight="32.0" prefWidth="103.0" text="Description" textFill="#FFFFFF">
+            <Label layoutX="18.0" layoutY="352.0" prefHeight="32.0" prefWidth="103.0" text="Description" textFill="#FFFFFF">
                <font>
                   <Font name="Bauhaus 93" size="18.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="icl" layoutX="132.0" layoutY="231.0" />
-            <JFXTextField fx:id="inb" layoutX="216.0" layoutY="351.0" prefHeight="31.0" prefWidth="112.0" unFocusColor="#FFFFFF" />
-            <JFXTextField fx:id="inom" layoutX="75.0" layoutY="69.0" prefHeight="31.0" prefWidth="233.0" />
-            <Label fx:id="iid" layoutX="18.0" layoutY="37.0" prefHeight="32.0" prefWidth="47.0" text="Id" textFill="#FFFFFF">
+            <JFXTextField fx:id="icl" layoutX="132.0" layoutY="305.0" />
+            <JFXTextField fx:id="inb" layoutX="216.0" layoutY="383.0" prefHeight="31.0" prefWidth="112.0" unFocusColor="#FFFFFF" />
+            <JFXTextField fx:id="inom" layoutX="75.0" layoutY="147.0" prefHeight="31.0" prefWidth="233.0" />
+            <JFXDatePicker fx:id="idate" defaultColor="#941075" layoutX="167.0" layoutY="257.0" prefHeight="31.0" prefWidth="157.0" style="-fx-background-color: Ajouter;" />
+            <Label layoutX="17.0" layoutY="442.0" prefHeight="32.0" prefWidth="245.0" text="Membre proprietaire" textFill="#FFFFFF">
                <font>
                   <Font name="Bauhaus 93" size="18.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="id" editable="false" focusColor="#e4e7ee" layoutX="65.0" layoutY="22.0" prefHeight="31.0" prefWidth="233.0" />
-            <JFXDatePicker fx:id="idate" layoutX="162.0" layoutY="177.0" prefHeight="31.0" prefWidth="157.0" style="-fx-background-color: Ajouter;" />
-            <Label layoutX="17.0" layoutY="418.0" prefHeight="32.0" prefWidth="245.0" text="Membre proprietaire" textFill="#FFFFFF">
-               <font>
-                  <Font name="Bauhaus 93" size="18.0" />
-               </font>
-            </Label>
-            <JFXTextField fx:id="imem" layoutX="216.0" layoutY="404.0" prefHeight="31.0" prefWidth="112.0" />
-            <JFXTextField fx:id="ides" layoutX="142.0" layoutY="288.0" prefHeight="26.0" prefWidth="171.0" unFocusColor="#FFFFFF" />
-            <ComboBox fx:id="combocat" layoutX="186.0" layoutY="133.0" prefHeight="28.0" prefWidth="126.0" />
+            <JFXTextField fx:id="imem" layoutX="216.0" layoutY="427.0" prefHeight="31.0" prefWidth="112.0" />
+            <JFXTextField fx:id="ides" layoutX="142.0" layoutY="343.0" prefHeight="26.0" prefWidth="171.0" unFocusColor="#FFFFFF" />
+            <ComboBox fx:id="combocat" layoutX="186.0" layoutY="215.0" prefHeight="28.0" prefWidth="126.0" />
+            <Button fx:id="ajoutimage" layoutX="11.0" layoutY="43.0" mnemonicParsing="false" onAction="#ajouterim" style="-fx-background-color: #6f1075;" text="Ajouter Image" textFill="#d8d1da" />
+            <ImageView fx:id="imagevc" fitHeight="90.0" fitWidth="183.0" layoutX="142.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <Pane layoutY="52.0" prefHeight="5.0" prefWidth="1261.0" style="-fx-background-color: 6f1075;" />
@@ -95,7 +91,7 @@
          </font>
       </Label>
       <Pane layoutY="52.0" prefHeight="5.0" prefWidth="1261.0" style="-fx-background-color: #6f1075;" />
-      <Button fx:id="btnclean" layoutX="94.0" layoutY="548.0" mnemonicParsing="false" onAction="#clean" style="-fx-background-color: #6f1075;" text="Vider les champs" textFill="#e1dcdc">
+      <Button fx:id="btnclean" layoutX="94.0" layoutY="570.0" mnemonicParsing="false" onAction="#clean" style="-fx-background-color: #6f1075;" text="Vider les champs" textFill="#e1dcdc">
          <font>
             <Font name="Bauhaus 93" size="18.0" />
          </font>
@@ -106,17 +102,18 @@
             <Font name="Bauhaus 93" size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="tableCours" editable="true" layoutX="389.0" layoutY="146.0" onMouseClicked="#getSelected" prefHeight="247.0" prefWidth="823.0" style="-fx-background-color: #6f1075;">
+      <TableView fx:id="tableCours" editable="true" layoutX="389.0" layoutY="146.0" onMouseClicked="#getSelected" prefHeight="247.0" prefWidth="896.0" style="-fx-background-color: #6f1075;">
          <columns>
-            <TableColumn fx:id="cid" editable="false" prefWidth="49.0" sortable="false" style="color: #6f1075;" text="Id" />
-            <TableColumn fx:id="cnom" prefWidth="77.0" text="Nom " />
-            <TableColumn fx:id="cdes" prefWidth="102.0" text="Déscription" />
-            <TableColumn fx:id="cmem" minWidth="0.0" prefWidth="93.0" text="Membres" />
-            <TableColumn fx:id="cdate" prefWidth="135.0" style="color: #6f1075;" text="Date de création" />
-            <TableColumn fx:id="cmoc" prefWidth="112.0" text="Mots clés" />
-            <TableColumn fx:id="ccat" prefWidth="105.0" text="Catégorie" />
-            <TableColumn fx:id="cnb" prefWidth="147.0" text="Nombre des participants" />
+            <TableColumn fx:id="cimage" prefWidth="121.0" text="Image" />
+            <TableColumn fx:id="cnom" prefWidth="78.0" text="Nom " />
+            <TableColumn fx:id="cdes" prefWidth="139.0" text="Déscription" />
+            <TableColumn fx:id="cmem" minWidth="0.0" prefWidth="94.0" text="Membres" />
+            <TableColumn fx:id="cdate" prefWidth="108.0" style="color: #6f1075;" text="Date de création" />
+            <TableColumn fx:id="cmoc" prefWidth="79.0" text="Mots clés" />
+            <TableColumn fx:id="ccat" prefWidth="69.0" text="Catégorie" />
+            <TableColumn fx:id="cnb" prefWidth="144.0" text="Nombre des participants" />
          </columns>
       </TableView>
+      <Label fx:id="alert" layoutX="406.0" layoutY="100.0" prefHeight="18.0" prefWidth="225.0" />
    </children>
 </AnchorPane>

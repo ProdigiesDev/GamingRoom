@@ -26,8 +26,8 @@ public class ServiceCours implements ICours {
 
         int nb_ajouter=0;
         try {
-            String requete = "INSERT INTO cour(nomCours,description,nb_participant ,membre_id,date_creation,tags,categorie_id)"
-                    + "VALUES (?,?,?,?,?,?,?)";
+            String requete = "INSERT INTO cour(nomCours,description,nb_participant ,membre_id,date_creation,tags,categorie_id,imagecours)"
+                    + "VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setString(1, c.getNomCours());
@@ -37,6 +37,7 @@ public class ServiceCours implements ICours {
             pst.setDate(5, c.getDate_creation());
             pst.setString(6, c.getTags());
             pst.setInt(7, c.getCategorie_id());
+            pst.setString(8, c.getImage());
             nb_ajouter=pst.executeUpdate();
             
             if (nb_ajouter <= 0) {
@@ -55,13 +56,13 @@ public class ServiceCours implements ICours {
    
 
     @Override
-    public int supprimerCours(Cours c) {
+    public int supprimerCours(int id) {
         int nb_supprim=0;
         try {
             String requeteSP = "DELETE FROM cour where id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requeteSP);
-            pst.setInt(1, c.getId());
+            pst.setInt(1, id);
             nb_supprim=pst.executeUpdate();
             
             if (nb_supprim <= 0) {
@@ -74,17 +75,18 @@ public class ServiceCours implements ICours {
         }
         return nb_supprim;
     }
-
+//TODO update image url
     @Override
     public int updateCours(Cours c) {
         int nb_up=0;
         try {
             
-            String requeteUp = "UPDATE cour SET nomCours=?, description=? ,tags=? ,categorie_id=? ,nb_participant=? WHERE id=?";
+            String requeteUp = "UPDATE cour SET nomCours=?, description=? ,tags=? ,categorie_id=? ,nb_participant=?,imagecours=? WHERE id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requeteUp);
             pst.setString(1, c.getNomCours());
-            pst.setInt(6, c.getId());
+            pst.setInt(7, c.getId());
+            pst.setString(6, c.getImage());
             pst.setString(2, c.getDescription());
             pst.setString(3, c.getTags());
             pst.setInt(4, c.getCategorie_id());
@@ -105,7 +107,7 @@ public class ServiceCours implements ICours {
     public List<Cours> displayCours() {
         List<Cours> CoursList = new ArrayList<>();
         try {
-            String requeteDs = "SELECT * FROM cour";
+            String requeteDs = "SELECT c.*,ca.nomcategorie from cour c , categorie ca where ca.idcat=c.categorie_id";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requeteDs);
@@ -119,6 +121,10 @@ public class ServiceCours implements ICours {
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setCategorie_id(rs.getInt("categorie_id"));
+               
+                c.setImage(rs.getString("imagecours"));
+             
+                    
                 CoursList.add(c);
             }
         } catch (SQLException ex) {

@@ -16,7 +16,7 @@ public interface ICours {
 
     public int ajouterCours(Cours c);
 
-    public int supprimerCours(Cours c);
+    public int supprimerCours(int id);
 
     public int updateCours(Cours c);
 
