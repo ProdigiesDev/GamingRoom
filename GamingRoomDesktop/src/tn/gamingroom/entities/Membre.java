@@ -43,6 +43,29 @@ public class Membre {
     public Membre() {
     }
 
+    public Membre(int id) {
+        this.id = id;
+    }
+    
+    
+
+    public Membre(int id, int point, boolean active, int ban_duration, Date last_timeban) {
+        this.id = id;
+        this.point = point;
+        this.active = active;
+        this.ban_duration = ban_duration;
+        this.last_timeban = last_timeban;
+    }
+
+   
+    
+
+    public Membre(int id, boolean active) {
+        this.id = id;
+        this.active = active;
+    }
+    
+
     public Membre(int id, int point) {
         this.id = id;
         this.point = point;
@@ -156,6 +179,7 @@ public class Membre {
         this.active = active;
     }
     
+    
     public Membre(String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, String description, boolean active) {
         this.nom = nom;
         this.prenom = prenom;
@@ -169,6 +193,8 @@ public class Membre {
         this.description = description;
         this.active = active;
     }
+    
+    
 
    
 

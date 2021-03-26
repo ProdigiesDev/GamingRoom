@@ -6,7 +6,9 @@
 package tn.gamingroom.gui.Member;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -16,7 +18,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
@@ -27,6 +33,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Categorie;
@@ -94,9 +101,11 @@ public class DashboardAdminController implements Initializable {
     @FXML
     private JFXButton btnsortm;
     @FXML
-    private JFXTextField tfpoint;
+    private JFXButton btnsignout;
     @FXML
-    private JFXButton btnUpdateMember;
+    private JFXComboBox<String> activateCombo;
+    @FXML
+    private JFXButton btnUpdateActivationAccount;
 
     /**
      * Initializes the controller class.
@@ -112,6 +121,11 @@ public class DashboardAdminController implements Initializable {
         
         //Categorie
         afficherCategorie();
+        //Combo Genre
+        activateCombo.getItems().addAll(
+                "Activate",
+                "Deactivate"
+                );
 
         
         
@@ -292,15 +306,15 @@ public class DashboardAdminController implements Initializable {
                     private final JFXButton btn = new JFXButton("ban");
 
                     {
+                        btn.setStyle("-fx-background-color: #9F7EF7");
+                        btn.setTextFill(Paint.valueOf("#f8f7f7"));
                         btn.setOnAction( event -> {
-                            btn.setStyle("-fx-background-color: #9F7EF7");
                             Membre membre = getTableView().getItems().get(getIndex());
                             MembreServices membreServices=new MembreServices();
                             membre.setBan_duration(membre.getBan_duration()+1);
                             membre.setActive(false);
                             membre.setLast_timeban(Date.valueOf(LocalDate.now()));
                             membreServices.modifierMembreParAdmin(membre);
-                            
                            getTableView().getItems().set(getIndex(), membre);
                         });
                     }
@@ -334,27 +348,37 @@ public class DashboardAdminController implements Initializable {
             return;
 
         }
+        
         tfidmember.setText(colonne_id.getCellData(index).toString());
-        tfpoint.setText(colonne_pt.getCellData(index).toString());
+        String active = colonne_active.getCellData(index).toString();
+        if (active.equals("false")){
+            activateCombo.setValue("Deactivate");
+        }
+         if (active.equals("true")){
+            activateCombo.setValue("Activate");
+        }
+        //activateCombo.setValue(colonne_active.getCellData(index).toString());
+       // tfpoint.setText(colonne_pt.getCellData(index).toString());
     }
 
-    @FXML
-    private void AjouterdesPoint(MouseEvent event) {
-        
+//    @FXML
+//    private void AjouterdesPoint(MouseEvent event) {
+//        try{
 //        int  id = Integer.parseInt(tfidmember.getText());
 //        int  point = Integer.parseInt(tfpoint.getText());
+//       
+//       tfpoint.setText((String.valueOf(point+1)));
+//        }catch(Exception ex){
+//            JOptionPane.showMessageDialog(null, " choisir un membre");
+//            
+//        }
+//          
 //        
-//        MembreServices ms = new MembreServices();
-//        int i = ms.getPointParid(id)+1;
-//        i++;
-//       tfpoint.setText((String.valueOf(i)));
-          
-        
-    }
+//    }
 
-    @FXML
-    private void modiferPointMembre(ActionEvent event) {
-        
+//    @FXML
+//    private void modiferPointMembre(ActionEvent event) {
+//        
 //         int idmembre = Integer.parseInt(tfidmember.getText());
 //        int pointmembre = Integer.parseInt(tfpoint.getText());
 //        
@@ -370,6 +394,42 @@ public class DashboardAdminController implements Initializable {
 //            JOptionPane.showMessageDialog(null, "Erreur de modification");
 //        }
 //        afficherMembre();
+//    }
+
+    @FXML
+    private void signout(ActionEvent event) throws IOException {
+        Parent dashboard ;
+                dashboard = FXMLLoader.load(getClass().getResource("LoginMember.fxml"));
+//             Parent root = loader.load();
+//            DashboardAdminController adc = loader.getController();
+            
+                Scene dashboardScene = new Scene(dashboard);
+                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                window.setScene(dashboardScene);
+                window.show();
+    }
+
+    @FXML
+    private void ActiverCompte(ActionEvent event) {
+        int idmembre = Integer.parseInt(tfidmember.getText());
+        String active =  activateCombo.getValue();
+        MembreServices ms = new MembreServices();
+        if(active.equals("Activate")){
+            Membre m = new Membre(idmembre,true);
+            ms.activerCompte(m);
+            JOptionPane.showMessageDialog(null, " Account successfully activated");
+            afficherMembre();
+        }
+        if(active.equals("Deactivate")){
+            Membre m1 = new Membre();
+            m1.setId(idmembre);
+            m1.setBan_duration(ms.getBandurParid(idmembre)+1);
+            m1.setActive(false);
+            m1.setLast_timeban(Date.valueOf(LocalDate.now()));
+            ms.desactiverCompte(m1);
+            JOptionPane.showMessageDialog(null, " Account successfully deactivated");
+            afficherMembre();
+        }
     }
 
     

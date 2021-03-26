@@ -26,6 +26,9 @@ public interface IMembre<T> {
      public int lastId();
      public int getPointParid(int id);
      public String autotext();
+     public int activerCompte(T m);
+     public int desactiverCompte(T m);
+     public int getBandurParid(int id);
 
     
 }

@@ -160,6 +160,7 @@ public class MembreServices implements IMembre<Membre> {
                 m.setPassword(rs.getString("password"));
                 m.setImage(rs.getString("image"));
                 m.setRole(Membre.Role.valueOf(rs.getString("role")));
+                m.setPoint(rs.getInt("point"));
                 m.setActive(rs.getBoolean("active"));
                 m.setBan_duration(rs.getInt("ban_duration"));
                 m.setLast_timeban(rs.getDate("last_timeban"));
@@ -361,13 +362,68 @@ public class MembreServices implements IMembre<Membre> {
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requete);
+            System.out.println("id"+id);
             if (rs.next()) {
                 point=rs.getInt("point");
+                System.out.println("Points"+rs.getInt("point"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(MembreServices.class.getName()).log(Level.SEVERE, null, ex);
         }
           return point;  
+    }
+
+    @Override
+    public int activerCompte(Membre m) {
+        int nbactive=0;
+        try {
+            String requete = "UPDATE membre SET active=? WHERE id=? AND role != 'Admin' ";
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requete);
+            pst.setBoolean(1, m.getActive());
+            pst.setInt(2, m.getId());
+            nbactive=pst.executeUpdate();
+            System.out.println("Modification avec succées");
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return nbactive;
+    }
+     @Override
+    public int desactiverCompte(Membre m) {
+        int nbactive=0;
+        try {
+            String requete = "UPDATE membre SET active=?,ban_duration=?,last_timeban=? WHERE id=? AND role != 'Admin' ";
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requete);
+            pst.setBoolean(1, m.getActive());
+            pst.setInt(2, m.getBan_duration());
+            pst.setDate(3, m.getLast_timeban());
+            pst.setInt(4, m.getId());
+            nbactive=pst.executeUpdate();
+            System.out.println("Modification avec succées");
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return nbactive;
+    }
+    @Override
+     public int getBandurParid(int id) {
+        int ban_dur = 0;
+        try {
+            
+            String requete = "select * from membre where id = '"+id+"'";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+ 
+            if (rs.next()) {
+                ban_dur=rs.getInt("ban_duration");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+          return ban_dur;  
     }
 
     

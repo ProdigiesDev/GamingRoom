@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Label?>
@@ -15,13 +16,13 @@
 
 <AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.DashboardAdminController">
    <children>
-      <TabPane layoutX="31.0" layoutY="15.0" prefHeight="621.0" prefWidth="850.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="1.0" layoutY="31.0" prefHeight="605.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="MEMBER">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="603.0" prefWidth="908.0">
                      <children>
-                        <TableView fx:id="table_memb" layoutX="13.0" layoutY="286.0" onMouseClicked="#getSelectedMember" prefHeight="264.0" prefWidth="831.0" style="-fx-background-color: #D5C4F4;" styleClass="dash" stylesheets="@dashboard.css">
+                        <TableView fx:id="table_memb" layoutX="13.0" layoutY="286.0" onMouseClicked="#getSelectedMember" prefHeight="264.0" prefWidth="876.0" style="-fx-background-color: #D5C4F4;" styleClass="dash" stylesheets="@dashboard.css">
                           <columns>
                             <TableColumn fx:id="colonne_id" prefWidth="41.0" text="ID" />
                             <TableColumn fx:id="colonne_name" prefWidth="75.0" text="NAME" />
@@ -49,13 +50,11 @@
                         </TextField>
                         <FontAwesomeIcon glyphName="SEARCH" layoutX="214.0" layoutY="267.0" />
                         <JFXTextField fx:id="tfidmember" focusColor="#4b3489" labelFloat="true" layoutX="358.0" layoutY="93.0" prefHeight="25.0" prefWidth="220.0" promptText="Id member" unFocusColor="#4b3489" />
-                        <JFXTextField fx:id="tfpoint" editable="false" focusColor="#4b3489" labelFloat="true" layoutX="359.0" layoutY="135.0" prefHeight="26.0" prefWidth="53.0" unFocusColor="#4b3489" />
                         <JFXButton fx:id="btnsortm" layoutX="275.0" layoutY="245.0" onAction="#trierMembre" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="SORT BY ID" textFill="WHITE" />
-                        <JFXButton fx:id="btnUpdateMember" layoutX="652.0" layoutY="179.0" onAction="#modiferPointMembre" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="UPDATE" textFill="WHITE" />
-                        <FontAwesomeIcon fill="#b34dbc" glyphName="PLUS" layoutX="429.0" layoutY="158.0" onMouseClicked="#AjouterdesPoint" size="1.5em" />
-                        <Label layoutX="460.0" layoutY="142.0" text="ADD Points" />
+                        <JFXButton fx:id="btnUpdateActivationAccount" layoutX="652.0" layoutY="179.0" onAction="#ActiverCompte" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="UPDATE" textFill="WHITE" />
                         <FontAwesomeIcon fill="WHITE" glyphName="PENCIL" layoutX="734.0" layoutY="200.0" size="1.5em" />
                         <FontAwesomeIcon fill="WHITE" glyphName="SORT" layoutX="365.0" layoutY="266.0" />
+                        <JFXComboBox fx:id="activateCombo" focusColor="#b34dbc" layoutX="358.0" layoutY="140.0" prefHeight="29.0" prefWidth="225.0" promptText="Act/Desac Account" unFocusColor="#b34dbc" />
                      </children>
                   </AnchorPane>
             </content>
@@ -100,5 +99,6 @@
           </Tab>
         </tabs>
       </TabPane>
+      <JFXButton fx:id="btnsignout" layoutX="816.0" layoutY="5.0" onAction="#signout" style="-fx-background-color: #F02307;" text="SIGN OUT" />
    </children>
 </AnchorPane>

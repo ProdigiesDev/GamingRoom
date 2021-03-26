@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Member/ProfilMemberController.java</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/entities/Membre.java</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/entities/Categorie.java</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Member/DashboardAdmin.fxml</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Member/SignupUserController.java</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/interfaces/IMembre.java</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Member/MemberHomePage.java</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Member/DashboardAdminController.java</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Member/LoginMemberController.java</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/services/CategorieMembreServices.java</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/services/CategorieServices.java</file>
+            <file>file:/C:/Users/asus/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/services/MembreServices.java</file>
+        </group>
     </open-files>
 </project-private>
