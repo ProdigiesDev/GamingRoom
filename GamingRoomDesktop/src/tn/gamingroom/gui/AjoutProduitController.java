@@ -57,6 +57,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Categorie;
+import tn.gamingroom.entities.ImageProduits;
 import tn.gamingroom.entities.Produits;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.outils.MyConnection;
@@ -75,17 +76,17 @@ public class AjoutProduitController implements Initializable {
     @FXML
     private JFXTextField tfprix;
     @FXML
-    private TableView<Produits> tvbox;
+    private TableView<ImageProduits> tvbox;
     @FXML
-    private TableColumn<Produits, Integer> colid;
+    private TableColumn<ImageProduits, Integer> colid;
     @FXML
-    private TableColumn<Produits, String> colimage;
+    private TableColumn<ImageProduits, ImageView> colimage;
     @FXML
-    private TableColumn<Produits, String> collibelle;
+    private TableColumn<ImageProduits, String> collibelle;
     @FXML
-    private TableColumn<Produits, Double> colprix;
+    private TableColumn<ImageProduits, Double> colprix;
     @FXML
-    private TableColumn<Produits, String> coldesc;
+    private TableColumn<ImageProduits, String> coldesc;
     @FXML
     private Button btnajouter;
     @FXML
@@ -108,7 +109,7 @@ public class AjoutProduitController implements Initializable {
     @FXML
     private ComboBox<Categorie> listCat;
     @FXML
-    private TableColumn<Produits, String> colcat;
+    private TableColumn<ImageProduits, String> colcat;
     private FileChooser fileChooser;
     private File file;
     Stage stage;
@@ -135,12 +136,12 @@ public class AjoutProduitController implements Initializable {
         textareaProd.setStyle("-fx-text-fill: white;");
         tfid.setStyle("-fx-text-fill: white;");
 
-        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
-        colcat.setCellValueFactory(new PropertyValueFactory<Produits, String>("nomCat"));
-        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
-        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
-        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Double>("prix"));
-        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
+        colid.setCellValueFactory(new PropertyValueFactory<ImageProduits, Integer>("idprod"));
+        colcat.setCellValueFactory(new PropertyValueFactory<ImageProduits, String>("nomCat"));
+        colimage.setCellValueFactory(new PropertyValueFactory<ImageProduits, ImageView>("image"));
+        collibelle.setCellValueFactory(new PropertyValueFactory<ImageProduits, String>("libelle"));
+        colprix.setCellValueFactory(new PropertyValueFactory<ImageProduits, Double>("prix"));
+        coldesc.setCellValueFactory(new PropertyValueFactory<ImageProduits, String>("description"));
 
         // TODO
         CategorieServices crud = new CategorieServices();
@@ -158,7 +159,7 @@ public class AjoutProduitController implements Initializable {
         listCat.setButtonCell(factory.call(null));
         listCat.setItems(FXCollections.observableArrayList(categories));
 
-        showProduct();
+        initTable(null);
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg"));
     }
@@ -185,38 +186,39 @@ public class AjoutProduitController implements Initializable {
         String resDesc = textareaProd.getText();
         Produits p2 = new Produits(rescategorie.getIdcat(), resImage, resLibelle, resPrix, resDesc);
         ProduitCrud pcd = new ProduitCrud();
-        if (file != null) {
-            try {
-                String fileName = file.getName();// 5dhina esm l fichier eli khtarneh 
-                int doitIndex = fileName.lastIndexOf(".");//lindice mta l pts
-                String imageName = fileName.substring(0, doitIndex) + new java.util.Date().getTime() + "." + fileName.substring(doitIndex + 1);//taatini esm image jdid+.+extension taa image kdima
-                String newImagePath = Env.getImagePath() + "produits\\" + imageName;//path
-                File dest = new File(newImagePath);//sna3na fich bel path taa limage
-                Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                p2.setImage(imageName);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }else 
+        String fileName=moveImage();
+    if(fileName.length()==0) 
         {
            JOptionPane.showMessageDialog(null, "Il faut choisir une image");   
         return ;
         }
         if (pcd.ajouterProduit(p2) > 0) {
             JOptionPane.showMessageDialog(null, "produit ajouté");
+            initTable(null);
         }
-        showProduct();
+ 
 
     }
 
-    public void showProduct() {
-        ProduitCrud crud = new ProduitCrud();
-        List<Produits> produitses = crud.displayProduit();
+    private String moveImage() {
+        if (file != null) {
+            try {
+                String fileName = file.getName();
+                int doitIndex = fileName.lastIndexOf(".");
+                String imageName = fileName.substring(0, doitIndex) + new java.util.Date().getTime() + "." + fileName.substring(doitIndex + 1);
+                String imageNameTodb = Env.getImagePath() + "produits\\" + imageName;
+                File dest = new File(imageNameTodb);
+                Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                return imageName;
 
-        ObservableList<Produits> list = FXCollections.observableArrayList(produitses);
-
-        tvbox.setItems(list);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return "";
     }
+    
+
 
     @FXML
     private void clean(ActionEvent event) {
@@ -237,9 +239,8 @@ public class AjoutProduitController implements Initializable {
         integers.forEach(i -> {
             produitses.add(pcd.getByID(i));
         });
-        ObservableList<Produits> list = FXCollections.observableArrayList(produitses);
-
-        tvbox.setItems(list);
+    initTable(produitses);
+     
 
     }
 
@@ -274,8 +275,7 @@ public class AjoutProduitController implements Initializable {
         int x = pcd.updateProduit(p2);
         if (x > 0) {
             JOptionPane.showMessageDialog(null, "produit modifié");
-            showProduct();
-
+            initTable(null);
         } else {
             System.out.println("produit non modifié");
         }
@@ -286,7 +286,7 @@ public class AjoutProduitController implements Initializable {
     private void supprimer(ActionEvent event) {
 
         ProduitCrud pcd = new ProduitCrud();
-        Produits p = new Produits();
+        ImageProduits p = new ImageProduits();
 
         p = this.tvbox.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -296,8 +296,8 @@ public class AjoutProduitController implements Initializable {
 
         Optional<ButtonType> btn = alert.showAndWait();
         if (btn.get() == ButtonType.OK) {
-            pcd.supprimerProduit(p);
-            this.showProduct();
+            pcd.supprimerProduit(p.getIdprod());
+            this.initTable(null);
             System.out.println("suppression avec succées");
         } else {
             alert.close();
@@ -310,14 +310,9 @@ public class AjoutProduitController implements Initializable {
     @FXML
     private void TrierParId(ActionEvent event) {
         ProduitCrud crud = new ProduitCrud();
-        ObservableList<Produits> list = FXCollections.observableArrayList(crud.TrierParId());
-
-        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
-        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
-        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
-        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Double>("prix"));
-        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
-        tvbox.setItems(list);
+  initTable(crud.TrierParId());
+     
+      
 
     }
 
@@ -325,14 +320,9 @@ public class AjoutProduitController implements Initializable {
     private void RechercherProduit(KeyEvent event) {
 
         ProduitCrud crud = new ProduitCrud();
-        ObservableList<Produits> list = FXCollections.observableArrayList(crud.RechercherProduit(tfrech.getText()));
 
-        colid.setCellValueFactory(new PropertyValueFactory<Produits, Integer>("idprod"));
-        colimage.setCellValueFactory(new PropertyValueFactory<Produits, String>("image"));
-        collibelle.setCellValueFactory(new PropertyValueFactory<Produits, String>("libelle"));
-        colprix.setCellValueFactory(new PropertyValueFactory<Produits, Double>("prix"));
-        coldesc.setCellValueFactory(new PropertyValueFactory<Produits, String>("description"));
-        tvbox.setItems(list);
+    initTable(crud.RechercherProduit(tfrech.getText()));
+
 
     }
 
@@ -340,9 +330,8 @@ public class AjoutProduitController implements Initializable {
     private void loadTable(ActionEvent event) {
 
         ProduitCrud crud = new ProduitCrud();
-        ObservableList<Produits> list = FXCollections.observableArrayList(crud.displayProduit());
-
-        tvbox.setItems(list);
+        initTable(null);
+    
     }
 
     @FXML
@@ -425,8 +414,39 @@ public class AjoutProduitController implements Initializable {
     
     void initTable(List<Produits> produitses){
         ProduitCrud crud = new ProduitCrud();
-        ObservableList<Produits> list = FXCollections.observableArrayList(produitses);
+if(produitses==null){
+            produitses=crud.displayProduit();
+        }
+        List<ImageProduits> lIm = new ArrayList<ImageProduits>();
+        produitses.forEach(e -> {
 
-        tvbox.setItems(list);
+            try {
+                File f = new File(Env.getImagePath() + "produits\\" + e.getImage());
+                Image img = new Image(f.toURI().toURL().toExternalForm());
+                ImageView i = new ImageView(img);
+                i.setFitHeight(50);
+                i.setFitWidth(70);
+                ImageProduits imageProduits=new ImageProduits();
+                imageProduits.setDescription(e.getDescription());
+                imageProduits.setId_cat(e.getId_cat());
+                imageProduits.setIdprod(e.getIdprod());
+                imageProduits.setImage(i);
+                imageProduits.setImagename(e.getImage());
+                imageProduits.setLibelle(e.getLibelle());
+                imageProduits.setNomCat(e.getNomCat());
+                imageProduits.setPrix(e.getPrix());
+                
+                
+                
+                imageProduits.setImagename(e.getImage());
+                lIm.add(imageProduits);
+            } catch (MalformedURLException ex) {
+ex.printStackTrace();            }
+
+        });
+        System.out.println("ev " + lIm);
+
+        ObservableList<ImageProduits> listProduitIm = FXCollections.observableArrayList(lIm);
+        tvbox.setItems(listProduitIm);
     }
 }

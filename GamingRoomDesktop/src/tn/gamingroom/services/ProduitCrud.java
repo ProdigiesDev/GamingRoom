@@ -41,12 +41,12 @@ public class ProduitCrud implements IProduits<Produits> {
     }
 
     @Override
-    public int supprimerProduit(Produits p) {
+    public int supprimerProduit(int  idprod) {
         int nbProd = 0;
         try {
             String requete = "delete from produit where idprod=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
-            pst.setInt(1, p.getIdprod());
+            pst.setInt(1, idprod);
 
             nbProd = pst.executeUpdate();
             System.out.println("produit supprimé");

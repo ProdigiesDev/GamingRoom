@@ -15,7 +15,7 @@ import tn.gamingroom.entities.Produits;
  */
 public interface IProduits <T> { 
     public int ajouterProduit(T p); //  T type generique
-    public int supprimerProduit(T p);
+    public int supprimerProduit(int idprod);
     public int updateProduit(T p);
     public List<T> displayProduit();
     
