@@ -28,11 +28,11 @@ public class ProduitCrud implements IProduits<Produits> {
         int nbProd = 0;
         try {
             String requete = "insert into produit(id_cat,image,libelle,prix,description)"
-                    + "values(" + p.getId_cat()+ ",+'" + p.getImage() + "','" + p.getLibelle() + "'," + p.getPrix() + ",'" + p.getDescription() + "')";
+                    + "values(" + p.getId_cat() + ",+'" + p.getImage() + "','" + p.getLibelle() + "'," + p.getPrix() + ",'" + p.getDescription() + "')";
 
             Statement st = MyConnection.getInstance().getCnx().createStatement();
-           nbProd=  st.executeUpdate(requete);
-            System.out.println("nbProd "+nbProd);
+            nbProd = st.executeUpdate(requete);
+            System.out.println("nbProd " + nbProd);
             System.out.println("Produit ajouté");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -47,13 +47,13 @@ public class ProduitCrud implements IProduits<Produits> {
             String requete = "delete from produit where idprod=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
             pst.setInt(1, p.getIdprod());
-            
-           nbProd= pst.executeUpdate();
+
+            nbProd = pst.executeUpdate();
             System.out.println("produit supprimé");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return nbProd ;
+        return nbProd;
     }
 
     @Override
@@ -68,8 +68,8 @@ public class ProduitCrud implements IProduits<Produits> {
                     + "' WHERE idprod=" + p.getIdprod();
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
-             rowsUpdated = pst.executeUpdate(requete);
-           
+            rowsUpdated = pst.executeUpdate(requete);
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -78,7 +78,7 @@ public class ProduitCrud implements IProduits<Produits> {
 
     @Override
     public List<Produits> displayProduit() {
-        
+
         List<Produits> myList = new ArrayList();
         try {
 
@@ -105,12 +105,6 @@ public class ProduitCrud implements IProduits<Produits> {
 
     }
 
-    
-    
-    
-    
-    
-    
     public ArrayList<Produits> TrierParId() {
         ArrayList<Produits> listProduit = new ArrayList<>();
         try {
@@ -122,7 +116,7 @@ public class ProduitCrud implements IProduits<Produits> {
             Produits pr = null;
             while (res.next()) {
 
-                pr = new Produits(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getString(6),res.getString(7));
+                pr = new Produits(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getString(6), res.getString(7));
                 listProduit.add(pr);
 
             }
@@ -163,12 +157,11 @@ public class ProduitCrud implements IProduits<Produits> {
         return listOffresTypeX;
     }
 
-    public Produits getByID(int x ){
-    
-    
-    try {
+    public Produits getByID(int x) {
 
-            String requete = "select  p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat and idprod='"+x+"'"; // statique
+        try {
+
+            String requete = "select  p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat and idprod='" + x + "'"; // statique
             Statement st = MyConnection.getInstance().getCnx().createStatement();
             ResultSet rs = st.executeQuery(requete);
             if (rs.next()) {
@@ -187,18 +180,11 @@ public class ProduitCrud implements IProduits<Produits> {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-    
-    
+
         return null;
-    
+
     }
-    
-    
-    
-    
-    
-    
-    
+
     public List<Integer> bestProductsSelled() {
         List<Integer> integers = new ArrayList<>();
         try {

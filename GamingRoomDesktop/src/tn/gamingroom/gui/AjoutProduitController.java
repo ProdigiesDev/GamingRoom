@@ -6,8 +6,13 @@
 package tn.gamingroom.gui;
 
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,13 +46,17 @@ import javafx.scene.control.TableColumn.SortType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Produits;
+import tn.gamingroom.outils.Env;
 import tn.gamingroom.outils.MyConnection;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.ProduitCrud;
@@ -59,8 +68,6 @@ import tn.gamingroom.services.ProduitCrud;
  */
 public class AjoutProduitController implements Initializable {
 
-    @FXML
-    private JFXTextField tfimage;
     @FXML
     private JFXTextField tflibelle;
     @FXML
@@ -101,13 +108,18 @@ public class AjoutProduitController implements Initializable {
     private ComboBox<Categorie> listCat;
     @FXML
     private TableColumn<Produits, String> colcat;
-
+private FileChooser fileChooser;
+ private File file;
+ Stage stage;
+    @FXML
+    private Button imagePath;
+    @FXML
+    private ImageView prodImage;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tfimage.setStyle("-fx-text-fill: white;");
         tflibelle.setStyle("-fx-text-fill: white;");
         tfprix.setStyle("-fx-text-fill: white;");
         tfdesc.setStyle("-fx-text-fill: white;");
@@ -138,14 +150,15 @@ public class AjoutProduitController implements Initializable {
         listCat.setItems(FXCollections.observableArrayList(categories));
         //  addButtonToTable();
         showProduct();
-
+ fileChooser = new FileChooser();
+ fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files","*.jpg","*.jpeg"));
     }
 
     @FXML
     private void ajouterProduit(ActionEvent event) {
 
         //  Save produit IN DATABASE
-        String resImage = tfimage.getText();
+        String resImage = "";
         String resLibelle = tflibelle.getText();
         Categorie rescategorie = listCat.getValue();
         int resPrix = 0;
@@ -163,6 +176,19 @@ public class AjoutProduitController implements Initializable {
         String resDesc = tfdesc.getText();
         Produits p2 = new Produits( rescategorie.getIdcat(), resImage, resLibelle, resPrix, resLibelle);
         ProduitCrud pcd = new ProduitCrud();
+         if (file != null) {
+                        try {
+                            String fileName=file.getName();
+                            int doitIndex=fileName.lastIndexOf(".");
+                            String imageName=fileName.substring(0,doitIndex)+new java.util.Date().getTime()+"."+fileName.substring(doitIndex+1);
+                            String newImagePath=Env.getImagePath()+"produits\\"+imageName;
+                            File dest = new File(newImagePath);
+                            Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                            p2.setImage(imageName);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
         if (pcd.ajouterProduit(p2) > 0) {
             JOptionPane.showMessageDialog(null, "produit ajouté");
         }
@@ -182,7 +208,6 @@ public class AjoutProduitController implements Initializable {
     @FXML
     private void clean(ActionEvent event) {
 
-        tfimage.setText(null);
         tflibelle.setText(null);
         tfdesc.setText(null);
         tfprix.setText(null);
@@ -215,7 +240,6 @@ public class AjoutProduitController implements Initializable {
             return;
 
         }
-        tfimage.setText(colimage.getCellData(index).toString());
         tflibelle.setText(collibelle.getCellData(index).toString());
         tfprix.setText(colprix.getCellData(index).toString());
         tfdesc.setText(coldesc.getCellData(index).toString());
@@ -226,7 +250,7 @@ public class AjoutProduitController implements Initializable {
     @FXML
     private void updateTable(ActionEvent event) {
 
-        String Value1 = tfimage.getText();
+        String Value1 = "";
         String Value2 = tflibelle.getText();
         int Value3 = Integer.parseInt(tfprix.getText());
         String Value4 = tfdesc.getText();
@@ -324,4 +348,21 @@ public class AjoutProduitController implements Initializable {
         }
 
     }
+
+    @FXML
+    private void loadImage(ActionEvent event) {
+        
+          file = fileChooser.showOpenDialog(stage);
+        try {
+            prodImage.setImage(new Image(file.toURI().toURL().toExternalForm()));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(AjoutProduitController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+                   
+    }
 }
+        
+        
+    
+

@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -67,7 +68,6 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <JFXTextField fx:id="tfimage" layoutX="204.0" layoutY="24.0" style="-fx-region-border: white;" />
       <JFXTextField fx:id="tflibelle" layoutX="204.0" layoutY="72.0" />
       <JFXTextField fx:id="tfprix" layoutX="204.0" layoutY="125.0" />
       <JFXTextField fx:id="tfdesc" layoutX="198.0" layoutY="180.0" />
@@ -103,5 +103,11 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <Button fx:id="imagePath" layoutX="413.0" layoutY="40.0" mnemonicParsing="false" onAction="#loadImage" text="ajouter Image " textFill="#5b0a50">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="prodImage" fitHeight="69.0" fitWidth="200.0" layoutX="189.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
