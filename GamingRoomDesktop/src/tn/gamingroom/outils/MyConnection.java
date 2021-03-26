@@ -6,6 +6,7 @@
 package tn.gamingroom.outils;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,6 +17,8 @@ import java.util.logging.Logger;
  * @author House
  */
 public class MyConnection {
+
+    
 
     String url="jdbc:mysql://localhost:3306/gamingroom";
     String login="gamingRoomUser";
@@ -32,13 +35,15 @@ public class MyConnection {
         }
     }
 
-    public Connection getCnx() {
+    // methode static 
+    
+    
+    
+      public Connection getCnx() {
         return cnx;
     }
-    
-    
-    public static MyConnection getInstance(){
-        if(instance == null){
+    public static MyConnection getInstance() {
+        if (instance == null) {
             instance = new MyConnection();
         }
         return instance;
