@@ -49,14 +49,14 @@ public class evenementTest {
         //es.supprimerReacC(rRs);
         //System.out.println(es.listerEvenement());
 //////////////////////////////////////////////////////Chercher Ev
-        //System.out.println(es.chercherEvenement("aventure"));
+        System.out.println(es.chercherEvenement("c"));
 /////////////////////////////////////////////////////inscription Ev        
-        //es.sinscrirEvenement(2, 6);
+        es.sinscrirEvenement(2, 6);
 /////////////////////////////////////////////////////tri ev
       // System.out.println(es.triEvenement());
 ////////////////////////////////////////////////upComingEvents
         //
-        System.out.println(es.upComingEvents());
+        //System.out.println(es.upComingEvents());
 
     }
 

@@ -76,8 +76,8 @@ public class ModifierEvenementController implements Initializable {
     @FXML
     private Label lienCont;
 
-    public void setId(String id) {
-        this.id = Integer.parseInt(id);
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setNomevent(String nomevent) {
@@ -125,6 +125,14 @@ public class ModifierEvenementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        nomevent.setStyle("-fx-text-fill: white; ");
+        datedeb.setStyle("-fx-text-fill: white; ");
+        datefin.setStyle("-fx-text-fill: white; ");
+        selectedFile.setStyle("-fx-text-fill: white; ");
+        categorie.setStyle("-fx-text-fill: white; ");
+        nbremax_participant.setStyle("-fx-text-fill: white; ");
+        lienyoutube.setStyle("-fx-text-fill: white; ");
+        description.setStyle("-fx-text-fill: white; ");
         bntModif.setDisable(true);
     }
 

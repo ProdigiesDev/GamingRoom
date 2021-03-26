@@ -19,19 +19,23 @@ public class EvenementImage {
     private Date dateDeb;
     private Date dateFin;
     private ImageView image;
+    private String imageUrl;
     private int categorie_id;
+    private String categorieNom;
     private int nbreMax_participant;
     private String description;
     private String lieu;
     private String lienYoutube;
 
-    public EvenementImage(int idevent, String nomEvent, Date dateDeb, Date dateFin, ImageView image, int categorie_id, int nbreMax_participant, String description, String lieu, String lienYoutube) {
+    public EvenementImage(int idevent, String nomEvent, Date dateDeb, Date dateFin, ImageView image, String imageUrl,int categorie_id, String categorieNom,int nbreMax_participant, String description, String lieu, String lienYoutube) {
         this.idevent = idevent;
         this.nomEvent = nomEvent;
         this.dateDeb = dateDeb;
         this.dateFin = dateFin;
         this.image = image;
+        this.imageUrl = imageUrl;
         this.categorie_id = categorie_id;
+        this.categorieNom = categorieNom;
         this.nbreMax_participant = nbreMax_participant;
         this.description = description;
         this.lieu = lieu;
@@ -78,6 +82,16 @@ public class EvenementImage {
         this.image = image;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    
+    
+
     public int getCategorie_id() {
         return categorie_id;
     }
@@ -118,10 +132,20 @@ public class EvenementImage {
         this.lienYoutube = lienYoutube;
     }
 
+    public String getCategorieNom() {
+        return categorieNom;
+    }
+
+    public void setCategorieNom(String categorieNom) {
+        this.categorieNom = categorieNom;
+    }
+
     @Override
     public String toString() {
-        return "EvenementImage{" + "idevent=" + idevent + ", nomEvent=" + nomEvent + ", dateDeb=" + dateDeb + ", dateFin=" + dateFin + ", image=" + image + ", categorie_id=" + categorie_id + ", nbreMax_participant=" + nbreMax_participant + ", description=" + description + ", lieu=" + lieu + ", lienYoutube=" + lienYoutube + '}';
+        return "EvenementImage{" + "idevent=" + idevent + ", nomEvent=" + nomEvent + ", dateDeb=" + dateDeb + ", dateFin=" + dateFin + ", image=" + image + ", imageUrl=" + imageUrl + ", categorie_id=" + categorie_id + ", categorieNom=" + categorieNom + ", nbreMax_participant=" + nbreMax_participant + ", description=" + description + ", lieu=" + lieu + ", lienYoutube=" + lienYoutube + '}';
     }
+    
+   
     
 
 }

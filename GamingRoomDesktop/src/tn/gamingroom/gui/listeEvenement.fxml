@@ -15,7 +15,7 @@
    <children>
       <ImageView fitHeight="692.0" fitWidth="1286.0" layoutX="-50.0" layoutY="-22.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/C:/Users/Asus/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/AjoutEvenement.jpg" />
+            <Image url="file:/C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/AjoutEvenement.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="48.0" layoutY="11.0" opacity="0.78" prefHeight="559.0" prefWidth="1152.0" style="-fx-background-color: black;">
@@ -37,6 +37,8 @@
                   <TableColumn fx:id="idE" prefWidth="79.0" visible="false" />
                   <TableColumn fx:id="catL" prefWidth="113.0" text="Catégorie" />
                   <TableColumn fx:id="nbML" prefWidth="131.0" text="Nombre maximale" />
+                  <TableColumn fx:id="idCat" prefWidth="113.0" text="idCat" visible="false" />
+                  <TableColumn fx:id="imageURL" prefWidth="131.0" visible="false" />
               </columns>
             </TableView>
             <JFXButton layoutX="443.0" layoutY="499.0" onAction="#goToAjouterEvenement" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: #6f1075;" text="Ajouter un evenement" textFill="#f8f8f8">

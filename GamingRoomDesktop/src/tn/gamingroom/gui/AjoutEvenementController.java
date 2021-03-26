@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -31,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -82,12 +84,23 @@ public class AjoutEvenementController implements Initializable {
     private Label lienCont = new Label();
     @FXML
     private Button bntAjout;
+    @FXML
+    private ImageView imV;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        nomevent.setStyle("-fx-text-fill: white; ");
+        datedeb.setStyle("-fx-text-fill: white; ");
+        datefin.setStyle("-fx-text-fill: white; ");
+        selectedFile.setStyle("-fx-text-fill: white; ");
+        categorie.setStyle("-fx-text-fill: white; ");
+        nbremax_participant.setStyle("-fx-text-fill: white; ");
+        lienyoutube.setStyle("-fx-text-fill: white; ");
+        description.setStyle("-fx-text-fill: white; ");
+        
         isImage = new ArrayList<>();
         isImage.add(".jpg");
         isImage.add(".png");
@@ -127,7 +140,14 @@ public class AjoutEvenementController implements Initializable {
         File f = fc.showOpenDialog(null);
         if (f != null) {
             image = f.getAbsolutePath();
-            selectedFile.setText("Selected File::" + image);
+            selectedFile.setText("Selected File::" + image); 
+           try {
+                Image imageForFile = new Image(f.toURI().toURL().toExternalForm());
+                imV.setImage(imageForFile);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(AjoutEvenementController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
 
     }

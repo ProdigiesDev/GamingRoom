@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -31,11 +32,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Evenement;
 import tn.gamingroom.entities.EvenementImage;
+import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.EvenementService;
 
 /**
@@ -54,7 +57,7 @@ public class ListeEvenementController implements Initializable {
     @FXML
     private TableColumn<EvenementImage, String> tL;
     @FXML
-    private TableColumn<EvenementImage, Integer> catL;
+    private TableColumn<EvenementImage, String> catL;
     @FXML
     private TableColumn<EvenementImage, Integer> nbML;
     @FXML
@@ -69,6 +72,10 @@ public class ListeEvenementController implements Initializable {
     private Label n;
     @FXML
     private TableColumn<EvenementImage, Integer> idE;
+    @FXML
+    private TableColumn<EvenementImage, Integer> idCat;
+    @FXML
+    private TableColumn<EvenementImage, String> imageURL;
 
     /**
      * Initializes the controller class.
@@ -78,21 +85,24 @@ public class ListeEvenementController implements Initializable {
 
         idE.setCellValueFactory(new PropertyValueFactory<EvenementImage, Integer>("idevent"));
         imL.setCellValueFactory(new PropertyValueFactory<EvenementImage, ImageView>("image"));
+        imageURL.setCellValueFactory(new PropertyValueFactory<EvenementImage, String>("imageUrl"));
         dateDL.setCellValueFactory(new PropertyValueFactory<EvenementImage, Date>("dateDeb"));
         dateFL.setCellValueFactory(new PropertyValueFactory<EvenementImage, Date>("dateFin"));
         tL.setCellValueFactory(new PropertyValueFactory<EvenementImage, String>("nomEvent"));
-        catL.setCellValueFactory(new PropertyValueFactory<EvenementImage, Integer>("categorie_id"));
+        idCat.setCellValueFactory(new PropertyValueFactory<EvenementImage, Integer>("categorie_id"));
+        catL.setCellValueFactory(new PropertyValueFactory<EvenementImage, String>("categorieNom"));
         nbML.setCellValueFactory(new PropertyValueFactory<EvenementImage, Integer>("nbreMax_participant"));
         desL.setCellValueFactory(new PropertyValueFactory<EvenementImage, String>("description"));
         lieuL.setCellValueFactory(new PropertyValueFactory<EvenementImage, String>("lieu"));
         LienYL.setCellValueFactory(new PropertyValueFactory<EvenementImage, String>("lienYoutube"));
 
         initTable();
-        addButtonToTable();
+        addButtonSupprimerToTable();
+        addButtonModifierToTable();
 
     }
 
-    private void addButtonToTable() {
+    private void addButtonSupprimerToTable() {
         TableColumn<EvenementImage, Void> colBtn = new TableColumn("");
 
         Callback<TableColumn<EvenementImage, Void>, TableCell<EvenementImage, Void>> cellFactory = new Callback<TableColumn<EvenementImage, Void>, TableCell<EvenementImage, Void>>() {
@@ -112,11 +122,38 @@ public class ListeEvenementController implements Initializable {
 
                             int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
                             if (a == JOptionPane.YES_OPTION) {
-
+                                EvenementService es = new EvenementService();
+                                es.suppressionEvenement(data.getIdevent());
+                                initTable();
                             }
-                            EvenementService es = new EvenementService();
-                            es.suppressionEvenement(data.getIdevent());
-                            initTable();
+
+                        });
+
+                        btnU.setTextFill(Paint.valueOf("#f8f7f7"));
+                        btnU.setStyle("-fx-background-color: #6f1075");
+                        btnU.setOnAction(event -> {
+                            EvenementImage data = getTableView().getItems().get(getIndex());
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierEvenement.fxml"));
+                            Parent root;
+                            try {
+                                root = loader.load();
+                                System.out.println("root" + root);
+                                ModifierEvenementController pct = loader.getController();
+                                // System.out.println("idE"+idE+" "+idE.getCellData(index));
+                                pct.setId(data.getIdevent());
+                                pct.setNomevent(data.getNomEvent());
+                                pct.setDatedeb(data.getDateDeb());
+                                pct.setDatefin(data.getDateFin());
+                                pct.setCategorie(data.getCategorie_id());
+                                pct.setImage(data.getImage().toString());
+                                pct.setNbremax_participant(data.getNbreMax_participant() + "");
+                                pct.setDescription(data.getDescription());
+                                pct.setLienyoutube(data.getLienYoutube());
+                                n.getScene().setRoot(root);
+                            } catch (IOException ex) {
+                                Logger.getLogger(ListeEvenementController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
                         });
                     }
 
@@ -140,15 +177,76 @@ public class ListeEvenementController implements Initializable {
 
     }
 
+    private void addButtonModifierToTable() {
+        TableColumn<EvenementImage, Void> colBtn = new TableColumn("");
+
+        Callback<TableColumn<EvenementImage, Void>, TableCell<EvenementImage, Void>> cellFactory = new Callback<TableColumn<EvenementImage, Void>, TableCell<EvenementImage, Void>>() {
+            @Override
+            public TableCell<EvenementImage, Void> call(final TableColumn<EvenementImage, Void> param) {
+                final TableCell<EvenementImage, Void> cell = new TableCell<EvenementImage, Void>() {
+
+                    private final Button btnU = new Button("Modifier");
+
+                    {
+                        btnU.setTextFill(Paint.valueOf("#f8f7f7"));
+                        btnU.setStyle("-fx-background-color: #6f1075");
+                        btnU.setOnAction(event -> {
+                            EvenementImage data = getTableView().getItems().get(getIndex());
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierEvenement.fxml"));
+                            Parent root;
+                            try {
+                                root = loader.load();
+                                System.out.println("root" + root);
+                                ModifierEvenementController pct = loader.getController();
+                                // System.out.println("idE"+idE+" "+idE.getCellData(index));
+                                pct.setId(data.getIdevent());
+                                pct.setNomevent(data.getNomEvent());
+                                pct.setDatedeb(data.getDateDeb());
+                                pct.setDatefin(data.getDateFin());
+                                pct.setCategorie(data.getCategorie_id());
+                                pct.setImage(data.getImage().toString());
+                                pct.setNbremax_participant(data.getNbreMax_participant() + "");
+                                pct.setDescription(data.getDescription());
+                                pct.setLienyoutube(data.getLienYoutube());
+                                n.getScene().setRoot(root);
+                            } catch (IOException ex) {
+                                Logger.getLogger(ListeEvenementController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btnU);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        listeEvents.getColumns().add(colBtn);
+
+    }
+
     private void initTable() {
         EvenementService es = new EvenementService();
+        CategorieServices cs = new CategorieServices();
         List<EvenementImage> lIm = new ArrayList<EvenementImage>();
         es.listerEvenement().forEach(e -> {
             ImageView i = new ImageView(new Image(e.getImage()));
-            i.setFitHeight(100);
-            i.setFitWidth(100);
-            lIm.add(new EvenementImage(e.getIdevent(), e.getNomEvent(), e.getDateDeb(), e.getDateFin(), i, e.getCategorie_id(), e.getNbreMax_participant(), e.getDescription(), e.getLieu(), e.getLienYoutube()));
+            i.setFitHeight(50);
+            i.setFitWidth(70);
+            lIm.add(new EvenementImage(e.getIdevent(), e.getNomEvent(), e.getDateDeb(), e.getDateFin(), i, e.getImage(), e.getCategorie_id(), cs.getById(e.getCategorie_id()).getNomcat(), e.getNbreMax_participant(), e.getDescription(), e.getLieu(), e.getLienYoutube()));
         });
+        System.out.println("ev " + lIm);
 
         ObservableList<EvenementImage> listEventsIm = FXCollections.observableArrayList(lIm);
 
@@ -166,33 +264,28 @@ public class ListeEvenementController implements Initializable {
                 return;
 
             }
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierEvenement.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsulterEvenementBackOffice.fxml"));
             Parent root;
             root = loader.load();
-            System.out.println("root" + root);
-            ModifierEvenementController pct = loader.getController();
-            // System.out.println("idE"+idE+" "+idE.getCellData(index));
-            pct.setId(idE.getCellData(index).toString());
-            pct.setNomevent(tL.getCellData(index));
-            pct.setDatedeb(dateDL.getCellData(index));
-            pct.setDatefin(dateFL.getCellData(index));
-            pct.setCategorie(catL.getCellData(index));
-            pct.setImage(imL.getCellData(index).toString());
-            pct.setNbremax_participant(nbML.getCellData(index).toString());
-            pct.setDescription(desL.getCellData(index));
-            pct.setLienyoutube(LienYL.getCellData(index));
-            n.getScene().setRoot(root);
+            ConsulterEvenementBackOfficeController pctC = loader.getController();
+            pctC.intData(idE.getCellData(index),n.getScene());
+            Scene scene = new Scene(root);
+            Stage primaryStage = new Stage();
+            primaryStage.setTitle(tL.getCellData(index));
+            primaryStage.setScene(scene);
+            primaryStage.show();
         } catch (IOException ex) {
             Logger.getLogger(ListeEvenementController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    private void goToAjouterEvenement(ActionEvent event) {
+    private void goToAjouterEvenement(ActionEvent event
+    ) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ajoutEvenement.fxml"));
             Parent root = loader.load();
-            
+
             n.getScene().setRoot(root);
         } catch (IOException ex) {
             Logger.getLogger(ListeEvenementController.class.getName()).log(Level.SEVERE, null, ex);
