@@ -11,9 +11,13 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -106,6 +110,8 @@ public class DashboardAdminController implements Initializable {
     private JFXComboBox<String> activateCombo;
     @FXML
     private JFXButton btnUpdateActivationAccount;
+    @FXML
+    private JFXButton btn_statisticPage;
 
     /**
      * Initializes the controller class.
@@ -313,7 +319,7 @@ public class DashboardAdminController implements Initializable {
                             MembreServices membreServices=new MembreServices();
                             membre.setBan_duration(membre.getBan_duration()+1);
                             membre.setActive(false);
-                            membre.setLast_timeban(Date.valueOf(LocalDate.now()));
+                            membre.setLast_timeban(Timestamp.valueOf(LocalDateTime.now()));
                             membreServices.modifierMembreParAdmin(membre);
                            getTableView().getItems().set(getIndex(), membre);
                         });
@@ -425,10 +431,25 @@ public class DashboardAdminController implements Initializable {
             m1.setId(idmembre);
             m1.setBan_duration(ms.getBandurParid(idmembre)+1);
             m1.setActive(false);
-            m1.setLast_timeban(Date.valueOf(LocalDate.now()));
+            m1.setLast_timeban(Timestamp.valueOf(LocalDateTime.now()));
             ms.desactiverCompte(m1);
             JOptionPane.showMessageDialog(null, " Account successfully deactivated");
             afficherMembre();
+        }
+    }
+
+    @FXML
+    private void staticCategorie(ActionEvent event) {
+        try {
+            Parent dashboard ;
+            dashboard = FXMLLoader.load(getClass().getResource("StatistiqueCategorie.fxml"));
+
+            Scene dashboardScene = new Scene(dashboard);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(dashboardScene);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(DashboardAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

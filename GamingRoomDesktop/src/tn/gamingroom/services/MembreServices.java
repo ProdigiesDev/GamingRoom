@@ -6,6 +6,7 @@
 package tn.gamingroom.services;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -129,7 +130,7 @@ public class MembreServices implements IMembre<Membre> {
             pst.setInt(1, m.getPoint());
             pst.setBoolean(2, m.getActive());
             pst.setInt(3, m.getBan_duration());
-            pst.setDate(4, m.getLast_timeban());
+            pst.setTimestamp(4, m.getLast_timeban());
             pst.setInt(5, m.getId());
             nbModifierParAdmin=pst.executeUpdate();
             System.out.println("Modification membre avec succées");
@@ -163,7 +164,7 @@ public class MembreServices implements IMembre<Membre> {
                 m.setPoint(rs.getInt("point"));
                 m.setActive(rs.getBoolean("active"));
                 m.setBan_duration(rs.getInt("ban_duration"));
-                m.setLast_timeban(rs.getDate("last_timeban"));
+                m.setLast_timeban(rs.getTimestamp("last_timeban"));
                 membreList.add(m);
             }
         } catch (SQLException ex) {
@@ -196,7 +197,7 @@ public class MembreServices implements IMembre<Membre> {
                 m.setImage(rs.getString("image"));
                 m.setRole(Membre.Role.valueOf(rs.getString("role")));
                 m.setBan_duration(rs.getInt("ban_duration"));
-                m.setLast_timeban(rs.getDate("last_timeban"));
+                m.setLast_timeban(rs.getTimestamp("last_timeban"));
                 return m;
             }
 
@@ -227,7 +228,7 @@ public class MembreServices implements IMembre<Membre> {
                 m.setImage(rs.getString("image"));
                 m.setRole(Membre.Role.valueOf(rs.getString("role")));
                 m.setBan_duration(rs.getInt("ban_duration"));
-                m.setLast_timeban(rs.getDate("last_timeban"));
+                m.setLast_timeban(rs.getTimestamp("last_timeban"));
 
                 ListMembre.add(m);
             }
@@ -266,7 +267,7 @@ public class MembreServices implements IMembre<Membre> {
                 m.setImage(rs.getString("image"));
                 m.setRole(Membre.Role.valueOf(rs.getString("role")));
                 m.setBan_duration(rs.getInt("ban_duration"));
-                m.setLast_timeban(rs.getDate("last_timeban"));
+                m.setLast_timeban(rs.getTimestamp("last_timeban"));
 
                 ListMembre.add(m);
             }
@@ -398,7 +399,7 @@ public class MembreServices implements IMembre<Membre> {
                     .prepareStatement(requete);
             pst.setBoolean(1, m.getActive());
             pst.setInt(2, m.getBan_duration());
-            pst.setDate(3, m.getLast_timeban());
+            pst.setTimestamp(3, m.getLast_timeban());
             pst.setInt(4, m.getId());
             nbactive=pst.executeUpdate();
             System.out.println("Modification avec succées");

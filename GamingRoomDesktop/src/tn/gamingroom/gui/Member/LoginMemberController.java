@@ -11,6 +11,14 @@ import com.jfoenix.controls.JFXTextField;
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -78,6 +86,33 @@ public class LoginMemberController implements Initializable {
         }
         else{
         if(user != null){
+            if(!user.getActive() && !user.getRole().toString().equals("Admin")){
+              if(user.getLast_timeban()!= null)  {
+                      DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+                  System.out.println(user.getLast_timeban()+" last_timeBan");
+                  Timestamp d= addHoursToJavaUtilDate(user.getLast_timeban(),user.getBan_duration());
+                  
+                  System.out.println(dateFormat.format(d)+" last_timeBan + 2h");
+                 Date date = new Date(new java.util.Date().getTime());
+                  System.out.println(dateFormat.format(date)+" "+date.getTime()+" todays times");
+                  System.out.println(d.getTime()+" last_timeBan++2 times");
+                 System.out.println(d.getTime()-date.getTime());
+                 
+                    
+                 if(date.getTime()-d.getTime()>0){
+                  
+                     user.setActive(true);
+                     ms.modifierMembreParAdmin(user);
+                     
+                 }
+                 else{
+                     JOptionPane.showMessageDialog(null, "You are banned you can connect after: "+d.toString());
+                     return ;
+                 }
+              }
+            }
+            System.out.println(user.getRole());
             if(user.getRole().toString().equals("Admin"))
             {   Parent dashboard ;
                 dashboard = FXMLLoader.load(getClass().getResource("DashboardAdmin.fxml"));
@@ -92,7 +127,8 @@ public class LoginMemberController implements Initializable {
             else if(user.getRole().toString().equals("Coach")){
                 
             }
-            else if(user.getRole().toString().equals("Member")){
+            else if(user.getRole().toString().equals("Membre")){
+                System.out.println("pew pew pew");
                 Parent dashboard ;
                 dashboard = FXMLLoader.load(getClass().getResource("ProfilMember.fxml"));
 //             Parent root = loader.load();
@@ -111,6 +147,14 @@ public class LoginMemberController implements Initializable {
         }
         }
     }
+    public Timestamp addHoursToJavaUtilDate(Timestamp date, int hours) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.add(Calendar.HOUR_OF_DAY, hours);
+    java.util.Date res=calendar.getTime();
+  
+    return new Timestamp(res.getTime());
+}
 
     @FXML
     private void signupMember(ActionEvent event) throws IOException {
