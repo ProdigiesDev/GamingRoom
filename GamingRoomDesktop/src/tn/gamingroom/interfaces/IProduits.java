@@ -13,6 +13,7 @@ import tn.gamingroom.entities.Produits;
  * @author yasmine
  * @param <T>
  */
+
 public interface IProduits <T> { 
     public int ajouterProduit(T p); //  T type generique
     public int supprimerProduit(int idprod);
@@ -23,4 +24,5 @@ public interface IProduits <T> {
     public List<Produits> RechercherProduit(String x);
    
     public List<Integer> bestProductsSelled();
+      public List<Produits> RechercherPrix(double minPrice, double maxPrice);
 }

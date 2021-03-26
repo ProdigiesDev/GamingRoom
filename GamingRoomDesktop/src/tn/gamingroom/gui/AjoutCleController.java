@@ -75,7 +75,7 @@ public class AjoutCleController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-              nbCle.setStyle("-fx-text-fill: white;");
+         nbCle.setStyle("-fx-text-fill: white;");
         ProduitCrud crud=new ProduitCrud();
         List<Produits> produitses=crud.displayProduit();
         Callback<ListView<Produits>, ListCell<Produits>> factory = lv -> new ListCell<Produits>() {

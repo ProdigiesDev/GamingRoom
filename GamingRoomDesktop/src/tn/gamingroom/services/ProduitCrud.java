@@ -41,7 +41,7 @@ public class ProduitCrud implements IProduits<Produits> {
     }
 
     @Override
-    public int supprimerProduit(int  idprod) {
+    public int supprimerProduit(int idprod) {
         int nbProd = 0;
         try {
             String requete = "delete from produit where idprod=?";
@@ -128,9 +128,9 @@ public class ProduitCrud implements IProduits<Produits> {
     }
 
     public List<Produits> RechercherProduit(String x) {
-        ArrayList<Produits> listOffresTypeX = new ArrayList<>();
+     ArrayList<Produits> listOffresTypeX = new ArrayList<>();
         try {
-            String req = "Select p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat and ( libelle like '%" + x + "%' or description like '%" + x + "%' )";
+       String req = "Select p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat and ( libelle like '%" + x + "%' or description like '%" + x + "%' )";
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(req);
 
             ResultSet rs = st.executeQuery();
@@ -216,11 +216,11 @@ public class ProduitCrud implements IProduits<Produits> {
         return integers;
     }
 
-    public List<Produits> RechercherPrix(double minPrice,double maxPrice){
-      
-       ArrayList<Produits> listOffresTypeX = new ArrayList<>();
+    public List<Produits> RechercherPrix(double minPrice, double maxPrice) {
+
+        ArrayList<Produits> listOffresTypeX = new ArrayList<>();
         try {
-            String req="Select p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat and  prix >= "+minPrice+" and prix <= "+maxPrice;
+            String req = "Select p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat and  prix >= " + minPrice + " and prix <= " + maxPrice;
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(req);
 
             ResultSet rs = st.executeQuery();
@@ -246,9 +246,5 @@ public class ProduitCrud implements IProduits<Produits> {
         }
         return listOffresTypeX;
     }
-    
-    
-    
-    
-    
+
 }

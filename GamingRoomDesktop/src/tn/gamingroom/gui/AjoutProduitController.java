@@ -187,6 +187,7 @@ public class AjoutProduitController implements Initializable {
         Produits p2 = new Produits(rescategorie.getIdcat(), resImage, resLibelle, resPrix, resDesc);
         ProduitCrud pcd = new ProduitCrud();
         String fileName=moveImage();
+        p2.setImage(fileName);
     if(fileName.length()==0) 
         {
            JOptionPane.showMessageDialog(null, "Il faut choisir une image");   
@@ -196,10 +197,7 @@ public class AjoutProduitController implements Initializable {
             JOptionPane.showMessageDialog(null, "produit ajouté");
             initTable(null);
         }
- 
-
     }
-
     private String moveImage() {
         if (file != null) {
             try {
@@ -222,7 +220,6 @@ public class AjoutProduitController implements Initializable {
 
     @FXML
     private void clean(ActionEvent event) {
-
         tflibelle.setText(null);
         textareaProd.setText(null);
         tfprix.setText(null);
@@ -246,19 +243,23 @@ public class AjoutProduitController implements Initializable {
 
     @FXML
     private void getSelected(MouseEvent event) {
-
+        ImageProduits c = tvbox.getSelectionModel().getSelectedItem();
         int index = tvbox.getSelectionModel().getSelectedIndex();
-
+     if (c == null) {
+            return;
+        }
         if (index <= -1) {
 
             return;
 
         }
+        
         tflibelle.setText(collibelle.getCellData(index).toString());
         tfprix.setText(colprix.getCellData(index).toString());
         textareaProd.setText(coldesc.getCellData(index).toString());
         tfid.setText(colid.getCellData(index).toString());
-
+       file = new File(Env.getImagePath() + "produits\\" + c.getImagename());
+        prodImage.setImage(c.getImage().getImage());
     }
 
     @FXML
