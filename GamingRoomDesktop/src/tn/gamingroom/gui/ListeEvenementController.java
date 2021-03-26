@@ -7,6 +7,7 @@ package tn.gamingroom.gui;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -241,10 +242,18 @@ public class ListeEvenementController implements Initializable {
         CategorieServices cs = new CategorieServices();
         List<EvenementImage> lIm = new ArrayList<EvenementImage>();
         es.listerEvenement().forEach(e -> {
-            ImageView i = new ImageView(new Image(e.getImage()));
-            i.setFitHeight(50);
-            i.setFitWidth(70);
-            lIm.add(new EvenementImage(e.getIdevent(), e.getNomEvent(), e.getDateDeb(), e.getDateFin(), i, e.getImage(), e.getCategorie_id(), cs.getById(e.getCategorie_id()).getNomcat(), e.getNbreMax_participant(), e.getDescription(), e.getLieu(), e.getLienYoutube()));
+
+            try {
+                File f = new File(e.getImage());
+                Image img = new Image(f.toURI().toURL().toExternalForm());
+                ImageView i = new ImageView(img);
+                i.setFitHeight(50);
+                i.setFitWidth(70);
+                lIm.add(new EvenementImage(e.getIdevent(), e.getNomEvent(), e.getDateDeb(), e.getDateFin(), i, e.getImage(), e.getCategorie_id(), cs.getById(e.getCategorie_id()).getNomcat(), e.getNbreMax_participant(), e.getDescription(), e.getLieu(), e.getLienYoutube()));
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(ListeEvenementController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         });
         System.out.println("ev " + lIm);
 
@@ -268,7 +277,7 @@ public class ListeEvenementController implements Initializable {
             Parent root;
             root = loader.load();
             ConsulterEvenementBackOfficeController pctC = loader.getController();
-            pctC.intData(idE.getCellData(index),n.getScene());
+            pctC.intData(idE.getCellData(index), n.getScene());
             Scene scene = new Scene(root);
             Stage primaryStage = new Stage();
             primaryStage.setTitle(tL.getCellData(index));

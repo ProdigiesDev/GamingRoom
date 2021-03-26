@@ -5,7 +5,9 @@
  */
 package tn.gamingroom.gui;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -78,19 +80,24 @@ public class ConsulterEvenementBackOfficeController implements Initializable {
     }
 
     public void intData(int idE, Scene n) {
-        EvenementService es = new EvenementService();
-        this.id = idE;
-        Evenement e = es.findById(idE);
-        Image im = new Image(e.getImage());
-        imageC.setSmooth(true);
-        imageC.setImage(im);
-        dd.setText(e.getDateDeb().toString());
-        df.setText(e.getDateFin().toString());
-        titre.setText(titre.getText() + " " + e.getNomEvent());
-        description.setText(e.getDescription());
-        lienY.setText(e.getLienYoutube());
-        nbM.setText(nbM.getText() + " " + e.getNbreMax_participant());
-        s = n;
+        try {
+            EvenementService es = new EvenementService();
+            this.id = idE;
+            Evenement e = es.findById(idE);
+            File f = new File(e.getImage());
+            Image img = new Image(f.toURI().toURL().toExternalForm());
+            imageC.setSmooth(true);
+            imageC.setImage(img);
+            dd.setText(e.getDateDeb().toString());
+            df.setText(e.getDateFin().toString());
+            titre.setText(titre.getText() + " " + e.getNomEvent());
+            description.setText(e.getDescription());
+            lienY.setText(e.getLienYoutube());
+            nbM.setText(nbM.getText() + " " + e.getNbreMax_participant());
+            s = n;
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ConsulterEvenementBackOfficeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

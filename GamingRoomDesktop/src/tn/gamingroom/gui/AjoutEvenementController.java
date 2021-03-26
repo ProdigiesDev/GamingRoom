@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,6 +42,7 @@ import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Evenement;
+import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.EvenementService;
 
@@ -100,7 +103,7 @@ public class AjoutEvenementController implements Initializable {
         nbremax_participant.setStyle("-fx-text-fill: white; ");
         lienyoutube.setStyle("-fx-text-fill: white; ");
         description.setStyle("-fx-text-fill: white; ");
-        
+
         isImage = new ArrayList<>();
         isImage.add(".jpg");
         isImage.add(".png");
@@ -139,15 +142,20 @@ public class AjoutEvenementController implements Initializable {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image", isImage));
         File f = fc.showOpenDialog(null);
         if (f != null) {
-            image = f.getAbsolutePath();
-            selectedFile.setText("Selected File::" + image); 
-           try {
+            try {
+                image = f.getAbsolutePath();
+                selectedFile.setText("Selected File::" + image);
                 Image imageForFile = new Image(f.toURI().toURL().toExternalForm());
                 imV.setImage(imageForFile);
-            } catch (MalformedURLException ex) {
+                String imageNameTodb = Env.getImagePath() + imageForFile;
+                File dest = new File(imageNameTodb);
+
+                Files.copy(f.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            } catch (IOException ex) {
                 Logger.getLogger(AjoutEvenementController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
 
     }
@@ -183,7 +191,7 @@ public class AjoutEvenementController implements Initializable {
                 //if (image.getBytes().length > 255 || image.isEmpty()) {
                 //   imageCont.setText("Veuillez choisir une autre image");
                 // } else {
-                e.setImage("https://images.unsplash.com/photo-1615333619365-a44d7e655661?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80");
+                e.setImage(image);
                 //   imageCont.setText("");
                 //}
 
@@ -220,8 +228,10 @@ public class AjoutEvenementController implements Initializable {
                         Parent root = loader.load();
 
                         nomevent.getScene().setRoot(root);
+
                     } catch (IOException ex) {
-                        Logger.getLogger(AjoutEvenementController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(AjoutEvenementController.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
 
                 }
@@ -241,8 +251,10 @@ public class AjoutEvenementController implements Initializable {
             Parent root = loader.load();
 
             lienyoutube.getScene().setRoot(root);
+
         } catch (IOException ex) {
-            Logger.getLogger(ListeEvenementController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListeEvenementController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

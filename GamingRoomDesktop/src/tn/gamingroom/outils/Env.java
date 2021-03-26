@@ -10,5 +10,10 @@ package tn.gamingroom.outils;
  * @author Dah
  */
 public class Env {
-    public static final String keyMeaningcloudApi="fb2edfd3397580535796144ef45588eb";
+
+    public static final String keyMeaningcloudApi = "fb2edfd3397580535796144ef45588eb";
+    private static String dossierImagePath ="C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/assetsEvenement";
+    public static String getImagePath() {
+        return dossierImagePath;
+    }
 }
