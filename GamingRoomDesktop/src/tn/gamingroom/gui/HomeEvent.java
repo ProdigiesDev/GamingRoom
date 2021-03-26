@@ -28,7 +28,7 @@ public class HomeEvent extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("listeEvenement.fxml"));
 
             Scene scene = new Scene(root);
-            File f = new File("C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/assetsEvenement");
+            File f = new File("C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/assetsEvenement/logo.png");
             Image img = new Image(f.toURI().toURL().toExternalForm());
             primaryStage.getIcons().add(img);
             primaryStage.setTitle("Ajout Evenement");

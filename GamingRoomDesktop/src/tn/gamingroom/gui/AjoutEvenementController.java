@@ -55,6 +55,7 @@ public class AjoutEvenementController implements Initializable {
 
     List<String> isImage;
     String image;
+    String imageNameTodb;
     @FXML
     private JFXTextField nomevent = new JFXTextField();
     @FXML
@@ -147,7 +148,7 @@ public class AjoutEvenementController implements Initializable {
                 selectedFile.setText("Selected File::" + image);
                 Image imageForFile = new Image(f.toURI().toURL().toExternalForm());
                 imV.setImage(imageForFile);
-                String imageNameTodb = Env.getImagePath() + imageForFile;
+                imageNameTodb = Env.getImagePath() + imageForFile;
                 File dest = new File(imageNameTodb);
 
                 Files.copy(f.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -191,7 +192,7 @@ public class AjoutEvenementController implements Initializable {
                 //if (image.getBytes().length > 255 || image.isEmpty()) {
                 //   imageCont.setText("Veuillez choisir une autre image");
                 // } else {
-                e.setImage(image);
+                e.setImage(imageNameTodb);
                 //   imageCont.setText("");
                 //}
 
