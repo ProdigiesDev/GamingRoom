@@ -15,11 +15,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 import tn.gamingroom.outils.SendEmail;
+import tn.gamingroom.services.MembreServices;
 
 /**
  * FXML Controller class
@@ -38,8 +40,16 @@ public class ForgotPasswordController implements Initializable {
     private JFXButton btn_verifyCode;
     
     int randomCode ;
+    
+    @FXML
+    private TextField tf_verifpass;
     @FXML
     private Pane pane_reset_code;
+
+    @FXML
+    private JFXButton btn_reset;
+    @FXML
+    private PasswordField tf_newpass;
 
     /**
      * Initializes the controller class.
@@ -56,7 +66,7 @@ public class ForgotPasswordController implements Initializable {
             String email = tf_email.getText();
             Random ran = new Random();
             randomCode=ran.nextInt(999999);
-            String text = "Hello,"+"\n"+"this is your reset code"+randomCode+"\n"+"GamingRoom.";
+            String text = "Hello,"+"\n"+"this is your reset code: "+randomCode+"\n"+"GamingRoom.";
             boolean b =SendEmail.sendMail(email,"Reseting Code",text);
             if(b==true){
                 JOptionPane.showMessageDialog(null, "Code has been sent to the email");
@@ -83,6 +93,21 @@ public class ForgotPasswordController implements Initializable {
              alert.setHeaderText(null);
              alert.setContentText("The code that you entered is not correct");
              alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void modifierPassword(ActionEvent event) {
+        String nvmdp = tf_newpass.getText();
+        String verifmdp = tf_verifpass.getText();
+        String email = tf_email.getText();
+        MembreServices ms = new MembreServices();
+        if(nvmdp.equals(verifmdp)){
+            ms.forgotPassword(email, nvmdp);
+            JOptionPane.showMessageDialog(null, "Reset successfully");
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Password do not match");
         }
     }
     

@@ -278,7 +278,7 @@ public class MembreServices implements IMembre<Membre> {
     }
 
     @Override
-    public int forgotPassword(int id,String email,String newpassword) {
+    public int forgotPassword(String email,String newpassword) {
         int res=0;
         
         try {
