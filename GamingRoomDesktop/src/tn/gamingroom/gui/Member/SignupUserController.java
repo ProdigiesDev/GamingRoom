@@ -339,13 +339,15 @@ public class SignupUserController implements Initializable {
 //            //desktop.open(file);
 ////            tf_pathImage.setText(file.getAbsolutePath());
 //        }
-FileChooser fileChooser = new FileChooser();
+
 
 
 file = fileChooser.showOpenDialog(stage);
 image = file.getAbsolutePath();
+
 Image imageForFile = new Image(file.toURI().toURL().toExternalForm());
 image_membre.setImage(imageForFile);
+
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(SignupUserController.class.getName()).log(Level.SEVERE, null, ex);
