@@ -14,7 +14,9 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 import tn.gamingroom.outils.SendEmail;
@@ -36,6 +38,8 @@ public class ForgotPasswordController implements Initializable {
     private JFXButton btn_verifyCode;
     
     int randomCode ;
+    @FXML
+    private Pane pane_reset_code;
 
     /**
      * Initializes the controller class.
@@ -43,6 +47,7 @@ public class ForgotPasswordController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        pane_reset_code.setVisible(false);
     }    
 
     @FXML
@@ -66,6 +71,19 @@ public class ForgotPasswordController implements Initializable {
 
     @FXML
     private void verifierCode(ActionEvent event) {
+        int code = Integer.parseInt(tf_code.getText());
+        String email = tf_email.getText();
+        if(code == randomCode){
+            pane_reset_code.setVisible(true);
+            
+        }
+        else{
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+             alert.setTitle("Error Code");
+             alert.setHeaderText(null);
+             alert.setContentText("The code that you entered is not correct");
+             alert.showAndWait();
+        }
     }
     
 }
