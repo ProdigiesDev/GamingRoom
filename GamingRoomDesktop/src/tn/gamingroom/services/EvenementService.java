@@ -31,7 +31,7 @@ public class EvenementService implements IEvenement {
 
     @Override
     public int ajoutEvenement(Evenement t) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
             String requete = "INSERT INTO evenement(nomevent,datedeb,datefin,image,categorie_id,nbremax_participant,description,lieu,lienyoutube)"
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
@@ -46,7 +46,7 @@ public class EvenementService implements IEvenement {
             pst.setString(7, t.getDescription());
             pst.setString(8, t.getLieu());
             pst.setString(9, t.getLienYoutube());
-            nbModif=pst.executeUpdate();
+            nbModif = pst.executeUpdate();
             System.out.println("Evenement inserée");
 
         } catch (SQLException ex) {
@@ -57,7 +57,7 @@ public class EvenementService implements IEvenement {
 
     @Override
     public int modifierEvenement(Evenement t) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
             String requete = "UPDATE evenement SET nomevent=? , datedeb=? , datefin=? , image=? , categorie_id=? , nbremax_participant=? , description=? , lieu=? , lienyoutube=? WHERE idevent=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
@@ -72,7 +72,7 @@ public class EvenementService implements IEvenement {
             pst.setString(8, t.getLieu());
             pst.setString(9, t.getLienYoutube());
             pst.setInt(10, t.getIdevent());
-            nbModif=pst.executeUpdate();
+            nbModif = pst.executeUpdate();
             System.out.println("Evenement modifiée");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -82,7 +82,7 @@ public class EvenementService implements IEvenement {
 
     @Override
     public int suppressionEvenement(int t) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
             String requete = "DELETE FROM evenement where idevent=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
@@ -131,7 +131,7 @@ public class EvenementService implements IEvenement {
 
     @Override
     public int reagirEvenement(ReactionEv rE) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
             String requette = "INSERT INTO reactionev(interaction,commentaire,evenement_id,membre_id)"
                     + "VALUES (?,?,?,?)";
@@ -142,7 +142,7 @@ public class EvenementService implements IEvenement {
             pst.setInt(3, rE.getEvenement_id());
             pst.setInt(4, rE.getMembre_id());
 
-            nbModif=pst.executeUpdate();
+            nbModif = pst.executeUpdate();
             System.out.println("Réaction ajouté");
 
         } catch (SQLException ex) {
@@ -150,8 +150,8 @@ public class EvenementService implements IEvenement {
         }
         return nbModif;
     }
-    
-     @Override
+
+    @Override
     public List<ReactionEv> listerReaction() {
         List<ReactionEv> reactionList = new ArrayList<>();
         try {
@@ -176,7 +176,7 @@ public class EvenementService implements IEvenement {
 
     @Override
     public int supprimerReacC(ReactionEv rE) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
             String requette = "DELETE FROM reactionev where id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
@@ -255,7 +255,7 @@ public class EvenementService implements IEvenement {
 
     @Override
     public int sinscrirEvenement(int idE, int idM) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
             String requete = "SELECT COUNT(p.evenement_id) as nbE, e.nbremax_participant as nbMaxE FROM participant p, evenement e where p.evenement_id=" + idE + " and e.idevent= " + idE;
             Statement st = MyConnection.getInstance().getCnx()
@@ -271,11 +271,11 @@ public class EvenementService implements IEvenement {
                     pst.setInt(1, idE);
                     pst.setInt(2, idM);
                     pst.setInt(3, 1);
-                    nbModif=pst.executeUpdate();
+                    nbModif = pst.executeUpdate();
                     System.out.println("inscription effectuée");
                 } else {
                     if (!this.repartitionDual(idE)) {
-                        nbModif=1;
+                        nbModif = 1;
                         System.out.println("Evenement saturé");
                     }
 
@@ -306,7 +306,6 @@ public class EvenementService implements IEvenement {
             char dual = 'A';
             int i = 1;
             while (!randomMember.isEmpty()) {
-                //randomElement = randomMember.get(rand.nextInt(randomMember.size()-1));
                 int randomnumber = rand.nextInt(randomMember.size());
                 randomElement = randomMember.get(randomnumber);
 
@@ -394,8 +393,8 @@ public class EvenementService implements IEvenement {
     public List<Evenement> upComingEvents() {
         ArrayList<Evenement> evenementList = new ArrayList<>();
         try {
-
-            String requete = "select * from evenement where datedeb >"+java.time.LocalDate.now();
+            //String requete = "select * from evenement where datedeb >"+java.time.LocalDate.now();
+            String requete = "select * from evenement where DATEDIFF(datedeb,'" + java.time.LocalDate.now() + "') >=0";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
 
             ResultSet rs = pst.executeQuery(requete);
@@ -417,6 +416,48 @@ public class EvenementService implements IEvenement {
             System.out.println(ex.getMessage());
         }
         return evenementList;
+    }
+
+    @Override
+    public boolean eventSature(int idE) {
+        int i = 0;
+        try {
+            String requete = "select member_id from participant where evenement_id=" + idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                i++;
+            }
+            requete = "select nbremax_participant from evenement where idevent=" + idE;
+            st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            rs = st.executeQuery(requete);
+            if (rs.next()) {
+                if (i >= rs.getInt("nbremax_participant")) {
+                    return true;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean eventExpire(int idE) {
+        try {
+            String requete = "select * from evenement where DATEDIFF(datedeb,'" + java.time.LocalDate.now() + "') >=0 AND idevent=" + idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
 }

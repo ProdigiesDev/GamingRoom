@@ -293,16 +293,16 @@ public class AjoutEvenementController implements Initializable {
             int x = Integer.parseInt(nbremax_participant.getText()) % 2;
 
             if (nbremax_participant.getText().isEmpty()) {
-                System.out.println("aaa");
+                
                 bntAjout.setDisable(true);
                 nbpartCont.setText("Veuillez remplir ce champs");
             } else if (x != 0) {
-                System.out.println("ccc");
+                
 
                 nbpartCont.setText("Le nombre maximale des participants doit être paire");
                 bntAjout.setDisable(true);
             } else {
-                System.out.println("bbbb");
+                
                 nbpartCont.setText("");
                 bntAjout.setDisable(false);
             }
