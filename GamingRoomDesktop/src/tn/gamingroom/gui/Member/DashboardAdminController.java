@@ -28,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -404,7 +405,17 @@ public class DashboardAdminController implements Initializable {
 
     @FXML
     private void signout(ActionEvent event) throws IOException {
-        Parent dashboard ;
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("You're about to logout!");
+        alert.setContentText("Are you sure ?");
+        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+        
+        if(alert.showAndWait().get()== okButton){
+                Parent dashboard ;
                 dashboard = FXMLLoader.load(getClass().getResource("LoginMember.fxml"));
 //             Parent root = loader.load();
 //            DashboardAdminController adc = loader.getController();
@@ -412,7 +423,7 @@ public class DashboardAdminController implements Initializable {
                 Scene dashboardScene = new Scene(dashboard);
                 Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
                 window.setScene(dashboardScene);
-                window.show();
+                window.show(); }
     }
 
     @FXML
