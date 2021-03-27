@@ -79,6 +79,21 @@ public class LoginMemberController implements Initializable {
         forgotPassword.setTextFill(Paint.valueOf("#9486FA"));});
         forgotPassword.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
         forgotPassword.setTextFill(Paint.valueOf("#333333"));});
+        ///////////////////////////////forgot password interface/////////////////////
+        forgotPassword.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e)->{
+            try {
+                FXMLLoader fxmlLoader =new FXMLLoader(getClass().getResource("ForgotPassword.fxml"));
+                Parent root = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Forgot Password");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(LoginMemberController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        });
+        
        
     }  
     
