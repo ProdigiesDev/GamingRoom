@@ -61,7 +61,7 @@
       <JFXComboBox fx:id="categorieCombo" focusColor="#4b3489" layoutX="31.0" layoutY="469.0" prefHeight="25.0" prefWidth="186.0" promptText="Game category" unFocusColor="#4b3489" />
       <JFXPasswordField fx:id="retypePassword" focusColor="#4b3489" layoutX="31.0" layoutY="373.0" prefHeight="25.0" prefWidth="436.0" promptText="Retype password" unFocusColor="#4b3489" />
       <JFXComboBox fx:id="GenderCombo" focusColor="#4b3489" layoutX="272.0" layoutY="209.0" prefHeight="25.0" prefWidth="195.0" promptText="Gender" unFocusColor="#4b3489" />
-      <JFXButton layoutX="174.0" layoutY="599.0" onAction="#btnCreateAccountMember" prefHeight="37.0" prefWidth="150.0" style="-fx-background-color: #9F7EF7;" text="Create account" textFill="WHITE" />
+      <JFXButton fx:id="btn_createAcc" layoutX="174.0" layoutY="599.0" onAction="#btnCreateAccountMember" prefHeight="37.0" prefWidth="150.0" style="-fx-background-color: #9F7EF7;" text="Create account" textFill="WHITE" />
       <JFXCheckBox fx:id="ckCoach" layoutX="324.0" layoutY="479.0" onAction="#checkCoach" prefHeight="18.0" prefWidth="97.0" text="Coach" />
       <TextArea fx:id="textAreaDesc" layoutX="31.0" layoutY="520.0" prefHeight="69.0" prefWidth="449.0" promptText="Games you use to play? Why shoold we choose as coach?" wrapText="true" />
       <JFXTextField fx:id="tf_age" editable="false" labelFloat="true" layoutX="419.0" layoutY="158.0" prefHeight="26.0" prefWidth="50.0" promptText="Age" />

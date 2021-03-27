@@ -20,6 +20,8 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +31,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -60,11 +64,26 @@ public class LoginMemberController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        /// SHADOW ON MOUSE ENTERED //////
+        DropShadow shadow = new DropShadow();
+        btnLogin.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+        btnLogin.setEffect(shadow);});
+        btnLogin.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+        btnLogin.setEffect(null);});
+        btnSignup.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+        btnSignup.setEffect(shadow);});
+        btnSignup.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+        btnSignup.setEffect(null);});
+        //////
+        forgotPassword.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+        forgotPassword.setTextFill(Paint.valueOf("#9486FA"));});
+        forgotPassword.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+        forgotPassword.setTextFill(Paint.valueOf("#333333"));});
        
     }  
     
 
-    @FXML
+ @FXML
     private void LoginMember(ActionEvent event) throws IOException {
         String resEmail= loginEmail.getText();
         String resPswd= loginPassword.getText();

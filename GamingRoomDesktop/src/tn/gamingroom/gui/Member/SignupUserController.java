@@ -44,6 +44,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -107,6 +108,8 @@ public class SignupUserController implements Initializable {
     
     @FXML
     private ImageView image_membre;
+    @FXML
+    private JFXButton btn_createAcc;
     
     /**
      * Initializes the controller class.
@@ -145,6 +148,21 @@ public class SignupUserController implements Initializable {
     
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files","*.jpg","*.jpeg"));
+        
+         /// SHADOW ON MOUSE ENTERED //////
+        DropShadow shadow = new DropShadow();
+        btnSignin.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+        btnSignin.setEffect(shadow);});
+        btnSignin.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+        btnSignin.setEffect(null);});
+        btn_browse.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+        btn_browse.setEffect(shadow);});
+        btn_browse.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+        btn_browse.setEffect(null);});
+        btn_createAcc.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+        btn_createAcc.setEffect(shadow);});
+        btn_createAcc.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+        btn_createAcc.setEffect(null);});
 
     }    
 
