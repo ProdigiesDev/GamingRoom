@@ -295,10 +295,10 @@ public class ListerEventUserController implements Initializable {
                 return;
 
             }
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsulterEvenementBackOffice.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("consulterEventFrontOffice.fxml"));
             Parent root;
             root = loader.load();
-            ConsulterEvenementBackOfficeController pctC = loader.getController();
+            ConsulterEventFrontOfficeController pctC = loader.getController();
             pctC.intData(idE.getCellData(index), n.getScene());
             Scene scene = new Scene(root);
             Stage primaryStage = new Stage();
