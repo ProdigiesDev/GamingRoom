@@ -26,4 +26,9 @@ public interface IEvenement {
     public List<Evenement> triEvenement();
     public List<Evenement> upComingEvents();
     public List<ReactionEv> listerReaction();
+    public boolean eventSature(int idE);
+    public boolean eventExpire(int idE);
+    public boolean canReact(int idE,int idM);
+    public int getReact(int idE,int idM);
+    public int updateReact(ReactionEv rE);
 }

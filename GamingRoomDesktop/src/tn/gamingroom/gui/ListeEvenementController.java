@@ -39,6 +39,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Evenement;
 import tn.gamingroom.entities.EvenementImage;
+import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.EvenementService;
 
@@ -112,7 +113,6 @@ public class ListeEvenementController implements Initializable {
                 final TableCell<EvenementImage, Void> cell = new TableCell<EvenementImage, Void>() {
 
                     private final Button btn = new Button("Supprimer");
-                    private final Button btnU = new Button("Modifier");
 
                     {
                         btn.setTextFill(Paint.valueOf("#f8f7f7"));
@@ -130,32 +130,7 @@ public class ListeEvenementController implements Initializable {
 
                         });
 
-                        btnU.setTextFill(Paint.valueOf("#f8f7f7"));
-                        btnU.setStyle("-fx-background-color: #6f1075");
-                        btnU.setOnAction(event -> {
-                            EvenementImage data = getTableView().getItems().get(getIndex());
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierEvenement.fxml"));
-                            Parent root;
-                            try {
-                                root = loader.load();
-                                System.out.println("root" + root);
-                                ModifierEvenementController pct = loader.getController();
-                                // System.out.println("idE"+idE+" "+idE.getCellData(index));
-                                pct.setId(data.getIdevent());
-                                pct.setNomevent(data.getNomEvent());
-                                pct.setDatedeb(data.getDateDeb());
-                                pct.setDatefin(data.getDateFin());
-                                pct.setCategorie(data.getCategorie_id());
-                                pct.setImage(data.getImage().toString());
-                                pct.setNbremax_participant(data.getNbreMax_participant() + "");
-                                pct.setDescription(data.getDescription());
-                                pct.setLienyoutube(data.getLienYoutube());
-                                n.getScene().setRoot(root);
-                            } catch (IOException ex) {
-                                Logger.getLogger(ListeEvenementController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-
-                        });
+                        
                     }
 
                     @Override
@@ -197,9 +172,7 @@ public class ListeEvenementController implements Initializable {
                             Parent root;
                             try {
                                 root = loader.load();
-                                System.out.println("root" + root);
                                 ModifierEvenementController pct = loader.getController();
-                                // System.out.println("idE"+idE+" "+idE.getCellData(index));
                                 pct.setId(data.getIdevent());
                                 pct.setNomevent(data.getNomEvent());
                                 pct.setDatedeb(data.getDateDeb());
@@ -255,7 +228,6 @@ public class ListeEvenementController implements Initializable {
             }
 
         });
-        System.out.println("ev " + lIm);
 
         ObservableList<EvenementImage> listEventsIm = FXCollections.observableArrayList(lIm);
 
@@ -280,6 +252,9 @@ public class ListeEvenementController implements Initializable {
             pctC.intData(idE.getCellData(index), n.getScene());
             Scene scene = new Scene(root);
             Stage primaryStage = new Stage();
+            File f = new File(Env.getDossierImageUtilEventPath()+"logo.png");
+            Image img = new Image(f.toURI().toURL().toExternalForm());
+            primaryStage.getIcons().add(img);
             primaryStage.setTitle(tL.getCellData(index));
             primaryStage.setScene(scene);
             primaryStage.show();

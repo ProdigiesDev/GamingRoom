@@ -38,6 +38,7 @@ import javafx.util.Callback;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.EvenementImage;
+import tn.gamingroom.entities.ReactionEv;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.EvenementService;
@@ -98,6 +99,8 @@ public class UpComingEventsController implements Initializable {
         LienYL.setCellValueFactory(new PropertyValueFactory<EvenementImage, String>("lienYoutube"));
 
         initTable();
+
+        //todo: Ses boutons ne peuvent apparaitre que pour un membre
         addButtonLike();
         addButtonDislike();
         addButtonParticiper();
@@ -163,18 +166,29 @@ public class UpComingEventsController implements Initializable {
                             Logger.getLogger(ListerEventUserController.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
-//                        btn.setOnAction(event -> {
-//                            EvenementImage data = getTableView().getItems().get(getIndex());
-//                            JFrame f = new JFrame();
-//
-//                            int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
-//                            if (a == JOptionPane.YES_OPTION) {
-//                                EvenementService es = new EvenementService();
-//                                es.suppressionEvenement(data.getIdevent());
-//                                initTable();
-//                            }
-//
-//                        });
+                        //todo: changer le deuxieme parametre pour y mettre l'id du membre courant
+                        btn.setOnAction(event -> {
+                            EvenementImage data = getTableView().getItems().get(getIndex());
+                            JFrame f = new JFrame();
+                            EvenementService es = new EvenementService();
+                            if (es.canReact(data.getIdevent(), 1)) {
+                                es.reagirEvenement(new ReactionEv(data.getIdevent(), 1, 1));
+                            } else if (es.getReact(data.getIdevent(), 1) == (-1)) {
+                                int b = JOptionPane.showConfirmDialog(f, "Êtes-vous de vouloir changer votre reaction?");
+                                if (b == JOptionPane.YES_OPTION) {
+                                    es.updateReact(new ReactionEv(data.getIdevent(), 1, 1));
+                                    JOptionPane.showMessageDialog(null, "Réaction modifée");
+                                }
+                            } else {
+                                int c = JOptionPane.showConfirmDialog(f, "Vous aimez déja cet evenement vous voulez annuler la reaction?");
+                                if (c == JOptionPane.YES_OPTION) {
+                                    es.supprimerReacC(new ReactionEv(data.getIdevent(), 1, 1));
+                                    JOptionPane.showMessageDialog(null, "Réaction annulée");
+                                }
+                            }
+                            initTable();
+
+                        });
                     }
 
                     @Override
@@ -227,18 +241,29 @@ public class UpComingEventsController implements Initializable {
                             Logger.getLogger(ListerEventUserController.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
-//                        btn.setOnAction(event -> {
-//                            EvenementImage data = getTableView().getItems().get(getIndex());
-//                            JFrame f = new JFrame();
-//
-//                            int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
-//                            if (a == JOptionPane.YES_OPTION) {
-//                                EvenementService es = new EvenementService();
-//                                es.suppressionEvenement(data.getIdevent());
-//                                initTable();
-//                            }
-//
-//                        });
+                        //todo: changer le deuxieme parametre pour y mettre l'id du membre courant
+                        btn.setOnAction(event -> {
+                            EvenementImage data = getTableView().getItems().get(getIndex());
+                            JFrame f = new JFrame();
+                            EvenementService es = new EvenementService();
+                            if (es.canReact(data.getIdevent(), 1)) {
+                                es.reagirEvenement(new ReactionEv(data.getIdevent(), 1, -1));
+                            } else if (es.getReact(data.getIdevent(), 1) == 1) {
+                                int b = JOptionPane.showConfirmDialog(f, "Êtes-vous de vouloir changer votre reaction?");
+                                if (b == JOptionPane.YES_OPTION) {
+                                    es.updateReact(new ReactionEv(data.getIdevent(), 1, 1));
+                                    JOptionPane.showMessageDialog(null, "Réaction modifée");
+                                }
+                            } else {
+                                int c = JOptionPane.showConfirmDialog(f, "Vous avez déja réagie à cet evenement vous voulez annuler la reaction?");
+                                if (c == JOptionPane.YES_OPTION) {
+                                    es.supprimerReacC(new ReactionEv(data.getIdevent(), 1, -1));
+                                    JOptionPane.showMessageDialog(null, "Réaction annulée");
+                                }
+                            }
+                            initTable();
+
+                        });
                     }
 
                     @Override
@@ -285,6 +310,7 @@ public class UpComingEventsController implements Initializable {
                                 if (es.eventSature(data.getIdevent())) {
                                     JOptionPane.showMessageDialog(null, "Evenement vient d'être saturé!");
                                 } else {
+                                    //todo: changer le deuxieme parametre pour y mettre l'id du membre courant
                                     es.sinscrirEvenement(data.getIdevent(), 1);
                                 }
                                 initTable();

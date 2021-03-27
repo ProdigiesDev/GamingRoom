@@ -178,10 +178,11 @@ public class EvenementService implements IEvenement {
     public int supprimerReacC(ReactionEv rE) {
         int nbModif = 0;
         try {
-            String requette = "DELETE FROM reactionev where id=?";
+            String requette = "DELETE FROM reactionev where evenement_id=? AND membre_id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requette);
-            pst.setInt(1, rE.getId());
+            pst.setInt(1, rE.getEvenement_id());
+            pst.setInt(2, rE.getMembre_id());
             nbModif = pst.executeUpdate();
             if (nbModif <= 0) {
                 System.out.println("Verifiez vos données");
@@ -458,6 +459,57 @@ public class EvenementService implements IEvenement {
             Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    @Override
+    public boolean canReact(int idE, int idM) {
+        try {
+            String requete = "select * from reactionev where evenement_id=" + idE + " AND membre_id =" + idM;
+            System.out.println("res "+requete);
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+    }
+
+    @Override
+    public int getReact(int idE, int idM) {
+        try {
+            String requete = "select interaction from reactionev where evenement_id=" + idE + " AND membre_id=" + idM;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                return rs.getInt("interaction");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    @Override
+    public int updateReact(ReactionEv rE) {
+        int nbModif = 0;
+        try {
+            String requete = "UPDATE reactionev SET interaction	=? WHERE evenement_id=? AND membre_id=?";
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requete);
+            pst.setInt(1, rE.getInteraction());
+            pst.setInt(2, rE.getEvenement_id());
+            pst.setInt(3, rE.getMembre_id());
+            nbModif = pst.executeUpdate();
+            System.out.println("ReactionEv modifiée");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return nbModif;
     }
 
 }

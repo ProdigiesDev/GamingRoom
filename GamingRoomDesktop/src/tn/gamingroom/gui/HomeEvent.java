@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import tn.gamingroom.outils.Env;
 
 /**
  *
@@ -25,13 +26,15 @@ public class HomeEvent extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("listeEvenement.fxml"));
+            //Parent root = FXMLLoader.load(getClass().getResource("listeEvenement.fxml"));
+            //Parent root = FXMLLoader.load(getClass().getResource("ListerEventUser.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("userEvents.fxml"));
 
             Scene scene = new Scene(root);
-            File f = new File("C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/assetsEvenement/logo.png");
+            File f = new File(Env.getDossierImageUtilEventPath()+"logo.png");
             Image img = new Image(f.toURI().toURL().toExternalForm());
             primaryStage.getIcons().add(img);
-            primaryStage.setTitle("Ajout Evenement");
+            primaryStage.setTitle("Evenement");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {
