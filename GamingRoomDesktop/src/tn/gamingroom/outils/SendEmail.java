@@ -22,7 +22,7 @@ import javax.mail.internet.MimeMessage;
  * @author Sonia
  */
 public class SendEmail {
-    public static boolean sendMail(String recepient,String text) throws MessagingException {
+    public static boolean sendMail(String recepient,String HeaderText,String text) throws MessagingException {
         System.out.println("preparing to send email");
         Properties properties = new Properties();
         
@@ -41,19 +41,19 @@ public class SendEmail {
             }
             
         } );
-        Message message = prepareMessage(session,myAccountEmail,recepient,text);
+        Message message = prepareMessage(session,myAccountEmail,recepient,HeaderText,text);
         Transport.send(message);
         //System.out.println("message sent successfully");
         return true;
       
         
     }
-    private static Message prepareMessage(Session session, String myAccountEmail, String recepient,String text){
+    private static Message prepareMessage(Session session, String myAccountEmail, String recepient, String HeaderText, String text){
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
-            message.setSubject("Account activated");
+            message.setSubject(HeaderText);
             message.setText(text);
             return message;
         } catch (Exception ex) {
