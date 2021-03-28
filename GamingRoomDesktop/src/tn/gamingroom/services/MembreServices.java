@@ -328,4 +328,32 @@ public class MembreServices implements IMembre<Membre> {
         return s;
     }
 
+    @Override
+    public Membre getMemberById(int idM) {
+        Membre m = new Membre();
+        try {
+            String requete = "SELECT * FROM membre where id=" + idM;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if(rs.next()) {
+                m.setId(rs.getInt("id"));
+                m.setNom(rs.getString("nom"));
+                m.setPrenom(rs.getString("prenom"));
+                m.setDate_naissance(rs.getDate("date_naissance"));
+                m.setGenre(Membre.Genre.valueOf(rs.getString("genre")));
+                m.setTel(rs.getString("numero_tel"));
+                m.setEmail(rs.getString("email"));
+                m.setPassword(rs.getString("password"));
+                m.setImage(rs.getString("image"));
+                m.setRole(Membre.Role.valueOf(rs.getString("role")));
+                m.setBan_duration(rs.getInt("ban_duration"));
+                m.setLast_timeban(rs.getDate("last_timeban"));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return m;
+    }
+
 }

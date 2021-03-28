@@ -133,11 +133,12 @@ public class AjoutEvenementController implements Initializable {
         });
         bntAjout.setDisable(true);
 
-        final Tooltip tooltip = new Tooltip();
-        tooltip.setText("Help");
-        bntHelp.setTooltip(tooltip);
-        tooltip.setText("Format embed");
-        lienyoutube.setTooltip(tooltip);
+        final Tooltip tooltip1 = new Tooltip();
+        final Tooltip tooltip2 = new Tooltip();
+        tooltip1.setText("Help");
+        bntHelp.setTooltip(tooltip1);
+        tooltip2.setText("Format embed");
+        lienyoutube.setTooltip(tooltip2);
 
     }
 

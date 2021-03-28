@@ -13,17 +13,29 @@ import java.util.List;
  * @author Sonia
  */
 public interface IMembre<T> {
-     public void ajouterMembre(T m);
-     public void ajouterCoach(T m);
-     public void sumprimerMembres(T m);
-     public void modifierMembres(T m);
-     public void modifierMembreParAdmin(T m);
-     public List<T> DisplayMembres();
-     public T Login(String a,String b);
-     public List<T> RechercherMembres(String x);
-     public ArrayList<T> TrierParId();
-     public void fPwd(int id);
-     public String findById(int idM);
 
-    
+    public void ajouterMembre(T m);
+
+    public void ajouterCoach(T m);
+
+    public void sumprimerMembres(T m);
+
+    public void modifierMembres(T m);
+
+    public void modifierMembreParAdmin(T m);
+
+    public List<T> DisplayMembres();
+
+    public T Login(String a, String b);
+
+    public List<T> RechercherMembres(String x);
+
+    public ArrayList<T> TrierParId();
+
+    public void fPwd(int id);
+
+    public String findById(int idM);
+
+    public T getMemberById(int idM);
+
 }
