@@ -28,11 +28,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
@@ -40,9 +42,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Membre;
+import tn.gamingroom.outils.SendEmail;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.MembreServices;
 
@@ -108,11 +112,14 @@ public class DashboardAdminController implements Initializable {
     @FXML
     private JFXButton btnsignout;
     @FXML
-    private JFXComboBox<String> activateCombo;
-    @FXML
-    private JFXButton btnUpdateActivationAccount;
-    @FXML
     private JFXButton btn_statisticPage;
+    @FXML
+    private TextArea txtarea_coachdesc;
+    @FXML
+    private JFXButton btn_activate;
+    @FXML
+    private JFXButton btn_refuser;
+   
 
     /**
      * Initializes the controller class.
@@ -129,11 +136,12 @@ public class DashboardAdminController implements Initializable {
         //Categorie
         afficherCategorie();
         //Combo Genre
-        activateCombo.getItems().addAll(
-                "Activate",
-                "Deactivate"
-                );
-
+//        activateCombo.getItems().addAll(
+//                "Activate",
+//                "Deactivate"
+//                );
+        /// 
+        txtarea_coachdesc.setVisible(false);
         
         
     } 
@@ -169,9 +177,9 @@ public class DashboardAdminController implements Initializable {
 
     @FXML
     private void ajouterCategorie(ActionEvent event) {
-        int idcat = Integer.parseInt(textcatid.getText());
+        //int idcat = Integer.parseInt(textcatid.getText());
         String nomcat=textcatname.getText();
-         Categorie c = new Categorie(idcat,nomcat);
+         Categorie c = new Categorie(1,nomcat);
          
          CategorieServices cs = new CategorieServices();
          cs.ajouterCategorie(c);
@@ -349,21 +357,39 @@ public class DashboardAdminController implements Initializable {
     @FXML
     private void getSelectedMember(MouseEvent event) {
          int index = table_memb.getSelectionModel().getSelectedIndex();
-
+//         String role = (String) colonne_role.getCellData(index);
+//         String ban = colonne_ban.getCellData(index).toString();
+         String active = colonne_active.getCellData(index).toString();
+         
         if (index <= -1) {
 
             return;
 
         }
+        else if( active.equals("false") ){
+            tfidmember.setText(colonne_id.getCellData(index).toString());
+            txtarea_coachdesc.setVisible(true);
+            MembreServices ms = new MembreServices();
+            int id = Integer.parseInt(tfidmember.getText());
+            String texte =  ms.getDescParId(id);
+            txtarea_coachdesc.setText(texte);
+           
+            
+        }
+        else{
+            txtarea_coachdesc.setVisible(false);
+        }
         
-        tfidmember.setText(colonne_id.getCellData(index).toString());
-        String active = colonne_active.getCellData(index).toString();
-        if (active.equals("false")){
-            activateCombo.setValue("Deactivate");
-        }
-         if (active.equals("true")){
-            activateCombo.setValue("Activate");
-        }
+        
+//        
+//        tfidmember.setText(colonne_id.getCellData(index).toString());
+////        String active = colonne_active.getCellData(index).toString();
+//        if (active.equals("false")){
+//            activateCombo.setValue("Deactivate");
+//        }
+//         if (active.equals("true")){
+//            activateCombo.setValue("Activate");
+//        }
         //activateCombo.setValue(colonne_active.getCellData(index).toString());
        // tfpoint.setText(colonne_pt.getCellData(index).toString());
     }
@@ -426,34 +452,36 @@ public class DashboardAdminController implements Initializable {
                 window.show(); }
     }
 
-    @FXML
-    private void ActiverCompte(ActionEvent event) {
-        int idmembre = Integer.parseInt(tfidmember.getText());
-        String active =  activateCombo.getValue();
-        MembreServices ms = new MembreServices();
-        if(active.equals("Activate")){
-            Membre m = new Membre(idmembre,true);
-            ms.activerCompte(m);
-            JOptionPane.showMessageDialog(null, " Account successfully activated");
-            afficherMembre();
-        }
-        if(active.equals("Deactivate")){
-            Membre m1 = new Membre();
-            m1.setId(idmembre);
-            m1.setBan_duration(ms.getBandurParid(idmembre)+1);
-            m1.setActive(false);
-            m1.setLast_timeban(Timestamp.valueOf(LocalDateTime.now()));
-            ms.desactiverCompte(m1);
-            JOptionPane.showMessageDialog(null, " Account successfully deactivated");
-            afficherMembre();
-        }
-    }
+//    @FXML
+//    private void ActiverCompte(ActionEvent event) {
+//        int idmembre = Integer.parseInt(tfidmember.getText());
+//        String active =  activateCombo.getValue();
+//        MembreServices ms = new MembreServices();
+//        if(active.equals("Activate")){
+//            Membre m = new Membre(idmembre,true);
+//            ms.activerCompte(m);
+//            JOptionPane.showMessageDialog(null, " Account successfully activated");
+//            afficherMembre();
+//        }
+//        if(active.equals("Deactivate")){
+//            Membre m1 = new Membre();
+//            m1.setId(idmembre);
+//            m1.setBan_duration(ms.getBandurParid(idmembre)+1);
+//            m1.setActive(false);
+//            m1.setLast_timeban(Timestamp.valueOf(LocalDateTime.now()));
+//            ms.desactiverCompte(m1);
+//            JOptionPane.showMessageDialog(null, " Account successfully deactivated");
+//            afficherMembre();
+//        }
+//    }
+
+   
 
     @FXML
-    private void staticCategorie(ActionEvent event) {
-        try {
+    private void staticMembre(ActionEvent event) {
+         try {
             Parent dashboard ;
-            dashboard = FXMLLoader.load(getClass().getResource("StatistiqueCategorie.fxml"));
+            dashboard = FXMLLoader.load(getClass().getResource("StatistiqueMembres.fxml"));
 
             Scene dashboardScene = new Scene(dashboard);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -463,6 +491,48 @@ public class DashboardAdminController implements Initializable {
             Logger.getLogger(DashboardAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @FXML
+    private void activerCompteCoach(ActionEvent event) {
+        
+        int idmembre = Integer.parseInt(tfidmember.getText());
+        MembreServices ms = new MembreServices();
+        String email = ms.getEmailParId(idmembre);
+       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("You're about to logout!");
+        alert.setContentText("Are you sure ?");
+        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+         if(alert.showAndWait().get()== okButton){
+             System.out.println("bla bla");
+          Membre m = new Membre(idmembre,true);
+          ms.activerCompte(m);
+          JOptionPane.showMessageDialog(null, " Account successfully activated");
+          afficherMembre(); 
+          String texte =  "Hello"+"\n"+" We are glad to let you know that we accepeted your request to be a coach and your account know is acctivated "+"\n"+"\n"+"GamingRoom";
+        
+            try {
+                boolean b= SendEmail.sendMail(email, "Account activation",texte);
+                 if(b==true){
+                JOptionPane.showMessageDialog(null, "Email sent successfullu");
+            }
+            else{
+                 JOptionPane.showMessageDialog(null,"ERROR! ");
+            } 
+            } catch (MessagingException ex) {
+                Logger.getLogger(DashboardAdminController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+         }
+    }
+
+    @FXML
+    private void RefuserCompte(ActionEvent event) {
+    }
+
+    
 
     
 }
