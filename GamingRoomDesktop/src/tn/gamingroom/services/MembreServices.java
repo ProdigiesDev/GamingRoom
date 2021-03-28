@@ -211,7 +211,7 @@ public class MembreServices implements IMembre<Membre> {
     public List<Membre> RechercherMembres(String x) {
         ArrayList<Membre> ListMembre = new ArrayList<>();
         try {
-            String requete = "Select * from membre where email like '%" + x + "%' or nom like '%" + x + "%' or prenom like '%" + x + "%'";
+            String requete = "Select * from membre  where email like '%" + x + "%' or nom like '%" + x + "%' or prenom like '%" + x + "%' or role like '%" + x + "%'";
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requete);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -425,6 +425,25 @@ public class MembreServices implements IMembre<Membre> {
             System.err.println(ex.getMessage());
         }
           return ban_dur;  
+    }
+
+    @Override
+    public String getDescParId(int id) {
+        String desc= "";
+        try {
+            
+            String requete = "select * from membre where id = '"+id+"'";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+ 
+            if (rs.next()) {
+                desc=rs.getString("descrption");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+          return desc;  
     }
 
     

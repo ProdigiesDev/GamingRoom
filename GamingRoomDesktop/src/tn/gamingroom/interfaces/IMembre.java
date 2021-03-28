@@ -29,6 +29,7 @@ public interface IMembre<T> {
      public int activerCompte(T m);
      public int desactiverCompte(T m);
      public int getBandurParid(int id);
+     public String getDescParId(int id);
 
     
 }
