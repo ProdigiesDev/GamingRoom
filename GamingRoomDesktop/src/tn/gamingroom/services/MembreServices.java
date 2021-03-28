@@ -390,24 +390,7 @@ public class MembreServices implements IMembre<Membre> {
         }
         return nbactive;
     }
-     @Override
-    public int desactiverCompte(Membre m) {
-        int nbactive=0;
-        try {
-            String requete = "UPDATE membre SET active=?,ban_duration=?,last_timeban=? WHERE id=? AND role != 'Admin' ";
-            PreparedStatement pst = MyConnection.getInstance().getCnx()
-                    .prepareStatement(requete);
-            pst.setBoolean(1, m.getActive());
-            pst.setInt(2, m.getBan_duration());
-            pst.setTimestamp(3, m.getLast_timeban());
-            pst.setInt(4, m.getId());
-            nbactive=pst.executeUpdate();
-            System.out.println("Modification avec succées");
-        } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
-        }
-        return nbactive;
-    }
+    
     @Override
      public int getBandurParid(int id) {
         int ban_dur = 0;

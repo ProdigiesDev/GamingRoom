@@ -511,7 +511,7 @@ public class DashboardAdminController implements Initializable {
           ms.activerCompte(m);
           JOptionPane.showMessageDialog(null, " Account successfully activated");
           afficherMembre(); 
-          String texte =  "Hello"+"\n"+" We are glad to let you know that we accepeted your request to be a coach and your account know is acctivated "+"\n"+"\n"+"GamingRoom";
+          String texte =  "Hello,"+"\n"+" We are glad to let you know that we accepeted your request to be a coach and your account is acctivated now  "+"\n"+"\n"+"GamingRoom";
         
             try {
                 boolean b= SendEmail.sendMail(email, "Account activation",texte);
@@ -530,6 +530,36 @@ public class DashboardAdminController implements Initializable {
 
     @FXML
     private void RefuserCompte(ActionEvent event) {
+        int idmembre = Integer.parseInt(tfidmember.getText());
+        MembreServices ms = new MembreServices();
+        String email = ms.getEmailParId(idmembre);
+        Membre m = new Membre(idmembre);
+       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Refuse Account");
+        alert.setHeaderText("You're about to refuse and delete member!");
+        alert.setContentText("Are you sure ?");
+        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+         if(alert.showAndWait().get()== okButton){
+        ms.sumprimerMembres(m);
+        JOptionPane.showMessageDialog(null, " Account successfully deleted");
+        afficherMembre();
+         String texte =  "Hello,"+"\n"+" We are sorry to let you know that we didn't accepet your request to be a coach  "+"\n"+"\n"+"GamingRoom";
+        
+            try {
+                boolean b= SendEmail.sendMail(email, "Account activation",texte);
+                 if(b==true){
+                JOptionPane.showMessageDialog(null, "Email sent successfullu");
+            }
+            else{
+                 JOptionPane.showMessageDialog(null,"ERROR! ");
+            } 
+            } catch (MessagingException ex) {
+                Logger.getLogger(DashboardAdminController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         }
+        
     }
 
     
