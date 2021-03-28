@@ -33,6 +33,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -90,6 +91,8 @@ public class AjoutEvenementController implements Initializable {
     private Button bntAjout;
     @FXML
     private ImageView imV;
+    @FXML
+    private Button bntHelp;
 
     /**
      * Initializes the controller class.
@@ -130,11 +133,12 @@ public class AjoutEvenementController implements Initializable {
         });
         bntAjout.setDisable(true);
 
-        /* if (!(nomevent.getText().isEmpty() || datedeb.getValue().toString().isEmpty() || datefin.getValue().toString().isEmpty() || image.getBytes().toString().isEmpty() || categorie.getId() == null || description.getText().isEmpty() || lienyoutube.getText().isEmpty())) {
-            bntAjout.setDisable(true);
-        } else {
-            bntAjout.setDisable(false);
-        }*/
+        final Tooltip tooltip = new Tooltip();
+        tooltip.setText("Help");
+        bntHelp.setTooltip(tooltip);
+        tooltip.setText("Format embed");
+        lienyoutube.setTooltip(tooltip);
+
     }
 
     @FXML
@@ -167,57 +171,15 @@ public class AjoutEvenementController implements Initializable {
             if (!(lienyoutube.getText().isEmpty() || description.getText().isEmpty() || nbremax_participant.getText().isEmpty() || image.isEmpty() || datefin.getValue().toString().isEmpty() || datedeb.getValue().toString().isEmpty() || nomevent.getText().isEmpty())) {
                 EvenementService es = new EvenementService();
                 Evenement e = new Evenement();
-                //if (nomevent.getText().length() > 20 || nomevent.getText().isEmpty()) {
-                //    nomeventCont.setText("Titre trop long");
-                // } else {
                 e.setNomEvent(nomevent.getText());
-                //    nomeventCont.setText("");
-                //  }
-
-                // if (datedeb.getValue().isBefore(LocalDate.now())|| datedeb.getValue().toString().isEmpty()) {
-                //    datedebCont.setText("La date doit être supérieur à la date acctuelle");
-                //  } else {
                 e.setDateDeb(java.sql.Date.valueOf(datedeb.getValue()));
-                //    datedebCont.setText("");
-                // }
-
-                //  if (datefin.getValue().isBefore(datedeb.getValue()) || datefin.getValue().toString().isEmpty()) {
-                //     datefinCont.setText("La date doit être supérieur à la date début");
-                //} else {
                 e.setDateFin(java.sql.Date.valueOf(datefin.getValue()));
-                //    datefinCont.setText("");
-                ///}
-
-                //e.setImage(image);
-                //if (image.getBytes().length > 255 || image.isEmpty()) {
-                //   imageCont.setText("Veuillez choisir une autre image");
-                // } else {
                 e.setImage(imageNameTodb);
-                //   imageCont.setText("");
-                //}
 
                 e.setCategorie_id(categorie.getValue().getIdcat());
-
-                //if (Integer.parseInt(nbremax_participant.getText()) % 2 != 0 || nbremax_participant.getText().isEmpty()) {
-                //     nbpartCont.setText("Le nombre maximale des participants doit être paire");
-                // } else {
                 e.setNbreMax_participant(Integer.parseInt(nbremax_participant.getText()));
-                //    nbpartCont.setText("");
-                // }
-
-                // if (description.getText().length() > 255 || description.getText().isEmpty()) {
-                //    descCont.setText("La déscription est trop longue");
-                // } else {
                 e.setDescription(description.getText());
-                //    descCont.setText("");
-                // }
-
-                //if (lienyoutube.getText().length() > 100 || lienyoutube.getText().isEmpty()) {
-                //lienCont.setText("Verrifier le lien");
-                //} else {
                 e.setLienYoutube(lienyoutube.getText());
-                // lienCont.setText("");
-                //}
 
                 int ret = es.ajoutEvenement(e);
                 if (ret == 0) {
@@ -293,16 +255,15 @@ public class AjoutEvenementController implements Initializable {
             int x = Integer.parseInt(nbremax_participant.getText()) % 2;
 
             if (nbremax_participant.getText().isEmpty()) {
-                
+
                 bntAjout.setDisable(true);
                 nbpartCont.setText("Veuillez remplir ce champs");
             } else if (x != 0) {
-                
 
                 nbpartCont.setText("Le nombre maximale des participants doit être paire");
                 bntAjout.setDisable(true);
             } else {
-                
+
                 nbpartCont.setText("");
                 bntAjout.setDisable(false);
             }
@@ -369,6 +330,15 @@ public class AjoutEvenementController implements Initializable {
             imageCont.setText("");
             bntAjout.setDisable(false);
         }
+    }
+
+    @FXML
+    private void help(ActionEvent event) {
+        JOptionPane.showMessageDialog(null, "Finding the embed code on YouTube:"
+                + "Go to YouTube.\n"
+                + "Navigate to the video you wish to embed.\n"
+                + "Click the Share link below the video, then click the Embed link.\n"
+                + "The embed link will be highlighted in blue. You will need to copy this link in order to add it to your page in the Employer Center.");
     }
 
 }

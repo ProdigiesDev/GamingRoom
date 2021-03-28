@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 import tn.gamingroom.entities.ReactionEv;
 import tn.gamingroom.services.EvenementService;
 
@@ -42,6 +43,8 @@ public class AjouterCommentaireController implements Initializable {
     private void ajouter(ActionEvent event) {
         EvenementService es = new EvenementService();
         es.reagirEvenement(new ReactionEv(id, 1, com.getText()));
+        Stage stage = (Stage) com.getScene().getWindow();
+        stage.close();
     }
 
 }

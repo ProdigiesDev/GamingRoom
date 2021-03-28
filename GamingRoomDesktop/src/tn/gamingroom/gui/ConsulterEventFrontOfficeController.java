@@ -71,6 +71,10 @@ public class ConsulterEventFrontOfficeController implements Initializable {
     private Scene s;
     @FXML
     private TableView<CommentaireReact> tVCom;
+    @FXML
+    private Label likes;
+    @FXML
+    private Label dislikes;
 
     /**
      * Initializes the controller class.
@@ -111,7 +115,8 @@ public class ConsulterEventFrontOfficeController implements Initializable {
             nbM.setText(nbM.getText() + " " + e.getNbreMax_participant());
             vidYoutube.getEngine().load(e.getLienYoutube());
             s = n;
-
+            likes.setText(es.getLikes(idE)+"");
+            dislikes.setText(es.getDisikes(idE)+"");
             membreCom.setCellValueFactory(new PropertyValueFactory<CommentaireReact, String>("nomMembre"));
             commentaire.setCellValueFactory(new PropertyValueFactory<CommentaireReact, String>("commentaire"));
 

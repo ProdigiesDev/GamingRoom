@@ -32,4 +32,6 @@ public interface IEvenement {
     public int getReact(int idE,int idM);
     public int updateReact(ReactionEv rE);
     public List<ReactionEv> listeCommentaires(int id);
+    public int getLikes(int idE);
+    public int getDisikes(int idE);
 }

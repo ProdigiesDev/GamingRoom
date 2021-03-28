@@ -178,10 +178,10 @@ public class ListeEvenementController implements Initializable {
                                 pct.setDatedeb(data.getDateDeb());
                                 pct.setDatefin(data.getDateFin());
                                 pct.setCategorie(data.getCategorie_id());
-                                pct.setImage(data.getImage().toString());
                                 pct.setNbremax_participant(data.getNbreMax_participant() + "");
                                 pct.setDescription(data.getDescription());
                                 pct.setLienyoutube(data.getLienYoutube());
+                                pct.iniData(data.getIdevent());
                                 n.getScene().setRoot(root);
                             } catch (IOException ex) {
                                 Logger.getLogger(ListeEvenementController.class.getName()).log(Level.SEVERE, null, ex);

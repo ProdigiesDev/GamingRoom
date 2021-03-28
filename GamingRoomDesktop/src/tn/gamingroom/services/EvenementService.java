@@ -515,7 +515,6 @@ public class EvenementService implements IEvenement {
     @Override
     public List<ReactionEv> listeCommentaires(int id) {
         List<ReactionEv> reactionList = new ArrayList<>();
-        System.out.println("id "+id);
         try {
             String requete = "SELECT * FROM reactionev where commentaire is not null AND evenement_id="+id;
             Statement st = MyConnection.getInstance().getCnx()
@@ -534,6 +533,40 @@ public class EvenementService implements IEvenement {
             System.out.println(ex.getMessage());
         }
         return reactionList;
+    }
+
+    @Override
+    public int getLikes(int idE) {
+        int likes=0;
+        try {
+            String requete = "SELECT count(interaction) as likes FROM reactionev where interaction>0 AND evenement_id="+idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                likes=rs.getInt("likes");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return likes;
+    }
+
+    @Override
+    public int getDisikes(int idE) {
+        int dislikes=0;
+        try {
+            String requete = "SELECT count(interaction) as dislikes FROM reactionev where interaction<0 AND evenement_id="+idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                dislikes=rs.getInt("dislikes");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return dislikes;
     }
 
 }

@@ -9,9 +9,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +23,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import tn.gamingroom.entities.CommentaireReact;
 import tn.gamingroom.entities.Evenement;
 import tn.gamingroom.services.EvenementService;
+import tn.gamingroom.services.MembreServices;
 
 /**
  * FXML Controller class
@@ -42,12 +52,23 @@ public class ConsulterEvenementBackOfficeController implements Initializable {
     private Label df;
     @FXML
     private Label nbM;
-    @FXML
     private Label lienY;
     @FXML
     private Label titre;
     private Scene s;
     private int id;
+    @FXML
+    private TableView<CommentaireReact> tVCom;
+    @FXML
+    private TableColumn<CommentaireReact, String> membreCom;
+    @FXML
+    private TableColumn<CommentaireReact, String> commentaire;
+    @FXML
+    private WebView vidYoutube;
+    @FXML
+    private Label likes;
+    @FXML
+    private Label dislikes;
 
     public ImageView getImage() {
         return imageC;
@@ -62,7 +83,6 @@ public class ConsulterEvenementBackOfficeController implements Initializable {
     }
 
     public void setImageC(String image) {
-        System.out.println("image" + image);
         Image im = new Image(image);
         imageC.setImage(im);
         imageC.setFitHeight(675);
@@ -79,6 +99,21 @@ public class ConsulterEvenementBackOfficeController implements Initializable {
 
     }
 
+    private void initTable() {
+        EvenementService es = new EvenementService();
+        MembreServices ms = new MembreServices();
+        List<CommentaireReact> lIm = new ArrayList<CommentaireReact>();
+        es.listeCommentaires(id).forEach(e -> {
+            String nom = ms.findById(e.getMembre_id());
+            lIm.add(new CommentaireReact(e.getId(), e.getEvenement_id(), e.getMembre_id(), e.getCommentaire(), nom));
+
+        });
+
+        ObservableList<CommentaireReact> listEventsIm = FXCollections.observableArrayList(lIm);
+
+        tVCom.setItems(listEventsIm);
+    }
+
     public void intData(int idE, Scene n) {
         try {
             EvenementService es = new EvenementService();
@@ -92,9 +127,15 @@ public class ConsulterEvenementBackOfficeController implements Initializable {
             df.setText(e.getDateFin().toString());
             titre.setText(titre.getText() + " " + e.getNomEvent());
             description.setText(e.getDescription());
-            lienY.setText(e.getLienYoutube());
             nbM.setText(nbM.getText() + " " + e.getNbreMax_participant());
+            vidYoutube.getEngine().load(e.getLienYoutube());
             s = n;
+            likes.setText(es.getLikes(idE) + "");
+            dislikes.setText(es.getDisikes(idE) + "");
+            membreCom.setCellValueFactory(new PropertyValueFactory<CommentaireReact, String>("nomMembre"));
+            commentaire.setCellValueFactory(new PropertyValueFactory<CommentaireReact, String>("commentaire"));
+
+            initTable();
         } catch (MalformedURLException ex) {
             Logger.getLogger(ConsulterEvenementBackOfficeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -115,10 +156,10 @@ public class ConsulterEvenementBackOfficeController implements Initializable {
             pct.setDatedeb(e.getDateDeb());
             pct.setDatefin(e.getDateFin());
             pct.setCategorie(e.getCategorie_id());
-            pct.setImage(e.getImage());
             pct.setNbremax_participant(e.getNbreMax_participant() + "");
             pct.setDescription(e.getDescription());
             pct.setLienyoutube(e.getLienYoutube());
+            pct.iniData(e.getIdevent());
             s.setRoot(root);
             Stage stage = (Stage) description.getScene().getWindow();
             stage.close();

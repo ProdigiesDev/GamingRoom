@@ -14,79 +14,80 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.ModifierEvenementController">
+<AnchorPane id="AnchorPane" prefHeight="697.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.ModifierEvenementController">
    <children>
-      <AnchorPane id="AnchorPane" layoutX="10.0" prefHeight="400.0" prefWidth="600.0">
+      <AnchorPane id="AnchorPane" layoutX="10.0" prefHeight="697.0" prefWidth="1240.0">
          <children>
-            <ImageView fitHeight="692.0" fitWidth="1286.0" layoutX="-46.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="704.0" fitWidth="1286.0" layoutX="-46.0" layoutY="-4.0" pickOnBounds="true">
                <image>
                   <Image url="file:/C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/AjoutEvenement.jpg" />
                </image>
             </ImageView>
-            <Pane layoutX="271.0" layoutY="8.0" opacity="0.78" prefHeight="579.0" prefWidth="675.0" style="-fx-background-color: black;">
+            <Pane layoutX="271.0" layoutY="8.0" opacity="0.78" prefHeight="680.0" prefWidth="675.0" style="-fx-background-color: black;">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="166.0" layoutY="14.0" prefHeight="22.0" prefWidth="343.0" text="Entrez vos modifications" textFill="#f8f7f7">
                      <font>
                         <Font name="Yu Gothic Regular" size="19.0" />
                      </font>
                   </Label>
-                  <Label alignment="TOP_LEFT" layoutX="41.0" layoutY="76.0" prefHeight="22.0" prefWidth="50.0" text="Titre" textFill="#f8f7f7">
+                  <Label alignment="TOP_LEFT" layoutX="41.0" layoutY="203.0" prefHeight="22.0" prefWidth="50.0" text="Titre" textFill="#f8f7f7">
                      <font>
                         <Font name="Yu Gothic Regular" size="13.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="nomevent" focusColor="#6f1075" layoutX="170.0" layoutY="76.0" onKeyPressed="#verifTitre" />
-                  <JFXDatePicker fx:id="datedeb" defaultColor="#6f1075" layoutX="166.0" layoutY="136.0" onAction="#verifDateDeb" />
-                  <Label alignment="TOP_LEFT" layoutX="37.0" layoutY="136.0" prefHeight="22.0" prefWidth="76.0" text="Date début" textFill="#f8f7f7">
+                  <JFXTextField fx:id="nomevent" focusColor="#6f1075" layoutX="170.0" layoutY="203.0" onKeyPressed="#verifTitre" />
+                  <JFXDatePicker fx:id="datedeb" defaultColor="#6f1075" layoutX="166.0" layoutY="263.0" onAction="#verifDateDeb" />
+                  <Label alignment="TOP_LEFT" layoutX="37.0" layoutY="263.0" prefHeight="22.0" prefWidth="76.0" text="Date début" textFill="#f8f7f7">
                      <font>
                         <Font name="Yu Gothic Regular" size="13.0" />
                      </font>
                   </Label>
-                  <JFXDatePicker fx:id="datefin" defaultColor="#6f1075" layoutX="168.0" layoutY="194.0" onAction="#verifDatefin" />
-                  <Label alignment="TOP_LEFT" layoutX="35.0" layoutY="194.0" prefHeight="22.0" prefWidth="76.0" text="Date fin" textFill="#f8f7f7">
+                  <JFXDatePicker fx:id="datefin" defaultColor="#6f1075" layoutX="168.0" layoutY="321.0" onAction="#verifDatefin" />
+                  <Label alignment="TOP_LEFT" layoutX="35.0" layoutY="321.0" prefHeight="22.0" prefWidth="76.0" text="Date fin" textFill="#f8f7f7">
                      <font>
                         <Font name="Yu Gothic Regular" size="13.0" />
                      </font>
                   </Label>
-                  <Button layoutX="358.0" layoutY="249.0" mnemonicParsing="false" onAction="#ChooseFile" style="-fx-background-color: #6f1075;" text="Choisir une image" textFill="#f5f3f3" />
-                  <JFXTextField fx:id="selectedFile" editable="false" focusColor="#6f1075" layoutX="170.0" layoutY="249.0" onAction="#verifImage" />
-                  <Label alignment="TOP_LEFT" layoutX="37.0" layoutY="250.0" prefHeight="22.0" prefWidth="76.0" text="Image" textFill="#f8f7f7">
+                  <Button layoutX="358.0" layoutY="376.0" mnemonicParsing="false" onAction="#ChooseFile" style="-fx-background-color: #6f1075;" text="Choisir une image" textFill="#f5f3f3" />
+                  <JFXTextField fx:id="selectedFile" editable="false" focusColor="#6f1075" layoutX="170.0" layoutY="376.0" onAction="#verifImage" />
+                  <Label alignment="TOP_LEFT" layoutX="37.0" layoutY="377.0" prefHeight="22.0" prefWidth="76.0" text="Image" textFill="#f8f7f7">
                      <font>
                         <Font name="Yu Gothic Regular" size="13.0" />
                      </font>
                   </Label>
-                  <JFXComboBox fx:id="categorie" focusColor="#6f1075" layoutX="170.0" layoutY="314.0" prefHeight="25.0" prefWidth="135.0" />
-                  <Label alignment="TOP_LEFT" layoutX="37.0" layoutY="315.0" prefHeight="22.0" prefWidth="76.0" text="Catégorie" textFill="#f8f7f7">
+                  <JFXComboBox fx:id="categorie" focusColor="#6f1075" layoutX="170.0" layoutY="441.0" prefHeight="25.0" prefWidth="135.0" />
+                  <Label alignment="TOP_LEFT" layoutX="37.0" layoutY="442.0" prefHeight="22.0" prefWidth="76.0" text="Catégorie" textFill="#f8f7f7">
                      <font>
                         <Font name="Yu Gothic Regular" size="13.0" />
                      </font>
                   </Label>
-                  <Label alignment="TOP_LEFT" layoutX="35.0" layoutY="369.0" prefHeight="25.0" prefWidth="98.0" text="Nb participants" textFill="#f8f7f7">
+                  <Label alignment="TOP_LEFT" layoutX="35.0" layoutY="496.0" prefHeight="25.0" prefWidth="98.0" text="Nb participants" textFill="#f8f7f7">
                      <font>
                         <Font name="Yu Gothic Regular" size="13.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="nbremax_participant" focusColor="#6f1075" layoutX="166.0" layoutY="369.0" onKeyPressed="#verifNbPart" />
-                  <JFXTextArea fx:id="description" focusColor="#6f1075" layoutX="170.0" layoutY="433.0" onKeyPressed="#verifDesc" prefHeight="38.0" prefWidth="189.0" />
-                  <Label alignment="TOP_LEFT" layoutX="35.0" layoutY="459.0" prefHeight="25.0" prefWidth="98.0" text="Description" textFill="#f8f7f7">
+                  <JFXTextField fx:id="nbremax_participant" focusColor="#6f1075" layoutX="166.0" layoutY="496.0" onKeyPressed="#verifNbPart" />
+                  <JFXTextArea fx:id="description" focusColor="#6f1075" layoutX="170.0" layoutY="560.0" onKeyPressed="#verifDesc" prefHeight="38.0" prefWidth="189.0" />
+                  <Label alignment="TOP_LEFT" layoutX="35.0" layoutY="586.0" prefHeight="25.0" prefWidth="98.0" text="Description" textFill="#f8f7f7">
                      <font>
                         <Font name="Yu Gothic Regular" size="13.0" />
                      </font>
                   </Label>
-                  <Label alignment="TOP_LEFT" layoutX="385.0" layoutY="459.0" prefHeight="25.0" prefWidth="98.0" text="Lien Youtube" textFill="#f8f7f7">
+                  <Label alignment="TOP_LEFT" layoutX="385.0" layoutY="586.0" prefHeight="25.0" prefWidth="98.0" text="Lien Youtube" textFill="#f8f7f7">
                      <font>
                         <Font name="Yu Gothic Regular" size="13.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="lienyoutube" focusColor="#6f1075" layoutX="489.0" layoutY="447.0" onKeyPressed="#verifLien" />
-                  <Button fx:id="bntModif" layoutX="276.0" layoutY="510.0" mnemonicParsing="false" onAction="#modifierE" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: #6f1075;" text="Modifier" textFill="#f5f3f3" />
-                  <Label fx:id="nomeventCont" layoutX="346.0" layoutY="79.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
-                  <Label fx:id="datedebCont" layoutX="346.0" layoutY="138.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
-                  <Label fx:id="datefinCont" layoutX="346.0" layoutY="196.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
-                  <Label fx:id="imageCont" layoutX="484.0" layoutY="252.0" prefHeight="17.0" prefWidth="182.0" textFill="#6f1075" />
-                  <Label fx:id="nbpartCont" layoutX="346.0" layoutY="372.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
-                  <Label fx:id="descCont" layoutX="161.0" layoutY="483.0" prefHeight="17.0" prefWidth="199.0" textFill="#6f1075" />
-                  <Label fx:id="lienCont" layoutX="434.0" layoutY="483.0" prefHeight="17.0" prefWidth="199.0" textFill="#6f1075" />
+                  <JFXTextField fx:id="lienyoutube" focusColor="#6f1075" layoutX="489.0" layoutY="574.0" onKeyPressed="#verifLien" />
+                  <Button fx:id="bntModif" layoutX="276.0" layoutY="637.0" mnemonicParsing="false" onAction="#modifierE" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: #6f1075;" text="Modifier" textFill="#f5f3f3" />
+                  <Label fx:id="nomeventCont" layoutX="346.0" layoutY="206.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
+                  <Label fx:id="datedebCont" layoutX="346.0" layoutY="265.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
+                  <Label fx:id="datefinCont" layoutX="346.0" layoutY="323.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
+                  <Label fx:id="imageCont" layoutX="484.0" layoutY="379.0" prefHeight="17.0" prefWidth="182.0" textFill="#6f1075" />
+                  <Label fx:id="nbpartCont" layoutX="346.0" layoutY="499.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
+                  <Label fx:id="descCont" layoutX="161.0" layoutY="610.0" prefHeight="17.0" prefWidth="199.0" textFill="#6f1075" />
+                  <Label fx:id="lienCont" layoutX="434.0" layoutY="610.0" prefHeight="17.0" prefWidth="199.0" textFill="#6f1075" />
+                  <ImageView fx:id="imV" fitHeight="150.0" fitWidth="200.0" layoutX="441.0" layoutY="37.0" pickOnBounds="true" />
                </children>
             </Pane>
          </children>
