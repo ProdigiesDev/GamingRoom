@@ -105,8 +105,8 @@
       <TableView fx:id="tableCours" editable="true" layoutX="579.0" layoutY="167.0" onMouseClicked="#getSelected" prefHeight="324.0" prefWidth="896.0" style="-fx-background-color: #6f1075;">
          <columns>
             <TableColumn fx:id="cimage" prefWidth="121.0" text="Image" />
-            <TableColumn fx:id="cnom" prefWidth="78.0" text="Nom " />
-            <TableColumn fx:id="cdes" prefWidth="139.0" text="Déscription" />
+            <TableColumn fx:id="cnom" prefWidth="104.0" text="Nom " />
+            <TableColumn fx:id="cdes" prefWidth="113.0" text="Déscription" />
             <TableColumn fx:id="cmem" minWidth="0.0" prefWidth="94.0" text="Membres" />
             <TableColumn fx:id="cdate" prefWidth="108.0" style="color: #6f1075;" text="Date de création" />
             <TableColumn fx:id="cmoc" prefWidth="79.0" text="Mots clés" />

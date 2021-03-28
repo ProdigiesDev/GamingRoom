@@ -30,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Cours;
+import tn.gamingroom.entities.Courslm;
 import tn.gamingroom.entities.ReacCours;
 import tn.gamingroom.outils.Outils;
 import tn.gamingroom.services.ServiceCours;
@@ -58,7 +59,7 @@ public class InfoCoursController implements Initializable {
     @FXML
     private TableColumn<ReacCours, Integer> colMem;
 
-    Cours c;
+    Courslm c;
     
     int memberId=2;
     @FXML
@@ -86,15 +87,26 @@ public class InfoCoursController implements Initializable {
        
     }
 
-    public void setCours(Cours c) {
+    public void setCours(Courslm c) {
         this.c = c;
         cat.setText(String.valueOf(c.getCategorie_id()));
         nom.setText(c.getNomCours());
         des.setText(c.getDescription());
+        
         initTable();
         initNbInteraction();
         
     }
+    
+//    public void setCours(Courslm cm) {
+//        this.cm = c;
+//        cat.setText(String.valueOf(c.getCategorie_id()));
+//        nom.setText(c.getNomCours());
+//        des.setText(c.getDescription());
+//        initTable();
+//        initNbInteraction();
+//        
+//    }
      
      
      

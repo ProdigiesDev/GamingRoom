@@ -101,7 +101,7 @@ public class CoursMembreintController implements Initializable {
         try {
             Parent root = null;
             int index = tbCours.getSelectionModel().getSelectedIndex();
-           // Cours c=tbCours.getItems().get(index);
+           Courslm c=tbCours.getItems().get(index);
             if (index <= -1) {
                 return;
             }
