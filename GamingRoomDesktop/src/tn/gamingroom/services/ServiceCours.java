@@ -144,6 +144,7 @@ public class ServiceCours implements ICours {
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Cours c = new Cours();
+                
                 c.setId(rs.getInt("id"));
                 c.setNomCours(rs.getString("nomCours"));
                 c.setDescription(rs.getString("description"));
@@ -151,7 +152,9 @@ public class ServiceCours implements ICours {
                 c.setMembre_id(rs.getInt("membre_id"));
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
+                c.setImage(rs.getString("imagecours"));
                 c.setCategorie_id(rs.getInt("categorie_id"));
+                
                 CoursListx.add(c);
             }
         } catch (SQLException ex) {
@@ -172,7 +175,7 @@ public class ServiceCours implements ICours {
             Cours c = null;
             while (res.next()) {
 
-                c = new Cours(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getInt(5), res.getDate(6), res.getString(7), res.getInt(8));
+                c = new Cours(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getInt(5), res.getDate(6), res.getString(7),res.getString(8), res.getInt(9));
                 listCours.add(c);
 
             }

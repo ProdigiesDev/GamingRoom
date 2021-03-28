@@ -100,8 +100,6 @@ public class CoursDetailsController implements Initializable {
      @FXML
     private JFXTextField inb;
     @FXML
-    private JFXTextField icat;
-    @FXML
     private JFXTextField inom;
 
     @FXML
@@ -126,6 +124,20 @@ public class CoursDetailsController implements Initializable {
     @FXML
     private ImageView imagevc;
     String image;
+    @FXML
+    private Label verifnom;
+    @FXML
+    private Label verifcat;
+    @FXML
+    private Label verifdate;
+    @FXML
+    private Label veriftag;
+    @FXML
+    private Label verifdes;
+    @FXML
+    private Label verifnb;
+    @FXML
+    private Label verifmem;
     
     
 
@@ -182,6 +194,7 @@ public class CoursDetailsController implements Initializable {
         if (verif) {
             return;
         }
+        
         Cours c = new Cours();
         ServiceCours s = new ServiceCours();
         Categorie categorie = combocat.getValue();
@@ -353,99 +366,105 @@ public class CoursDetailsController implements Initializable {
     @FXML
     private void searchCours(KeyEvent event) {
         ServiceCours s = new ServiceCours();
-        ObservableList<Courslm> list = FXCollections.observableArrayList(s.searchCours(search.getText()));
 
-        tableCours.setItems(list);
+        initTable(s.searchCours(search.getText()));
     }
 
     @FXML
     private void trierC(ActionEvent event) {
         ServiceCours s = new ServiceCours();
-        ObservableList<Courslm> list = FXCollections.observableArrayList(s.trierCoursID());
-        String nomImage = moveImage();
-        tableCours.setItems(list);
+        initTable(s.trierCoursID());
+        
+        //ObservableList<Courslm> list = FXCollections.observableArrayList(s.trierCoursID());
+        //String nomImage = moveImage();
+        //tableCours.setItems(list);
         
 
     }
 
     private boolean verifnom() {
-        alert.setStyle("-fx-text-fill: white; ");
+        verifnom.setStyle("-fx-text-fill: white; ");
         if (inom.getText().isEmpty()) {
-            alert.setText("Veuillez remplir ce champs");
+            verifnom.setText("Veuillez remplir ce champs");
             return true;
         } else if (inom.getText().length() > 20) {
-            alert.setText("Nom trop long");
+            verifnom.setText("Nom trop long");
             return true;
         } else {
-            alert.setText("");
+            verifnom.setText("");
             return false;
         }
     }
 
     private boolean verifmo() {
-        alert.setStyle("-fx-text-fill: white; ");
+        veriftag.setStyle("-fx-text-fill: white; ");
         if (icl.getText().isEmpty()) {
-            alert.setText("Veuillez remplir ce champs");
+            veriftag.setText("Veuillez remplir ce champs");
             return true;
+            
         } else {
-            alert.setText("");
+            veriftag.setText("");
             return false;
         }
     }
 
     private boolean verifnb() {
-        alert.setStyle("-fx-text-fill: white; ");
+        
+        verifnb.setStyle("-fx-text-fill: white; ");
+        int x=Integer.parseInt(inb.getText());
         if (inb.getText().isEmpty()) {
-            alert.setText("Veuillez remplir ce champs");
+            verifnb.setText("Veuillez remplir ce champs");
             return true;
+        
+     
         } else {
-            alert.setText("");
+            verifnb.setText("");
             return false;
         }
     }
 
     private boolean verifdate() {
-        alert.setStyle("-fx-text-fill: white; ");
+        verifdate.setStyle("-fx-text-fill: white; ");
 
         if (idate.getValue() == null) {
 
-            alert.setText("Veuillez remplir ce champs");
+            verifdate.setText("Veuillez remplir ce champs");
             return true;
         } else {
-            alert.setText("");
+            verifdate.setText("");
             return false;
         }
     }
 
     private boolean verifmem() {
-        alert.setStyle("-fx-text-fill: white; ");
+        verifmem.setStyle("-fx-text-fill: white; ");
         if (imem.getText().isEmpty()) {
-            alert.setText("Veuillez remplir ce champs");
+            verifmem.setText("Veuillez remplir ce champs");
             return true;
         } else {
-            alert.setText("");
+            verifmem.setText("");
             return false;
         }
     }
 
     private boolean verifdes() {
-        alert.setStyle("-fx-text-fill: white; ");
+        verifdes.setStyle("-fx-text-fill: white; ");
         if (ides.getText().isEmpty()) {
-            alert.setText("Veuillez remplir ce champs");
+            verifdes.setText("Veuillez remplir ce champs");
             return true;
         } else {
-            alert.setText("");
+            verifdes.setText("");
             return false;
         }
     }
 
     private boolean verifcat() {
-        alert.setStyle("-fx-text-fill: white; ");
+        verifcat.setStyle("-fx-text-fill: white; ");
         if (combocat.getItems().isEmpty()) {
-            alert.setText("Veuillez remplir ce champs");
+            verifcat.setText("Veuillez remplir ce champs");
             return true;
         } else {
-            alert.setText("");
+            verifcat.setText("");
             return false;
         }
     }

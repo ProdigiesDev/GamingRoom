@@ -29,7 +29,7 @@ public class CoursHomePage extends Application {
         
         try {
             Parent root = FXMLLoader.load(getClass().getResource("coursDetails.fxml"));
-            Scene scene = new Scene(root, 1250, 600);
+            Scene scene = new Scene(root, 1500, 720);
             
             primaryStage.setTitle("GamingRoom");
             primaryStage.setScene(scene);
