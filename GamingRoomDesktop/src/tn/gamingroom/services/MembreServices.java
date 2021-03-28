@@ -432,18 +432,37 @@ public class MembreServices implements IMembre<Membre> {
         String desc= "";
         try {
             
-            String requete = "select * from membre where role != 'Membre' and  id = '"+id+"'";
+            String requete = "select * from membre  where  id = '"+id+"'";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requete);
  
             if (rs.next()) {
-                desc=rs.getString("descrption");
+                desc=rs.getString("description");
             }
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
           return desc;  
+    }
+
+    @Override
+    public String getEmailParId(int id) {
+         String email= "";
+        try {
+            
+            String requete = "select * from membre  where  id = '"+id+"'";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+ 
+            if (rs.next()) {
+                email=rs.getString("email");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+          return email;  
     }
 
     
