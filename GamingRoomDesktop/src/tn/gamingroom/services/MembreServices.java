@@ -432,7 +432,7 @@ public class MembreServices implements IMembre<Membre> {
         String desc= "";
         try {
             
-            String requete = "select * from membre where id = '"+id+"'";
+            String requete = "select * from membre where role != 'Membre' and  id = '"+id+"'";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requete);
