@@ -7,9 +7,19 @@ package tn.gamingroom.gui;
 
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import com.pdfjet.A4;
+import com.pdfjet.Cell;
+import com.pdfjet.CoreFont;
+import com.pdfjet.Font;
+import com.pdfjet.PDF;
+import com.pdfjet.Page;
+import com.pdfjet.Table;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -22,6 +32,7 @@ import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,9 +63,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.ImageProduits;
@@ -125,6 +147,15 @@ public class AjoutProduitController implements Initializable {
     private JFXTextField MinPrix;
     @FXML
     private Button btnSearchPrix;
+    @FXML
+    private Button btnpdf;
+    private ImageView exit;
+    private ImageView reduir;
+    @FXML
+    private AnchorPane DashProduit;
+      @FXML
+    private ImageView btnexit;
+
 
     /**
      * Initializes the controller class.
@@ -165,7 +196,7 @@ public class AjoutProduitController implements Initializable {
     }
 
     @FXML
-    private void ajouterProduit(ActionEvent event) {
+    private void ajouterProduit(ActionEvent event) throws MessagingException, IOException {
 
         //  Save produit IN DATABASE
         String resImage = "";
@@ -182,22 +213,24 @@ public class AjoutProduitController implements Initializable {
             return;
 
         }
-        resPrix =Double.parseDouble(tfprix.getText());
+        resPrix = Double.parseDouble(tfprix.getText());
         String resDesc = textareaProd.getText();
         Produits p2 = new Produits(rescategorie.getIdcat(), resImage, resLibelle, resPrix, resDesc);
         ProduitCrud pcd = new ProduitCrud();
-        String fileName=moveImage();
+        String fileName = moveImage();
         p2.setImage(fileName);
-    if(fileName.length()==0) 
-        {
-           JOptionPane.showMessageDialog(null, "Il faut choisir une image");   
-        return ;
+        if (fileName.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Il faut choisir une image");
+            return;
         }
         if (pcd.ajouterProduit(p2) > 0) {
+
             JOptionPane.showMessageDialog(null, "produit ajouté");
             initTable(null);
+
         }
     }
+
     private String moveImage() {
         if (file != null) {
             try {
@@ -215,8 +248,6 @@ public class AjoutProduitController implements Initializable {
         }
         return "";
     }
-    
-
 
     @FXML
     private void clean(ActionEvent event) {
@@ -236,8 +267,7 @@ public class AjoutProduitController implements Initializable {
         integers.forEach(i -> {
             produitses.add(pcd.getByID(i));
         });
-    initTable(produitses);
-     
+        initTable(produitses);
 
     }
 
@@ -245,7 +275,7 @@ public class AjoutProduitController implements Initializable {
     private void getSelected(MouseEvent event) {
         ImageProduits c = tvbox.getSelectionModel().getSelectedItem();
         int index = tvbox.getSelectionModel().getSelectedIndex();
-     if (c == null) {
+        if (c == null) {
             return;
         }
         if (index <= -1) {
@@ -253,12 +283,12 @@ public class AjoutProduitController implements Initializable {
             return;
 
         }
-        
+
         tflibelle.setText(collibelle.getCellData(index).toString());
         tfprix.setText(colprix.getCellData(index).toString());
         textareaProd.setText(coldesc.getCellData(index).toString());
         tfid.setText(colid.getCellData(index).toString());
-       file = new File(Env.getImagePath() + "produits\\" + c.getImagename());
+        file = new File(Env.getImagePath() + "produits\\" + c.getImagename());
         prodImage.setImage(c.getImage().getImage());
     }
 
@@ -270,15 +300,30 @@ public class AjoutProduitController implements Initializable {
         double Value3 = Double.parseDouble(tfprix.getText());
         String Value4 = textareaProd.getText();
         int Value5 = Integer.parseInt(tfid.getText());
-        Produits p2 = new Produits(Value5, 0, Value1, Value2, Value3, Value4);
+        Categorie cat = listCat.getValue();
+        String nomImage = moveImage();
 
+        if (nomImage.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Veuillez insérer une image");
+            return;
+        }
+        //  Produits p2 = new Produits(Value5, 0, Value1, Value2, Value3, Value4);
+//      Produits p3 = new Produits(Value5, cat.getIdcat(), nomImage, Value2, Value3, Value4);
+Produits p3= new Produits(nomImage, Value4, Value3, nomImage);
+        
         ProduitCrud pcd = new ProduitCrud();
-        int x = pcd.updateProduit(p2);
+        int x = pcd.updateProduit(p3);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Confirmation de Modifiation !");
+        alert.setContentText("Voulez-Vous Vraiment Modifer");
+        Optional<ButtonType> btn = alert.showAndWait();
         if (x > 0) {
             JOptionPane.showMessageDialog(null, "produit modifié");
             initTable(null);
         } else {
             System.out.println("produit non modifié");
+            JOptionPane.showMessageDialog(null, "produit non modifié");
         }
 
     }
@@ -311,9 +356,7 @@ public class AjoutProduitController implements Initializable {
     @FXML
     private void TrierParId(ActionEvent event) {
         ProduitCrud crud = new ProduitCrud();
-  initTable(crud.TrierParId());
-     
-      
+        initTable(crud.TrierParId());
 
     }
 
@@ -322,8 +365,7 @@ public class AjoutProduitController implements Initializable {
 
         ProduitCrud crud = new ProduitCrud();
 
-    initTable(crud.RechercherProduit(tfrech.getText()));
-
+        initTable(crud.RechercherProduit(tfrech.getText()));
 
     }
 
@@ -332,7 +374,7 @@ public class AjoutProduitController implements Initializable {
 
         ProduitCrud crud = new ProduitCrud();
         initTable(null);
-    
+
     }
 
     @FXML
@@ -359,7 +401,7 @@ public class AjoutProduitController implements Initializable {
         try {
             prodImage.setImage(new Image(file.toURI().toURL().toExternalForm()));//path image (ligne mtaa file)
         } catch (Exception ex) {
-           ex.printStackTrace();
+            ex.printStackTrace();
         }
 
     }
@@ -391,7 +433,7 @@ public class AjoutProduitController implements Initializable {
             maxprice = Double.parseDouble(MaxPrix.getText());
             minprice = Double.parseDouble(MinPrix.getText());
             double price = minprice;
-            
+
             if (maxprice < minprice) {
 
                 minprice = maxprice;
@@ -400,7 +442,7 @@ public class AjoutProduitController implements Initializable {
                 MinPrix.setText(String.valueOf(minprice));
                 ProduitCrud crud = new ProduitCrud();
                 initTable(crud.RechercherPrix(minprice, maxprice));
-                
+
             }
 
         } catch (Exception ex) {
@@ -412,11 +454,11 @@ public class AjoutProduitController implements Initializable {
 
         }
     }
-    
-    void initTable(List<Produits> produitses){
+
+    void initTable(List<Produits> produitses) {
         ProduitCrud crud = new ProduitCrud();
-if(produitses==null){
-            produitses=crud.displayProduit();
+        if (produitses == null) {
+            produitses = crud.displayProduit();
         }
         List<ImageProduits> lIm = new ArrayList<ImageProduits>();
         produitses.forEach(e -> {
@@ -427,7 +469,7 @@ if(produitses==null){
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);
                 i.setFitWidth(70);
-                ImageProduits imageProduits=new ImageProduits();
+                ImageProduits imageProduits = new ImageProduits();
                 imageProduits.setDescription(e.getDescription());
                 imageProduits.setId_cat(e.getId_cat());
                 imageProduits.setIdprod(e.getIdprod());
@@ -436,13 +478,12 @@ if(produitses==null){
                 imageProduits.setLibelle(e.getLibelle());
                 imageProduits.setNomCat(e.getNomCat());
                 imageProduits.setPrix(e.getPrix());
-                
-                
-                
+
                 imageProduits.setImagename(e.getImage());
                 lIm.add(imageProduits);
             } catch (MalformedURLException ex) {
-ex.printStackTrace();            }
+                ex.printStackTrace();
+            }
 
         });
         System.out.println("ev " + lIm);
@@ -450,4 +491,174 @@ ex.printStackTrace();            }
         ObservableList<ImageProduits> listProduitIm = FXCollections.observableArrayList(lIm);
         tvbox.setItems(listProduitIm);
     }
+
+    public void Send() throws MessagingException, IOException {
+        String to = "prodigiesdev@gmail.com";
+        String from = "Gamingroom.prodigiesDev@gmail.com";
+        String host = "smtp.gmail.com";
+        final String Username = "Gamingroom.prodigiesDev@gmail.com";
+        final String Pass = "Gamingroom2020";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", "25");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+
+            protected PasswordAuthentication getpPasswordAuthentication() {
+
+                return new PasswordAuthentication("Gamingroom.prodigiesDev@gmail.com", "Gamingroom2020");
+            }
+
+        });try{
+        Message message = new MimeMessage(session);
+	   message.setFrom(new InternetAddress(from));
+	   message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
+	   message.setSubject("liste produits");
+	   Multipart emailContent = new MimeMultipart();
+           MimeBodyPart textBodyPart = new MimeBodyPart();
+           textBodyPart.setText("bienvenue");
+           MimeBodyPart pdfAttatchement = new MimeBodyPart();
+           pdfAttatchement.attachFile("C:/Users/yasmine/Desktop/pidev/GamingRoomDesktop/produits.pdf");
+           emailContent.addBodyPart(textBodyPart);
+           emailContent.addBodyPart(pdfAttatchement);
+           message.setContent(emailContent);
+           Transport.send(message,Username,Pass);
+	  // System.out.println("Sent message successfully....");
+             JOptionPane.showMessageDialog(null, "Sent message successfully....");
+      } catch (MessagingException e) {
+         throw new RuntimeException(e);
+      }   
+
+    }
+
+    
+    
+    public void PDF()throws FileNotFoundException,Exception{
+    File out = new File("produits.pdf");
+        try (FileOutputStream fos = new FileOutputStream(out)) {
+            PDF pdf = new PDF(fos);
+            Page page = new Page(pdf, A4.PORTRAIT);
+            Font f1 = new Font(pdf, CoreFont.HELVETICA_BOLD);
+            Font f2 = new Font(pdf, CoreFont.HELVETICA);
+            
+            Table table = new Table();
+            List<List<Cell>> tableData = new ArrayList<>();
+            List<Cell> tableRow = new ArrayList<>();
+            
+            Cell cell = new Cell(f1,colid.getText() );
+            tableRow.add(cell);
+            
+//            cell = new Cell(f1,colimage.getText() );
+//            tableRow.add(cell);
+//            
+            cell = new Cell(f1,collibelle.getText() );
+            tableRow.add(cell);
+            
+            cell = new Cell(f1,colprix.getText() );
+            tableRow.add(cell);
+            
+            cell = new Cell(f1,coldesc.getText() );
+            tableRow.add(cell);
+            
+            cell = new Cell(f1,colcat.getText() );
+            tableRow.add(cell);
+            
+            tableData.add(tableRow);
+            
+            List<ImageProduits> items = tvbox.getItems();
+            for(ImageProduits prod :items){
+                Cell IDProd = new Cell(f2,String.valueOf(prod.getIdprod()) );
+              //  Cell ImageProd = new Cell(f2, prod.getImagename());
+                Cell libProd = new Cell(f2, prod.getLibelle());
+                Cell PrixProd= new Cell(f2,String.valueOf(prod.getPrix()) );
+                Cell DescProd = new Cell(f2, prod.getDescription());
+                Cell CatProd = new Cell(f2, prod.getNomCat());
+                
+                tableRow =new ArrayList<>();
+                tableRow.add(IDProd);
+               // tableRow.add(ImageProd);
+                tableRow.add(libProd);
+                tableRow.add(PrixProd);
+                tableRow.add(DescProd);
+                tableRow.add(CatProd);
+            tableData.add(tableRow);
+        }
+            table.setData(tableData);
+            table.setPosition(10f, 60f);
+            table.setColumnWidth(0, 50f);
+           // table.setColumnWidth(1, 60f);
+            table.setColumnWidth(1, 80f);
+            table.setColumnWidth(2, 100f);
+            table.setColumnWidth(3, 200f);
+            table.setColumnWidth(4, 110f);
+            while(true){
+                table.drawOn(page);
+                if(!table.hasMoreData()){
+                    table.resetRenderedPagesCount();
+                    break;
+                    
+                }
+                page = new Page(pdf, A4.PORTRAIT);
+            }
+            pdf.flush();
+        JOptionPane.showMessageDialog(null, "PDF enregistré sous le path "+out.getAbsolutePath());
+        System.out.println("Saved to " +out.getAbsolutePath());
+        }
+    }
+    
+    
+    @FXML
+    private void enregistrerPDF(ActionEvent event) throws Exception {
+        
+        
+        PDF();
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Mailing");
+        alert.setHeaderText("Confirmation de mailing!");
+        alert.setContentText("Voulez-Vous Vraiment envoyer un email?");
+         Optional<ButtonType> btn = alert.showAndWait();
+         if(btn.get()==ButtonType.OK){
+         
+              Send();
+         
+         
+         
+         
+         }
+
+   
+        
+        
+         
+    }
+
+    @FXML
+    private void click(MouseEvent event) {
+        if (event.getSource().equals(btnexit)) 
+        {
+            System.exit(0);
+        }
+        
+//       if (event.getSource().equals(btnReduce)){
+//          Stage stage = (Stage) AdminDashBoardPane.getScene().getWindow();
+//
+//          stage.setIconified(true);
+//        } 
+//        
+        
+        
+    }
+
+    
+        
+        
+        
+        
+        
+        
+        
+    
 }

@@ -52,15 +52,9 @@ public class Produits {
         this.nomCat = nomCat;
     }
 
+    
    
-    public Produits(int idprod, int id_cat, String image, String libelle, double prix, String description) {
-        this.idprod = idprod;
-        this.id_cat = id_cat;
-        this.image = image;
-        this.libelle = libelle;
-        this.prix = prix;
-        this.description = description;
-    }
+    
 
     public String getNomCat() {
         return nomCat;

@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -25,6 +26,7 @@ public class ProduitHomePage extends Application {
             Scene scene = new Scene(root);
             
             primaryStage.setTitle("Gestion Produits + Clés");
+           // primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {
