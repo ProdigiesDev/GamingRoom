@@ -264,7 +264,7 @@ public class MembreServices implements IMembre<Membre> {
 
     @Override
     public void fPwd(int id) {
-        Scanner myObj = new Scanner(System.in);  
+        Scanner myObj = new Scanner(System.in);
         System.out.println("Enter votre num tel");
 
         String tel = myObj.nextLine();
@@ -296,8 +296,9 @@ public class MembreServices implements IMembre<Membre> {
                         int b = ps2.executeUpdate();
                         if (b > 0) {
                             System.out.println("PWD changé");
-                        }else
+                        } else {
                             System.out.println("Réessayer");
+                        }
 
                     } catch (SQLException ex) {
                         System.err.println(ex.getMessage());
@@ -307,6 +308,24 @@ public class MembreServices implements IMembre<Membre> {
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+    }
+
+    @Override
+    public String findById(int idM) {
+        String s = "";
+        try {
+            String requete = "SELECT * FROM membre where id=" + idM;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                s += rs.getString("prenom") + " " + rs.getString("nom");
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return s;
     }
 
 }

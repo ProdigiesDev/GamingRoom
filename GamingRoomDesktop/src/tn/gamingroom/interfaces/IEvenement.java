@@ -31,4 +31,5 @@ public interface IEvenement {
     public boolean canReact(int idE,int idM);
     public int getReact(int idE,int idM);
     public int updateReact(ReactionEv rE);
+    public List<ReactionEv> listeCommentaires(int id);
 }

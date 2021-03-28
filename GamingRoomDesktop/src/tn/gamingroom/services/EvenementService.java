@@ -465,7 +465,7 @@ public class EvenementService implements IEvenement {
     public boolean canReact(int idE, int idM) {
         try {
             String requete = "select * from reactionev where evenement_id=" + idE + " AND membre_id =" + idM;
-            System.out.println("res "+requete);
+            System.out.println("res " + requete);
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requete);
@@ -510,6 +510,30 @@ public class EvenementService implements IEvenement {
             System.out.println(ex.getMessage());
         }
         return nbModif;
+    }
+
+    @Override
+    public List<ReactionEv> listeCommentaires(int id) {
+        List<ReactionEv> reactionList = new ArrayList<>();
+        System.out.println("id "+id);
+        try {
+            String requete = "SELECT * FROM reactionev where commentaire is not null AND evenement_id="+id;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                ReactionEv e = new ReactionEv();
+                e.setInteraction(rs.getInt("interaction"));
+                e.setCommentaire(rs.getString("commentaire"));
+                e.setEvenement_id(rs.getInt("evenement_id"));
+                e.setMembre_id(rs.getInt("membre_id"));
+                reactionList.add(e);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return reactionList;
     }
 
 }

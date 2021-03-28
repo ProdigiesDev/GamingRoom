@@ -23,6 +23,7 @@ public interface IMembre<T> {
      public List<T> RechercherMembres(String x);
      public ArrayList<T> TrierParId();
      public void fPwd(int id);
+     public String findById(int idM);
 
     
 }

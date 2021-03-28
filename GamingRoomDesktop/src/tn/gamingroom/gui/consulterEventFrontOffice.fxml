@@ -43,7 +43,7 @@
                   <Font name="Yu Gothic Regular" size="12.0" />
                </font>
             </Label>
-            <TableView layoutX="43.0" layoutY="550.0" prefHeight="169.0" prefWidth="756.0" style="-fx-background-color: black; -fx-border-color: #6f1075;">
+            <TableView fx:id="tVCom" layoutX="43.0" layoutY="550.0" prefHeight="169.0" prefWidth="756.0" style="-fx-background-color: black; -fx-border-color: #6f1075;">
                <columns>
                   <TableColumn fx:id="membreCom" prefWidth="120.0" text="Membre" />
                   <TableColumn fx:id="commentaire" prefWidth="405.0" text="Commentaire" />

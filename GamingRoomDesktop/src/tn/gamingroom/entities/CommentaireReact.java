@@ -7,55 +7,33 @@ package tn.gamingroom.entities;
 
 /**
  *
- * @author Asus
+ * @author Farah
  */
-public class ReactionEv {
+public class CommentaireReact {
+
     public int id;
     public int evenement_id;
     public int membre_id;
     public int interaction;
     public String commentaire;
+    public String nomMembre;
 
-    public ReactionEv() {
-    }
-    
-    public ReactionEv(int id) {
+    public CommentaireReact(int id, int evenement_id, int membre_id, String commentaire, String nomMembre) {
         this.id = id;
-    }
-    
-
-    public ReactionEv(int evenement_id, int membre_id) {
-        this.evenement_id = evenement_id;
-        this.membre_id = membre_id;
-    }
-
-    public ReactionEv(int evenement_id, int membre_id, int interaction) {
-        this.evenement_id = evenement_id;
-        this.membre_id = membre_id;
-        this.interaction = interaction;
-    }
-
-    public ReactionEv(int evenement_id, int membre_id, String commentaire) {
         this.evenement_id = evenement_id;
         this.membre_id = membre_id;
         this.commentaire = commentaire;
+        this.nomMembre = nomMembre;
     }
 
-    public ReactionEv(int evenement_id, int membre_id, int interaction, String commentaire) {
-        this.evenement_id = evenement_id;
-        this.membre_id = membre_id;
-        this.interaction = interaction;
-        this.commentaire = commentaire;
-    }
-
-    public ReactionEv(int id, int evenement_id, int membre_id, int interaction, String commentaire) {
+    public CommentaireReact(int id, int evenement_id, int membre_id, int interaction, String commentaire, String nomMembre) {
         this.id = id;
         this.evenement_id = evenement_id;
         this.membre_id = membre_id;
         this.interaction = interaction;
         this.commentaire = commentaire;
+        this.nomMembre = nomMembre;
     }
-
 
     public int getId() {
         return id;
@@ -97,10 +75,19 @@ public class ReactionEv {
         this.commentaire = commentaire;
     }
 
+    public String getNomMembre() {
+        return nomMembre;
+    }
+
+    public void setNomMembre(String nomMembre) {
+        this.nomMembre = nomMembre;
+    }
+
     @Override
     public String toString() {
-        return "reactionEv{" + "id=" + id + ", evenement_id=" + evenement_id + ", membre_id=" + membre_id + ", interaction=" + interaction + ", commentaire=" + commentaire + '}';
+        return "CommentaireReact{" + "id=" + id + ", evenement_id=" + evenement_id + ", membre_id=" + membre_id + ", interaction=" + interaction + ", commentaire=" + commentaire + ", nomMembre=" + nomMembre + '}';
     }
+    
     
     
     
