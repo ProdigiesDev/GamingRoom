@@ -11,6 +11,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,19 +22,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Cours;
 import tn.gamingroom.entities.Courslm;
+import tn.gamingroom.entities.ParticipantsCours;
 import tn.gamingroom.entities.ReacCours;
 import tn.gamingroom.outils.Outils;
 import tn.gamingroom.services.ServiceCours;
+import tn.gamingroom.services.ServiceParticipantsCours;
 import tn.gamingroom.services.ServiceReacCours;
 
 /**
@@ -62,6 +69,7 @@ public class InfoCoursController implements Initializable {
     Courslm c;
     
     int memberId=2;
+    int cour_id;
     @FXML
     private TableView<ReacCours> tablCom;
     @FXML
@@ -75,7 +83,11 @@ public class InfoCoursController implements Initializable {
     
     @FXML
     private Text nbInternegng;
-    
+    @FXML
+    private ImageView imgcours;
+    @FXML
+    private Button inscrire;
+    ParticipantsCours p;
     /**
      * Initializes the controller class.
      */
@@ -92,6 +104,8 @@ public class InfoCoursController implements Initializable {
         cat.setText(String.valueOf(c.getCategorie_id()));
         nom.setText(c.getNomCours());
         des.setText(c.getDescription());
+        imgcours.setImage(c.getImage().getImage());
+        
         
         initTable();
         initNbInteraction();
@@ -197,6 +211,45 @@ public class InfoCoursController implements Initializable {
         nbInternegng.setText(String.valueOf(nbLikes[1]));
         
     }
+
+    @FXML
+    private void inscrirecours(ActionEvent event) {
+        ParticipantsCours pc=new ParticipantsCours();
+        
+        JFrame f = new JFrame();
+
+        int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
+        if (a == JOptionPane.YES_OPTION) {
+            ServiceParticipantsCours spc=new ServiceParticipantsCours();
+            Cours c = new Cours();
+            
+//            
+                int nb =spc.ajouterParticipant(2, c.getId());
+                 if (nb == 0) {
+           JOptionPane.showMessageDialog(null, "Erreur d'inscription");
+                 }
+                 else{
+                JOptionPane.showMessageDialog(null, "Félicitation vous etes inscrit à ce cours");
+            }
+        }
+    }
 }
+        
+//        spc.ajouterParticipant(p);
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("Confirmation");
+//        alert.setHeaderText("Confirmation d'inscription !");
+//        alert.setContentText("Voulez-Vous Vraiment S'inscrire");
+
+//        if (nb == 0) {
+//            JOptionPane.showMessageDialog(null, "Erreur d'inscription");
+//        } else {
+//            Optional<ButtonType> btn = alert.showAndWait();
+//            JOptionPane.showMessageDialog(null, "Félicitation vous etes inscrit à ce cours");
+        
+        
+
+
+
     
 

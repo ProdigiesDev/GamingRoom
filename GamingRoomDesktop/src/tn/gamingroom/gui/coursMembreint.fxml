@@ -20,12 +20,12 @@
             <Image url="file:/C:/Users/eyatr/Downloads/wp5147454-pink-retro-gaming-wallpapers.jpg" />
          </image>
       </ImageView>
-      <TableView fx:id="tbCours" layoutX="200.0" layoutY="142.0" onMouseClicked="#getSelect" prefHeight="267.0" prefWidth="420.0">
+      <TableView fx:id="tbCours" layoutX="121.0" layoutY="142.0" onMouseClicked="#getSelect" prefHeight="322.0" prefWidth="744.0">
         <columns>
-          <TableColumn fx:id="cimg" prefWidth="75.0" text="Image" />
-          <TableColumn fx:id="cnom" prefWidth="110.0" text="Nom du cours" />
-            <TableColumn fx:id="ccat" prefWidth="110.0" text="Catégorie" />
-            <TableColumn fx:id="cdes" prefWidth="110.0" text="Déscription" />
+          <TableColumn fx:id="cimg" prefWidth="156.0" text="Image" />
+          <TableColumn fx:id="cnom" prefWidth="180.0" text="Nom du cours" />
+            <TableColumn fx:id="ccat" prefWidth="209.0" text="Catégorie" />
+            <TableColumn fx:id="cdes" prefWidth="198.0" text="Déscription" />
         </columns>
       </TableView>
       <Label fx:id="titre" layoutX="297.0" layoutY="17.0" prefHeight="64.0" prefWidth="480.0" text="Gaming Courses " textFill="#6f1075" underline="true">
@@ -33,6 +33,6 @@
             <Font name="Bauhaus 93" size="56.0" />
          </font>
       </Label>
-      <TextField fx:id="prefer" layoutX="202.0" layoutY="109.0" onKeyPressed="#preferCours" />
+      <TextField fx:id="prefer" layoutX="123.0" layoutY="109.0" onKeyPressed="#preferCours" />
    </children>
 </AnchorPane>

@@ -13,7 +13,7 @@ import tn.gamingroom.entities.ParticipantsCours;
  * @author eyatr
  */
 public interface IParticipantsCours {
-    public int ajouterParticipant(ParticipantsCours p);
+    public int ajouterParticipant(int membre_id, int cour_id);
     public List<ParticipantsCours> DisplayParticipants ();
  
 }

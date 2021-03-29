@@ -70,30 +70,24 @@ public class CoursMembreintController implements Initializable {
         cimg.setCellValueFactory(new PropertyValueFactory<Courslm, ImageView>("image"));
         cnom.setCellValueFactory(new PropertyValueFactory<Courslm, String>("nomCours"));
         ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
-        
+
         cdes.setCellValueFactory(new PropertyValueFactory<Courslm, String>("description"));
-       
-        
+
         this.initTable(null);
-       
-        
-        
+
     }
 
     @FXML
     private void preferCours(KeyEvent event) {
         ServiceCours s = new ServiceCours();
         //ObservableList<Cours> list = FXCollections.observableArrayList(s.displayprefcours(Integer.parseInt(prefer.getText())));
-
+        cimg.setCellValueFactory(new PropertyValueFactory<Courslm, ImageView>("image"));
         cnom.setCellValueFactory(new PropertyValueFactory<Courslm, String>("nomCours"));
-        //cid.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("Id"));
+
         cdes.setCellValueFactory(new PropertyValueFactory<Courslm, String>("description"));
-        //cdate.setCellValueFactory(new PropertyValueFactory<Cours, Date>("date_creation"));
-        //cmoc.setCellValueFactory(new PropertyValueFactory<Cours, String>("tags"));
-        //cmem.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("membre_id"));
-        //cnb.setCellValueFactory(new PropertyValueFactory<Cours, Integer>("nb_participants"));
+
         ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
-        //initTable(s.displayprefcours(prefer.getId().toString()));
+        initTable(s.displayprefcours(prefer.getAnchor()));
     }
 
     @FXML
@@ -101,7 +95,7 @@ public class CoursMembreintController implements Initializable {
         try {
             Parent root = null;
             int index = tbCours.getSelectionModel().getSelectedIndex();
-           Courslm c=tbCours.getItems().get(index);
+            Courslm c = tbCours.getItems().get(index);
             if (index <= -1) {
                 return;
             }
@@ -121,12 +115,12 @@ public class CoursMembreintController implements Initializable {
             Logger.getLogger(CoursMembreintController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void initTable(List<Cours> listcours) {
         ServiceCours es = new ServiceCours();
         CategorieServices cs = new CategorieServices();
-        if(listcours==null){
-            listcours=es.displayCours();
+        if (listcours == null) {
+            listcours = es.displayCours();
         }
         List<Courslm> lIm = new ArrayList<Courslm>();
         listcours.forEach(e -> {
@@ -137,7 +131,7 @@ public class CoursMembreintController implements Initializable {
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);
                 i.setFitWidth(70);
-                Courslm addCours=new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat());
+                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat());
                 addCours.setImagename(e.getImage());
                 lIm.add(addCours);
             } catch (MalformedURLException ex) {

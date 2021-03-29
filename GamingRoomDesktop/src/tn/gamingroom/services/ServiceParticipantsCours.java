@@ -23,14 +23,14 @@ import tn.gamingroom.outils.MyConnection;
 public class ServiceParticipantsCours implements IParticipantsCours {
 
     @Override
-    public int ajouterParticipant(ParticipantsCours p) {
+    public int ajouterParticipant(int membre_id, int cour_id ) {
         int nb_ajouter=0;
         try {
             String requete = "INSERT INTO participantcours(membre_id,cour_id)" + "VALUES (?,?)";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
-            pst.setInt(1, p.getMembre_id());
-            pst.setInt(2, p.getCour_id());
+            pst.setInt(1, membre_id);
+            pst.setInt(2, cour_id);
 
             nb_ajouter=pst.executeUpdate();
             if (nb_ajouter <= 0) {
