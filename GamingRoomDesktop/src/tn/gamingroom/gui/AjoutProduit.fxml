@@ -27,46 +27,46 @@
       </TableView>
       <Button fx:id="btnajouter" graphicTextGap="9.0" layoutX="16.0" layoutY="546.0" mnemonicParsing="false" onAction="#ajouterProduit" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-background-radius: 0px;" text="Ajouter" textFill="#830f70">
          <font>
-            <Font name="System Bold Italic" size="18.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
       <Button fx:id="btnmodifier" layoutX="187.0" layoutY="546.0" mnemonicParsing="false" onAction="#updateTable" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Modifier" textFill="#830f70">
          <font>
-            <Font name="System Bold Italic" size="18.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
       <Button fx:id="btnsupp" layoutX="360.0" layoutY="546.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Supprimer" textFill="#610d54">
          <font>
-            <Font name="System Bold Italic" size="18.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
       <TextField fx:id="tfrech" layoutX="611.0" layoutY="83.0" onKeyPressed="#RechercherProduit" prefHeight="33.0" prefWidth="258.0" style="-fx-border-color: #5b0a50;" />
       <Button fx:id="btnTri" graphicTextGap="9.0" layoutX="360.0" layoutY="609.0" mnemonicParsing="false" onAction="#TrierParId" prefHeight="41.0" prefWidth="161.0" style="-fx-border-color: #dadada; -fx-border-radius: 0px;" text="Tri Par ID" textFill="#5b0a50fc">
          <font>
-            <Font name="System Bold Italic" size="18.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
       <Button fx:id="btnannuler" layoutX="405.0" layoutY="446.0" mnemonicParsing="false" onAction="#clean" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #dadada;" text="Vider les champs" textFill="#5b0a50">
          <font>
-            <Font name="System Bold Italic" size="14.0" />
+            <Font name="Arial Rounded MT Bold" size="14.0" />
          </font></Button>
-      <Button fx:id="btnBest" layoutX="793.0" layoutY="625.0" mnemonicParsing="false" onAction="#bestProductsSelled" prefHeight="41.0" prefWidth="244.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Meilleurs produits vendus" textFill="#5b0a50">
+      <Button fx:id="btnBest" layoutX="793.0" layoutY="625.0" mnemonicParsing="false" onAction="#bestProductsSelled" prefHeight="41.0" prefWidth="258.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Meilleurs produits vendus" textFill="#5b0a50">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
       <Button fx:id="btnload" layoutX="618.0" layoutY="625.0" mnemonicParsing="false" onAction="#loadTable" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Load Table" textFill="#5b0a50">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font></Button>
       <FontAwesomeIcon glyphName="SEARCH" layoutX="618.0" layoutY="104.0" />
       <FontAwesomeIcon glyphName="REMOVE" layoutX="369.0" layoutY="578.0" size="2em" text="" />
       <FontAwesomeIcon glyphName="EDIT" layoutX="198.0" layoutY="577.0" size="2em" wrappingWidth="20.999999523162842" />
       <FontAwesomeIcon glyphName="SORT" layoutX="364.0" layoutY="641.0" size="2em" text="" />
       <FontAwesomeIcon glyphName="TABLE" layoutX="621.0" layoutY="660.0" size="2em" wrappingWidth="21.00001886487007" />
-      <Button layoutX="1174.0" mnemonicParsing="false" onAction="#backToList" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="BACK" textFill="#610d54">
+      <Button layoutX="1193.0" mnemonicParsing="false" onAction="#backToList" prefHeight="41.0" prefWidth="142.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="BACK" textFill="#610d54">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font name="Arial Rounded MT Bold" size="15.0" />
          </font>
       </Button>
       <JFXTextField fx:id="tflibelle" layoutX="113.0" layoutY="205.0" />
@@ -105,15 +105,15 @@
       </Label>
       <Button fx:id="imagePath" layoutX="373.0" layoutY="123.0" mnemonicParsing="false" onAction="#loadImage" prefHeight="41.0" prefWidth="178.0" text="ajouter Image " textFill="#5b0a50">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
       <ImageView fx:id="prodImage" fitHeight="69.0" fitWidth="200.0" layoutX="119.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true" />
       <JFXTextArea fx:id="textareaProd" layoutX="112.0" layoutY="303.0" prefHeight="62.0" prefWidth="340.0" />
       <FontAwesomeIcon glyphName="IMAGE" layoutX="381.0" layoutY="150.0" text="" wrappingWidth="23.57143521308899" />
-      <Button layoutX="1059.0" layoutY="625.0" mnemonicParsing="false" onAction="#statistique" prefHeight="41.0" prefWidth="161.0" text="Statistique" textFill="#5b0a50">
+      <Button layoutX="1059.0" layoutY="625.0" mnemonicParsing="false" onAction="#statistique" prefHeight="41.0" prefWidth="188.0" text="Statistique" textFill="#5b0a50">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
       <Label layoutX="13.0" layoutY="712.0" prefHeight="21.0" prefWidth="70.0" text="PrixMax" textFill="WHITE">
@@ -130,17 +130,17 @@
       <JFXTextField fx:id="MinPrix" layoutX="88.0" layoutY="722.0" />
       <Button fx:id="btnSearchPrix" layoutX="267.0" layoutY="717.0" mnemonicParsing="false" onAction="#SearchPrice" prefHeight="41.0" prefWidth="161.0" text="Search" textFill="#610d54">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnpdf" layoutX="1067.0" layoutY="677.0" mnemonicParsing="false" onAction="#enregistrerPDF" prefHeight="41.0" prefWidth="161.0" text="Enregistrer PDF" textFill="#5b0a50">
+      <Button fx:id="btnpdf" layoutX="1059.0" layoutY="677.0" mnemonicParsing="false" onAction="#enregistrerPDF" prefHeight="41.0" prefWidth="188.0" text="Enregistrer PDF" textFill="#5b0a50">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
       <Label layoutX="4.0" layoutY="6.0" text="Gestion Produits" textFill="WHITE" underline="true">
          <font>
-            <Font name="Book Antiqua" size="48.0" />
+            <Font name="Book Antiqua Italic" size="48.0" />
          </font>
       </Label>
    </children>
