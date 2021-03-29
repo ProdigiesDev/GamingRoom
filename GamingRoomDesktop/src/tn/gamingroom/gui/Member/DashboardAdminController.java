@@ -46,6 +46,7 @@ import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Membre;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.SendEmail;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.MembreServices;
@@ -128,8 +129,8 @@ public class DashboardAdminController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
-        //Membre
-        
+        //Membre 
+        System.out.println(UserSession.getInstance().getUser()+" awka say jawik behi last test");
         addButtonToTable();
         afficherMembre();
         
@@ -357,16 +358,16 @@ public class DashboardAdminController implements Initializable {
     @FXML
     private void getSelectedMember(MouseEvent event) {
          int index = table_memb.getSelectionModel().getSelectedIndex();
-//         String role = (String) colonne_role.getCellData(index);
-//         String ban = colonne_ban.getCellData(index).toString();
-         String active = colonne_active.getCellData(index).toString();
+//       Membre.Role role =  colonne_role.getCellData(index);
+       int ban = colonne_ban.getCellData(index);
+         boolean active = colonne_active.getCellData(index);
          
         if (index <= -1) {
 
             return;
 
         }
-        else if( active.equals("false") ){
+        else if( active ==false && ban==0 ){
             tfidmember.setText(colonne_id.getCellData(index).toString());
             txtarea_coachdesc.setVisible(true);
             MembreServices ms = new MembreServices();
@@ -449,7 +450,10 @@ public class DashboardAdminController implements Initializable {
                 Scene dashboardScene = new Scene(dashboard);
                 Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
                 window.setScene(dashboardScene);
-                window.show(); }
+                window.show(); 
+                UserSession us = UserSession.getInstance();
+                us.cleanUserSession();
+        }
     }
 
 //    @FXML
