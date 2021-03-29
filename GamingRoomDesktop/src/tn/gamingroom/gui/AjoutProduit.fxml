@@ -15,125 +15,125 @@
 
 <AnchorPane id="AnchorPane" fx:id="DashProduit" prefHeight="679.0" prefWidth="1332.0" style="-fx-background-color: #c264c2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutProduitController">
    <children>
-      <TableView fx:id="tvbox" layoutX="523.0" layoutY="95.0" onMouseClicked="#getSelected" prefHeight="444.0" prefWidth="692.0" style="-fx-background-color: #9d1889;">
+      <TableView fx:id="tvbox" layoutX="610.0" layoutY="95.0" onMouseClicked="#getSelected" prefHeight="444.0" prefWidth="692.0" style="-fx-background-color: #9d1889;">
         <columns>
           <TableColumn fx:id="colid" prefWidth="52.0" text="ID" />
             <TableColumn fx:id="colimage" prefWidth="105.0" text="Image" />
             <TableColumn fx:id="collibelle" prefWidth="111.0" text="Libelle" />
             <TableColumn fx:id="colprix" prefWidth="72.0" text="Prix" />
-            <TableColumn fx:id="coldesc" prefWidth="139.0" text="Description" />
-            <TableColumn fx:id="colcat" prefWidth="139.0" text="Categorie" />
+            <TableColumn fx:id="coldesc" prefWidth="195.0" text="Description" />
+            <TableColumn fx:id="colcat" prefWidth="116.0" text="Categorie" />
         </columns>
       </TableView>
-      <Button fx:id="btnajouter" graphicTextGap="9.0" layoutY="421.0" mnemonicParsing="false" onAction="#ajouterProduit" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #dadada; -fx-background-radius: 0px;" text="Ajouter" textFill="#830f70">
+      <Button fx:id="btnajouter" graphicTextGap="9.0" layoutX="20.0" layoutY="426.0" mnemonicParsing="false" onAction="#ajouterProduit" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-background-radius: 0px;" text="Ajouter" textFill="#830f70">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnmodifier" layoutX="166.0" layoutY="421.0" mnemonicParsing="false" onAction="#updateTable" prefHeight="41.0" prefWidth="169.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Modifier" textFill="#830f70">
+      <Button fx:id="btnmodifier" layoutX="199.0" layoutY="425.0" mnemonicParsing="false" onAction="#updateTable" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Modifier" textFill="#830f70">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnsupp" layoutX="353.0" layoutY="421.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Supprimer" textFill="#610d54">
+      <Button fx:id="btnsupp" layoutX="390.0" layoutY="425.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Supprimer" textFill="#610d54">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="tfrech" layoutX="599.0" layoutY="53.0" onKeyPressed="#RechercherProduit" prefHeight="31.0" prefWidth="327.0" style="-fx-border-color: #5b0a50;" />
-      <Button fx:id="btnTri" graphicTextGap="9.0" layoutX="514.0" layoutY="569.0" mnemonicParsing="false" onAction="#TrierParId" prefHeight="31.0" prefWidth="152.0" style="-fx-border-color: #dadada; -fx-border-radius: 0px;" text="Tri Par ID" textFill="#5b0a50fc">
+      <TextField fx:id="tfrech" layoutX="610.0" layoutY="60.0" onKeyPressed="#RechercherProduit" prefHeight="31.0" prefWidth="327.0" style="-fx-border-color: #5b0a50;" />
+      <Button fx:id="btnTri" graphicTextGap="9.0" layoutX="395.0" layoutY="478.0" mnemonicParsing="false" onAction="#TrierParId" prefHeight="41.0" prefWidth="161.0" style="-fx-border-color: #dadada; -fx-border-radius: 0px;" text="Tri Par ID" textFill="#5b0a50fc">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnannuler" layoutX="341.0" layoutY="340.0" mnemonicParsing="false" onAction="#clean" prefHeight="37.0" prefWidth="144.0" style="-fx-background-color: #dadada;" text="Vider les champs" textFill="#5b0a50">
+      <Button fx:id="btnannuler" layoutX="337.0" layoutY="351.0" mnemonicParsing="false" onAction="#clean" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada;" text="Vider les champs" textFill="#5b0a50">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font></Button>
-      <Button fx:id="btnBest" layoutX="677.0" layoutY="569.0" mnemonicParsing="false" onAction="#bestProductsSelled" prefHeight="41.0" prefWidth="194.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="BestProductsSelled" textFill="#5b0a50">
+      <Button fx:id="btnBest" layoutX="785.0" layoutY="546.0" mnemonicParsing="false" onAction="#bestProductsSelled" prefHeight="41.0" prefWidth="244.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Meilleurs produits vendus" textFill="#5b0a50">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnload" layoutX="874.0" layoutY="570.0" mnemonicParsing="false" onAction="#loadTable" prefHeight="39.0" prefWidth="183.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Load Table" textFill="#5b0a50">
+      <Button fx:id="btnload" layoutX="611.0" layoutY="546.0" mnemonicParsing="false" onAction="#loadTable" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Load Table" textFill="#5b0a50">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Button>
-      <FontAwesomeIcon glyphName="SEARCH" layoutX="610.0" layoutY="74.0" />
-      <FontAwesomeIcon glyphName="REMOVE" layoutX="361.0" layoutY="452.0" size="2em" />
-      <FontAwesomeIcon glyphName="EDIT" layoutX="177.0" layoutY="452.0" size="2em" wrappingWidth="20.999999523162842" />
-      <FontAwesomeIcon glyphName="SORT" layoutX="524.0" layoutY="600.0" size="2em" />
-      <FontAwesomeIcon glyphName="TABLE" layoutX="881.0" layoutY="600.0" size="2em" wrappingWidth="36.00002187490463" />
-      <Button layoutX="1258.0" layoutY="634.0" mnemonicParsing="false" onAction="#backToList" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="BACK" textFill="#610d54">
+      <FontAwesomeIcon glyphName="SEARCH" layoutX="611.0" layoutY="81.0" />
+      <FontAwesomeIcon glyphName="REMOVE" layoutX="397.0" layoutY="456.0" size="2em" />
+      <FontAwesomeIcon glyphName="EDIT" layoutX="208.0" layoutY="456.0" size="2em" wrappingWidth="20.999999523162842" />
+      <FontAwesomeIcon glyphName="SORT" layoutX="400.0" layoutY="509.0" size="2em" />
+      <FontAwesomeIcon glyphName="TABLE" layoutX="611.0" layoutY="577.0" size="2em" wrappingWidth="13.928571660071611" />
+      <Button layoutX="1174.0" mnemonicParsing="false" onAction="#backToList" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="BACK" textFill="#610d54">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <JFXTextField fx:id="tflibelle" layoutX="204.0" layoutY="72.0" />
-      <JFXTextField fx:id="tfprix" layoutX="204.0" layoutY="125.0" />
-      <JFXTextField fx:id="tfid" editable="false" layoutX="198.0" layoutY="223.0" />
-      <Label layoutX="15.0" layoutY="42.0" text="Image" textFill="WHITE">
+      <JFXTextField fx:id="tflibelle" layoutX="105.0" layoutY="133.0" />
+      <JFXTextField fx:id="tfprix" layoutX="105.0" layoutY="190.0" />
+      <JFXTextField fx:id="tfid" editable="false" layoutX="105.0" layoutY="288.0" />
+      <Label layoutX="15.0" layoutY="50.0" text="Image" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="13.0" layoutY="90.0" text="Libelle" textFill="WHITE">
+      <Label layoutX="13.0" layoutY="148.0" text="Libelle" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="143.0" text="Prix" textFill="WHITE">
+      <Label layoutX="15.0" layoutY="205.0" text="Prix" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="198.0" text="Description" textFill="WHITE">
+      <Label layoutX="6.0" layoutY="267.0" text="Description" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="22.0" layoutY="241.0" text="ID" textFill="WHITE">
+      <Label layoutX="22.0" layoutY="306.0" text="ID" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="listCat" layoutX="139.0" layoutY="286.0" prefWidth="150.0" />
-      <Label layoutX="7.0" layoutY="288.0" text="Categorie" textFill="WHITE">
+      <ComboBox fx:id="listCat" layoutX="103.0" layoutY="340.0" prefWidth="150.0" />
+      <Label layoutX="14.0" layoutY="342.0" text="Categorie" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="imagePath" layoutX="367.0" layoutY="40.0" mnemonicParsing="false" onAction="#loadImage" prefHeight="39.0" prefWidth="183.0" text="ajouter Image " textFill="#5b0a50">
+      <Button fx:id="imagePath" layoutX="367.0" layoutY="40.0" mnemonicParsing="false" onAction="#loadImage" prefHeight="41.0" prefWidth="169.0" text="ajouter Image " textFill="#5b0a50">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <ImageView fx:id="prodImage" fitHeight="69.0" fitWidth="200.0" layoutX="189.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXTextArea fx:id="textareaProd" layoutX="139.0" layoutY="157.0" prefHeight="62.0" prefWidth="340.0" />
+      <ImageView fx:id="prodImage" fitHeight="69.0" fitWidth="200.0" layoutX="108.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
+      <JFXTextArea fx:id="textareaProd" layoutX="113.0" layoutY="221.0" prefHeight="62.0" prefWidth="340.0" />
       <FontAwesomeIcon glyphName="IMAGE" layoutX="373.0" layoutY="69.0" wrappingWidth="23.57143521308899" />
-      <Button layoutX="1071.0" layoutY="570.0" mnemonicParsing="false" onAction="#statistique" prefHeight="39.0" prefWidth="128.0" text="Statistique" textFill="#5b0a50">
+      <Button layoutX="1046.0" layoutY="546.0" mnemonicParsing="false" onAction="#statistique" prefHeight="41.0" prefWidth="161.0" text="Statistique" textFill="#5b0a50">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Label layoutX="13.0" layoutY="535.0" prefHeight="21.0" prefWidth="70.0" text="PrixMax" textFill="WHITE">
+      <Label layoutX="13.0" layoutY="575.0" prefHeight="21.0" prefWidth="70.0" text="PrixMax" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="MaxPrix" layoutX="93.0" layoutY="514.0" />
-      <Label layoutX="13.0" layoutY="575.0" prefHeight="21.0" prefWidth="70.0" text="PrixMin" textFill="WHITE">
+      <JFXTextField fx:id="MaxPrix" layoutX="88.0" layoutY="558.0" />
+      <Label layoutX="13.0" layoutY="624.0" prefHeight="21.0" prefWidth="70.0" text="PrixMin" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="MinPrix" layoutX="93.0" layoutY="554.0" />
-      <Button fx:id="btnSearchPrix" layoutX="283.0" layoutY="550.0" mnemonicParsing="false" onAction="#SearchPrice" prefHeight="15.0" prefWidth="116.0" text="Search" textFill="#610d54">
+      <JFXTextField fx:id="MinPrix" layoutX="88.0" layoutY="605.0" />
+      <Button fx:id="btnSearchPrix" layoutX="271.0" layoutY="591.0" mnemonicParsing="false" onAction="#SearchPrice" prefHeight="41.0" prefWidth="161.0" text="Search" textFill="#610d54">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnpdf" layoutX="1031.0" layoutY="46.0" mnemonicParsing="false" onAction="#enregistrerPDF" prefHeight="31.0" prefWidth="176.0" text="Enregistrer PDF" textFill="#5b0a50">
+      <Button fx:id="btnpdf" layoutX="1046.0" layoutY="600.0" mnemonicParsing="false" onAction="#enregistrerPDF" prefHeight="41.0" prefWidth="161.0" text="Enregistrer PDF" textFill="#5b0a50">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

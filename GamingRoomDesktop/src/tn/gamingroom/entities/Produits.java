@@ -41,6 +41,14 @@ public class Produits {
         this.description = description;
         this.nomCat = nomCat;
     }
+    public Produits(int idprod, String image, String libelle, double prix, String description,String nomCat) {
+        this.id_cat = id_cat;
+        this.image = image;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.description = description;
+        this.nomCat = nomCat;
+    }
 
     public Produits(int idprod, int id_cat, String image, String libelle, double prix, String description, String nomCat) {
         this.idprod = idprod;
@@ -51,6 +59,7 @@ public class Produits {
         this.description = description;
         this.nomCat = nomCat;
     }
+ 
 
     
    

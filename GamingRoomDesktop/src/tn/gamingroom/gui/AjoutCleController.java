@@ -33,6 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -69,6 +70,8 @@ public class AjoutCleController implements Initializable {
     private TextField tfrechProd;
     @FXML
     private Button btnload;
+    @FXML
+    private ImageView reduce;
 
     /**
      * Initializes the controller class.
@@ -261,4 +264,8 @@ public class AjoutCleController implements Initializable {
         
         
     }
+
+    
+
+    
 }

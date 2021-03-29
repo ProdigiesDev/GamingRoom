@@ -11,45 +11,45 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="708.0" prefWidth="1069.0" style="-fx-background-color: #c264c2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutCleController">
+<AnchorPane id="AnchorPane" prefHeight="808.0" prefWidth="1153.0" style="-fx-background-color: #c264c2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutCleController">
    <children>
-      <ComboBox fx:id="listProd" layoutX="136.0" layoutY="188.0" prefWidth="150.0" />
-      <JFXTextField fx:id="nbCle" layoutX="169.0" layoutY="259.0" prefHeight="31.0" prefWidth="101.0" />
-      <Button fx:id="btnAjouter" layoutX="86.0" layoutY="361.0" mnemonicParsing="false" onAction="#ajouterCle" prefHeight="31.0" prefWidth="127.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Ajouter" textFill="#610d54">
+      <ComboBox fx:id="listProd" layoutX="124.0" layoutY="267.0" prefWidth="150.0" />
+      <JFXTextField fx:id="nbCle" layoutX="224.0" layoutY="323.0" prefHeight="31.0" prefWidth="101.0" />
+      <Button fx:id="btnAjouter" layoutX="41.0" layoutY="446.0" mnemonicParsing="false" onAction="#ajouterCle" prefHeight="39.0" prefWidth="240.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Ajouter" textFill="#610d54">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="tableview" layoutX="337.0" layoutY="53.0" prefHeight="599.0" prefWidth="732.0">
+      <TableView fx:id="tableview" layoutX="380.0" layoutY="127.0" prefHeight="599.0" prefWidth="732.0">
         <columns>
           <TableColumn fx:id="colid" prefWidth="75.0" text="id" />
           <TableColumn fx:id="colcode" prefWidth="406.0" text="code" />
             <TableColumn fx:id="colproduitid" minWidth="0.0" prefWidth="111.0" text="produit_id" />
         </columns>
       </TableView>
-      <Label layoutX="14.0" layoutY="7.0" text="Gestion Clés " textFill="WHITE" underline="true">
+      <Label layoutX="16.0" layoutY="32.0" text="Gestion Clés " textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold Italic" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="12.0" layoutY="274.0" text="Nombre de clé :" textFill="WHITE">
+      <Label layoutX="12.0" layoutY="330.0" text="Nombre de clés :" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="14.0" layoutY="663.0" mnemonicParsing="false" onAction="#backToList" prefHeight="31.0" prefWidth="101.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Back" textFill="#610d54">
+      <Button layoutX="963.0" mnemonicParsing="false" onAction="#backToList" prefHeight="39.0" prefWidth="240.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Back" textFill="#610d54">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Label layoutX="14.0" layoutY="189.0" prefHeight="21.0" prefWidth="112.0" text="Produit" textFill="WHITE">
+      <Label layoutX="12.0" layoutY="265.0" prefHeight="21.0" prefWidth="112.0" text="Produit" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="tfrechProd" layoutX="741.0" layoutY="18.0" onKeyPressed="#RechercherProduit_ID" prefHeight="31.0" prefWidth="314.0" />
-      <FontAwesomeIcon glyphName="SEARCH" layoutX="741.0" layoutY="38.0" wrappingWidth="8.928571701049805" />
-      <Button fx:id="btnload" layoutX="887.0" layoutY="663.0" mnemonicParsing="false" onAction="#LoadTableCle" prefHeight="31.0" prefWidth="127.0" style="-fx-background-color: #dadada; -fx-border-radius: 0 px;" text="Load Table " textFill="#610d54">
+      <TextField fx:id="tfrechProd" layoutX="380.0" layoutY="94.0" onKeyPressed="#RechercherProduit_ID" prefHeight="31.0" prefWidth="314.0" />
+      <FontAwesomeIcon glyphName="SEARCH" layoutX="391.0" layoutY="114.0" wrappingWidth="8.928571701049805" />
+      <Button fx:id="btnload" layoutX="380.0" layoutY="738.0" mnemonicParsing="false" onAction="#LoadTableCle" prefHeight="39.0" prefWidth="240.0" style="-fx-background-color: #dadada; -fx-border-radius: 0 px;" text="Load Table " textFill="#610d54">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

@@ -308,11 +308,10 @@ public class AjoutProduitController implements Initializable {
             return;
         }
         //  Produits p2 = new Produits(Value5, 0, Value1, Value2, Value3, Value4);
-//      Produits p3 = new Produits(Value5, cat.getIdcat(), nomImage, Value2, Value3, Value4);
-Produits p3= new Produits(nomImage, Value4, Value3, nomImage);
+Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value4, cat.getNomcat());// nbadel fel id_cat nwali 
         
         ProduitCrud pcd = new ProduitCrud();
-        int x = pcd.updateProduit(p3);
+        int x = pcd.updateProduit(p2);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Confirmation de Modifiation !");
@@ -588,12 +587,12 @@ Produits p3= new Produits(nomImage, Value4, Value3, nomImage);
         }
             table.setData(tableData);
             table.setPosition(10f, 60f);
-            table.setColumnWidth(0, 50f);
-           // table.setColumnWidth(1, 60f);
-            table.setColumnWidth(1, 80f);
-            table.setColumnWidth(2, 100f);
-            table.setColumnWidth(3, 200f);
-            table.setColumnWidth(4, 110f);
+            table.setColumnWidth(0, 40f);
+       
+            table.setColumnWidth(1, 150f);
+            table.setColumnWidth(2, 50f);
+            table.setColumnWidth(3, 250f);
+            table.setColumnWidth(4, 80f);
             while(true){
                 table.drawOn(page);
                 if(!table.hasMoreData()){
@@ -635,22 +634,22 @@ Produits p3= new Produits(nomImage, Value4, Value3, nomImage);
          
     }
 
-    @FXML
-    private void click(MouseEvent event) {
-        if (event.getSource().equals(btnexit)) 
-        {
-            System.exit(0);
-        }
-        
-//       if (event.getSource().equals(btnReduce)){
-//          Stage stage = (Stage) AdminDashBoardPane.getScene().getWindow();
-//
-//          stage.setIconified(true);
-//        } 
+//    @FXML
+//    private void click(MouseEvent event) {
+//        if (event.getSource().equals(btnexit)) 
+//        {
+//            System.exit(0);
+//        }
 //        
-        
-        
-    }
+////       if (event.getSource().equals(btnReduce)){
+////          Stage stage = (Stage) AdminDashBoardPane.getScene().getWindow();
+////
+////          stage.setIconified(true);
+////        } 
+////        
+//        
+//        
+//    }
 
     
         

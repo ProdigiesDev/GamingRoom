@@ -60,12 +60,25 @@ public class ProduitCrud implements IProduits<Produits> {
     public int updateProduit(Produits p) {
         int rowsUpdated = 0;
         try {
-
-            String requete = "UPDATE produit SET libelle='" + p.getLibelle()
+//
+//            String requete = "UPDATE produit SET libelle='" + p.getLibelle()
+//                    + "',image='" + p.getImage()
+//                    + "',prix='" + p.getPrix()
+//                    + "',description='" + p.getDescription()
+//                    + "' WHERE idprod=" + p.getIdprod();
+            
+            
+               String requete = "UPDATE produit SET libelle='" + p.getLibelle()+ "',id_cat='" + p.getId_cat()
                     + "',image='" + p.getImage()
                     + "',prix='" + p.getPrix()
                     + "',description='" + p.getDescription()
                     + "' WHERE idprod=" + p.getIdprod();
+            
+            
+            
+            
+            
+            
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             rowsUpdated = pst.executeUpdate(requete);
