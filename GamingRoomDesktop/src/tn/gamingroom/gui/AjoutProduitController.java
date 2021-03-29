@@ -202,7 +202,10 @@ public class AjoutProduitController implements Initializable {
         String resImage = "";
         String resLibelle = tflibelle.getText();
         Categorie rescategorie = listCat.getValue();
+         
+        String resDesc = textareaProd.getText();
         double resPrix = 0;
+        // controle de saisie
         try {
 
             resPrix = Double.parseDouble(tfprix.getText());
@@ -213,16 +216,27 @@ public class AjoutProduitController implements Initializable {
             return;
 
         }
-        resPrix = Double.parseDouble(tfprix.getText());
-        String resDesc = textareaProd.getText();
+       resPrix = Double.parseDouble(tfprix.getText());
         Produits p2 = new Produits(rescategorie.getIdcat(), resImage, resLibelle, resPrix, resDesc);
         ProduitCrud pcd = new ProduitCrud();
         String fileName = moveImage();
         p2.setImage(fileName);
+        
+        // controle de saisie
+        if (tflibelle.getText().length() == 0){
+            JOptionPane.showMessageDialog(null, "Il faut remplir le champ Libelle");
+            return;
+        }
+         
         if (fileName.length() == 0) {
             JOptionPane.showMessageDialog(null, "Il faut choisir une image");
             return;
         }
+         if (textareaProd.getText().length()== 0) {
+            JOptionPane.showMessageDialog(null, "Il faut remplir le champ Description");
+            return;
+        }
+        
         if (pcd.ajouterProduit(p2) > 0) {
 
             JOptionPane.showMessageDialog(null, "produit ajouté");

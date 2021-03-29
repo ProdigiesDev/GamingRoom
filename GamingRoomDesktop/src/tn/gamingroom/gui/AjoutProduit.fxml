@@ -41,12 +41,12 @@
          </font>
       </Button>
       <TextField fx:id="tfrech" layoutX="610.0" layoutY="60.0" onKeyPressed="#RechercherProduit" prefHeight="31.0" prefWidth="327.0" style="-fx-border-color: #5b0a50;" />
-      <Button fx:id="btnTri" graphicTextGap="9.0" layoutX="395.0" layoutY="478.0" mnemonicParsing="false" onAction="#TrierParId" prefHeight="41.0" prefWidth="161.0" style="-fx-border-color: #dadada; -fx-border-radius: 0px;" text="Tri Par ID" textFill="#5b0a50fc">
+      <Button fx:id="btnTri" graphicTextGap="9.0" layoutX="390.0" layoutY="478.0" mnemonicParsing="false" onAction="#TrierParId" prefHeight="41.0" prefWidth="161.0" style="-fx-border-color: #dadada; -fx-border-radius: 0px;" text="Tri Par ID" textFill="#5b0a50fc">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnannuler" layoutX="337.0" layoutY="351.0" mnemonicParsing="false" onAction="#clean" prefHeight="41.0" prefWidth="161.0" style="-fx-background-color: #dadada;" text="Vider les champs" textFill="#5b0a50">
+      <Button fx:id="btnannuler" layoutX="337.0" layoutY="351.0" mnemonicParsing="false" onAction="#clean" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #dadada;" text="Vider les champs" textFill="#5b0a50">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font></Button>
