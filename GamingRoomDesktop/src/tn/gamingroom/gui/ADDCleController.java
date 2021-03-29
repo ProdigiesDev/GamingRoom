@@ -42,7 +42,7 @@ public class ADDCleController implements Initializable {
                 Scene dashboardScene = new Scene(dashboard);
                 Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
                 window.setScene(dashboardScene);
-                window.setTitle("Gestion Produit");
+             //   window.setTitle("Gestion Produit");
                 window.show();
     
 }

@@ -25,7 +25,7 @@ public class ProduitHomePage extends Application {
             Parent root =FXMLLoader.load(getClass().getResource("ADDCle.fxml"));
             Scene scene = new Scene(root);
             
-            primaryStage.setTitle("Gestion Produits + Clés");
+          //  primaryStage.setTitle("Gestion Produits + Clés");
            // primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.setScene(scene);
             primaryStage.show();
