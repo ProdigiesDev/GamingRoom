@@ -10,13 +10,20 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.DashboardAdminController">
    <children>
-      <TabPane layoutX="1.0" layoutY="31.0" prefHeight="605.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
+      <ImageView fitHeight="675.0" fitWidth="1442.0" layoutX="-491.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/C:/Users/asus/Desktop/3emeAnnee/semestre2/pidev/images/AjoutEvenement.jpg" />
+         </image>
+      </ImageView>
+      <TabPane layoutX="25.0" layoutY="14.0" prefHeight="605.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="MEMBER">
             <content>
@@ -37,7 +44,7 @@
                               <TableColumn fx:id="colonne_lastban" prefWidth="108.0" text="LAST BAN" />
                           </columns>
                         </TableView>
-                        <Label layoutX="37.0" layoutY="14.0" text="MEMBER" textFill="#6f1075">
+                        <Label layoutX="37.0" layoutY="14.0" text="MEMBER" textFill="#c41ed0">
                            <font>
                               <Font name="Calibri Bold" size="46.0" />
                            </font>
@@ -49,12 +56,11 @@
                            </font>
                         </TextField>
                         <FontAwesomeIcon glyphName="SEARCH" layoutX="214.0" layoutY="267.0" />
-                        <JFXTextField fx:id="tfidmember" focusColor="#4b3489" labelFloat="true" layoutX="251.0" layoutY="85.0" prefHeight="25.0" prefWidth="220.0" promptText="Id member" unFocusColor="#4b3489" />
+                        <JFXTextField fx:id="tfidmember" focusColor="#4b3489" labelFloat="true" layoutX="249.0" layoutY="108.0" prefHeight="25.0" prefWidth="220.0" promptText="Id member" unFocusColor="#4b3489" />
                         <JFXButton fx:id="btnsortm" layoutX="275.0" layoutY="245.0" onAction="#trierMembre" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="SORT BY ID" textFill="WHITE" />
-                        <FontAwesomeIcon fill="WHITE" glyphName="PENCIL" layoutX="734.0" layoutY="200.0" size="1.5em" />
                         <FontAwesomeIcon fill="WHITE" glyphName="SORT" layoutX="365.0" layoutY="266.0" />
                         <JFXButton fx:id="btn_statisticPage" layoutX="399.0" layoutY="245.0" onAction="#staticMembre" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="Statistic" />
-                        <TextArea fx:id="txtarea_coachdesc" editable="false" layoutX="612.0" layoutY="92.0" prefHeight="171.0" prefWidth="245.0" />
+                        <TextArea fx:id="txtarea_coachdesc" editable="false" layoutX="652.0" layoutY="95.0" prefHeight="171.0" prefWidth="154.0" />
                         <JFXButton fx:id="btn_activate" layoutX="478.0" layoutY="134.0" onAction="#activerCompteCoach" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="Activate" />
                         <JFXButton fx:id="btn_refuser" layoutX="477.0" layoutY="180.0" onAction="#RefuserCompte" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="Refuse" />
                      </children>
@@ -63,7 +69,7 @@
           </Tab>
           <Tab text="CATEGORY">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="570.0" prefWidth="900.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="577.0" prefWidth="948.0">
                      <children>
                         <JFXTextField fx:id="textcatid" editable="false" focusColor="#4b3489" labelFloat="true" layoutX="53.0" layoutY="155.0" prefHeight="25.0" prefWidth="220.0" promptText="Id" unFocusColor="#4b3489" />
                         <JFXTextField fx:id="textcatname" focusColor="#4b3489" labelFloat="true" layoutX="53.0" layoutY="241.0" prefHeight="25.0" prefWidth="225.0" promptText="Category name" unFocusColor="#4b3489" />
@@ -83,7 +89,7 @@
                         <JFXButton fx:id="btndeleteCat" layoutX="694.0" layoutY="222.0" onAction="#supprimerCategorie" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="DELETE" textFill="WHITE" />
                         <JFXButton fx:id="btnsort" layoutX="694.0" layoutY="278.0" onAction="#trierCategorie_parId" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="SORT BY ID" textFill="WHITE" />
                         <JFXButton fx:id="btn_clean" layoutX="293.0" layoutY="210.0" onAction="#Clean" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="Clean" textFill="WHITE" />
-                        <Label layoutX="37.0" layoutY="14.0" text="CATEGORY" textFill="#6f1075">
+                        <Label layoutX="37.0" layoutY="14.0" text="CATEGORY" textFill="#c41ed0">
                            <font>
                               <Font name="Calibri Bold" size="46.0" />
                            </font>
@@ -101,6 +107,6 @@
           </Tab>
         </tabs>
       </TabPane>
-      <JFXButton fx:id="btnsignout" layoutX="816.0" layoutY="5.0" onAction="#signout" style="-fx-background-color: #F02307;" text="SIGN OUT" />
+      <JFXButton fx:id="btnsignout" layoutX="816.0" layoutY="24.0" onAction="#signout" style="-fx-background-color: #F02307;" text="SIGN OUT" />
    </children>
 </AnchorPane>

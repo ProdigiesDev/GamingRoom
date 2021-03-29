@@ -33,11 +33,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Membre;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.services.MembreServices;
 
 /**
@@ -105,7 +107,6 @@ public class LoginMemberController implements Initializable {
         
         Membre user;
         MembreServices ms = new MembreServices();
-        user = ms.Login(resEmail, resPswd);
 //        if (resEmail.length()==0 || resPswd.length()==0){
 //            JOptionPane.showMessageDialog(null, "Veuillez compléter vos champs");
 //            
@@ -119,6 +120,7 @@ public class LoginMemberController implements Initializable {
             
         }
         else{
+            user = ms.Login(resEmail, resPswd);
         if(user != null){
             if(!user.getActive() && !user.getRole().toString().equals("Admin")){
               if(user.getLast_timeban()!= null)  {
@@ -146,7 +148,8 @@ public class LoginMemberController implements Initializable {
                  }
               }
             }
-            System.out.println(user.getRole());
+            
+            UserSession userSession = new UserSession(user,user.getRole());
             if(user.getRole().toString().equals("Admin"))
             {   Parent dashboard ;
                 dashboard = FXMLLoader.load(getClass().getResource("DashboardAdmin.fxml"));
@@ -157,6 +160,7 @@ public class LoginMemberController implements Initializable {
                 Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
                 window.setScene(dashboardScene);
                 window.show();
+                
             }
             else if(user.getRole().toString().equals("Coach")){
                 
@@ -212,6 +216,7 @@ public class LoginMemberController implements Initializable {
 //        
 //    }
 
+   
  
     
 }
