@@ -5,8 +5,6 @@
  */
 package tn.gamingroom.entities;
 
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;

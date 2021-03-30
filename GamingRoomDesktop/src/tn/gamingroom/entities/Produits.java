@@ -14,7 +14,7 @@ public class Produits {
     private int idprod;
     private String image;
     private String libelle;
-    private int prix;
+    private float prix;
     private String description;
 
 
@@ -49,7 +49,7 @@ public class Produits {
         return libelle;
     }
 
-    public int getPrix() {
+    public float getPrix() {
         return prix;
     }
 
@@ -71,7 +71,7 @@ public class Produits {
         this.libelle = libelle;
     }
 
-    public void setPrix(int prix) {
+    public void setPrix(float prix) {
         this.prix = prix;
     }
 

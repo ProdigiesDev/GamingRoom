@@ -24,18 +24,18 @@ public class CommandeTest {
         CommandService commandService=new CommandService();
        //       /*  Ajouter Commande */
        
-         Commande  commande=new Commande(3);
-         int nb=commandService.ajouterCommand(commande);
-         if(nb==0)
-                System.out.println("Erreur Ajout commande");
-         else
-             System.out.println("Commande a ete ajouter");
+//         Commande  commande=new Commande(3);
+//         int nb=commandService.ajouterCommand(commande);
+//         if(nb==0)
+//                System.out.println("Erreur Ajout commande");
+//         else
+//             System.out.println("Commande a ete ajouter");
          
        
         
         // Ajouter produit au panier 
         
-            Panier panier=new Panier(1,14,5);
+            Panier panier=new Panier(1,5,10);
            int res=panierService.ajouterProd(panier);
            if(res>0)
                System.out.println("Produit a été ajouter au panier");
@@ -90,7 +90,7 @@ public class CommandeTest {
         
         
        /* Consulter all Commande */
-        System.out.println(commandService.consulterCommande());
+//        System.out.println(commandService.consulterCommande());
         
         
         

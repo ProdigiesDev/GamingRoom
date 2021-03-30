@@ -29,10 +29,6 @@ and open the template in the editor.
     -fx-border-width: 0px;
 }
 
-.anchor-pane:empty{
-    -fx-background-image:"C:\ProdigiesDev\GamingRoomDesktop\src\tn\gamingroom\gui\AjoutEvenement.jpg";
-}
-
 .split-pane:horizontal > * > .split-pane-divider {
    -fx-border-color: transparent -fx-box-border transparent #BBBBBB;
    -fx-background-color: transparent, -fx-inner-border-horizontal;
@@ -59,7 +55,7 @@ and open the template in the editor.
     -fx-table-header-border-color: #959595;
     -fx-table-cell-border-color: #843d9c;
     -fx-control-inner-background: white;
-    -fx-background-color: white;
+    -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-padding: 0;
     -fx-border-insets: 0;

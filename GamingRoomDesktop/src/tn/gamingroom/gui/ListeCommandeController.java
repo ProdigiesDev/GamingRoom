@@ -5,7 +5,6 @@
  */
 package tn.gamingroom.gui;
 
-import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +51,8 @@ public class ListeCommandeController implements Initializable {
     private TableColumn<CommandeGui, Double> colNet;
     @FXML
     private TableColumn<CommandeGui, Commande.Statu> colEtat;
+    @FXML
+    private ImageView backIm;
     
     /**
      * Initializes the controller class.

@@ -5,11 +5,6 @@
  */
 package tn.gamingroom.gui;
 
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +18,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
 import javafx.util.Callback;
+import javafx.util.converter.IntegerStringConverter;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import tn.gamingroom.entities.PanierProduit;
 import tn.gamingroom.entities.Panier;
 import tn.gamingroom.entities.Produits;
@@ -70,7 +62,7 @@ public class PanierController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+//       panierService = new panier service 
       initTable();
     }    
     private void addButtonToTable() {
@@ -140,21 +132,8 @@ public class PanierController implements Initializable {
       paniers.forEach(p->{
           Produits p1= ps.getProductById(p.getProduit_id());
           ImageView imageView=new ImageView(new Image (p1.getImage()));
-          imageView.setFitHeight(100);
-          imageView.setFitWidth(100);
-//          TextField  fXTextField=new TextField ();
-//          fXTextField.setVisible(true);
-//          fXTextField.setText(String.valueOf(p.getQuantityDemande()));
-//          fXTextField.setOnMouseClicked(e->{
-//                  try{
-//                      Integer.parseInt(fXTextField.getText());
-//                  }catch(Exception ex){
-//                      fXTextField.setText("");
-//                      JOptionPane.showMessageDialog(null, "Quantite doit etre entier");
-//
-//                  }
-//                });
-
+          imageView.setFitHeight(200);
+          imageView.setFitWidth(250);
           panierProduits.add(new PanierProduit(p1.getIdprod(),p.getId(),p1.getLibelle(),p.getQuantityDemande(),imageView,(double) (p1.getPrix()*p.getQuantityDemande()),(double) p1.getPrix()));
           
       });
@@ -165,11 +144,20 @@ public class PanierController implements Initializable {
         colQuantite.setCellValueFactory(new PropertyValueFactory<PanierProduit, Integer>("quantite"));
         colPrix.setCellValueFactory(new PropertyValueFactory<PanierProduit, Double>("Prix"));
         addButtonToTable();
-        
+        editableCol();
         btCom.setVisible(!panierProduits.isEmpty());
       listTable.setItems(list);
     }
 
+   private void editableCol(){
+       
+      colQuantite.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+       colQuantite.setOnEditCommit(e->{ 
+               e.getTableView().getItems().get(e.getTablePosition().getRow()).setQuantite(e.getNewValue());
+       });
+       listTable.setEditable(true);
+   }
    
-
 }
+
+
