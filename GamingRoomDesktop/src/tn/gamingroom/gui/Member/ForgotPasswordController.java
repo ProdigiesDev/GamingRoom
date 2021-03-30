@@ -58,6 +58,9 @@ public class ForgotPasswordController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         pane_reset_code.setVisible(false);
+    }
+       public void setRnom(String Value) {
+        this.tf_email.setText(Value);
     }    
 
     @FXML

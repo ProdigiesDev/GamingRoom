@@ -88,6 +88,8 @@ public class LoginMemberController implements Initializable {
                 Parent root = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setTitle("Forgot Password");
+                ForgotPasswordController fpc = fxmlLoader.getController();
+                fpc.setRnom(loginEmail.getText());
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {
