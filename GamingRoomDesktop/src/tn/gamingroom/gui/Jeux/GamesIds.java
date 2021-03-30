@@ -10,7 +10,7 @@ package tn.gamingroom.gui.Jeux;
  * @author Dah
  */
 public class GamesIds {
-    static final   int SNAKE_ID=14; 
-    static  final  int TIC_TAC_TOE=13;
+    public static final   int SNAKE_ID=14; 
+    public static  final  int TIC_TAC_TOE=13;
     
 }

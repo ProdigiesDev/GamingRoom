@@ -124,12 +124,13 @@ public class Snake extends Application {
             }
             headloc = new int[]{xc[0], yc[0]};
         });
-        primaryStage.setTitle("Snake");
+       
         primaryStage.setScene(scene);
         primaryStage.setMinHeight(543);
         primaryStage.setMinWidth(514);
         primaryStage.setMaxHeight(543);
         primaryStage.setMaxWidth(514);
+        primaryStage.setTitle("Snake");
         try {
             primaryStage.getIcons().add(new Image(new File(Env.getImagePath()+"snake.png").toURI().toURL().toExternalForm()));
         } catch (MalformedURLException ex) {

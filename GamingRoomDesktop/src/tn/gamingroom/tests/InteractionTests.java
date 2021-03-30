@@ -185,7 +185,7 @@ public class InteractionTests {
     
     static void modifierJeux(){
         System.out.print("Donner jeux id : ");
-        Jeux j=new Jeux(scan.nextInt(),"csgo","description csgo",Jeux.Type.Desktop);
+        Jeux j=new Jeux(scan.nextInt(),"csgo","description csgo",Jeux.Type.Desktop,"Test");
         int nbModifier=jeuxService.modifier(j);
         if(nbModifier > 0)
            System.out.println("Jeux été modifier");
