@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import tn.gamingroom.gui.Chat.ChatController;
+import tn.gamingroom.gui.Home;
 
 public class Server implements Runnable {
     
@@ -26,7 +28,7 @@ public class Server implements Runnable {
     private ArrayList<Socket> clients;
     private ArrayList<ClientThread> clientThreads;
     public ObservableList<String> serverLog;
-    public ObservableList<String> clientNames;
+    public static ObservableList<String> clientNames;
     public Server(int portNumber) throws IOException {
         
         this.portNumber = portNumber;
@@ -81,6 +83,7 @@ public class Server implements Runnable {
                     public void run() {
 			serverLog.add("Client "+ clientSocket.getRemoteSocketAddress()
 						+ " connected");
+                        
                     }
 		});
 		ClientThread clientThreadHolderClass = new ClientThread(clientSocket, this);
@@ -107,9 +110,11 @@ public class Server implements Runnable {
 				serverLog.add("Client "
 						+ client.getClientSocket().getRemoteSocketAddress()
 						+ " disconnected");
+                                
 				clients.remove(clientThreads.indexOf(client));
 				clientNames.remove(clientThreads.indexOf(client));
 				clientThreads.remove(clientThreads.indexOf(client));
+                                
 			}
 		});
 		

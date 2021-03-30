@@ -18,9 +18,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javax.swing.JOptionPane;
+import tn.gamingroom.chat.server.ServerApplication;
 import tn.gamingroom.entities.Client;
 import tn.gamingroom.entities.Membre;
 import tn.gamingroom.outils.Env;
@@ -37,12 +40,12 @@ public class ChatController implements Initializable {
     private JFXListView<String> listChat;
     @FXML
     private JFXTextField msg;
-    @FXML
-    private Button btnSend;
 
     private ArrayList<Thread> threads= new ArrayList<Thread>();;
     
     private Client client;
+    @FXML
+    private static Label ngUsers;
     
     /**
      * Initializes the controller class.
@@ -70,7 +73,6 @@ public class ChatController implements Initializable {
         }
     }    
 
-    @FXML
     private void envoyerMsg(ActionEvent event) {
         client.writeToServer(msg.getText());
 	msg.clear();
@@ -83,6 +85,7 @@ public class ChatController implements Initializable {
             envoyerMsg(null);
         }
     }
+    
     	
     
 }

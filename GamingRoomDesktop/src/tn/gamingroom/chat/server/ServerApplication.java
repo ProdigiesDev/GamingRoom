@@ -29,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tn.gamingroom.gui.Chat.ChatController;
 import tn.gamingroom.outils.Env;
 
 
