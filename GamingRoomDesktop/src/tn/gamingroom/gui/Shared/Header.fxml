@@ -43,6 +43,11 @@
                <Font size="15.0" />
             </font>
          </JFXButton>
+         <JFXButton fx:id="games1" layoutX="740.0" layoutY="24.0" onAction="#gotoReclamtion" prefHeight="31.0" prefWidth="92.0" text="Aide" textFill="WHITE">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </JFXButton>
          </children>
       </Pane>
 </AnchorPane>
