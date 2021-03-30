@@ -5,9 +5,9 @@
  */
 package tn.gamingroom.gui.Accueil;
 
-
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,10 +40,17 @@ import tn.gamingroom.services.ProduitCrud;
 import tn.gamingroom.entities.Membre;
 import tn.gamingroom.services.MembreServices;
 import java.util.Arrays;
-import javafx.scene.text.Text; 
-import javafx.scene.paint.Color; 
-import javafx.scene.text.Font; 
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import tn.gamingroom.entities.Avis;
+import tn.gamingroom.gui.Jeux.AjouterJeuxController;
+import tn.gamingroom.gui.Jeux.Snake;
 import tn.gamingroom.services.AvisService;
 
 /**
@@ -58,39 +65,31 @@ public class AccueilController implements Initializable {
     @FXML
     private Pane bestProduct1;
     @FXML
-    private Pane bestProduct2;  
-        
+    private Pane bestProduct2;
+
     @FXML
     private Pane bestProduct3;
 
-    private int bestAvisPage=0;
-    private final int NB_PRODUCT_PAGE_ITEMS=3;
-    private List<Produits> bestProducts;
-    private List<Avis> listAvis;
-    @FXML
-    private Button presProductbtn1;
-    @FXML
-    private Pane bestProduct11;
+    
     @FXML
     private Label reviewMbr;
     @FXML
     private TextFlow review;
     @FXML
     private Button nextProductbtn1;
+    
+    private int bestAvisPage=0;
+    private List<Produits> bestProducts;
+    private List<Avis> listAvis;
+    private final int NB_PRODUCT_PAGE_ITEMS = 3;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        AvisService avisService=new AvisService();
-        listAvis=avisService.getPostivesAvis();
-        review.setTextAlignment(TextAlignment.CENTER); 
-        review.setLineSpacing(2.0); 
-        
-        bestAvisPage=0;
-        initReview();
-        
-      /*  ProduitCrud produitCrud=new ProduitCrud();
+
+        /*  ProduitCrud produitCrud=new ProduitCrud();
         List<Integer> listIdProd=produitCrud.bestProductsSelled();
         bestProducts=new ArrayList();
         listIdProd.forEach(id->{
@@ -98,10 +97,14 @@ public class AccueilController implements Initializable {
             if(p!=null)
                 bestProducts.add(p);
         });*/
+        AvisService avisService=new AvisService();
+        listAvis=avisService.getPostivesAvis();
+        review.setTextAlignment(TextAlignment.CENTER); 
+        review.setLineSpacing(2.0); 
         
-        
-        
-    }    
+        bestAvisPage=0;
+        initReview();
+    }
 
     /*
     void initListProducts(){
@@ -113,8 +116,12 @@ public class AccueilController implements Initializable {
         
         List<Produits> produitses=bestProducts.subList(nbProjectStart, nbProjectEnd);
     }
-    */
+     */
+    
+    
     private void initReview(){
+        
+        System.out.println(bestAvisPage);
         ObservableList list = review.getChildren();
         MembreServices membreServices=new MembreServices();
         Membre membre=membreServices.getById(listAvis.get(bestAvisPage).getMember_id());
@@ -131,9 +138,9 @@ public class AccueilController implements Initializable {
             text1.setFill(Color.DARKSLATEBLUE); 
             
             list.add(text1);  
-        });      
+        });   
     }
-
+    
     @FXML
     private void presAvisValue(ActionEvent event) {
         bestAvisPage-=1;
@@ -145,10 +152,10 @@ public class AccueilController implements Initializable {
 
     @FXML
     private void nextAvisValue(ActionEvent event) {
-        System.out.println(bestAvisPage);
           bestAvisPage+=1;
         if(bestAvisPage>=listAvis.size())
             bestAvisPage=listAvis.size()-1;
         initReview();
     }
+
 }
