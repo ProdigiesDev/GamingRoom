@@ -592,7 +592,7 @@ public class DashboardAdminController implements Initializable {
         try {
               Class.forName("com.mysql.jdbc.Driver");
                   Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gamingroom","gamingRoomUser","!&_UkTz/Cw`*2#[u");
-      PreparedStatement pt = con.prepareStatement("select * from membre");
+      PreparedStatement pt = con.prepareStatement("select * from membre where role != 'Admin'");
             ResultSet rs = pt.executeQuery();
             
                        /* Step-2: Initialize PDF documents - logical objects */
