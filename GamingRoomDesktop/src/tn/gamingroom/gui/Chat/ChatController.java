@@ -54,7 +54,7 @@ public class ChatController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         MembreServices membreServices=new MembreServices();
-        Membre membre=membreServices.getById(2);
+        Membre membre=membreServices.getById(5);
         try {
             client = new Client("", Env.getPort(), membre.getNom());
             

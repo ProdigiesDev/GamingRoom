@@ -41,9 +41,9 @@ public class Home extends Application {
         try {
 
             //Parent root=FXMLLoader.load(getClass().getResource("Reclamation/AjouterReclamation.fxml"));
-            Parent root=FXMLLoader.load(getClass().getResource("Avis/AjouterAvis.fxml"));
+           // Parent root=FXMLLoader.load(getClass().getResource("Avis/AjouterAvis.fxml"));
             // Parent root=FXMLLoader.load(getClass().getResource("Chat/chat.fxml"));
-           // Parent root = FXMLLoader.load(getClass().getResource("Accueil/Accueil.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("Accueil/Accueil.fxml"));
 
             Scene scene = new Scene(root);
             primaryStage.setTitle("GamingRoom");
@@ -53,7 +53,7 @@ public class Home extends Application {
             primaryStage.setHeight(700);
             primaryStage.getIcons().add(new Image(new File("C:\\Users\\Dah\\Desktop\\demo\\images\\logo.png").toURI().toURL().toExternalForm()));
             primaryStage.show();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
