@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Shared.HeaderController">
+     <Pane fx:id="header" prefHeight="79.0" prefWidth="1350.0" style="-fx-background-color: rgba(8,3,37,.4);;">
+         <children>
+            <ImageView fitHeight="79.0" fitWidth="134.0" layoutX="100.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Dah/Desktop/demo/images/logo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="365.0" layoutY="30.0" text="Cours" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="432.0" layoutY="30.0" text="Events" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="499.0" layoutY="30.0" text="Store" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <FontAwesomeIcon fill="WHITE" glyphName="SHOPPING_CART" layoutX="1075.0" layoutY="49.0" size="2em" />
+            <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" layoutX="1135.0" layoutY="48.0" size="2em" />
+         <Label layoutX="566.0" layoutY="30.0" text="Games" textFill="WHITE">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </Label>
+         </children>
+      </Pane>
+</AnchorPane>

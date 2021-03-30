@@ -161,8 +161,33 @@ public ArrayList<Produits> TrierParId() {
             System.out.println("Il y a aucun produit de ce libelle");
         }
         return listOffresTypeX;
-    }     
-        
+    }   
+   
+    public Produits getByID(int x) {
+
+        try {
+
+            String requete = "select  p.* ,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat and idprod='" + x + "'"; // statique
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                Produits p = new Produits();
+                p.setIdprod(rs.getInt(1));
+                p.setImage(rs.getString(3));
+                p.setLibelle(rs.getString(4));
+                p.setPrix(rs.getInt(5));
+                p.setDescription(rs.getString(6));
+                return p;
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return null;
+
+    }    
         
     public List<Integer> bestProductsSelled(){
         List<Integer> integers=new ArrayList<>();
