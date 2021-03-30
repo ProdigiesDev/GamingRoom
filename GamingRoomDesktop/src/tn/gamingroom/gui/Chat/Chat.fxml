@@ -2,13 +2,28 @@
 
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.Button?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Chat.ChatController">
+<AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="320.0" stylesheets="file:/C:/Users/Dah/Desktop/demo/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Chat.ChatController">
    <children>
-      <JFXListView fx:id="listChat" prefHeight="333.0" prefWidth="337.0" />
-      <JFXTextField fx:id="msg" layoutY="334.0" onKeyPressed="#keyPresed" prefHeight="65.0" prefWidth="244.0" />
-      <Button fx:id="btnSend" layoutX="244.0" layoutY="334.0" mnemonicParsing="false" onAction="#envoyerMsg" prefHeight="65.0" prefWidth="94.0" text="Envoyer" />
+      <Pane prefHeight="78.0" prefWidth="320.0">
+         <children>
+            <Label layoutX="67.0" layoutY="14.0" prefHeight="30.0" prefWidth="186.0" text="GamingRoom Chat">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <FontAwesomeIcon glyphName="USERS" layoutX="260.0" layoutY="37.0" size="2em" />
+         </children>
+      </Pane>
+      <JFXTextField fx:id="msg" layoutY="334.0" onKeyPressed="#keyPresed" prefHeight="65.0" prefWidth="320.0" promptText="Type your message here ..." style="-fx-text-fill: white;" unFocusColor="#4059a9" AnchorPane.topAnchor="100.0">
+         <font>
+            <Font size="15.0" />
+         </font></JFXTextField>
+      <JFXListView fx:id="listChat" prefHeight="835.0" prefWidth="320.0" style="-fx-background-color: rgba(8,3,37,.9); -fx-border-color: #4059a9;" AnchorPane.bottomAnchor="0.0" />
    </children>
 </AnchorPane>

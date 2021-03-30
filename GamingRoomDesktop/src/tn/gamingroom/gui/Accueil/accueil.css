@@ -9,7 +9,34 @@ and open the template in the editor.
 */
 
 
-.navbar{
-    -fx-background-color: rgba(8,3,37,.4);
+.body{
+    -fx-background-color: rgb(8, 3, 37);
+}
+
+.panebg{
+    -fx-background-color: rgb(22, 9, 98);
+}
+
+.cardLabel{
+    -fx-background-color:black;
+    -fx-font-weight:bolder;
+    -fx-font-family:fantasy;
+}
+
+.btnMore{
+    -fx-border-color:white;
+    -fx-border-width:2;
+    -fx-border-radius:4;
+}
+.scroll-pane > .corner {
+    -fx-background-color: black;
+}
+
+.list-cell{
+    -fx-opacity: 0.5;
+    -fx-background-color:  rgb(22, 9, 98);
+    -fx-text-fill: white;
+    -fx-font-weight: bolder;
+    -fx-font-size: 15.0;
 }
 
