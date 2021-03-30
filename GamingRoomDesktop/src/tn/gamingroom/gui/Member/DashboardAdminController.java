@@ -5,12 +5,27 @@
  */
 package tn.gamingroom.gui.Member;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -120,6 +135,8 @@ public class DashboardAdminController implements Initializable {
     private JFXButton btn_activate;
     @FXML
     private JFXButton btn_refuser;
+    @FXML
+    private Button button_imprimer;
    
 
     /**
@@ -143,6 +160,10 @@ public class DashboardAdminController implements Initializable {
 //                );
         /// 
         txtarea_coachdesc.setVisible(false);
+        //text fill
+        tfidmember.setStyle("-fx-text-FILL : white;");
+        textcatid.setStyle("-fx-text-FILL : white;");
+        textcatname.setStyle("-fx-text-FILL : white;");
         
         
     } 
@@ -564,6 +585,135 @@ public class DashboardAdminController implements Initializable {
             }
          }
         
+    }
+
+    @FXML
+    private void imprimerTable(ActionEvent event) throws SQLException, DocumentException, ClassNotFoundException {
+        try {
+              Class.forName("com.mysql.jdbc.Driver");
+                  Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gamingroom","gamingRoomUser","!&_UkTz/Cw`*2#[u");
+      PreparedStatement pt = con.prepareStatement("select * from membre");
+            ResultSet rs = pt.executeQuery();
+            
+                       /* Step-2: Initialize PDF documents - logical objects */
+
+                       Document my_pdf_report = new Document();
+
+                       PdfWriter.getInstance(my_pdf_report, new FileOutputStream("pdf_report_from_sql_using_java.pdf"));
+                       
+                              my_pdf_report.open();  
+//                       my_pdf_report.add(new Paragraph(new Date().toString()));
+//                            Image img = Image.getInstance("c:/6.png");
+//                            my_pdf_report.add(img);
+                              my_pdf_report.add(new Paragraph("Listes des Membres:"));
+                              my_pdf_report.add(new Paragraph(" "));
+                              my_pdf_report.addCreationDate();
+              
+                       
+                       //we have seven columns in our table
+                       PdfPTable my_report_table = new PdfPTable(7);
+                   
+                             
+                       //create a cell object
+                       PdfPCell table_cell;
+                       
+                       
+                       
+                                       table_cell=new PdfPCell(new Phrase("ID"));
+                                      table_cell.setBackgroundColor(BaseColor.CYAN);
+                                       my_report_table.addCell(table_cell);
+//                                       table_cell=new PdfPCell(new Phrase("nom"));
+//                                       table_cell.setBackgroundColor(BaseColor.WHITE);
+//                                       my_report_table.addCell(table_cell);
+//                                       table_cell=new PdfPCell(new Phrase("prenom"));
+//                                       table_cell.setBackgroundColor(BaseColor.WHITE);
+//                                       my_report_table.addCell(table_cell);
+//                                       table_cell=new PdfPCell(new Phrase("date_naissance"));
+//                                       table_cell.setBackgroundColor(BaseColor.WHITE);
+//                                       my_report_table.addCell(table_cell);
+                                       table_cell=new PdfPCell(new Phrase("Genre"));
+                                       table_cell.setBackgroundColor(BaseColor.CYAN);
+                                       my_report_table.addCell(table_cell);
+                                       table_cell=new PdfPCell(new Phrase("Telephone"));
+                                       table_cell.setBackgroundColor(BaseColor.CYAN);
+                                       my_report_table.addCell(table_cell);
+                                       table_cell=new PdfPCell(new Phrase("e=Email"));
+                                       table_cell.setBackgroundColor(BaseColor.CYAN);
+                                       my_report_table.addCell(table_cell);
+                                       table_cell=new PdfPCell(new Phrase("Role"));
+                                       table_cell.setBackgroundColor(BaseColor.CYAN);
+                                       my_report_table.addCell(table_cell);
+                                       table_cell=new PdfPCell(new Phrase("Point"));
+                                       table_cell.setBackgroundColor(BaseColor.CYAN);
+                                       my_report_table.addCell(table_cell);
+//                                       table_cell=new PdfPCell(new Phrase("ban_duration"));
+//                                       table_cell.setBackgroundColor(BaseColor.WHITE);
+//                                       my_report_table.addCell(table_cell);
+                                       table_cell=new PdfPCell(new Phrase("Last_timeban"));
+                                       table_cell.setBackgroundColor(BaseColor.CYAN);
+                                       my_report_table.addCell(table_cell);
+                                       
+                                       
+                                       
+                                       
+
+                                      while(rs.next()){
+                                      
+                                       String idRdv= rs.getString("id");
+                                       table_cell=new PdfPCell(new Phrase(idRdv));
+                                       my_report_table.addCell(table_cell);
+//                                       String type=rs.getString("nom");
+//                                       table_cell=new PdfPCell(new Phrase(type));
+//                                       my_report_table.addCell(table_cell);
+//                                       String ds=rs.getString("prenom");
+//                                       table_cell=new PdfPCell(new Phrase(ds));
+//                                       my_report_table.addCell(table_cell);
+//                                       String dd=rs.getString("date_naissance");
+//                                       table_cell=new PdfPCell(new Phrase(dd));
+//                                       my_report_table.addCell(table_cell);
+                                       String dn=rs.getString("genre");
+                                       table_cell=new PdfPCell(new Phrase(dn));
+                                       my_report_table.addCell(table_cell);
+                                       String tel=rs.getString("numero_tel");
+                                       table_cell=new PdfPCell(new Phrase(tel));
+                                       my_report_table.addCell(table_cell);
+                                       String email=rs.getString("email");
+                                       table_cell=new PdfPCell(new Phrase(email));
+                                       my_report_table.addCell(table_cell);
+                                       String role=rs.getString("role");
+                                       table_cell=new PdfPCell(new Phrase(role));
+                                       my_report_table.addCell(table_cell);
+                                       String point=rs.getString("point");
+                                       table_cell=new PdfPCell(new Phrase(point));
+                                       my_report_table.addCell(table_cell);
+//                                       String ban_dur=rs.getString("ban_duration");
+//                                       table_cell=new PdfPCell(new Phrase(ban_dur));
+//                                       my_report_table.addCell(table_cell);
+                                       String lban=rs.getString("last_timeban");
+                                       table_cell=new PdfPCell(new Phrase(lban));
+                                       my_report_table.addCell(table_cell);
+                                       
+                                        
+                       }
+                       /* Attach report table to PDF */
+                       
+                       my_pdf_report.add(my_report_table); 
+                       
+                       System.out.println(my_pdf_report);
+                       my_pdf_report.close();
+                       JOptionPane.showMessageDialog(null, "imprimer avec succes");
+
+                       /* Close all DB related objects */
+                       rs.close();
+                       pt.close(); 
+                       con.close();    
+                       
+
+
+       } catch (FileNotFoundException e) {
+       // TODO Auto-generated catch block
+       e.printStackTrace();
+       }
     }
 
     
