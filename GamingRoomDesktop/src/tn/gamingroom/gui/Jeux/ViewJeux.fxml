@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1400.0" prefWidth="1350.0" stylesheets="@../Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Jeux.ViewJeuxController">
+    <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1400.0" prefWidth="1350.0" styleClass="body" stylesheets="@../Accueil/accueil.css">
+            <children>
+            <ImageView fitHeight="308.0" fitWidth="1350.0" pickOnBounds="true">
+               <image>
+                  <Image url="file:/C:/Users/Dah/Desktop/demo/images/banner-blog-bg.jpg" />
+               </image>
+            </ImageView>          
+                <fx:include fx:id="header" source="../Shared/Header.fxml" />
+            <ImageView fx:id="jeuxImage" fitHeight="302.0" fitWidth="652.0" layoutX="131.0" layoutY="357.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../../images/713006.jpg" />
+               </image>
+            </ImageView>
+                  <JFXListView fx:id="listChat" layoutX="1001.0" layoutY="414.0" prefHeight="663.0" prefWidth="278.0" style="-fx-background-color: rgba(8,3,37,.9); -fx-border-color: #4059a9;" AnchorPane.rightAnchor="71.0" />
+
+                <fx:include fx:id="footer" source="../Shared/Footer.fxml" AnchorPane.bottomAnchor="0.0" />
+            <Label fx:id="title" layoutX="114.0" layoutY="183.0" prefHeight="73.0" prefWidth="887.0">
+               <font>
+                  <Font name="Comic Sans MS" size="50.0" />
+               </font>
+            </Label>
+            <TextFlow fx:id="descgame" layoutX="130.0" layoutY="690.0" prefHeight="241.0" prefWidth="652.0" />
+            <JFXButton fx:id="startBtn" layoutX="407.0" layoutY="1019.0" onAction="#startTheGame" styleClass="btnMore" text="Jouer">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </JFXButton>
+            
+            <Label layoutX="1047.0" layoutY="357.0" prefHeight="30.0" prefWidth="186.0" text="Score des membres">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+    </content>
+</ScrollPane>
