@@ -8,8 +8,11 @@ package tn.gamingroom.gui;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -19,11 +22,14 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,9 +58,12 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Cours;
 import tn.gamingroom.entities.Courslm;
+import tn.gamingroom.outils.ApiCall;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.ServiceCours;
@@ -82,6 +91,8 @@ public class CoursDetailsController implements Initializable {
     @FXML
     private TableColumn<Courslm, Integer> ccat;
     @FXML
+    private TableColumn<Courslm, String> clien;
+    @FXML
     private TableView<Courslm> tableCours;
     @FXML
     private Button btnaj;
@@ -97,7 +108,7 @@ public class CoursDetailsController implements Initializable {
     private JFXTextField icl;
     @FXML
     private JFXDatePicker idate;
-     @FXML
+    @FXML
     private JFXTextField inb;
     @FXML
     private JFXTextField inom;
@@ -138,23 +149,25 @@ public class CoursDetailsController implements Initializable {
     private Label verifnb;
     @FXML
     private Label verifmem;
-    
-    
+    @FXML
+    private JFXTextField lien;
+    @FXML
+    private Button infoYoutube;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        //getVideoDetails("https://www.youtube.com/watch?v=gbt6cTZSKgo");
         inom.setStyle("-fx-text-fill: white; ");
         icl.setStyle("-fx-text-fill: white; ");
         ides.setStyle("-fx-text-fill: white; ");
         inb.setStyle("-fx-text-fill: white; ");
         imem.setStyle("-fx-text-fill: white; ");
         idate.setStyle("-fx-text-fill: white; ");
+        lien.setStyle("-fx-text-fill: white; ");
         cnom.setCellValueFactory(new PropertyValueFactory<Courslm, String>("nomCours"));
-
         cdes.setCellValueFactory(new PropertyValueFactory<Courslm, String>("description"));
         cdate.setCellValueFactory(new PropertyValueFactory<Courslm, Date>("date_creation"));
         cmoc.setCellValueFactory(new PropertyValueFactory<Courslm, String>("tags"));
@@ -162,7 +175,8 @@ public class CoursDetailsController implements Initializable {
         cnb.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("nb_participants"));
         ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
         cimage.setCellValueFactory(new PropertyValueFactory<Courslm, ImageView>("image"));
-        
+        clien.setCellValueFactory(new PropertyValueFactory<Courslm, String>("lienYoutube"));
+
         this.initTable(null);
 
         //catégorie combo
@@ -188,13 +202,12 @@ public class CoursDetailsController implements Initializable {
     private void ajouterC(ActionEvent event) {
 
         //try {
-        
         //TODO fil verifNb lazem ykon integer 
         boolean verif = verifcat() || verifdate() || verifdes() || verifmem() || verifmo() || verifmo() || verifnb() || verifnom();
         if (verif) {
             return;
         }
-        
+
         Cours c = new Cours();
         ServiceCours s = new ServiceCours();
         Categorie categorie = combocat.getValue();
@@ -214,6 +227,7 @@ public class CoursDetailsController implements Initializable {
             JOptionPane.showMessageDialog(null, "Veuillez insérer une image");
             return;
         }
+        c.setLienYoutube(lien.getText());
         int nb = s.ajouterCours(c);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
@@ -225,20 +239,20 @@ public class CoursDetailsController implements Initializable {
         } else {
             Optional<ButtonType> btn = alert.showAndWait();
             JOptionPane.showMessageDialog(null, "Cours ajouté");
-            Courslm cmm= new Courslm();
-            
+            Courslm cmm = new Courslm();
 
-        cmm.setNomCours(inom.getText());
-        cmm.setDescription(ides.getText());
-        cmm.setNb_participants(Integer.parseInt(inb.getText()));
-        cmm.setDate_creation(Date.valueOf(idate.getValue()));
-        cmm.setTags(icl.getText());
-        cmm.setCategorie_id(categorie.getIdcat());
-        cmm.setMembre_id(Integer.parseInt(imem.getText()));
-        
-        c.setImage(nomImage);
+            cmm.setNomCours(inom.getText());
+            cmm.setDescription(ides.getText());
+            cmm.setNb_participants(Integer.parseInt(inb.getText()));
+            cmm.setDate_creation(Date.valueOf(idate.getValue()));
+            cmm.setTags(icl.getText());
+            cmm.setCategorie_id(categorie.getIdcat());
+            cmm.setMembre_id(Integer.parseInt(imem.getText()));
 
-        clean();
+            c.setImage(nomImage);
+            cmm.setLienYoutube(lien.getText());
+
+            clean();
 
         }
 
@@ -254,13 +268,12 @@ public class CoursDetailsController implements Initializable {
     @FXML
     private void modifierC(ActionEvent event) {
 
-        
         Courslm c = this.tableCours.getSelectionModel().getSelectedItem();
-        if(c==null){
+        if (c == null) {
             JOptionPane.showMessageDialog(null, "a5tar cours");
             return;
         }
-        
+
         //TODO fil verifNb lazem ykon integer 
         boolean verif = verifcat() || verifdate() || verifdes() || verifmem() || verifmo() || verifmo() || verifnb() || verifnom();
         if (verif) {
@@ -273,6 +286,7 @@ public class CoursDetailsController implements Initializable {
         int Value5 = Integer.parseInt(inb.getText());
         Categorie cat = combocat.getValue();
         Date Value7 = Date.valueOf(idate.getValue());
+        String Value8 = lien.getText();
         String nomImage = moveImage();
 
         if (nomImage.length() == 0) {
@@ -280,7 +294,7 @@ public class CoursDetailsController implements Initializable {
             return;
         }
 
-        Cours c2 = new Cours(Value2, Value1, Value5, Value7, Value4, nomImage, cat.getIdcat());
+        Cours c2 = new Cours(Value2, Value1, Value5, Value7, Value4, nomImage, cat.getIdcat(), Value8);
         c2.setId(c.getId());
         ServiceCours s = new ServiceCours();
         int x = s.updateCours(c2);
@@ -296,7 +310,7 @@ public class CoursDetailsController implements Initializable {
 
         } else {
             System.out.println("cours non modifié");
-            
+
             JOptionPane.showMessageDialog(null, "cours non modifié");
         }
 
@@ -308,7 +322,7 @@ public class CoursDetailsController implements Initializable {
         Courslm c = new Courslm();
 
         c = this.tableCours.getSelectionModel().getSelectedItem();
-        if(c==null){
+        if (c == null) {
             JOptionPane.showMessageDialog(null, "a5tar cours");
             return;
         }
@@ -321,7 +335,7 @@ public class CoursDetailsController implements Initializable {
         if (btn.get() == ButtonType.OK) {
             s.supprimerCours(c.getId());
             this.tableCours.getItems().remove(c);
-            
+
             System.out.println("suppression avec succées");
         } else {
             alert.close();
@@ -347,6 +361,7 @@ public class CoursDetailsController implements Initializable {
         inb.setText(String.valueOf(c.getNb_participants()));
         file = new File(Env.getImagePath() + "cours\\" + c.getImagename());
         imagevc.setImage(c.getImage().getImage());
+        lien.setText(c.getLienYoutube());
         //inb.setText(img.getCellData(index).toString());
     }
 
@@ -361,6 +376,7 @@ public class CoursDetailsController implements Initializable {
         ides.setText(null);
         icl.setText(null);
         imagevc.setImage(null);
+        lien.setText(null);
     }
 
     @FXML
@@ -374,12 +390,10 @@ public class CoursDetailsController implements Initializable {
     private void trierC(ActionEvent event) {
         ServiceCours s = new ServiceCours();
         initTable(s.trierCoursID());
-        
+
         //ObservableList<Courslm> list = FXCollections.observableArrayList(s.trierCoursID());
         //String nomImage = moveImage();
         //tableCours.setItems(list);
-        
-
     }
 
     private boolean verifnom() {
@@ -401,7 +415,7 @@ public class CoursDetailsController implements Initializable {
         if (icl.getText().isEmpty()) {
             veriftag.setText("Veuillez remplir ce champs");
             return true;
-            
+
         } else {
             veriftag.setText("");
             return false;
@@ -409,14 +423,13 @@ public class CoursDetailsController implements Initializable {
     }
 
     private boolean verifnb() {
-        
+
         verifnb.setStyle("-fx-text-fill: white; ");
-        int x=Integer.parseInt(inb.getText());
+        int x = Integer.parseInt(inb.getText());
         if (inb.getText().isEmpty()) {
             verifnb.setText("Veuillez remplir ce champs");
             return true;
-        
-     
+
         } else {
             verifnb.setText("");
             return false;
@@ -468,6 +481,18 @@ public class CoursDetailsController implements Initializable {
             return false;
         }
     }
+    
+    private boolean verifYouUrl(){
+        
+        verifcat.setStyle("-fx-text-fill: white; ");
+        if (!lien.getText().matches("^https://www.youtube.com/watch?v=")) {
+            verifcat.setText("Lien invalid");
+            return true;
+        } else {
+            verifcat.setText("");
+            return false;
+        }
+    }
 
     @FXML
     private void ajouterim(ActionEvent event) {
@@ -513,8 +538,8 @@ public class CoursDetailsController implements Initializable {
     private void initTable(List<Cours> listcours) {
         ServiceCours es = new ServiceCours();
         CategorieServices cs = new CategorieServices();
-        if(listcours==null){
-            listcours=es.displayCours();
+        if (listcours == null) {
+            listcours = es.displayCours();
         }
         List<Courslm> lIm = new ArrayList<Courslm>();
         listcours.forEach(e -> {
@@ -525,18 +550,67 @@ public class CoursDetailsController implements Initializable {
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);
                 i.setFitWidth(70);
-                Courslm addCours=new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat());
+                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat());
                 addCours.setImagename(e.getImage());
+                addCours.setLienYoutube(e.getLienYoutube());
                 lIm.add(addCours);
             } catch (MalformedURLException ex) {
                 Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         });
-        System.out.println("ev " + lIm);
+        //System.out.println("ev " + lIm);
 
         ObservableList<Courslm> listCoursIm = FXCollections.observableArrayList(lIm);
 
         tableCours.setItems(listCoursIm);
+    }
+
+    private HashMap<String, String> getVideoDetails(String url) {
+            HashMap<String, String> hashMap = new HashMap();
+            int idpos=url.indexOf("=")+1;
+            String id=url.substring(idpos, idpos+11);
+            System.out.println(id);
+        try {
+            HashMap<String, String> headers = new HashMap();
+            HttpURLConnection conn = ApiCall.callApi("https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id="+id+"&key="+Env.getYoutubeApiKey(), headers);
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP Error code : "
+                        + conn.getResponseCode());
+            }
+            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            String objctDetails=br.lines().collect(Collectors.joining(" "));
+            JSONObject obj = new JSONObject(objctDetails);
+            JSONArray details = obj.getJSONArray("items");
+            if(details.length()==0){
+                System.out.println("Check your video ");
+                return null;
+            }
+            
+            JSONObject snippet=details.getJSONObject(0).getJSONObject("snippet");
+            
+            String title=snippet.getString("title");
+            String descirption=snippet.getString("description");
+            JSONArray tagsjson=snippet.getJSONArray("tags");
+            
+            String tags="";
+            for (int i = 0; i < tagsjson.length(); i++) {
+                tags+=tagsjson.get(i);
+            }
+            
+            System.out.println("Title : "+title);
+            System.out.println("descirption : "+descirption);
+            System.out.println("tags : "+tags);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return hashMap;
+    }
+
+    @FXML
+    private void getInformationsYoutube(ActionEvent event) {
     }
 }

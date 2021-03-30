@@ -12,11 +12,15 @@ package tn.gamingroom.outils;
 public class Env {
 
     public static final String keyMeaningcloudApi = "fb2edfd3397580535796144ef45588eb";
+    private static final String youtubeApiKey = "AIzaSyA_8Z1_SB9rtueiZXM3kMLKHlV5kOqTGSY";
+    private static String dossierImagePath = "C:\\Users\\eyatr\\Desktop\\ProdgiesDev\\images\\";
 
-    private static String dossierImagePath =
-
-    "C:\\Users\\eyatr\\Desktop\\ProdgiesDev\\images\\";
-public static String getImagePath() {
+    public static String getImagePath() {
         return dossierImagePath;
     }
+
+    public static String getYoutubeApiKey() {
+        return youtubeApiKey;
+    }
+    
 }

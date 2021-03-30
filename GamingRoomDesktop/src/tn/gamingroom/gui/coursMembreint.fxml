@@ -33,6 +33,6 @@
             <Font name="Bauhaus 93" size="56.0" />
          </font>
       </Label>
-      <TextField fx:id="prefer" layoutX="123.0" layoutY="109.0" onKeyPressed="#preferCours" />
+      <TextField fx:id="prefer" layoutX="123.0" layoutY="109.0" onKeyReleased="#preferCours" />
    </children>
 </AnchorPane>

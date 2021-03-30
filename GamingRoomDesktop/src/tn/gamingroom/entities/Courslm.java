@@ -25,7 +25,23 @@ public class Courslm {
     private int categorie_id;
     private String categorieNom;
     private String imagename;
+    private String lienYoutube;
     public Courslm() {
+    }
+
+    public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView image, int categorie_id, String categorieNom, String imagename, String lienYoutube) {
+        this.id = id;
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.membre_id = membre_id;
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.image = image;
+        this.categorie_id = categorie_id;
+        this.categorieNom = categorieNom;
+        this.imagename = imagename;
+        this.lienYoutube = lienYoutube;
     }
 
     public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView image, int categorie_id, String categorieNom) {
@@ -147,5 +163,28 @@ public class Courslm {
     public void setCategorie_id(int categorie_id) {
         this.categorie_id = categorie_id;
     }
+
+    public String getCategorieNom() {
+        return categorieNom;
+    }
+
+    public void setCategorieNom(String categorieNom) {
+        this.categorieNom = categorieNom;
+    }
+
+    public String getLienYoutube() {
+        return lienYoutube;
+    }
+
+    public void setLienYoutube(String lienYoutube) {
+        this.lienYoutube = lienYoutube;
+    }
+
+    @Override
+    public String toString() {
+        return "Courslm{" + "id=" + id + ", nomCours=" + nomCours + ", description=" + description + ", nb_participants=" + nb_participants + ", membre_id=" + membre_id + ", date_creation=" + date_creation + ", tags=" + tags + ", image=" + image + ", categorie_id=" + categorie_id + ", categorieNom=" + categorieNom + ", imagename=" + imagename + ", lienYoutube=" + lienYoutube + '}';
+    }
+    
+    
 
 }

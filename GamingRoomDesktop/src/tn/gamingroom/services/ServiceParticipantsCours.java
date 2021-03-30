@@ -31,6 +31,7 @@ public class ServiceParticipantsCours implements IParticipantsCours {
                     .prepareStatement(requete);
             pst.setInt(1, membre_id);
             pst.setInt(2, cour_id);
+            System.out.println(cour_id+"sss");
 
             nb_ajouter=pst.executeUpdate();
             if (nb_ajouter <= 0) {

@@ -32,6 +32,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebView;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Cours;
@@ -88,6 +89,8 @@ public class InfoCoursController implements Initializable {
     @FXML
     private Button inscrire;
     ParticipantsCours p;
+    @FXML
+    private WebView vidYoutube;
     /**
      * Initializes the controller class.
      */
@@ -105,7 +108,9 @@ public class InfoCoursController implements Initializable {
         nom.setText(c.getNomCours());
         des.setText(c.getDescription());
         imgcours.setImage(c.getImage().getImage());
-        
+        cour_id=c.getId();
+        vidYoutube.getEngine().load(c.getLienYoutube());
+               
         
         initTable();
         initNbInteraction();
@@ -224,7 +229,7 @@ public class InfoCoursController implements Initializable {
             Cours c = new Cours();
             
 //            
-                int nb =spc.ajouterParticipant(2, c.getId());
+                int nb =spc.ajouterParticipant(2,cour_id);
                  if (nb == 0) {
            JOptionPane.showMessageDialog(null, "Erreur d'inscription");
                  }

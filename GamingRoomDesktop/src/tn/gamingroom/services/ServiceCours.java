@@ -26,8 +26,8 @@ public class ServiceCours implements ICours {
 
         int nb_ajouter=0;
         try {
-            String requete = "INSERT INTO cour(nomCours,description,nb_participant ,membre_id,date_creation,tags,categorie_id,imagecours)"
-                    + "VALUES (?,?,?,?,?,?,?,?)";
+            String requete = "INSERT INTO cour(nomCours,description,nb_participant ,membre_id,date_creation,tags,categorie_id,imagecours,lienYoutube)"
+                    + "VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setString(1, c.getNomCours());
@@ -38,6 +38,7 @@ public class ServiceCours implements ICours {
             pst.setString(6, c.getTags());
             pst.setInt(7, c.getCategorie_id());
             pst.setString(8, c.getImage());
+            pst.setString(9, c.getLienYoutube());
             nb_ajouter=pst.executeUpdate();
             
             if (nb_ajouter <= 0) {
@@ -81,12 +82,13 @@ public class ServiceCours implements ICours {
         int nb_up=0;
         try {
             
-            String requeteUp = "UPDATE cour SET nomCours=?, description=? ,tags=? ,categorie_id=? ,nb_participant=?,imagecours=? WHERE id=?";
+            String requeteUp = "UPDATE cour SET nomCours=?, description=? ,tags=? ,categorie_id=? ,nb_participant=?,imagecours=? , lienYoutube=? WHERE id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requeteUp);
             pst.setString(1, c.getNomCours());
-            pst.setInt(7, c.getId());
+            pst.setInt(8, c.getId());
             pst.setString(6, c.getImage());
+            pst.setString(7, c.getLienYoutube());
             pst.setString(2, c.getDescription());
             pst.setString(3, c.getTags());
             pst.setInt(4, c.getCategorie_id());
@@ -121,8 +123,8 @@ public class ServiceCours implements ICours {
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setCategorie_id(rs.getInt("categorie_id"));
-               
                 c.setImage(rs.getString("imagecours"));
+                c.setLienYoutube(rs.getString("lienYoutube"));
              
                     
                 CoursList.add(c);
@@ -153,6 +155,7 @@ public class ServiceCours implements ICours {
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setImage(rs.getString("imagecours"));
+                c.setLienYoutube(rs.getString("lienYoutube"));
                 c.setCategorie_id(rs.getInt("categorie_id"));
                 
                 CoursListx.add(c);
@@ -175,7 +178,7 @@ public class ServiceCours implements ICours {
             Cours c = null;
             while (res.next()) {
 
-                c = new Cours(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getInt(5), res.getDate(6), res.getString(7),res.getString(8), res.getInt(9));
+                c = new Cours(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getInt(5), res.getDate(6), res.getString(7),res.getString(8), res.getInt(9),res.getString(10));
                 listCours.add(c);
 
             }
@@ -202,6 +205,9 @@ public class ServiceCours implements ICours {
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setCategorie_id(rs.getInt("categorie_id"));
+                c.setImage(rs.getString("imagecours"));
+                c.setLienYoutube(rs.getString("lienYoutube"));
+                
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -213,7 +219,7 @@ public class ServiceCours implements ICours {
     public List<Cours> displayprefcours(int membre_id) {
         List<Cours> CoursList = new ArrayList<>();
         try {
-            String requeteDs = "select * from cour where categorie_id in ( select categorie_id from categori_membre where membre_id='" + membre_id + "' )";
+            String requeteDs = "select * from cour where categorie_id in ( select categorie_id from categori_membre where membre_id='" + membre_id + "'  order by categorie_id asc)";
             //String requeteDs = "select * from cour where not EXISTS (select * from cours where idcat in (select id from categori_membre where membre_id=2)";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
@@ -229,6 +235,8 @@ public class ServiceCours implements ICours {
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setCategorie_id(rs.getInt("categorie_id"));
+                c.setImage(rs.getString("imagecours"));
+                c.setLienYoutube(rs.getString("lienYoutube"));
                 CoursList.add(c);
             }
 
@@ -246,6 +254,8 @@ public class ServiceCours implements ICours {
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setCategorie_id(rs.getInt("categorie_id"));
+                c.setImage(rs.getString("imagecours"));
+                c.setLienYoutube(rs.getString("lienYoutube"));
                 CoursList.add(c);
             }
 

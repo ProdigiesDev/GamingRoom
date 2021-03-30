@@ -21,6 +21,21 @@ public class Cours {
     private String tags;
     private String image;
     private int categorie_id;
+    private String lienYoutube;
+
+    public Cours(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, String image, int categorie_id, String lienYoutube) {
+        this.id = id;
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.membre_id = membre_id;
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.image = image;
+        this.categorie_id = categorie_id;
+        this.lienYoutube = lienYoutube;
+    }
+    
     
     
     public Cours(int id, String nomCours, String description, int nb_participants, int membre_id, String tags, int categorie_id) {
@@ -44,12 +59,36 @@ public class Cours {
         this.categorie_id = categorie_id;
     }
 
+    public Cours(String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, String image, int categorie_id, String lienYoutube) {
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.membre_id = membre_id;//
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.image = image;
+        this.categorie_id = categorie_id;
+        this.lienYoutube = lienYoutube;
+    }
+    public Cours(String nomCours, String description, int nb_participants, Date date_creation, String tags, String image, int categorie_id, String lienYoutube) {
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.membre_id = membre_id;//
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.image = image;
+        this.categorie_id = categorie_id;
+        this.lienYoutube = lienYoutube;
+    }
+    
+
     public Cours(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, String image, int categorie_id) {
         this.id = id;
         this.nomCours = nomCours;
         this.description = description;
         this.nb_participants = nb_participants;
-        this.membre_id = membre_id;
+        //this.membre_id = membre_id;
         this.date_creation = date_creation;
         this.tags = tags;
         this.image = image;
@@ -172,11 +211,20 @@ public class Cours {
     public void setImage(String image) {
         this.image = image;
     }
-    
-    
+
+    public String getLienYoutube() {
+        return lienYoutube;
+    }
+
+    public void setLienYoutube(String lienYoutube) {
+        this.lienYoutube = lienYoutube;
+    }
+
     @Override
     public String toString() {
-        return "cours{" + "id=" + id + ", nomCours=" + nomCours + ", description=" + description + ", nb_participants=" + nb_participants + ", membre_id=" + membre_id + ", date_creation=" + date_creation + ", tags=" + tags + ", categorie_id=" + categorie_id + '}';
+        return "Cours{" + "id=" + id + ", nomCours=" + nomCours + ", description=" + description + ", nb_participants=" + nb_participants + ", membre_id=" + membre_id + ", date_creation=" + date_creation + ", tags=" + tags + ", image=" + image + ", categorie_id=" + categorie_id + ", lienYoutube=" + lienYoutube + '}';
     }
+    
+    
     
 }

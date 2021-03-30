@@ -87,7 +87,8 @@ public class CoursMembreintController implements Initializable {
         cdes.setCellValueFactory(new PropertyValueFactory<Courslm, String>("description"));
 
         ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
-        initTable(s.displayprefcours(prefer.getAnchor()));
+        //System.out.println("iddperc "+prefer.getText());
+        initTable(s.displayprefcours(Integer.parseInt(prefer.getText())));
     }
 
     @FXML
