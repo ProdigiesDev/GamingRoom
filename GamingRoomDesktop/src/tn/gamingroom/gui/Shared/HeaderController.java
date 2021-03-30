@@ -39,6 +39,8 @@ public class HeaderController implements Initializable {
     private JFXButton events;
     @FXML
     private JFXButton sotre;
+    @FXML
+    private JFXButton home;
 
     /**
      * Initializes the controller class.
@@ -65,6 +67,17 @@ public class HeaderController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../Jeux/Jeux.fxml"));
             Parent root = loader.load();
             JeuxController jeuxController = loader.getController();
+            games.getScene().setRoot(root);
+        } catch (IOException ex) {
+            Logger.getLogger(HeaderController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void gotoHome(ActionEvent event) {
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Accueil/Accueil.fxml"));
+            Parent root = loader.load();
             games.getScene().setRoot(root);
         } catch (IOException ex) {
             Logger.getLogger(HeaderController.class.getName()).log(Level.SEVERE, null, ex);
