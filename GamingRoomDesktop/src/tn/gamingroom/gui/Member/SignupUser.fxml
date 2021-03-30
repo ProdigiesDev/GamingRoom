@@ -52,15 +52,15 @@
             <Font name="Calibri" size="48.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="fnameMember" focusColor="#4b3489" labelFloat="true" layoutX="31.0" layoutY="102.0" prefHeight="25.0" prefWidth="195.0" promptText="First name" unFocusColor="#4b3489" />
-      <JFXTextField fx:id="lnameMember" focusColor="#4b3489" labelFloat="true" layoutX="272.0" layoutY="102.0" prefHeight="25.0" prefWidth="195.0" promptText="Last name" unFocusColor="#4b3489" />
-      <JFXTextField fx:id="phone" focusColor="#4b3489" labelFloat="true" layoutX="31.0" layoutY="209.0" prefHeight="25.0" prefWidth="195.0" promptText="Phone number" unFocusColor="#4b3489" />
-      <JFXDatePicker fx:id="bday" defaultColor="#4b3489" layoutX="31.0" layoutY="158.0" onAction="#calculerAge" prefHeight="26.0" prefWidth="368.0" promptText="Birthday" showWeekNumbers="true" />
+      <JFXTextField fx:id="fnameMember" focusColor="#4b3489" labelFloat="true" layoutX="31.0" layoutY="102.0" prefHeight="25.0" prefWidth="195.0" promptText="Prénom" unFocusColor="#4b3489" />
+      <JFXTextField fx:id="lnameMember" focusColor="#4b3489" labelFloat="true" layoutX="272.0" layoutY="102.0" prefHeight="25.0" prefWidth="195.0" promptText="Nom" unFocusColor="#4b3489" />
+      <JFXTextField fx:id="phone" focusColor="#4b3489" labelFloat="true" layoutX="31.0" layoutY="209.0" prefHeight="25.0" prefWidth="195.0" promptText="Téléphone" unFocusColor="#4b3489" />
+      <JFXDatePicker fx:id="bday" defaultColor="#4b3489" layoutX="31.0" layoutY="158.0" onAction="#calculerAge" prefHeight="26.0" prefWidth="368.0" promptText="Date de naissance" showWeekNumbers="true" />
       <JFXTextField fx:id="emailMember" focusColor="#4b3489" labelFloat="true" layoutX="31.0" layoutY="266.0" prefHeight="25.0" prefWidth="436.0" promptText="Email" unFocusColor="#4b3489" />
       <JFXPasswordField fx:id="passwordMember" labelFloat="true" layoutX="31.0" layoutY="321.0" prefHeight="25.0" prefWidth="436.0" promptText="Pasword" unFocusColor="#4b3489" />
-      <JFXComboBox fx:id="categorieCombo" focusColor="#4b3489" layoutX="31.0" layoutY="469.0" prefHeight="25.0" prefWidth="186.0" promptText="Game category" unFocusColor="#4b3489" />
+      <JFXComboBox fx:id="categorieCombo" focusColor="#4b3489" layoutX="31.0" layoutY="469.0" prefHeight="25.0" prefWidth="186.0" promptText="Catégorie jeux" unFocusColor="#4b3489" />
       <JFXPasswordField fx:id="retypePassword" focusColor="#4b3489" layoutX="31.0" layoutY="373.0" prefHeight="25.0" prefWidth="436.0" promptText="Retype password" unFocusColor="#4b3489" />
-      <JFXComboBox fx:id="GenderCombo" focusColor="#4b3489" layoutX="272.0" layoutY="209.0" prefHeight="25.0" prefWidth="195.0" promptText="Gender" unFocusColor="#4b3489" />
+      <JFXComboBox fx:id="GenderCombo" focusColor="#4b3489" layoutX="272.0" layoutY="209.0" prefHeight="25.0" prefWidth="195.0" promptText="Sexe" unFocusColor="#4b3489" />
       <JFXButton fx:id="btn_createAcc" layoutX="174.0" layoutY="599.0" onAction="#btnCreateAccountMember" prefHeight="37.0" prefWidth="150.0" style="-fx-background-color: #9F7EF7;" text="Create account" textFill="WHITE" />
       <JFXCheckBox fx:id="ckCoach" layoutX="324.0" layoutY="479.0" onAction="#checkCoach" prefHeight="18.0" prefWidth="97.0" text="Coach" />
       <TextArea fx:id="textAreaDesc" layoutX="31.0" layoutY="520.0" prefHeight="69.0" prefWidth="449.0" promptText="Games you use to play? Why shoold we choose as coach?" wrapText="true" />
