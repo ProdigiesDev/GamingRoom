@@ -26,7 +26,7 @@
           <fx:include fx:id="header" source="../Shared/Header.fxml" />
       <Label layoutX="120.0" layoutY="100.0" prefHeight="52.0" prefWidth="254.0" text="Welcome" textFill="WHITE">
          <font>
-            <Font name="Palatino Linotype" size="40.0" />
+            <Font name="Palatino Linotype" size="50.0" />
          </font>
       </Label>
       <Label layoutX="150.0" layoutY="150.0" prefHeight="118.0" prefWidth="379.0" style="-fx-font-style: italic;" text="GamingRoom GamingRoom GamingRoom GamingRoom" textFill="WHITE">
@@ -101,25 +101,23 @@
             </BorderPane>
             <AnchorPane layoutX="10.0" layoutY="728.0" minHeight="0.0" minWidth="0.0" prefHeight="421.0" prefWidth="667.0" AnchorPane.bottomAnchor="271.0" AnchorPane.rightAnchor="673.0">
                <children>
-                  <Pane opacity="0.5" prefHeight="415.0" prefWidth="50.0" style="-fx-background-color: black;" />
-                  <Pane opacity="0.4" prefHeight="420.0" prefWidth="667.0">
+                  <Pane layoutX="-2.0" opacity="0.4" prefHeight="420.0" prefWidth="669.0">
                      <children>
-                        <Pane layoutX="617.0" layoutY="3.0" opacity="0.5" prefHeight="415.0" prefWidth="50.0" style="-fx-background-color: black;" />
+                        <Button fx:id="nextProductbtn1" layoutX="605.0" layoutY="358.0" mnemonicParsing="false" onAction="#nextAvisValue" opacity="0.5" prefHeight="55.0" prefWidth="50.0">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="ANGLE_RIGHT" size="3em" wrappingWidth="12.857142448425293" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="presProductbtn1" layoutX="555.0" layoutY="358.0" mnemonicParsing="false" onAction="#presAvisValue" opacity="0.5" prefHeight="55.0" prefWidth="50.0">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="ANGLE_LEFT" size="3em" text="" />
+                           </graphic>
+                        </Button>
                      </children></Pane>
-                  <Button fx:id="nextProductbtn1" mnemonicParsing="false" onAction="#nextAvisValue" opacity="0.5" prefHeight="421.0" prefWidth="51.0" AnchorPane.rightAnchor="0.0">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="ANGLE_RIGHT" size="3em" wrappingWidth="12.857142448425293" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="presProductbtn1" mnemonicParsing="false" onAction="#presAvisValue" opacity="0.5" prefHeight="421.0" prefWidth="52.0" AnchorPane.leftAnchor="0.0">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="ANGLE_LEFT" size="3em" text="" />
-                     </graphic>
-                  </Button>
-                  <Pane fx:id="bestProduct11" layoutX="100.0" layoutY="98.0" prefHeight="275.0" prefWidth="460.0">
+                  <Pane fx:id="bestProduct11" layoutX="100.0" layoutY="98.0" prefHeight="260.0" prefWidth="460.0">
                      <children>
                         <TextFlow fx:id="review" layoutX="1.0" layoutY="25.0" prefHeight="200.0" prefWidth="460.0" />
-                        <Label fx:id="reviewMbr" contentDisplay="RIGHT" layoutX="1.0" layoutY="249.0" prefHeight="21.0" prefWidth="224.0" style="-fx-text-alignment: right;">
+                        <Label fx:id="reviewMbr" contentDisplay="RIGHT" layoutX="14.0" layoutY="225.0" prefHeight="21.0" prefWidth="224.0" style="-fx-text-alignment: right;">
                            <font>
                               <Font size="20.0" />
                            </font>

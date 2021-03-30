@@ -16,9 +16,9 @@
          <Image url="file:/C:/Users/Dah/Desktop/demo/images/713022.png" />
       </image>
    </ImageView>
-   <Label layoutX="63.0" layoutY="161.0" prefHeight="52.0" prefWidth="600.0" text="Explorez nos jeux et amusez-vous" textFill="WHITE">
+   <Label layoutX="63.0" layoutY="161.0" prefHeight="63.0" prefWidth="833.0" text="Explorez nos jeux et amusez-vous" textFill="WHITE">
          <font>
-            <Font name="Palatino Linotype" size="40.0" />
+            <Font name="Palatino Linotype" size="50.0" />
          </font>
       </Label>
     <fx:include fx:id="header" source="../Shared/Header.fxml" AnchorPane.topAnchor="0.0" />
