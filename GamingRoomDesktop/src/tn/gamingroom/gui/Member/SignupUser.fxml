@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.SignupUserController">
+   <children>
+      <Pane layoutX="500.0" prefHeight="650.0" prefWidth="400.0" style="-fx-background-color: #4B3489;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="343.0" fitWidth="400.0" layoutX="28.0" layoutY="-78.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/asus/Desktop/3emeAnnee/semestre2/pidev/images/Sans%20titre-3.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="300.0" text="To keep connected with us please login " textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="94.0" layoutY="162.0" text="WELCOME BACK !" textFill="#9f7ef7">
+               <font>
+                  <Font name="Calibri" size="29.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="228.0" text="             FIND GAMERS JUST LIKE YOU..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="134.0" layoutY="344.0" text="with your personal info" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnSignin" layoutX="125.0" layoutY="424.0" onAction="#SignInIterface" prefHeight="37.0" prefWidth="150.0" style="-fx-background-color: #9F7EF7;" text="Sign in" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Label layoutX="88.0" layoutY="14.0" text="Sign up Member" textFill="#9f7ef7" textOverrun="CLIP">
+         <font>
+            <Font name="Calibri" size="48.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="fnameMember" focusColor="#4b3489" labelFloat="true" layoutX="31.0" layoutY="102.0" prefHeight="25.0" prefWidth="195.0" promptText="Prénom" unFocusColor="#4b3489" />
+      <JFXTextField fx:id="lnameMember" focusColor="#4b3489" labelFloat="true" layoutX="272.0" layoutY="102.0" prefHeight="25.0" prefWidth="195.0" promptText="Nom" unFocusColor="#4b3489" />
+      <JFXTextField fx:id="phone" focusColor="#4b3489" labelFloat="true" layoutX="31.0" layoutY="209.0" prefHeight="25.0" prefWidth="195.0" promptText="Téléphone" unFocusColor="#4b3489" />
+      <JFXDatePicker fx:id="bday" defaultColor="#4b3489" layoutX="31.0" layoutY="158.0" onAction="#calculerAge" prefHeight="26.0" prefWidth="368.0" promptText="Date de naissance" showWeekNumbers="true" />
+      <JFXTextField fx:id="emailMember" focusColor="#4b3489" labelFloat="true" layoutX="31.0" layoutY="266.0" prefHeight="25.0" prefWidth="436.0" promptText="Email" unFocusColor="#4b3489" />
+      <JFXPasswordField fx:id="passwordMember" labelFloat="true" layoutX="31.0" layoutY="321.0" prefHeight="25.0" prefWidth="436.0" promptText="Pasword" unFocusColor="#4b3489" />
+      <JFXComboBox fx:id="categorieCombo" focusColor="#4b3489" layoutX="31.0" layoutY="469.0" prefHeight="25.0" prefWidth="186.0" promptText="Catégorie jeux" unFocusColor="#4b3489" />
+      <JFXPasswordField fx:id="retypePassword" focusColor="#4b3489" layoutX="31.0" layoutY="373.0" prefHeight="25.0" prefWidth="436.0" promptText="Retype password" unFocusColor="#4b3489" />
+      <JFXComboBox fx:id="GenderCombo" focusColor="#4b3489" layoutX="272.0" layoutY="209.0" prefHeight="25.0" prefWidth="195.0" promptText="Sexe" unFocusColor="#4b3489" />
+      <JFXButton fx:id="btn_createAcc" layoutX="174.0" layoutY="599.0" onAction="#btnCreateAccountMember" prefHeight="37.0" prefWidth="150.0" style="-fx-background-color: #9F7EF7;" text="Create account" textFill="WHITE" />
+      <JFXCheckBox fx:id="ckCoach" layoutX="324.0" layoutY="479.0" onAction="#checkCoach" prefHeight="18.0" prefWidth="97.0" text="Coach" />
+      <TextArea fx:id="textAreaDesc" layoutX="31.0" layoutY="520.0" prefHeight="69.0" prefWidth="449.0" promptText="Games you use to play? Why shoold we choose as coach?" wrapText="true" />
+      <JFXTextField fx:id="tf_age" editable="false" labelFloat="true" layoutX="419.0" layoutY="158.0" prefHeight="26.0" prefWidth="50.0" promptText="Age" />
+      <JFXButton fx:id="btn_browse" layoutX="415.0" layoutY="415.0" onAction="#SelectImage" prefHeight="32.0" prefWidth="72.0" style="-fx-background-color: #9F7EF7;" text="BROWSE" />
+      <FontAwesomeIcon fill="#4b3489" glyphName="IMAGE" layoutX="382.0" layoutY="439.0" size="1.5em" />
+      <ImageView fx:id="image_membre" fitHeight="55.0" fitWidth="66.0" layoutX="282.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
