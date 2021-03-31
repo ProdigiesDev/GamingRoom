@@ -49,9 +49,9 @@ public class Home extends Application {
             primaryStage.setTitle("GamingRoom");
             primaryStage.setScene(scene);
 
-            primaryStage.setMaximized(true);
+           // primaryStage.setMaximized(true);
             primaryStage.setHeight(700);
-            primaryStage.getIcons().add(new Image(new File("C:\\Users\\Dah\\Desktop\\demo\\images\\logo.png").toURI().toURL().toExternalForm()));
+            primaryStage.getIcons().add(new Image(new File(Env.getImagePath()+"logo.png").toURI().toURL().toExternalForm()));
             primaryStage.show();
         } catch (Exception ex) {
             ex.printStackTrace();

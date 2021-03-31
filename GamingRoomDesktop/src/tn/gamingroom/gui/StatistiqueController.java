@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,12 +35,15 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import tn.gamingroom.entities.Produits;
+import tn.gamingroom.services.ProduitCrud;
 
 /**
  * FXML Controller class
  *
  * @author yasmine
  */
+
 public class StatistiqueController implements Initializable {
 
     @FXML
@@ -49,10 +53,10 @@ public class StatistiqueController implements Initializable {
     @FXML
     private CategoryAxis XAxis;
     private PieChart piechart;
-    
+
     @FXML
     private PieChart PieChartData;
-
+    private ProduitCrud produitCrud = new ProduitCrud();
 
     /**
      * Initializes the controller class.
@@ -63,94 +67,65 @@ public class StatistiqueController implements Initializable {
             // TODO
             Yaxis.setLabel("Prix");
             loading();
-               load();
+            load();
             PieChartData.setData(Pie);
-         
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(StatistiqueController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(StatistiqueController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-ObservableList<PieChart.Data> Pie;
-     ArrayList<Double> cell = new ArrayList<>();
-     ArrayList<String> name = new ArrayList<>();
-     Connection conn ;
-     PreparedStatement pre;
-     ResultSet rs;
-     
-    public void load() throws ClassNotFoundException, SQLException{
-        Pie= FXCollections.observableArrayList();
+    }
+    ObservableList<PieChart.Data> Pie;
+    ArrayList<Double> cell = new ArrayList<>();
+    ArrayList<String> name = new ArrayList<>();
+    Connection conn;
+    PreparedStatement pre;
+    ResultSet rs;
+
+    public void load() throws ClassNotFoundException, SQLException {
+        Pie = FXCollections.observableArrayList();
+        List<Produits> produitses = produitCrud.displayProduit();
+        produitses.forEach(produit -> {
+
+            Pie.add(new PieChart.Data(produit.getLibelle(), produit.getPrix()));
+            name.add(produit.getLibelle());
+            cell.add(produit.getPrix());
+        });
+
+    }
+
+    public void loading() {
+
+        XYChart.Series<String, Double> series = new XYChart.Series<>();
+        series.setName("Prix par Produits");
+        List<Produits> produitses = produitCrud.displayProduit();
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/gamingroom","gamingRoomUser","!&_UkTz/Cw`*2#[u");
-     Statement stmt = conn.createStatement();         
-    }catch(SQLException e){
-        e.printStackTrace();
-    }
-     
-    pre=conn.prepareStatement("Select libelle, prix FROM  produit ");
-    rs=pre.executeQuery();
-    while(rs.next()){
-        Pie.add(new PieChart.Data(rs.getString("libelle"), rs.getDouble("prix")) );
-        name.add(rs.getString("libelle"));
-        cell.add(rs.getDouble("prix"));
-    }
-    
-    
-    }
-    
-  
-    
-    public void loading(){
-     Connection conn = null;
-        Statement stmt = null ;
-        ResultSet rs=null;
-        String SQL= "Select libelle, prix FROM  produit ORDER BY libelle";  
-        XYChart.Series<String,Double> series = new XYChart.Series<>();
-        series.setName("Prix par Produits");   
-        try {
-    Class.forName("com.mysql.jdbc.Driver");
-    conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/gamingroom","gamingRoomUser","!&_UkTz/Cw`*2#[u");
-    stmt=conn.createStatement();                   
-            try{
-                 rs = conn.createStatement().executeQuery(SQL);
-                 while(rs.next()){
-                     series.getData().add(new XYChart.Data<>(rs.getString(1), rs.getDouble(2)));
-                 }
-                barchart.getData().add(series);
-                       } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Probleme ");}                     
-        }catch(Exception e){
+            produitses.forEach(produit->{
+                series.getData().add(new XYChart.Data<>(produit.getLibelle(), produit.getPrix()));
+            });
+            barchart.getData().add(series);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
-  
-    }
-    
 
+    }
 
     @FXML
     private void Back(ActionEvent event) {
-              try {
-            Parent dashboard ;
+        try {
+            Parent dashboard;
             dashboard = FXMLLoader.load(getClass().getResource("AjoutProduit.fxml"));
-            
-            
+
             Scene dashboardScene = new Scene(dashboard);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(dashboardScene);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(AjoutCleController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
-    }
-        
-        
-    }
-    
 
+    }
+
+}

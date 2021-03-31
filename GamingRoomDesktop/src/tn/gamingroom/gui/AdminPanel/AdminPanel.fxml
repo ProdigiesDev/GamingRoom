@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1350.0" stylesheets="file:/C:/Users/Dah/Desktop/demo/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AdminPanel.AdminPanelController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1350.0" stylesheets="file:/C:/Users/yasmine/Desktop/pidev/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AdminPanel.AdminPanelController">
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1350.0" styleClass="body">
             <children>
@@ -16,7 +16,7 @@
                     <children>
                         <ImageView fitHeight="67.0" fitWidth="200.0" layoutX="55.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="file:/C:/Users/Dah/Desktop/demo/images/logo.png" />
+                                <Image url="file:/C:/Users/yasmine/Desktop/pidev/images/logo.png" />
                             </image>
                         </ImageView>
                         <JFXButton fx:id="games" layoutX="433.0" layoutY="35.0" onAction="#openGames" text="Jeux">
@@ -24,7 +24,7 @@
                                 <Font size="20.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton fx:id="products" layoutX="500.0" layoutY="35.0" text="Produits">
+                        <JFXButton fx:id="products" layoutX="500.0" layoutY="35.0" onAction="#openProduits" text="Produits">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -51,15 +51,20 @@
                   </JFXButton>
                     </children>
                 </Pane>
-            <Pane fx:id="listerJeux" layoutX="303.0" layoutY="218.0" prefHeight="398.0" prefWidth="744.0">
+            <Pane fx:id="listerJeux" layoutX="303.0" layoutY="218.0" prefHeight="398.0" prefWidth="744.0" visible="false">
                <children>
       
                           <fx:include fx:id="listjeux" source="../Jeux/ListerJeux.fxml" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="200.0" />
                </children>
             </Pane>
-            <Pane fx:id="listerreclm" layoutX="303.0" layoutY="218.0" prefHeight="398.0" prefWidth="744.0">
+            <Pane fx:id="listerreclm" layoutX="303.0" layoutY="218.0" prefHeight="398.0" prefWidth="744.0" visible="false">
                <children>
                   <fx:include fx:id="listjeux1" source="../Reclamation/listReclamation.fxml" />
+               </children>
+            </Pane>
+            <Pane fx:id="produitspane" layoutX="313.0" layoutY="228.0" prefHeight="398.0" prefWidth="744.0" visible="false">
+               <children>
+                  <fx:include fx:id="produits" source="../AjoutProduit.fxml" />
                </children>
             </Pane>
             </children>
