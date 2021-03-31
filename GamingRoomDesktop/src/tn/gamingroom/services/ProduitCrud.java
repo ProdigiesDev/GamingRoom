@@ -169,7 +169,6 @@ public class ProduitCrud implements IProduits<Produits> {
         }
         return listOffresTypeX;
     }
-
     public Produits getByID(int x) {
 
         try {
@@ -182,10 +181,8 @@ public class ProduitCrud implements IProduits<Produits> {
                 p.setIdprod(rs.getInt(1));
                 p.setImage(rs.getString(3));
                 p.setLibelle(rs.getString(4));
-                p.setPrix(rs.getDouble(5));
+                p.setPrix(rs.getInt(5));
                 p.setDescription(rs.getString(6));
-                p.setId_cat(rs.getInt(2));
-                p.setNomCat(rs.getString(7));
                 return p;
 
             }
@@ -196,7 +193,8 @@ public class ProduitCrud implements IProduits<Produits> {
 
         return null;
 
-    }
+    }    
+        
 
     public List<Integer> bestProductsSelled() {
         List<Integer> integers = new ArrayList<>();

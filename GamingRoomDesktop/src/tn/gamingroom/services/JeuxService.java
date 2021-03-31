@@ -22,22 +22,22 @@ import tn.gamingroom.outils.MyConnection;
  *
  * @author Dah
  */
-public class JeuxService implements IJeux{
+public class JeuxService implements IJeux {
 
-    
-    private Connection  cnx=MyConnection.getInstance().getCnx();
-    
+    private Connection cnx = MyConnection.getInstance().getCnx();
+
     @Override
     public int ajouter(Jeux jeux) {
-         System.out.println("Inside ajouter Jeux");
-        int nbInsert=0;
-        try {        
-            String req="insert into jeux (nom,description,type_plateforme) values(?,?,?)";
-            PreparedStatement ps=cnx.prepareStatement(req);
-            ps.setString(1,jeux.getNom());
-            ps.setString(2,jeux.getDescriString());
-            ps.setString(3,Jeux.Type.Desktop.toString() );
-           nbInsert = ps.executeUpdate();
+        System.out.println("Inside ajouter Jeux");
+        int nbInsert = 0;
+        try {
+            String req = "insert into jeux (nom,description,type_plateforme,image) values(?,?,?,?)";
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setString(1, jeux.getNom());
+            ps.setString(2, jeux.getDescriString());
+            ps.setString(3, jeux.getType_plateforme().toString());
+            ps.setString(4, jeux.getImage());
+            nbInsert = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -46,33 +46,34 @@ public class JeuxService implements IJeux{
 
     @Override
     public int supprimer(int id) {
-        
+
         System.out.println("Inside supprimer Jeux");
-        
-        String req="delete from jeux where id="+id;
-        int nbDelete=0;
-       
+
+        String req = "delete from jeux where id=" + id;
+        int nbDelete = 0;
+
         try {
-             Statement s = cnx.createStatement();
-             nbDelete =  s.executeUpdate(req);
+            Statement s = cnx.createStatement();
+            nbDelete = s.executeUpdate(req);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-       return nbDelete;
-        
+        return nbDelete;
+
     }
 
     @Override
     public int modifier(Jeux jeux) {
         System.out.println("Inside Modifier Jeux");
-        int nbModifier=0;
+        int nbModifier = 0;
         try {
-            String req="update jeux set nom = ? , description=?, type_plateforme=? where id= ?";
+            String req = "update jeux set nom = ? , description=?, type_plateforme=?,image=? where id= ?";
             PreparedStatement ps = cnx.prepareStatement(req);
-            ps.setString(1,jeux.getNom());
-            ps.setString(2,jeux.getDescriString());
-            ps.setString(3,jeux.getType_plateforme().toString());
-            ps.setInt(4,jeux.getId());
+            ps.setString(1, jeux.getNom());
+            ps.setString(2, jeux.getDescriString());
+            ps.setString(3, jeux.getType_plateforme().toString());
+            ps.setString(4, jeux.getImage());
+            ps.setInt(5, jeux.getId());
             nbModifier = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -82,24 +83,58 @@ public class JeuxService implements IJeux{
 
     @Override
     public List<Jeux> getAll() {
-        
-        List<Jeux> jeux=new ArrayList();
-        
+
+        List<Jeux> jeux = new ArrayList();
+
         try {
-            String req="select * from jeux order by id desc";
+            String req = "select * from jeux order by id desc";
             Statement s = cnx.createStatement();
-            ResultSet resultSet=s.executeQuery(req);
-            while(resultSet.next()){
-                jeux.add(new Jeux(resultSet.getInt("id"),resultSet.getString("nom"),resultSet.getString("description"),Jeux.Type.valueOf(resultSet.getString("type_plateforme"))));
+            ResultSet resultSet = s.executeQuery(req);
+            while (resultSet.next()) {
+                jeux.add(new Jeux(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getString("description"), Jeux.Type.valueOf(resultSet.getString("type_plateforme")), resultSet.getString("image")));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
-        
+
         return jeux;
-        
-        
+
+    }
+
+    @Override
+    public List<Jeux> search(String name, String plat) {
+        List<Jeux> jeux = new ArrayList();
+
+        try {
+            String req = "select * from jeux where nom ='" + name + "' and  type_plateforme  ='" + plat + "'";
+            PreparedStatement s = cnx.prepareStatement(req);
+            ResultSet resultSet = s.executeQuery(req);
+            while (resultSet.next()) {
+                jeux.add(new Jeux(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getString("description"), Jeux.Type.valueOf(resultSet.getString("type_plateforme")), resultSet.getString("image")));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return jeux;
+
     }
     
+    public List<Jeux> getJeuxByType(String type){
+        List<Jeux> jeux = new ArrayList();
+
+        try {
+            String req = "select * from jeux where  type_plateforme  ='" + type + "'";
+            PreparedStatement s = cnx.prepareStatement(req);
+            ResultSet resultSet = s.executeQuery(req);
+            while (resultSet.next()) {
+                jeux.add(new Jeux(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getString("description"), Jeux.Type.valueOf(resultSet.getString("type_plateforme")), resultSet.getString("image")));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return jeux;
+    } 
+
 }

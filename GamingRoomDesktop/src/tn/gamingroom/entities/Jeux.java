@@ -15,28 +15,39 @@ public class Jeux {
     private String nom;
     private String descriString;
     private Type type_plateforme;
+    private String image;
     public Jeux() {
     }
 
-    public Jeux(String nom, String descriString, Type type_plateforme) {
+    public Jeux(String nom, String descriString, Type type_plateforme, String image) {
         this.nom = nom;
         this.descriString = descriString;
         this.type_plateforme = type_plateforme;
+        this.image = image;
     }
 
-    public Jeux(int id, String nom, String descriString, Type type_plateforme) {
+    public Jeux(int id, String nom, String descriString, Type type_plateforme, String image) {
         this.id = id;
         this.nom = nom;
         this.descriString = descriString;
         this.type_plateforme = type_plateforme;
+        this.image = image;
     }
-
+    
     public String getDescriString() {
         return descriString;
     }
 
     public void setDescriString(String descriString) {
         this.descriString = descriString;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     

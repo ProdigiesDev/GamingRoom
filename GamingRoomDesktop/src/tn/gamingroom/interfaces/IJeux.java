@@ -17,4 +17,5 @@ public interface IJeux {
     public int supprimer(int id);
     public int modifier(Jeux jeux);
     public List<Jeux> getAll();
+    public List<Jeux> search(String name,String plat);
 }
