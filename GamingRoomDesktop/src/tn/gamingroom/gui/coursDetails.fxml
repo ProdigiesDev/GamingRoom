@@ -129,9 +129,9 @@
       <Label fx:id="verifdate" layoutX="376.0" layoutY="420.0" prefHeight="18.0" prefWidth="199.0" />
       <Label fx:id="veriftag" layoutX="371.0" layoutY="489.0" prefHeight="18.0" prefWidth="199.0" />
       <Label fx:id="verifdes" layoutX="374.0" layoutY="541.0" prefHeight="18.0" prefWidth="199.0" />
+      <Label fx:id="verifimage" layoutX="405.0" layoutY="269.0" onKeyPressed="#verifImage" prefHeight="18.0" prefWidth="118.0" />
       <Label fx:id="verifnb" layoutX="371.0" layoutY="592.0" prefHeight="18.0" prefWidth="199.0" />
       <Label fx:id="verifmem" layoutX="376.0" layoutY="645.0" prefHeight="18.0" prefWidth="205.0" />
-      <Label fx:id="verifimage" layoutX="405.0" layoutY="269.0" prefHeight="18.0" prefWidth="118.0" />
       <FontAwesomeIconView fill="#ae0ea6" glyphName="SEARCH" layoutX="1203.0" layoutY="41.0" size="20" />
       <Label fx:id="veriflien" layoutX="405.0" layoutY="103.0" prefHeight="18.0" prefWidth="315.0" />
    </children>

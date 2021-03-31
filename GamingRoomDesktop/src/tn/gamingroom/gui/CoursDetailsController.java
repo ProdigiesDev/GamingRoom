@@ -547,7 +547,7 @@ public class CoursDetailsController implements Initializable {
         boolean success;
         String pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+";
         if (lien.getText().isEmpty()||lien.getText().matches(pattern)) {
-            veriflien.setText("Veillez remplir ce champs avec un lien valide");
+            veriflien.setText("Veuillez remplir ce champs avec un lien valide");
             success = true;
 
         
@@ -561,6 +561,19 @@ public class CoursDetailsController implements Initializable {
         return false;
 
     }
+    
+   @FXML
+   private void verifImage(ActionEvent event) {
+  if (imagevc.getImage()==null) {
+            btnaj.setDisable(true);
+            verifimage.setText("Veuillez remplir ce champs");
+        } else if (imagevc.getImage().toString().length() > 255) {
+            verifimage.setText("Veuillez choisir une autre image");
+            btnaj.setDisable(true);
+        } else {
+            verifimage.setText("");
+            btnaj.setDisable(false);
+    }}
 
     @FXML
     private void ajouterim(ActionEvent event) {
@@ -634,7 +647,7 @@ public class CoursDetailsController implements Initializable {
         tableCours.setItems(listCoursIm);
     }
 
-    private HashMap<String, String> getVideoDetails(String url) {
+    private void getVideoDetails(String url) {
         HashMap<String, String> hashMap = new HashMap();
         int idpos = url.indexOf("=") + 1;
         String id = url.substring(idpos, idpos + 11);
@@ -653,7 +666,7 @@ public class CoursDetailsController implements Initializable {
             JSONArray details = obj.getJSONArray("items");
             if (details.length() == 0) {
                 System.out.println("Check your video ");
-                return null;
+                return;
             }
 
             JSONObject snippet = details.getJSONObject(0).getJSONObject("snippet");
@@ -679,27 +692,19 @@ public class CoursDetailsController implements Initializable {
             Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return hashMap;
+        
     }
 
     @FXML
     private void getInformationsYoutube(ActionEvent event) {
         
-       // Courslm cmm = new Courslm();
-        //boolean verif = verifYouUrl();
-        //if (verif) {
-          //  return;
-        //}
-        //getVideoDetails(String url);
-//        cmm.setNomCours(inom.getText());
-//        cmm.setDescription(ides.getText());
-//        cmm.setTags(icl.getText());
+       
+        getVideoDetails(lien.getText());
         
-           // System.out.println("-----"+inom);
-//            ides.setText(cmm.getDescription());
-//            icl.setText(cmm.getTags());
-
+       
         
         
     }
+
+    
 }
