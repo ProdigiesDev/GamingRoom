@@ -453,10 +453,12 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
                 maxprice = price;
                 MaxPrix.setText(String.valueOf(maxprice));//tconverti double ->chaine
                 MinPrix.setText(String.valueOf(minprice));
+                
+            }
                 ProduitCrud crud = new ProduitCrud();
                 initTable(crud.RechercherPrix(minprice, maxprice));
 
-            }
+            
 
         } catch (Exception ex) {
 
@@ -532,7 +534,7 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
 	   message.setSubject("liste produits");
 	   Multipart emailContent = new MimeMultipart();
            MimeBodyPart textBodyPart = new MimeBodyPart();
-           textBodyPart.setText("bienvenue");
+           textBodyPart.setText("Bonjour , voila la liste des produits que vous avez ajouté!");
            MimeBodyPart pdfAttatchement = new MimeBodyPart();
            pdfAttatchement.attachFile("C:/Users/yasmine/Desktop/pidev/GamingRoomDesktop/produits.pdf");
            emailContent.addBodyPart(textBodyPart);
