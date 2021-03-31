@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1350.0" stylesheets="file:/C:/Users/Dah/Desktop/demo/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AdminPanel.AdminPanelController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1350.0" stylesheets="file:/C:/Users/Dah/Desktop/demo/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AdminPanel.AdminPanelController">
     <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1350.0" styleClass="body">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1100.0" prefWidth="1350.0" styleClass="body">
             <children>
                 <Pane layoutX="-2.0" layoutY="-3.0" prefHeight="112.0" prefWidth="1350.0">
                     <children>
@@ -24,7 +24,7 @@
                                 <Font size="20.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton fx:id="products" layoutX="500.0" layoutY="35.0" text="Produits">
+                        <JFXButton fx:id="products" layoutX="500.0" layoutY="35.0" onAction="#openProduit" text="Produits">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -39,7 +39,7 @@
                                 <Font size="20.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton fx:id="keys" layoutX="799.0" layoutY="35.0" prefHeight="44.0" prefWidth="66.0" text="Cles">
+                        <JFXButton fx:id="keys" layoutX="799.0" layoutY="35.0" onAction="#openCle" prefHeight="44.0" prefWidth="66.0" text="Cles">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -51,15 +51,25 @@
                   </JFXButton>
                     </children>
                 </Pane>
-            <Pane fx:id="listerJeux" layoutX="303.0" layoutY="218.0" prefHeight="398.0" prefWidth="744.0">
+            <Pane fx:id="listerJeux" layoutX="303.0" layoutY="218.0" prefHeight="398.0" prefWidth="744.0" visible="false">
                <children>
       
                           <fx:include fx:id="listjeux" source="../Jeux/ListerJeux.fxml" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="200.0" />
                </children>
             </Pane>
-            <Pane fx:id="listerreclm" layoutX="303.0" layoutY="218.0" prefHeight="398.0" prefWidth="744.0">
+            <Pane fx:id="listerreclm" layoutX="303.0" layoutY="218.0" prefHeight="398.0" prefWidth="744.0" visible="false">
                <children>
                   <fx:include fx:id="listjeux1" source="../Reclamation/listReclamation.fxml" />
+               </children>
+            </Pane>
+            <Pane fx:id="produits" layoutX="313.0" layoutY="228.0" prefHeight="844.0" prefWidth="1335.0" visible="false" AnchorPane.leftAnchor="10.0">
+               <children>
+                  <fx:include fx:id="listjeux11" source="../AjoutProduit.fxml" />
+               </children>
+            </Pane>
+            <Pane fx:id="cles" layoutX="323.0" layoutY="238.0" prefHeight="844.0" prefWidth="1335.0" visible="false" AnchorPane.leftAnchor="10.0">
+               <children>
+                  <fx:include fx:id="listjeux111" source="../AjoutCle.fxml" />
                </children>
             </Pane>
             </children>

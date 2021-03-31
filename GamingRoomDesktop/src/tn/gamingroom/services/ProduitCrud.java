@@ -89,6 +89,35 @@ public class ProduitCrud implements IProduits<Produits> {
         return rowsUpdated;
     }
 
+        
+    public List<Produits> displayProduitORDERBYLibelle() {
+
+        List<Produits> myList = new ArrayList();
+        try {
+
+            String requete = "select p.*,c.nomcategorie from produit p , categorie c where c.idcat=p.id_cat ORDER BY libelle"; // statique
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                Produits p = new Produits();
+                p.setIdprod(rs.getInt(1));
+                p.setImage(rs.getString(3));
+                p.setLibelle(rs.getString(4));
+                p.setPrix(rs.getDouble(5));
+                p.setDescription(rs.getString(6));
+                p.setId_cat(rs.getInt(2));
+                p.setNomCat(rs.getString(7));
+                myList.add(p);
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return myList;
+
+    }
+
     @Override
     public List<Produits> displayProduit() {
 

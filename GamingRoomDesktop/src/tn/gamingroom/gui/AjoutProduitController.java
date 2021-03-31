@@ -269,7 +269,8 @@ public class AjoutProduitController implements Initializable {
         textareaProd.setText(null);
         tfprix.setText(null);
         tfid.setText(null);
-
+        prodImage.setImage(null);
+        listCat.getSelectionModel().select(null);
     }
 
     @FXML
@@ -297,7 +298,8 @@ public class AjoutProduitController implements Initializable {
             return;
 
         }
-
+        CategorieServices categorieServices=new CategorieServices();
+        listCat.getSelectionModel().select(categorieServices.getById(c.getId_cat()));
         tflibelle.setText(collibelle.getCellData(index).toString());
         tfprix.setText(colprix.getCellData(index).toString());
         textareaProd.setText(coldesc.getCellData(index).toString());
@@ -411,11 +413,12 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
     private void loadImage(ActionEvent event) {
 
         file = fileChooser.showOpenDialog(stage);//ykhalini nekhtar fichier
-        try {
-            prodImage.setImage(new Image(file.toURI().toURL().toExternalForm()));//path image (ligne mtaa file)
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        if(file!=null)
+            try {
+                prodImage.setImage(new Image(file.toURI().toURL().toExternalForm()));//path image (ligne mtaa file)
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
 
     }
 
@@ -426,10 +429,10 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
             Parent stat;
             stat = FXMLLoader.load(getClass().getResource("statistique.fxml"));
 
-            Scene dashboardScene = new Scene(stat);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(dashboardScene);
-            window.show();
+            Scene dashboardScene = new Scene(stat,1209,600);
+            Stage stage=new Stage();
+            stage.setScene(dashboardScene);
+            stage.show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -507,7 +510,7 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
         tvbox.setItems(listProduitIm);
     }
 
-    public void Send() throws MessagingException, IOException {
+    public void Send(String path) throws MessagingException, IOException {
         String to = "prodigiesdev@gmail.com";
         String from = "Gamingroom.prodigiesDev@gmail.com";
         String host = "smtp.gmail.com";
@@ -536,7 +539,7 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
            MimeBodyPart textBodyPart = new MimeBodyPart();
            textBodyPart.setText("Bonjour , voila la liste des produits que vous avez ajouté!");
            MimeBodyPart pdfAttatchement = new MimeBodyPart();
-           pdfAttatchement.attachFile("C:/Users/yasmine/Desktop/pidev/GamingRoomDesktop/produits.pdf");
+           pdfAttatchement.attachFile(path);
            emailContent.addBodyPart(textBodyPart);
            emailContent.addBodyPart(pdfAttatchement);
            message.setContent(emailContent);
@@ -551,8 +554,8 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
 
     
     
-    public void PDF()throws FileNotFoundException,Exception{
-    File out = new File("produits.pdf");
+    public String PDF()throws FileNotFoundException,Exception{
+    File out = new File("..\\produitsPdf\\produits"+new java.util.Date().getTime()+".pdf");
         try (FileOutputStream fos = new FileOutputStream(out)) {
             PDF pdf = new PDF(fos);
             Page page = new Page(pdf, A4.PORTRAIT);
@@ -621,6 +624,7 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
             pdf.flush();
         JOptionPane.showMessageDialog(null, "PDF enregistré sous le path "+out.getAbsolutePath());
         System.out.println("Saved to " +out.getAbsolutePath());
+        return out.getAbsolutePath();
         }
     }
     
@@ -629,7 +633,7 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
     private void enregistrerPDF(ActionEvent event) throws Exception {
         
         
-        PDF();
+        String path=PDF();
          Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Mailing");
         alert.setHeaderText("Confirmation de mailing!");
@@ -637,7 +641,7 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
          Optional<ButtonType> btn = alert.showAndWait();
          if(btn.get()==ButtonType.OK){
          
-              Send();
+              Send(path);
          
          
          

@@ -34,6 +34,10 @@ public class AdminPanelController implements Initializable {
     private Pane listerJeux;
     @FXML
     private Pane listerreclm;
+    @FXML
+    private Pane produits;
+    @FXML
+    private Pane cles;
 
     /**
      * Initializes the controller class.
@@ -56,11 +60,31 @@ public class AdminPanelController implements Initializable {
     
         listerJeux.setVisible(true);
         listerreclm.setVisible(false);
+        produits.setVisible(false);
+        cles.setVisible(false);
     }
     @FXML
     private void openReclamtion(ActionEvent event) {
         listerJeux.setVisible(false);
         listerreclm.setVisible(true);
+        produits.setVisible(false);
+        cles.setVisible(false);
+    }
+
+    @FXML
+    private void openProduit(ActionEvent event) {
+        listerJeux.setVisible(false);
+        listerreclm.setVisible(false);
+        produits.setVisible(true);
+        cles.setVisible(false);
+    }
+
+    @FXML
+    private void openCle(ActionEvent event) {
+        listerJeux.setVisible(false);
+        listerreclm.setVisible(false);
+        produits.setVisible(false);
+        cles.setVisible(true);
     }
 
 }

@@ -32,8 +32,11 @@ and open the template in the editor.
 
 .btnMore{
     -fx-border-color:white;
+    -fx-background-color: rgb(8, 3, 37);
     -fx-border-width:2;
     -fx-border-radius:4;
+    -fx-font-color:white;
+    
 }
 .scroll-pane > .corner {
     -fx-background-color: black;
@@ -47,3 +50,6 @@ and open the template in the editor.
     -fx-font-size: 15.0;
 }
 
+.column{
+    -fx-text-fill: black;
+}
