@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.logging.Level;
@@ -52,7 +53,7 @@ public class InfoCoursController implements Initializable {
 
     @FXML
     private Label nom;
-    
+
     @FXML
     private Label cat;
     @FXML
@@ -67,8 +68,8 @@ public class InfoCoursController implements Initializable {
     private TableColumn<ReacCours, Integer> colMem;
 
     Courslm c;
-    
-    int memberId=2;
+
+    int memberId = 1;
     int cour_id;
     @FXML
     private TableView<ReacCours> tablCom;
@@ -80,7 +81,7 @@ public class InfoCoursController implements Initializable {
     private Button back;
     @FXML
     private FontAwesomeIconView dislike;
-    
+
     @FXML
     private Text nbInternegng;
     @FXML
@@ -90,15 +91,16 @@ public class InfoCoursController implements Initializable {
     ParticipantsCours p;
     @FXML
     private WebView vidYoutube;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        colMem.setCellValueFactory(new PropertyValueFactory<ReacCours,Integer>("membre_id"));
-        allcom.setCellValueFactory(new PropertyValueFactory<ReacCours,String>("commentaire"));
-       
+
+        colMem.setCellValueFactory(new PropertyValueFactory<ReacCours, Integer>("membre_id"));
+        allcom.setCellValueFactory(new PropertyValueFactory<ReacCours, String>("commentaire"));
+
     }
 
     public void setCours(Courslm c) {
@@ -107,16 +109,15 @@ public class InfoCoursController implements Initializable {
         nom.setText(c.getNomCours());
         des.setText(c.getDescription());
         imgcours.setImage(c.getImage().getImage());
-        cour_id=c.getId();
+        cour_id = c.getId();
         //System.out.println("c "+c.getLienYoutube());
         vidYoutube.getEngine().load(c.getLienYoutube());
-               
-        
+
         initTable();
         initNbInteraction();
-        
+
     }
-    
+
 //    public void setCours(Courslm cm) {
 //        this.cm = c;
 //        cat.setText(String.valueOf(c.getCategorie_id()));
@@ -126,63 +127,62 @@ public class InfoCoursController implements Initializable {
 //        initNbInteraction();
 //        
 //    }
-     
-     
-     
-     void initTable(){
-         ServiceReacCours cours=new ServiceReacCours();
-         ObservableList<ReacCours> courses=FXCollections.observableArrayList(cours.getListReacCours(c.getId()));
-         tablCom.setItems(courses);
-     }
+    void initTable() {
+        ServiceReacCours cours = new ServiceReacCours();
+        ObservableList<ReacCours> courses = FXCollections.observableArrayList(cours.getListReacCours(c.getId()));
+        tablCom.setItems(courses);
+    }
 
     @FXML
     private void ajouterCommentaire(ActionEvent event) {
-        String commentaire=com.getText();
-        if(Outils.containsBadWords(commentaire)){
-            JOptionPane.showMessageDialog(null,"Ce Message ne respecte pas nos standards de la communauté en matière de contenus indésirables");
-           return ;
+        String commentaire = com.getText();
+        ServiceReacCours serviceReacCours = new ServiceReacCours();
+        if (Outils.containsBadWords(commentaire)) {
+            JOptionPane.showMessageDialog(null, "Ce Message ne respecte pas nos standards de la communauté en matière de contenus indésirables");
+            return;
         }
-        if (tablCom.getItems().size() <= 9){
-            ReacCours cours=new ReacCours(0,commentaire,memberId,c.getId());
-            ServiceReacCours serviceReacCours=new ServiceReacCours();
+        List<ReacCours> reacCourses = serviceReacCours.getReactionByMemberCours(c.getId(), memberId);
+        System.out.println(reacCourses.size());
+        if (reacCourses.size() <= 9) {
+            ReacCours cours = new ReacCours(0, commentaire, memberId, c.getId());
+
             serviceReacCours.ajouterReacC(cours);
             tablCom.getItems().add(cours);
-        }else {
-            JOptionPane.showMessageDialog(null,"depasse pas 10 commentaires");
+        } else {
+            JOptionPane.showMessageDialog(null, "depasse pas 10 commentaires");
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                @Override
+                public void run() {
+                    ReacCours cours = new ReacCours(0, commentaire, memberId, c.getId());
 
+                    serviceReacCours.ajouterReacC(cours);
+                    tablCom.getItems().add(cours);
+                }
+            }, 2000
+            );
         }
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-        }
-            
-            
-            
-        }
-        
-    
+
+    }
 
     @FXML
     private void react(MouseEvent event) {
-        ServiceReacCours serviceReacCours=new ServiceReacCours();
-                                      
-        ReacCours rc=serviceReacCours.getFirstReactionById(this.c.getId(),memberId);
-        int nb=0;
-        if(rc==null){
-            ReacCours cours=new ReacCours(1,"",memberId,c.getId());
-            nb=serviceReacCours.ajouterReacC(cours);
-        }
-        else if(rc.getNb_interaction()==-1){
+        ServiceReacCours serviceReacCours = new ServiceReacCours();
+
+        ReacCours rc = serviceReacCours.getFirstReactionById(this.c.getId(), memberId);
+        int nb = 0;
+        if (rc == null) {
+            ReacCours cours = new ReacCours(1, "", memberId, c.getId());
+            nb = serviceReacCours.ajouterReacC(cours);
+        } else if (rc.getNb_interaction() == -1) {
             rc.setNb_interaction(1);
-            nb=serviceReacCours.updateReacC(rc);
-           
+            nb = serviceReacCours.updateReacC(rc);
+
         }
-         if(nb>0){
-               initNbInteraction();
-            }
+        if (nb > 0) {
+            initNbInteraction();
+        }
     }
-     
-     
 
     @FXML
     private void back(ActionEvent event) {
@@ -191,7 +191,7 @@ public class InfoCoursController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("coursMembreint.fxml"));
             root = loader.load();
             CoursMembreintController pct = loader.getController();
-            
+
             nom.getScene().setRoot(root);
         } catch (IOException ex) {
             Logger.getLogger(InfoCoursController.class.getName()).log(Level.SEVERE, null, ex);
@@ -200,73 +200,63 @@ public class InfoCoursController implements Initializable {
 
     @FXML
     private void reacneg(MouseEvent event) {
-        ServiceReacCours serviceReacCours=new ServiceReacCours();
-                                      
-        ReacCours rc=serviceReacCours.getFirstReactionById(this.c.getId(),memberId);
-        int nb=0;
-        if(rc==null){
-            ReacCours cours=new ReacCours(-1,"",memberId,c.getId());
-           nb= serviceReacCours.ajouterReacC(cours);
-            
-            
-            
-        }
-        else if(rc.getNb_interaction()==1){
+        ServiceReacCours serviceReacCours = new ServiceReacCours();
+
+        ReacCours rc = serviceReacCours.getFirstReactionById(this.c.getId(), memberId);
+        int nb = 0;
+        if (rc == null) {
+            ReacCours cours = new ReacCours(-1, "", memberId, c.getId());
+            nb = serviceReacCours.ajouterReacC(cours);
+
+        } else if (rc.getNb_interaction() == 1) {
 
             rc.setNb_interaction(-1);
-             nb=serviceReacCours.updateReacC(rc);
-            
+            nb = serviceReacCours.updateReacC(rc);
+
         }
-        if(nb>0){
-               initNbInteraction();
-            }
+        if (nb > 0) {
+            initNbInteraction();
+        }
     }
-    void initNbInteraction(){
-        ServiceReacCours serviceReacCours=new ServiceReacCours();
-        Integer[] nbLikes=serviceReacCours.getNbInteraction(this.c.getId());
+
+    void initNbInteraction() {
+        ServiceReacCours serviceReacCours = new ServiceReacCours();
+        Integer[] nbLikes = serviceReacCours.getNbInteraction(this.c.getId());
         nbInter.setText(String.valueOf(nbLikes[0]));
         nbInternegng.setText(String.valueOf(nbLikes[1]));
-        
+
     }
 
     @FXML
     private void inscrirecours(ActionEvent event) {
-        ParticipantsCours pc=new ParticipantsCours();
-        
+        ParticipantsCours pc = new ParticipantsCours();
+
         JFrame f = new JFrame();
 
         int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
         if (a == JOptionPane.YES_OPTION) {
-            ServiceParticipantsCours spc=new ServiceParticipantsCours();
+            ServiceParticipantsCours spc = new ServiceParticipantsCours();
             Cours c = new Cours();
-            
+
 //            
-                int nb =spc.ajouterParticipant(2,cour_id);
-                 if (nb == 0) {
-           JOptionPane.showMessageDialog(null, "Erreur d'inscription");
-                 }
-                 else{
+            int nb = spc.ajouterParticipant(2, cour_id);
+            if (nb == 0) {
+                JOptionPane.showMessageDialog(null, "Erreur d'inscription");
+            } else {
                 JOptionPane.showMessageDialog(null, "Félicitation vous etes inscrit à ce cours");
             }
         }
     }
 }
-        
+
 //        spc.ajouterParticipant(p);
 //        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 //        alert.setTitle("Confirmation");
 //        alert.setHeaderText("Confirmation d'inscription !");
 //        alert.setContentText("Voulez-Vous Vraiment S'inscrire");
-
 //        if (nb == 0) {
 //            JOptionPane.showMessageDialog(null, "Erreur d'inscription");
 //        } else {
 //            Optional<ButtonType> btn = alert.showAndWait();
 //            JOptionPane.showMessageDialog(null, "Félicitation vous etes inscrit à ce cours");
-        
-        
-
-
-
-    
 

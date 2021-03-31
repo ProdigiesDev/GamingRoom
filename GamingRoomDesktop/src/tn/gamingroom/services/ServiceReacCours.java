@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import tn.gamingroom.entities.Cours;
@@ -108,6 +109,24 @@ public class ServiceReacCours implements IReacCours {
     
     }
     
+    public List<ReacCours> getReactionByMemberCours(int courId,int memberId){
+        List<ReacCours> courses=new ArrayList();
+         try {
+            String requeteDs = "SELECT * FROM reactioncours where cour_id ='"+courId+"' and membre_id='"+memberId+"'";
+             
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requeteDs);
+            while (rs.next()) {
+                courses.add(new ReacCours(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4),rs.getInt(5)));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        return courses;
+    
+    }
     
     public int updateReacC(ReacCours r) {
         int nb_supp=0;
