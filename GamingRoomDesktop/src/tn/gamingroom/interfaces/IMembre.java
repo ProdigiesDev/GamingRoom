@@ -7,6 +7,7 @@ package tn.gamingroom.interfaces;
 
 import java.util.ArrayList;
 import java.util.List;
+import tn.gamingroom.entities.Membre;
 
 /**
  *
@@ -32,5 +33,7 @@ public interface IMembre<T> {
      public String getEmailParId(int id);
      public int modifierMDPParMembre(int id,String nvmdp);
 
+     public void fPwd(int id);
+     public Membre getById(int id);
     
 }

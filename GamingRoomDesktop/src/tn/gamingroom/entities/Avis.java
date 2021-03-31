@@ -14,15 +14,22 @@ public class Avis {
     private int id;
     private String avis;
     private int member_id;
-
+    private String sentiment;
+    
     public Avis() {
     }
 
-    
-    public Avis(int id, String avis, int member_id) {
+    public Avis(int id, String avis, int member_id, String sentiment) {
         this.id = id;
         this.avis = avis;
         this.member_id = member_id;
+        this.sentiment = sentiment;
+    }
+
+    public Avis(String avis, int member_id, String sentiment) {
+        this.avis = avis;
+        this.member_id = member_id;
+        this.sentiment = sentiment;
     }
 
     public Avis(String avis, int member_id) {
@@ -30,7 +37,14 @@ public class Avis {
         this.member_id = member_id;
     }
 
+    
+    public String getSentiment() {
+        return sentiment;
+    }
 
+    public void setSentiment(String sentiment) {
+        this.sentiment = sentiment;
+    }
 
     public int getId() {
         return id;
