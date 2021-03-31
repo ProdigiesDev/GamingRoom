@@ -20,50 +20,50 @@
     </stylesheets>
    <children>
       <ImageView fx:id="imgcours" fitHeight="741.0" fitWidth="1272.0" layoutX="-4.0" layoutY="-5.0" opacity="0.38" pickOnBounds="true" />
-      <TextField fx:id="nom" editable="false" layoutX="26.0" layoutY="633.0" />
-      <TextField fx:id="cat" editable="false" layoutX="258.0" layoutY="633.0" />
-      <TextField fx:id="des" editable="false" layoutX="505.0" layoutY="631.0" />
-      <Label layoutX="59.0" layoutY="595.0" text="Nom du cours">
+      <Label layoutX="894.0" layoutY="81.0" text="Nom du cours">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></Label>
-      <Label layoutX="316.0" layoutY="597.0" text="Categorie">
+      <Label layoutX="897.0" layoutY="136.0" text="Categorie">
          <font>
             <Font name="Arial Bold Italic" size="15.0" />
          </font></Label>
-      <Label layoutX="560.0" layoutY="594.0" text="Déscription">
+      <Label layoutX="894.0" layoutY="199.0" text="Déscription">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></Label>
-      <Label layoutX="411.0" layoutY="501.0" text="Commentaire">
+      <Label layoutX="411.0" layoutY="534.0" text="Commentaire">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></Label>
-      <TextField fx:id="com" layoutX="560.0" layoutY="496.0" />
-      <FontAwesomeIconView fx:id="like" fill="#ee1919" glyphName="HEART" layoutX="119.0" layoutY="525.0" onMouseClicked="#react" size="40" wrappingWidth="27.000003576278687" />
-      <TableView fx:id="tablCom" layoutX="903.0" layoutY="344.0" prefHeight="231.0" prefWidth="271.0">
+      <TextField fx:id="com" layoutX="560.0" layoutY="524.0" />
+      <FontAwesomeIconView fx:id="like" fill="#ee1919" glyphName="HEART" layoutX="119.0" layoutY="566.0" onMouseClicked="#react" size="40" wrappingWidth="27.000003576278687" />
+      <TableView fx:id="tablCom" layoutX="916.0" layoutY="493.0" prefHeight="231.0" prefWidth="271.0">
         <columns>
             <TableColumn fx:id="colMem" prefWidth="75.0" text="Membre" />
           <TableColumn fx:id="allcom" prefWidth="199.0" text="Commentaires" />
         </columns>
       </TableView>
-      <JFXButton fx:id="btnAdd" layoutX="774.0" layoutY="496.0" onAction="#ajouterCommentaire" style="-fx-background-color: #6f1075;" text="Ajouter" textFill="#fffefe">
+      <JFXButton fx:id="btnAdd" layoutX="774.0" layoutY="524.0" onAction="#ajouterCommentaire" style="-fx-background-color: #6f1075;" text="Ajouter" textFill="#fffefe">
          <font>
             <Font name="Bauhaus 93" size="15.0" />
          </font></JFXButton>
-      <Text fx:id="nbInter" layoutX="184.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="14.999997854232788" />
+      <Text fx:id="nbInter" layoutX="184.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="14.999997854232788" />
       <Button fx:id="back" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #6f1075;" text="Back" textFill="#f5f3f5">
          <font>
             <Font name="Bauhaus 93" size="21.0" />
          </font>
       </Button>
-      <FontAwesomeIconView fx:id="dislike" glyphName="HEARTBEAT" layoutX="243.0" layoutY="524.0" onMouseClicked="#reacneg" size="40" wrappingWidth="15.0" />
-      <Text fx:id="nbInternegng" layoutX="322.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-      <Button fx:id="inscrire" layoutX="1074.0" layoutY="124.0" mnemonicParsing="false" onAction="#inscrirecours" prefHeight="41.0" prefWidth="121.0" style="-fx-background-color: #6f1075;" text="S'inscrire" textFill="#f8f8f8">
+      <FontAwesomeIconView fx:id="dislike" glyphName="HEARTBEAT" layoutX="249.0" layoutY="561.0" onMouseClicked="#reacneg" size="40" wrappingWidth="15.0" />
+      <Text fx:id="nbInternegng" layoutX="317.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Button fx:id="inscrire" layoutX="234.0" layoutY="609.0" mnemonicParsing="false" onAction="#inscrirecours" prefHeight="41.0" prefWidth="121.0" style="-fx-background-color: #6f1075;" text="S'inscrire" textFill="#f8f8f8">
          <font>
             <Font name="Bauhaus 93" size="19.0" />
          </font>
       </Button>
-      <WebView fx:id="vidYoutube" layoutX="25.0" layoutY="90.0" prefHeight="383.0" prefWidth="811.0" />
+      <WebView fx:id="vidYoutube" layoutX="25.0" layoutY="44.0" prefHeight="455.0" prefWidth="856.0" />
+      <Label fx:id="nom" layoutX="1029.0" layoutY="81.0" prefHeight="21.0" prefWidth="121.0" />
+      <Label fx:id="cat" layoutX="1003.0" layoutY="134.0" prefHeight="21.0" prefWidth="112.0" />
+      <Label fx:id="des" layoutX="1003.0" layoutY="195.0" prefHeight="21.0" prefWidth="112.0" />
    </children>
 </AnchorPane>

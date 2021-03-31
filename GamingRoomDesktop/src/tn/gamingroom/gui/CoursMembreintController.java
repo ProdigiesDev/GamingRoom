@@ -58,6 +58,8 @@ public class CoursMembreintController implements Initializable {
     private TextField prefer;
     @FXML
     private Label titre;
+    @FXML
+    private TableColumn<Courslm, String> lienYoutube;
 
     /**
      * Initializes the controller class.
@@ -72,6 +74,7 @@ public class CoursMembreintController implements Initializable {
         ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
 
         cdes.setCellValueFactory(new PropertyValueFactory<Courslm, String>("description"));
+        lienYoutube.setCellValueFactory(new PropertyValueFactory<Courslm, String>("lienYoutube"));
 
         this.initTable(null);
 
@@ -85,7 +88,7 @@ public class CoursMembreintController implements Initializable {
         cnom.setCellValueFactory(new PropertyValueFactory<Courslm, String>("nomCours"));
 
         cdes.setCellValueFactory(new PropertyValueFactory<Courslm, String>("description"));
-
+        lienYoutube.setCellValueFactory(new PropertyValueFactory<Courslm, String>("lienYoutube"));
         ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
         //System.out.println("iddperc "+prefer.getText());
         initTable(s.displayprefcours(Integer.parseInt(prefer.getText())));
@@ -97,6 +100,7 @@ public class CoursMembreintController implements Initializable {
             Parent root = null;
             int index = tbCours.getSelectionModel().getSelectedIndex();
             Courslm c = tbCours.getItems().get(index);
+            System.out.println("c "+c);
             if (index <= -1) {
                 return;
             }
@@ -110,7 +114,9 @@ public class CoursMembreintController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("infoCours.fxml"));
             root = loader.load();
             InfoCoursController pct = loader.getController();
+            System.out.println("c "+c);
             pct.setCours(c);
+            System.out.println("c1 "+c.getLienYoutube());
             titre.getScene().setRoot(root);
         } catch (IOException ex) {
             Logger.getLogger(CoursMembreintController.class.getName()).log(Level.SEVERE, null, ex);
@@ -132,7 +138,8 @@ public class CoursMembreintController implements Initializable {
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);
                 i.setFitWidth(70);
-                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat());
+                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat(),e.getLienYoutube());
+                System.out.println("ima "+addCours.getImage());
                 addCours.setImagename(e.getImage());
                 lIm.add(addCours);
             } catch (MalformedURLException ex) {

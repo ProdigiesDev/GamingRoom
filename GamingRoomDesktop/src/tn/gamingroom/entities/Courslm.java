@@ -43,6 +43,8 @@ public class Courslm {
         this.imagename = imagename;
         this.lienYoutube = lienYoutube;
     }
+    
+    
 
     public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView image, int categorie_id, String categorieNom) {
         this.id = id;
@@ -79,6 +81,20 @@ public class Courslm {
         this.date_creation = date_creation;
         this.tags = tags;
         this.categorieNom = categorieNom;
+        this.categorie_id = categorie_id;
+    }
+
+    public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView i, int categorie_id, String nomcat, String lienYoutube) {
+        this.id = id;
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.membre_id = membre_id;
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.lienYoutube = lienYoutube;
+        this.image = i;
+        
         this.categorie_id = categorie_id;
     }
 
@@ -179,6 +195,8 @@ public class Courslm {
     public void setLienYoutube(String lienYoutube) {
         this.lienYoutube = lienYoutube;
     }
+    
+    
 
     @Override
     public String toString() {

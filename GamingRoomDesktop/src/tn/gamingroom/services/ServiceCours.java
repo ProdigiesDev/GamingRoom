@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import tn.gamingroom.entities.Cours;
+import tn.gamingroom.entities.Courslm;
 import tn.gamingroom.interfaces.ICours;
 import tn.gamingroom.outils.MyConnection;
 
@@ -174,11 +175,21 @@ public class ServiceCours implements ICours {
             String requete = "select * from cour ORDER BY id DESC";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
 
-            ResultSet res = pst.executeQuery(requete);
-            Cours c = null;
-            while (res.next()) {
+            ResultSet rs = pst.executeQuery(requete);
+           
+            while (rs.next()) {
+                  Cours c= new Cours();
 
-                c = new Cours(res.getInt(1), res.getString(2), res.getString(3), res.getInt(4), res.getInt(5), res.getDate(6), res.getString(7),res.getString(8), res.getInt(9),res.getString(10));
+                c.setId(rs.getInt("id"));
+                c.setNomCours(rs.getString("nomCours"));
+                c.setDescription(rs.getString("description"));
+                c.setNb_participants(rs.getInt("nb_participant"));
+                c.setMembre_id(rs.getInt("membre_id"));
+                c.setDate_creation(rs.getDate("date_creation"));
+                c.setTags(rs.getString("tags"));
+                c.setImage(rs.getString("imagecours"));
+                c.setLienYoutube(rs.getString("lienYoutube"));
+                c.setCategorie_id(rs.getInt("categorie_id"));                
                 listCours.add(c);
 
             }

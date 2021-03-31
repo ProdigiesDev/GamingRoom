@@ -6,13 +6,11 @@
 package tn.gamingroom.gui;
 
 import com.jfoenix.controls.JFXButton;
-import com.sun.xml.internal.bind.v2.runtime.property.PropertyFactory;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
-import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -25,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -52,12 +51,12 @@ import tn.gamingroom.services.ServiceReacCours;
 public class InfoCoursController implements Initializable {
 
     @FXML
-    private TextField nom;
+    private Label nom;
     
     @FXML
-    private TextField cat;
+    private Label cat;
     @FXML
-    private TextField des;
+    private Label des;
     @FXML
     private TextField com;
     @FXML
@@ -109,6 +108,7 @@ public class InfoCoursController implements Initializable {
         des.setText(c.getDescription());
         imgcours.setImage(c.getImage().getImage());
         cour_id=c.getId();
+        //System.out.println("c "+c.getLienYoutube());
         vidYoutube.getEngine().load(c.getLienYoutube());
                
         
@@ -138,17 +138,29 @@ public class InfoCoursController implements Initializable {
     @FXML
     private void ajouterCommentaire(ActionEvent event) {
         String commentaire=com.getText();
-           
         if(Outils.containsBadWords(commentaire)){
             JOptionPane.showMessageDialog(null,"Ce Message ne respecte pas nos standards de la communauté en matière de contenus indésirables");
            return ;
         }
+        if (tablCom.getItems().size() <= 9){
+            ReacCours cours=new ReacCours(0,commentaire,memberId,c.getId());
+            ServiceReacCours serviceReacCours=new ServiceReacCours();
+            serviceReacCours.ajouterReacC(cours);
+            tablCom.getItems().add(cours);
+        }else {
+            JOptionPane.showMessageDialog(null,"depasse pas 10 commentaires");
+
+        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+        }
+            
+            
+            
+        }
         
-        ReacCours cours=new ReacCours(0,commentaire,memberId,c.getId());
-        ServiceReacCours serviceReacCours=new ServiceReacCours();
-        serviceReacCours.ajouterReacC(cours);
-        tablCom.getItems().add(cours);
-    }
+    
 
     @FXML
     private void react(MouseEvent event) {

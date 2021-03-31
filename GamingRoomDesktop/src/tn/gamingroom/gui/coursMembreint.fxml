@@ -26,6 +26,7 @@
           <TableColumn fx:id="cnom" prefWidth="180.0" text="Nom du cours" />
             <TableColumn fx:id="ccat" prefWidth="209.0" text="Catégorie" />
             <TableColumn fx:id="cdes" prefWidth="198.0" text="Déscription" />
+            <TableColumn fx:id="lienYoutube" prefWidth="198.0" text="Déscription" visible="false" />
         </columns>
       </TableView>
       <Label fx:id="titre" layoutX="297.0" layoutY="17.0" prefHeight="64.0" prefWidth="480.0" text="Gaming Courses " textFill="#6f1075" underline="true">
