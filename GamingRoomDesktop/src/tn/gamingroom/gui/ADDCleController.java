@@ -36,7 +36,7 @@ public class ADDCleController implements Initializable {
     private void interface2(ActionEvent event) throws IOException {
         
         Parent dashboard ;
-                dashboard = FXMLLoader.load(getClass().getResource("ListProduit.fxml"));
+                dashboard = FXMLLoader.load(getClass().getResource("AjoutProduit.fxml"));
 
 
                 Scene dashboardScene = new Scene(dashboard);

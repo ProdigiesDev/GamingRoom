@@ -15,14 +15,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Callback;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import tn.gamingroom.entities.Cles;
 import tn.gamingroom.entities.ImageProduits;
 import tn.gamingroom.entities.Produits;
 import tn.gamingroom.outils.Env;
+import tn.gamingroom.services.CleService;
 import tn.gamingroom.services.ProduitCrud;
 
 /**
@@ -101,6 +108,5 @@ public class ListProduitController implements Initializable {
         tvList.setItems(listProduitIm);
     }
     
-    
-    
 }
+   
