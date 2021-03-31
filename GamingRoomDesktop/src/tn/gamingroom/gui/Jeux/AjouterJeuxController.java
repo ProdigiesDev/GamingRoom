@@ -43,7 +43,7 @@ import tn.gamingroom.services.JeuxService;
  */
 public class AjouterJeuxController implements Initializable {
 
-    @FXML
+    @FXML 
     private JFXTextField txtNom;
     @FXML
     private JFXTextArea txtDesc;
@@ -63,7 +63,6 @@ public class AjouterJeuxController implements Initializable {
     private Text errImage;
     @FXML
     private ImageView imageView;
-
     /**
      * Initializes the controller class.
      */
@@ -129,7 +128,7 @@ public class AjouterJeuxController implements Initializable {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-            } else {
+            } else if(jeux.getId() == 0) {
                 errImage.setText("Image est obligatoire");
                 errImage.setVisible(true);
                 return;
@@ -143,6 +142,7 @@ public class AjouterJeuxController implements Initializable {
                 int nb = jeuxService.ajouter(jeux);
                 if (nb == 0) {
                     JOptionPane.showMessageDialog(null, "Une erreur s'est produite, veuillez réessayer plus tard");
+                    return;
                 } else {
                     JOptionPane.showMessageDialog(null, "Jeux ajouteé");
                 }
@@ -151,12 +151,13 @@ public class AjouterJeuxController implements Initializable {
                 int nb = jeuxService.modifier(jeux);
                 if (nb == 0) {
                     JOptionPane.showMessageDialog(null, "Une erreur s'est produite, veuillez réessayer plus tard");
+                    return;
                 } else {
                     JOptionPane.showMessageDialog(null, "Jeux a ete modifié");
                 }
             }
         }
-
+        reset();
     }
 
     public Jeux getJeux() {
@@ -189,6 +190,26 @@ public class AjouterJeuxController implements Initializable {
         } else {
             try {
                 imageView.setImage(new Image(file.toURI().toURL().toExternalForm()));
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(AjouterJeuxController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    private void reset(){
+        if(jeux.getId()==0){
+            txtNom .setText("");
+            txtDesc.setText(""); 
+            comboPlat.setValue(Jeux.Type.Desktop); 
+            imageView.setImage(null);
+        }
+        else{
+            
+            txtNom .setText(jeux.getNom());
+            txtDesc.setText(jeux.getDescriString()); 
+            comboPlat.setValue(jeux.getType_plateforme()); 
+            try {
+                imageView.setImage(new Image(new File(Env.getImagePath()+"\\jeux\\"+jeux.getImage()).toURI().toURL().toExternalForm()));
             } catch (MalformedURLException ex) {
                 Logger.getLogger(AjouterJeuxController.class.getName()).log(Level.SEVERE, null, ex);
             }
