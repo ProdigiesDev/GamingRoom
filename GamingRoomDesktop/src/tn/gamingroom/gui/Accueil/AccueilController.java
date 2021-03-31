@@ -49,6 +49,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import tn.gamingroom.entities.Avis;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.gui.Jeux.AjouterJeuxController;
 import tn.gamingroom.gui.Jeux.Snake;
 import tn.gamingroom.services.AvisService;
@@ -82,21 +83,24 @@ public class AccueilController implements Initializable {
     private List<Produits> bestProducts;
     private List<Avis> listAvis;
     private final int NB_PRODUCT_PAGE_ITEMS = 3;
-
+    private Membre membre;
+    @FXML
+    private Button presProductbtn1;
+    @FXML
+    private Pane bestProduct11;
+    @FXML
+    private Pane avisPane;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        /*  ProduitCrud produitCrud=new ProduitCrud();
-        List<Integer> listIdProd=produitCrud.bestProductsSelled();
-        bestProducts=new ArrayList();
-        listIdProd.forEach(id->{
-            Produits p=produitCrud.getByID(id);
-            if(p!=null)
-                bestProducts.add(p);
-        });*/
+        
+        if(UserSession.getInstance()!=null){
+            membre=UserSession.getInstance().getUser();
+            avisPane.setVisible(true);
+        }
+        
         AvisService avisService=new AvisService();
         listAvis=avisService.getPostivesAvis();
         review.setTextAlignment(TextAlignment.CENTER); 

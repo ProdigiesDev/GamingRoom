@@ -8,6 +8,7 @@ package tn.gamingroom.gui.Jeux;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -21,7 +22,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,6 +37,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Jeux;
 import tn.gamingroom.entities.Score;
+import tn.gamingroom.entities.Membre;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.gui.Jeux.Tictactoe.TPPOOGameTikTakTok;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.JeuxService;
@@ -59,6 +64,7 @@ public class ViewJeuxController implements Initializable {
     @FXML
     private TextFlow descgame;
     private List<Score> scores;
+    private Membre membre;
 
     /**
      * Initializes the controller class.
@@ -66,6 +72,7 @@ public class ViewJeuxController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
 
     }
 
@@ -106,7 +113,16 @@ public class ViewJeuxController implements Initializable {
 
     @FXML
     private void startTheGame(ActionEvent event) {
-        int a = JOptionPane.showConfirmDialog(new JFrame(), "Êtes-vous prêt à jouer ?");
+        if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
+        } else {
+            int a = JOptionPane.showConfirmDialog(new JFrame(), "vous dois d'abord vous connecter ?");
+            if (a == JOptionPane.YES_OPTION) {
+                goLogin();
+            }
+            return;
+        }
+            int a = JOptionPane.showConfirmDialog(new JFrame(), "Êtes-vous prêt à jouer ?");
         if (a == JOptionPane.YES_OPTION) {
             switch (jeux.getId()) {
                 case GamesIds.SNAKE_ID:
@@ -134,6 +150,16 @@ public class ViewJeuxController implements Initializable {
 
     }
 
+    private void goLogin() {
+        try {
+            Parent root = FXMLLoader.
+                    load(getClass().getResource("../Member/LoginMember.fxml"));
+
+            startBtn.getScene().setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 }
 
 class ScoreList {

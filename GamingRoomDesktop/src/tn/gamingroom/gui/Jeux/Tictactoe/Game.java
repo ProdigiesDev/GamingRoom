@@ -11,6 +11,7 @@ import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import tn.gamingroom.entities.Jeux;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.services.ScoreService;
 
 /**
@@ -111,8 +112,13 @@ public class Game {
     }
     
     void updateOrAddScore(tn.gamingroom.entities.Score score,int val){
+         int memeber_id = 2;
+        if (UserSession.getInstance() != null) {
+            memeber_id = UserSession.getInstance().getUser().getId();
+        } 
+        
         if(score==null){
-            score= new tn.gamingroom.entities.Score(val,this.jeux.getId(),this.member_id);
+            score= new tn.gamingroom.entities.Score(val,this.jeux.getId(),member_id);
         }
         else
             score.setScore(score.getScore()+val);

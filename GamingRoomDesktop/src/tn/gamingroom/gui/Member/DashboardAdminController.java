@@ -147,8 +147,7 @@ public class DashboardAdminController implements Initializable {
         // TODO
         
         //Membre 
-        System.out.println(UserSession.getInstance().getUser()+" awka say jawik behi last test");
-        addButtonToTable();
+      addButtonToTable();
         afficherMembre();
         
         //Categorie

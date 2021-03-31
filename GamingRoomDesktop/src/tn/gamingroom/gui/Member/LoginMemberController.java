@@ -59,6 +59,8 @@ public class LoginMemberController implements Initializable {
     private Label forgotPassword;
     @FXML
     private JFXButton btnSignup;
+    @FXML
+    private Label home;
 
     /**
      * Initializes the controller class.
@@ -67,6 +69,15 @@ public class LoginMemberController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         /// SHADOW ON MOUSE ENTERED //////
+        home.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("../Accueil/Accueil.fxml"));
+                home.getScene().setRoot(root);
+            } catch (IOException ex) {
+                Logger.getLogger(LoginMemberController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
         DropShadow shadow = new DropShadow();
         btnLogin.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
         btnLogin.setEffect(shadow);});
@@ -154,7 +165,7 @@ public class LoginMemberController implements Initializable {
             UserSession userSession = new UserSession(user,user.getRole());
             if(user.getRole().toString().equals("Admin"))
             {   Parent dashboard ;
-                dashboard = FXMLLoader.load(getClass().getResource("DashboardAdmin.fxml"));
+                dashboard = FXMLLoader.load(getClass().getResource("../AdminPanel/AdminPanel.fxml"));
 //             Parent root = loader.load();
 //            DashboardAdminController adc = loader.getController();
             
@@ -178,14 +189,11 @@ public class LoginMemberController implements Initializable {
             else if(user.getRole().toString().equals("Membre")){
                 System.out.println("pew pew pew");
                 Parent dashboard ;
-                dashboard = FXMLLoader.load(getClass().getResource("ProfilMember.fxml"));
-//             Parent root = loader.load();
+                dashboard = FXMLLoader.load(getClass().getResource("../Accueil/Accueil.fxml"));
+               
 //            DashboardAdminController adc = loader.getController();
             
-                Scene dashboardScene = new Scene(dashboard);
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-                window.setScene(dashboardScene);
-                window.show();
+               btnSignup.getScene().setRoot(dashboard);
             }
 
             
