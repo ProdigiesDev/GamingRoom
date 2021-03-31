@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -54,6 +55,12 @@
                         <Font size="20.0" />
                      </font>
                   </JFXButton>
+                  <JFXButton fx:id="btnsignout" layoutX="1228.0" layoutY="44.0" onAction="#signout" style="-fx-background-color: #F02307;" text="SIGN OUT" textFill="WHITE" />
+                  <Label fx:id="name" layoutX="1040.0" layoutY="42.0" prefHeight="30.0" prefWidth="165.0" text="Label" visible="false">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                     </children>
                 </Pane>
             <Pane fx:id="listerJeux" layoutX="303.0" layoutY="218.0" prefHeight="398.0" prefWidth="744.0" visible="false">
