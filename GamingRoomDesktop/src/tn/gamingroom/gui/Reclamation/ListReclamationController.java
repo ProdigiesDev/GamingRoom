@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -39,15 +40,23 @@ public class ListReclamationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        ReclamationService reclamationService=new ReclamationService();
-        ObservableList<Reclamation> listRec=FXCollections.observableArrayList(reclamationService.getListReclamation());
-        
-        colId.setCellValueFactory(new PropertyValueFactory<Reclamation,Integer>("id"));
-        colMsg.setCellValueFactory(new PropertyValueFactory<Reclamation,String>("contenue"));
-        colSujet.setCellValueFactory(new PropertyValueFactory<Reclamation,String>("sujet"));
+        ReclamationService reclamationService = new ReclamationService();
+
+        colId.setCellValueFactory(new PropertyValueFactory<Reclamation, Integer>("id"));
+        colMsg.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("contenue"));
+        colSujet.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("sujet"));
+        ObservableList<Reclamation> listRec = FXCollections.observableArrayList(reclamationService.getListReclamation());
 
         this.listRec.setItems(listRec);
-        
-    }    
-    
+
+    }
+
+    @FXML
+    private void relode(ActionEvent event) {
+        ReclamationService reclamationService = new ReclamationService();
+        ObservableList<Reclamation> listRec = FXCollections.observableArrayList(reclamationService.getListReclamation());
+
+        this.listRec.setItems(listRec);
+    }
+
 }
