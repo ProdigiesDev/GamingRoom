@@ -11,32 +11,67 @@ package tn.gamingroom.entities;
  */
 public class Produits {
 
-    private int idprod;
-    private String image;
-    private String libelle;
-    private int prix;
-    private String description;
+ 
 
+    private int idprod;
+     private int id_cat;
+       private String image;
+    private String libelle;
+    private double prix;
+    private String description;
+ 
+    private String nomCat;
 
     public Produits() {
     }
 
-    public Produits(int idprod, String image, String libelle, int prix, String description) {
+
+    public Produits(String image, String libelle, double prix, String description) {
+        this.image = image;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.description = description;
+    }
+
+    public Produits(int id_cat, String image, String libelle, double prix, String description) {
+        this.id_cat = id_cat;
+        this.image = image;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.description = description;
+        this.nomCat = nomCat;
+    }
+    public Produits(int idprod, String image, String libelle, double prix, String description,String nomCat) {
+        this.id_cat = id_cat;
+        this.image = image;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.description = description;
+        this.nomCat = nomCat;
+    }
+
+    public Produits(int idprod, int id_cat, String image, String libelle, double prix, String description, String nomCat) {
         this.idprod = idprod;
+        this.id_cat = id_cat;
         this.image = image;
         this.libelle = libelle;
         this.prix = prix;
         this.description = description;
+        this.nomCat = nomCat;
     }
-
-    public Produits(String image, String libelle, int prix, String description) {
-        this.image = image;
-        this.libelle = libelle;
-        this.prix = prix;
-        this.description = description;
-    }
-
  
+
+    
+   
+    
+
+    public String getNomCat() {
+        return nomCat;
+    }
+
+    public void setNomCat(String nomCat) {
+        this.nomCat = nomCat;
+    }
  
 
    
@@ -53,7 +88,7 @@ public class Produits {
         return libelle;
     }
 
-    public int getPrix() {
+    public double getPrix() {
         return prix;
     }
 
@@ -75,12 +110,20 @@ public class Produits {
         this.libelle = libelle;
     }
 
-    public void setPrix(int prix) {
+    public void setPrix(double prix) {
         this.prix = prix;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getId_cat() {
+        return id_cat;
+    }
+
+    public void setId_cat(int id_cat) {
+        this.id_cat = id_cat;
     }
 
     @Override

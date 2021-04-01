@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="tn.gamingroom.gui.Avis.ListAvisController">
+    <children>
+      <ImageView fitHeight="600.0" fitWidth="700.0" layoutX="-46.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="file:/C:/Users/Dah/Desktop/demo/images/713006.jpg" />
+         </image>
+      </ImageView>
+      <TableView fx:id="listRec" layoutX="76.0" layoutY="48.0" opacity="0.59" prefHeight="296.0" prefWidth="502.0" stylesheets="@../Jeux/listJeux.css">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="75.0" style="-fx-background-color: black;" text="Id" />
+          <TableColumn fx:id="colAvis" prefWidth="155.0" style="-fx-background-color: black;" text="Avis" />
+            <TableColumn fx:id="colM" prefWidth="271.0" style="-fx-background-color: black;" text="Member Id" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,3 +1,4 @@
+
 package tn.gamingroom.outils;
 
 import java.io.File;
@@ -16,7 +17,7 @@ public class Outils {
     
     public static boolean containsBadWords(String body){
         File file = new File("src/tn/gamingroom/outils/badWords.txt");
-        List<String> bodyList=Arrays.asList(body.split(" "));
+        List<String> bodyList=Arrays.asList(body.toLowerCase().split(" "));
         
         try {
             Scanner scanner = new Scanner(file);
