@@ -111,6 +111,7 @@ public class Cours {
         this.nb_participants = nb_participants;
         this.date_creation = date_creation;
         this.tags = tags;
+        this.image=image;
         this.categorie_id = categorie_id;
     }
 

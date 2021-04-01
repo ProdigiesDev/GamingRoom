@@ -27,19 +27,20 @@ public class ServiceCours implements ICours {
 
         int nb_ajouter=0;
         try {
-            String requete = "INSERT INTO cour(nomCours,description,nb_participant ,membre_id,date_creation,tags,categorie_id,imagecours,lienYoutube)"
+            String requete = "INSERT INTO cour(nomCours,description,nb_participant ,date_creation,tags,categorie_id,imagecours,lienYoutube,membre_id)"
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setString(1, c.getNomCours());
             pst.setString(2, c.getDescription());
             pst.setInt(3, c.getNb_participants());
-            pst.setInt(4, c.getMembre_id());
-            pst.setDate(5, c.getDate_creation());
-            pst.setString(6, c.getTags());
-            pst.setInt(7, c.getCategorie_id());
-            pst.setString(8, c.getImage());
-            pst.setString(9, c.getLienYoutube());
+            
+            pst.setDate(4, c.getDate_creation());
+            pst.setString(5, c.getTags());
+            pst.setInt(6, c.getCategorie_id());
+            pst.setString(7, c.getImage());
+            pst.setString(8, c.getLienYoutube());
+            pst.setInt(9, c.getMembre_id());
             nb_ajouter=pst.executeUpdate();
             
             if (nb_ajouter <= 0) {
@@ -120,7 +121,7 @@ public class ServiceCours implements ICours {
                 c.setNomCours(rs.getString("nomCours"));
                 c.setDescription(rs.getString("description"));
                 c.setNb_participants(rs.getInt("nb_participant"));
-                c.setMembre_id(rs.getInt("membre_id"));
+               // c.setMembre_id(rs.getInt("membre_id"));
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setCategorie_id(rs.getInt("categorie_id"));
@@ -139,7 +140,7 @@ public class ServiceCours implements ICours {
     public List<Cours> displayCoursByCoach() {
         List<Cours> CoursList = new ArrayList<>();
         try {
-            String requeteDs = "select c.* from cour c , membre m where c.membre_id=m.id";
+            String requeteDs = "select * from cour c";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requeteDs);
@@ -149,7 +150,7 @@ public class ServiceCours implements ICours {
                 c.setNomCours(rs.getString("nomCours"));
                 c.setDescription(rs.getString("description"));
                 c.setNb_participants(rs.getInt("nb_participant"));
-                c.setMembre_id(rs.getInt("membre_id"));
+                //c.setMembre_id(rs.getInt("membre_id"));
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setCategorie_id(rs.getInt("categorie_id"));
@@ -181,7 +182,7 @@ public class ServiceCours implements ICours {
                 c.setNomCours(rs.getString("nomCours"));
                 c.setDescription(rs.getString("description"));
                 c.setNb_participants(rs.getInt("nb_participant"));
-                c.setMembre_id(rs.getInt("membre_id"));
+                //c.setMembre_id(rs.getInt("membre_id"));
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setImage(rs.getString("imagecours"));
@@ -213,7 +214,7 @@ public class ServiceCours implements ICours {
                 c.setNomCours(rs.getString("nomCours"));
                 c.setDescription(rs.getString("description"));
                 c.setNb_participants(rs.getInt("nb_participant"));
-                c.setMembre_id(rs.getInt("membre_id"));
+                //c.setMembre_id(rs.getInt("membre_id"));
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setImage(rs.getString("imagecours"));
@@ -241,7 +242,7 @@ public class ServiceCours implements ICours {
                 c.setNomCours(rs.getString("nomCours"));
                 c.setDescription(rs.getString("description"));
                 c.setNb_participants(rs.getInt("nb_participant"));
-                c.setMembre_id(rs.getInt("membre_id"));
+                //c.setMembre_id(rs.getInt("membre_id"));
                 c.setDate_creation(rs.getDate("date_creation"));
                 c.setTags(rs.getString("tags"));
                 c.setCategorie_id(rs.getInt("categorie_id"));
