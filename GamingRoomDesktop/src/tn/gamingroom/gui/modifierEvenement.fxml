@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
@@ -80,14 +81,31 @@
                   </Label>
                   <JFXTextField fx:id="lienyoutube" focusColor="#6f1075" layoutX="489.0" layoutY="574.0" onKeyPressed="#verifLien" />
                   <Button fx:id="bntModif" layoutX="276.0" layoutY="637.0" mnemonicParsing="false" onAction="#modifierE" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: #6f1075;" text="Modifier" textFill="#f5f3f3" />
-                  <Label fx:id="nomeventCont" layoutX="346.0" layoutY="206.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
-                  <Label fx:id="datedebCont" layoutX="346.0" layoutY="265.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
-                  <Label fx:id="datefinCont" layoutX="346.0" layoutY="323.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
-                  <Label fx:id="imageCont" layoutX="484.0" layoutY="379.0" prefHeight="17.0" prefWidth="182.0" textFill="#6f1075" />
-                  <Label fx:id="nbpartCont" layoutX="346.0" layoutY="499.0" prefHeight="17.0" prefWidth="315.0" textFill="#6f1075" />
-                  <Label fx:id="descCont" layoutX="161.0" layoutY="610.0" prefHeight="17.0" prefWidth="199.0" textFill="#6f1075" />
-                  <Label fx:id="lienCont" layoutX="434.0" layoutY="610.0" prefHeight="17.0" prefWidth="199.0" textFill="#6f1075" />
+                  <Label fx:id="nomeventCont" layoutX="346.0" layoutY="206.0" prefHeight="17.0" prefWidth="315.0" textFill="WHITE" />
+                  <Label fx:id="datedebCont" layoutX="346.0" layoutY="265.0" prefHeight="17.0" prefWidth="315.0" textFill="WHITE" />
+                  <Label fx:id="datefinCont" layoutX="346.0" layoutY="323.0" prefHeight="17.0" prefWidth="315.0" textFill="WHITE" />
+                  <Label fx:id="imageCont" layoutX="484.0" layoutY="379.0" prefHeight="17.0" prefWidth="182.0" textFill="WHITE" />
+                  <Label fx:id="nbpartCont" layoutX="346.0" layoutY="499.0" prefHeight="17.0" prefWidth="315.0" textFill="WHITE" />
+                  <Label fx:id="descCont" layoutX="161.0" layoutY="610.0" prefHeight="17.0" prefWidth="199.0" textFill="WHITE" />
+                  <Label fx:id="lienCont" layoutX="434.0" layoutY="610.0" prefHeight="17.0" prefWidth="199.0" textFill="WHITE" />
                   <ImageView fx:id="imV" fitHeight="150.0" fitWidth="200.0" layoutX="441.0" layoutY="37.0" pickOnBounds="true" />
+                  <Label alignment="TOP_LEFT" layoutX="42.0" layoutY="159.0" prefHeight="25.0" prefWidth="98.0" text="Lieu" textFill="#f8f7f7">
+                     <font>
+                        <Font name="Yu Gothic Regular" size="13.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="langLat" focusColor="#6f1075" layoutX="170.0" layoutY="146.0" onKeyPressed="#verifLien" />
+                  <Button fx:id="btnGoToMap" layoutX="319.0" layoutY="158.0" mnemonicParsing="false" onAction="#goToMap" style="-fx-background-color: #6f1075;" textFill="#f5f3f3">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="MAP_MARKER" size="1.5em" />
+                     </graphic>
+                  </Button>
+                  <JFXRadioButton fx:id="online" layoutX="38.0" layoutY="111.0" onAction="#ifSelectetd" text="ONILNE" textFill="WHITE" />
+                  <Button fx:id="btnHelpL" layoutX="358.0" layoutY="158.0" mnemonicParsing="false" onAction="#helpL" style="-fx-background-color: #6f1075;" textFill="#f5f3f3">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="QUESTION_CIRCLE" size="1.5em" />
+                     </graphic>
+                  </Button>
                </children>
             </Pane>
          </children>

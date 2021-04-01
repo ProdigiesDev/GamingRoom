@@ -7,6 +7,7 @@ package tn.gamingroom.gui;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
@@ -31,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -38,11 +40,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Evenement;
+import static tn.gamingroom.gui.ConsulterEventFrontOfficeController.browser;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.EvenementService;
@@ -93,6 +98,15 @@ public class AjoutEvenementController implements Initializable {
     private ImageView imV;
     @FXML
     private Button bntHelp;
+    @FXML
+    private JFXRadioButton online;
+    @FXML
+    private JFXTextField langLat;
+    @FXML
+    private Button btnGoToMap;
+    @FXML
+    private Button btnHelpL;
+    static Browser browser;
 
     /**
      * Initializes the controller class.
@@ -135,10 +149,14 @@ public class AjoutEvenementController implements Initializable {
 
         final Tooltip tooltip1 = new Tooltip();
         final Tooltip tooltip2 = new Tooltip();
+        final Tooltip tooltip3 = new Tooltip();
         tooltip1.setText("Help");
         bntHelp.setTooltip(tooltip1);
         tooltip2.setText("Format embed");
         lienyoutube.setTooltip(tooltip2);
+        tooltip3.setText("Map");
+        btnGoToMap.setTooltip(tooltip3);
+        btnHelpL.setTooltip(tooltip1);
 
     }
 
@@ -176,7 +194,11 @@ public class AjoutEvenementController implements Initializable {
                 e.setDateDeb(java.sql.Date.valueOf(datedeb.getValue()));
                 e.setDateFin(java.sql.Date.valueOf(datefin.getValue()));
                 e.setImage(imageNameTodb);
-
+                if (!online.isSelected()) {
+                    e.setLieu(langLat.getText());
+                } else {
+                    e.setLieu("ONLINE");
+                }
                 e.setCategorie_id(categorie.getValue().getIdcat());
                 e.setNbreMax_participant(Integer.parseInt(nbremax_participant.getText()));
                 e.setDescription(description.getText());
@@ -282,8 +304,14 @@ public class AjoutEvenementController implements Initializable {
             lienCont.setText("Verrifier le lien");
             bntAjout.setDisable(true);
         } else {
-            lienCont.setText("");
-            bntAjout.setDisable(false);
+            String pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+";
+            if (!lienyoutube.getText().matches(pattern)) {
+                lienCont.setText("Lien Youtube Invalide");
+                bntAjout.setDisable(true);
+            } else if (lienyoutube.getText().matches(pattern)) {
+                lienCont.setText("");
+                bntAjout.setDisable(false);
+            }
         }
     }
 
@@ -291,7 +319,8 @@ public class AjoutEvenementController implements Initializable {
      * ************************
      */
     @FXML
-    private void verifDateDeb(ActionEvent event) {
+    private void verifDateDeb(ActionEvent event
+    ) {
         if (datedeb.getValue().toString().isEmpty()) {
             datedebCont.setText("Veuillez remplir ce champs");
             bntAjout.setDisable(true);
@@ -306,7 +335,8 @@ public class AjoutEvenementController implements Initializable {
     }
 
     @FXML
-    private void verifDatefin(ActionEvent event) {
+    private void verifDatefin(ActionEvent event
+    ) {
         if (datefin.getValue().toString().isEmpty()) {
             bntAjout.setDisable(true);
             datefinCont.setText("Veuillez remplir ce champs");
@@ -320,7 +350,8 @@ public class AjoutEvenementController implements Initializable {
     }
 
     @FXML
-    private void verifImage(ActionEvent event) {
+    private void verifImage(ActionEvent event
+    ) {
         if (image.isEmpty()) {
             bntAjout.setDisable(true);
             imageCont.setText("Veuillez remplir ce champs");
@@ -334,12 +365,47 @@ public class AjoutEvenementController implements Initializable {
     }
 
     @FXML
-    private void help(ActionEvent event) {
+    private void help(ActionEvent event
+    ) {
         JOptionPane.showMessageDialog(null, "Finding the embed code on YouTube:"
                 + "Go to YouTube.\n"
                 + "Navigate to the video you wish to embed.\n"
                 + "Click the Share link below the video, then click the Embed link.\n"
                 + "The embed link will be highlighted in blue. You will need to copy this link in order to add it to your page in the Employer Center.");
+    }
+
+    @FXML
+    private void goToMap(ActionEvent event) {
+
+        Scene scene;
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Map");
+        browser = new Browser(0, 0, false);
+        scene = new Scene(browser, 500, 500, Color.web("#666970"));
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    @FXML
+    private void ifSelectetd(ActionEvent event) {
+        if (online.isSelected()) {
+            langLat.setDisable(true);
+            btnGoToMap.setDisable(true);
+            btnHelpL.setDisable(true);
+        } else {
+            langLat.setDisable(false);
+            btnGoToMap.setDisable(false);
+            btnHelpL.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void helpL(ActionEvent event) {
+        JOptionPane.showMessageDialog(null, "Comment récuperer la longitude et latitude:\n"
+                + "ouvrir la fenêtre de Map\n"
+                + "Cliquez sur Agranidr le plan\n"
+                + "Choisissez la localisation\n"
+                + "La copier et la coller dans le champs Lieu.");
     }
 
 }

@@ -7,6 +7,7 @@ package tn.gamingroom.gui;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
@@ -29,17 +30,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Evenement;
+import static tn.gamingroom.gui.AjoutEvenementController.browser;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.EvenementService;
 
@@ -88,6 +93,14 @@ public class ModifierEvenementController implements Initializable {
     private Label lienCont;
     @FXML
     private ImageView imV;
+    @FXML
+    private JFXTextField langLat;
+    @FXML
+    private Button btnGoToMap;
+    @FXML
+    private JFXRadioButton online;
+    @FXML
+    private Button btnHelpL;
 
     public void iniData(int id) {
         try {
@@ -152,6 +165,10 @@ public class ModifierEvenementController implements Initializable {
 
     public void setImageNameTodb(String imageNameTodb) {
         this.imageNameTodb = imageNameTodb;
+    }
+
+    public void setLangLat(String langLat) {
+        this.langLat.setText(langLat);
     }
 
     /**
@@ -230,7 +247,11 @@ public class ModifierEvenementController implements Initializable {
                  * *******
                  */
                 e.setDateFin(java.sql.Date.valueOf(datefin.getValue()));
-
+                if (!online.isSelected()) {
+                    e.setLieu(langLat.getText());
+                } else {
+                    e.setLieu("ONLINE");
+                }
                 e.setImage(imageNameTodb);
                 e.setCategorie_id(categorie.getValue().getIdcat());
                 System.out.println("cat " + e.getCategorie_id());
@@ -262,7 +283,8 @@ public class ModifierEvenementController implements Initializable {
     }
 
     @FXML
-    private void backToList(ActionEvent event) {
+    private void backToList(ActionEvent event
+    ) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("listeEvenement.fxml"));
             Parent root = loader.load();
@@ -274,7 +296,8 @@ public class ModifierEvenementController implements Initializable {
     }
 
     @FXML
-    private void verifDesc(KeyEvent event) {
+    private void verifDesc(KeyEvent event
+    ) {
         if (description.getText().isEmpty()) {
             bntModif.setDisable(true);
             descCont.setText("Veuillez remplir ce champs");
@@ -288,7 +311,8 @@ public class ModifierEvenementController implements Initializable {
     }
 
     @FXML
-    private void verifTitre(KeyEvent event) {
+    private void verifTitre(KeyEvent event
+    ) {
         if (nomevent.getText().isEmpty()) {
             nomeventCont.setText("Veuillez remplir ce champs");
             bntModif.setDisable(true);
@@ -302,7 +326,8 @@ public class ModifierEvenementController implements Initializable {
     }
 
     @FXML
-    private void verifNbPart(KeyEvent event) {
+    private void verifNbPart(KeyEvent event
+    ) {
         try {
             int x = Integer.parseInt(nbremax_participant.getText()) % 2;
 
@@ -326,7 +351,8 @@ public class ModifierEvenementController implements Initializable {
     }
 
     @FXML
-    private void verifLien(KeyEvent event) {
+    private void verifLien(KeyEvent event
+    ) {
         if (lienyoutube.getText().isEmpty()) {
             bntModif.setDisable(true);
             lienCont.setText("Veuillez remplir ce champs");
@@ -343,7 +369,8 @@ public class ModifierEvenementController implements Initializable {
      * ************************
      */
     @FXML
-    private void verifDateDeb(ActionEvent event) {
+    private void verifDateDeb(ActionEvent event
+    ) {
         if (datedeb.getValue().toString().isEmpty()) {
             datedebCont.setText("Veuillez remplir ce champs");
             bntModif.setDisable(true);
@@ -358,7 +385,8 @@ public class ModifierEvenementController implements Initializable {
     }
 
     @FXML
-    private void verifDatefin(ActionEvent event) {
+    private void verifDatefin(ActionEvent event
+    ) {
         if (datefin.getValue().toString().isEmpty()) {
             bntModif.setDisable(true);
             datefinCont.setText("Veuillez remplir ce champs");
@@ -372,7 +400,8 @@ public class ModifierEvenementController implements Initializable {
     }
 
     @FXML
-    private void verifImage(ActionEvent event) {
+    private void verifImage(ActionEvent event
+    ) {
         if (image.isEmpty()) {
             bntModif.setDisable(true);
             imageCont.setText("Veuillez remplir ce champs");
@@ -383,6 +412,43 @@ public class ModifierEvenementController implements Initializable {
             imageCont.setText("");
             bntModif.setDisable(false);
         }
+    }
+
+    @FXML
+    private void goToMap(ActionEvent event
+    ) {
+
+        Scene scene;
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Map");
+        browser = new Browser(0, 0, false);
+        scene = new Scene(browser, 500, 500, Color.web("#666970"));
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    @FXML
+    private void ifSelectetd(ActionEvent event
+    ) {
+        if (online.isSelected()) {
+            langLat.setDisable(true);
+            btnGoToMap.setDisable(true);
+            btnHelpL.setDisable(true);
+        } else {
+            langLat.setDisable(false);
+            btnGoToMap.setDisable(false);
+            btnHelpL.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void helpL(ActionEvent event
+    ) {
+        JOptionPane.showMessageDialog(null, "Comment récuperer la longitude et latitude:\n"
+                + "ouvrir la fenêtre de Map\n"
+                + "Cliquez sur Agranidr le plan\n"
+                + "Choisissez la localisation\n"
+                + "La copier et la coller dans le champs Lieu.");
     }
 
 }

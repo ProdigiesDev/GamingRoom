@@ -181,6 +181,7 @@ public class ListeEvenementController implements Initializable {
                                 pct.setNbremax_participant(data.getNbreMax_participant() + "");
                                 pct.setDescription(data.getDescription());
                                 pct.setLienyoutube(data.getLienYoutube());
+                                pct.setLangLat(data.getLieu());
                                 pct.iniData(data.getIdevent());
                                 n.getScene().setRoot(root);
                             } catch (IOException ex) {
