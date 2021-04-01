@@ -6,6 +6,7 @@
 package tn.gamingroom.interfaces;
 
 import java.util.List;
+import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.ParticipantsCours;
 
 /**
@@ -15,5 +16,6 @@ import tn.gamingroom.entities.ParticipantsCours;
 public interface IParticipantsCours {
     public int ajouterParticipant(int membre_id, int cour_id);
     public List<ParticipantsCours> DisplayParticipants ();
+    public List <Membre>getListeParticipants(int idE);
  
 }

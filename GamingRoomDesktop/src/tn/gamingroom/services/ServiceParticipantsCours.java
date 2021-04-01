@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import tn.gamingroom.entities.Cours;
+import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.ParticipantsCours;
 import tn.gamingroom.interfaces.IParticipantsCours;
 import tn.gamingroom.outils.MyConnection;
@@ -51,7 +52,7 @@ public class ServiceParticipantsCours implements IParticipantsCours {
     public List<ParticipantsCours> DisplayParticipants() {
         List<ParticipantsCours> PartCours = new ArrayList<>();
         try {
-            String requeteDs = "SELECT * FROM participantcours";
+            String requeteDs = "SELECT * FROM participantcours ";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requeteDs);
@@ -69,5 +70,32 @@ public class ServiceParticipantsCours implements IParticipantsCours {
         return PartCours;
     }
 
-    
+    @Override
+    public List<Membre> getListeParticipants(int idE) {
+        List<Membre> membreList = new ArrayList<>();
+        try {
+            String requete = "SELECT m.* FROM membre m, participantcours p where m.id=p.membre_id AND p.cour_id="+idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                Membre m = new Membre();
+                m.setId(rs.getInt("id"));
+                m.setNom(rs.getString("nom"));
+                m.setPrenom(rs.getString("prenom"));
+                m.setDate_naissance(rs.getDate("date_naissance"));
+                m.setGenre(Membre.Genre.valueOf(rs.getString("genre")));
+                m.setTel(rs.getString("numero_tel"));
+                m.setEmail(rs.getString("email"));
+                m.setPassword(rs.getString("password"));
+                m.setImage(rs.getString("image"));
+                m.setRole(Membre.Role.valueOf(rs.getString("role")));
+                m.setBan_duration(rs.getInt("ban_duration"));
+                membreList.add(m);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return membreList;
+    }
 }

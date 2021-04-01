@@ -6,7 +6,7 @@
 package tn.gamingroom.gui;
 
 import com.jfoenix.controls.JFXButton;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -33,6 +34,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Cours;
@@ -61,8 +63,6 @@ public class InfoCoursController implements Initializable {
     @FXML
     private TextField com;
     @FXML
-    private FontAwesomeIconView like;
-    @FXML
     private TableColumn<ReacCours, String> allcom;
     @FXML
     private TableColumn<ReacCours, Integer> colMem;
@@ -79,8 +79,6 @@ public class InfoCoursController implements Initializable {
     private Text nbInter;
     @FXML
     private Button back;
-    @FXML
-    private FontAwesomeIconView dislike;
 
     @FXML
     private Text nbInternegng;
@@ -91,6 +89,12 @@ public class InfoCoursController implements Initializable {
     ParticipantsCours p;
     @FXML
     private WebView vidYoutube;
+    @FXML
+    private FontAwesomeIcon dislike;
+    @FXML
+    private FontAwesomeIcon like;
+    @FXML
+    private Button bntLPart;
 
     /**
      * Initializes the controller class.
@@ -110,6 +114,7 @@ public class InfoCoursController implements Initializable {
         des.setText(c.getDescription());
         imgcours.setImage(c.getImage().getImage());
         cour_id = c.getId();
+
         //System.out.println("c "+c.getLienYoutube());
         vidYoutube.getEngine().load(c.getLienYoutube());
 
@@ -245,6 +250,23 @@ public class InfoCoursController implements Initializable {
             } else {
                 JOptionPane.showMessageDialog(null, "Félicitation vous etes inscrit à ce cours");
             }
+        }
+    }
+
+    @FXML
+    private void goToListePart(ActionEvent event) {
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("listeParticipantsCours.fxml"));
+            Parent root = loader.load();
+            Scene s=new Scene(root);
+            ListeParticipantsCoursController pct = loader.getController();
+            pct.initDat(cour_id);
+            Stage prS=new Stage();
+            prS.setScene(s);
+            prS.show();
+        } catch (IOException ex) {
+            Logger.getLogger(InfoCoursController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
