@@ -57,14 +57,15 @@ public class CommandService implements ICommande{
         } 
     
     
-    public int confirmerCommande(int memberId) {
+    public int confirmerCommande(int memberId,double totale) {
         System.out.println("Modifier Commande");
             int nbModifier=0;
         try {
             
-            String req="Update commande set etat = ?  where etat='EnCours' and membreid ="+memberId;
+            String req="Update commande set etat = ? , totale = ?  where etat='EnCours' and membreid ="+memberId;
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, Commande.Statu.EnAttente.toString());
+            ps.setDouble(2, totale);
             nbModifier = ps.executeUpdate();  
            } catch (SQLException ex) {
             ex.printStackTrace();

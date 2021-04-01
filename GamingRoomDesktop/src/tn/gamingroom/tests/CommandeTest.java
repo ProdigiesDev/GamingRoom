@@ -24,12 +24,12 @@ public class CommandeTest {
         CommandService commandService=new CommandService();
        //       /*  Ajouter Commande */
        
-//         Commande  commande=new Commande(3);
-//         int nb=commandService.ajouterCommand(commande);
-//         if(nb==0)
-//                System.out.println("Erreur Ajout commande");
-//         else
-//             System.out.println("Commande a ete ajouter");
+         Commande  commande=new Commande(3);
+         int nb=commandService.ajouterCommand(commande);
+         if(nb==0)
+                System.out.println("Erreur Ajout commande");
+         else
+             System.out.println("Commande a ete ajouter");
          
        
         

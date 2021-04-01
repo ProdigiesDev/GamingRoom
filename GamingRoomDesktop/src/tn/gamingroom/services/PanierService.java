@@ -60,12 +60,14 @@ public class PanierService implements IPanier {
     @Override
     public int modifierQuantity(Panier p) {
         int nbModifier=0;
+        System.out.println("I am here "+p);
         try {
-            String req="Update panier set quantityDemande = ? where id=?";
+            String req="Update panier set quantityDemande = ? where id = ?";
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setInt(1,p.getQuantityDemande());
             ps.setInt(2,p.getId());
             nbModifier = ps.executeUpdate();  
+            System.out.println(nbModifier+" "+p);
            } catch (SQLException ex) {
             ex.printStackTrace();
            }
