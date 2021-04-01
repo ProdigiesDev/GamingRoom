@@ -343,10 +343,13 @@ public class SignupUserController implements Initializable {
 
 
 file = fileChooser.showOpenDialog(stage);
+if(file != null){
 image = file.getAbsolutePath();
+
 
 Image imageForFile = new Image(file.toURI().toURL().toExternalForm());
 image_membre.setImage(imageForFile);
+}
 
 
         } catch (MalformedURLException ex) {

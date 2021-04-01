@@ -51,7 +51,7 @@
          </children>
       </Pane>
       <ImageView fx:id="image_user" fitHeight="171.0" fitWidth="175.0" layoutX="34.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="label_nomprenom" layoutX="221.0" layoutY="50.0" prefHeight="35.0" prefWidth="237.0" text="Label" textFill="WHITE">
+      <Label fx:id="label_nomprenom" layoutX="221.0" layoutY="50.0" prefHeight="53.0" prefWidth="390.0" text="Label" textFill="WHITE">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
@@ -61,6 +61,7 @@
             <FontAwesomeIcon fill="WHITE" glyphName="COG" text="" />
          </graphic>
       </Button>
-      <JFXButton fx:id="btn_signout" layoutX="1073.0" layoutY="38.0" onAction="#SignOut" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: #F02307;" text="SIGN OUT" textFill="WHITE" />
+      <JFXButton fx:id="btn_signout" layoutX="1036.0" layoutY="28.0" onAction="#SignOut" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: #F02307;" text="SIGN OUT" textFill="WHITE" />
+      <FontAwesomeIcon fx:id="btn_reload" fill="WHITE" glyphName="REFRESH" layoutX="575.0" layoutY="71.0" onMousePressed="#reloadPage" size="2em" />
    </children>
 </AnchorPane>

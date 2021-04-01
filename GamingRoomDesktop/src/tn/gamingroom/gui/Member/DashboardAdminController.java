@@ -505,13 +505,12 @@ public class DashboardAdminController implements Initializable {
     @FXML
     private void staticMembre(ActionEvent event) {
          try {
-            Parent dashboard ;
-            dashboard = FXMLLoader.load(getClass().getResource("StatistiqueMembres.fxml"));
-
-            Scene dashboardScene = new Scene(dashboard);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(dashboardScene);
-            window.show();
+            FXMLLoader fxmlLoader =new FXMLLoader(getClass().getResource("StatistiqueMembres.fxml"));
+                Parent root = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Statistiques");
+                stage.setScene(new Scene(root));
+                stage.show();
         } catch (IOException ex) {
             Logger.getLogger(DashboardAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }

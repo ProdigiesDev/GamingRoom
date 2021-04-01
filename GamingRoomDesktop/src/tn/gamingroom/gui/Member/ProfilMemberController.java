@@ -6,6 +6,7 @@
 package tn.gamingroom.gui.Member;
 
 import com.jfoenix.controls.JFXButton;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -27,10 +28,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.Env;
+import tn.gamingroom.services.MembreServices;
 
 /**
  * FXML Controller class
@@ -55,6 +59,10 @@ public class ProfilMemberController implements Initializable {
     private JFXButton btn_signout;
     @FXML
     private Button btn_settings;
+    
+     
+    @FXML
+    private FontAwesomeIcon btn_reload;
 
     /**
      * Initializes the controller class.
@@ -65,10 +73,14 @@ public class ProfilMemberController implements Initializable {
         Afficherprofil();
         
         
+        
+        
     }  
+    
     public void Afficherprofil(){
-         UserSession us = UserSession.getInstance();
-            Membre m = us.getUser();
+        UserSession us = UserSession.getInstance();
+        Membre m = us.getUser();
+
             String nom = m.getNom();
             String prenom = m.getPrenom();
             Membre.Role role = m.getRole();
@@ -93,6 +105,8 @@ public class ProfilMemberController implements Initializable {
 
     @FXML
     private void SignOut(ActionEvent event) throws IOException {
+        UserSession us = UserSession.getInstance();
+        Membre m = us.getUser();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setHeaderText("You're about to logout!");
@@ -111,18 +125,29 @@ public class ProfilMemberController implements Initializable {
                 Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
                 window.setScene(dashboardScene);
                 window.show(); 
-                UserSession us = UserSession.getInstance();
                 us.cleanUserSession();
         }
     }
 
     @FXML
     private void afficherSettings(ActionEvent event) {
+        UserSession us = UserSession.getInstance();
+        Membre m = us.getUser();
         try {
                 FXMLLoader fxmlLoader =new FXMLLoader(getClass().getResource("Settings.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setTitle("Settings");
+                 SettingsController sc = fxmlLoader.getController();
+                sc.setId(m.getId());
+                sc.setNom(m.getNom());
+                sc.setPrenom(m.getPrenom());
+                sc.setSexe(m.getGenre());
+                sc.set_Date(m.getDate_naissance().toLocalDate());
+                sc.set_Email(m.getEmail());
+                sc.set_image(m);
+                sc.setTel(m.getTel());
+                
 //                ForgotPasswordController fpc = fxmlLoader.getController();
 //                fpc.setRnom(loginEmail.getText());
                 stage.setScene(new Scene(root));
@@ -131,6 +156,40 @@ public class ProfilMemberController implements Initializable {
                 Logger.getLogger(LoginMemberController.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
-    
-    
+
+   
+
+    @FXML
+    private void reloadPage(MouseEvent event) {
+        UserSession us1 = UserSession.getInstance();
+        Membre m = us1.getUser();
+         int id = m.getId();
+                MembreServices ms = new MembreServices();
+                Membre m1 = ms.getMemberById(id);
+                UserSession us = new UserSession(m1, m1.getRole());
+               
+
+            String nom = m1.getNom();
+            String prenom = m1.getPrenom();
+            Membre.Role role = m1.getRole();
+            Membre.Genre sexe = m1.getGenre();
+            String email = m1.getEmail();
+            String tel = m1.getTel();
+        try {
+           
+            
+            image_user.setImage(new Image(new File(Env.getImagePath() + "\\membre\\" + m1.getImage()).toURI().toURL().toExternalForm()));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ProfilMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+        
+        label_nomprenom.setText(nom+" "+prenom);
+        label_role.setText(role.toString());
+        label_sexe.setText(sexe.toString());
+        label_email.setText(email);
+        label_tel.setText(tel);
+    }
+
+  
 }
