@@ -92,6 +92,27 @@ public class CategorieServices implements ICategorie<Categorie> {
         return CatList;
     }
 
+    
+    public Categorie getCategorieById(int id) {
+        List <Categorie> CatList = new ArrayList<>();
+        try {
+            String requete = "SELECT * FROM categorie where idcat="+id;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs =  st.executeQuery(requete);
+            if(rs.next()){
+                Categorie c = new Categorie();
+                c.setIdcat(rs.getInt("idcat"));
+                c.setNomcat(rs.getString("nomcategorie"));
+               
+                return c;
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return null;
+    }
+    
     @Override
     public List<Categorie> RechercherCategorie(String x) {
          ArrayList<Categorie> ListCategorie = new ArrayList<>();
