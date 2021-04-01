@@ -15,7 +15,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="DashProduit" prefHeight="844.0" prefWidth="1335.0" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutProduitController">
    <children>
-      <TableView fx:id="tvbox" layoutX="610.0" layoutY="125.0" onMouseClicked="#getSelected" opacity="0.5" prefHeight="480.0" prefWidth="692.0" style="-fx-background-color: black;" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
+      <TableView fx:id="tvbox" layoutX="610.0" layoutY="125.0" onMouseClicked="#getSelected" prefHeight="480.0" prefWidth="692.0" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
         <columns>
           <TableColumn fx:id="colid" prefWidth="52.0" style="-fx-text-fill: black;" text="ID" />
             <TableColumn fx:id="colimage" prefWidth="105.0" text="Image" />
@@ -40,7 +40,7 @@
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="tfrech" layoutX="1044.0" layoutY="88.0" onKeyPressed="#RechercherProduit" prefHeight="33.0" prefWidth="258.0" styleClass="btnMore" />
+      <TextField fx:id="tfrech" layoutX="1044.0" layoutY="88.0" onKeyPressed="#RechercherProduit" prefHeight="33.0" prefWidth="258.0" promptText="Vous pouvez rechercher avec identifiant" />
       <Button fx:id="btnTri" graphicTextGap="9.0" layoutX="360.0" layoutY="609.0" mnemonicParsing="false" onAction="#TrierParId" prefHeight="41.0" prefWidth="161.0" styleClass="btnMore" text="Tri Par ID" textFill="#5b0a50fc">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />

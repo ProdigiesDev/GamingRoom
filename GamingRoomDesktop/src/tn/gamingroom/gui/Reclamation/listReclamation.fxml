@@ -10,9 +10,9 @@
    <children>
       <TableView fx:id="listRec" layoutX="14.0" layoutY="81.0" opacity="0.59" prefHeight="296.0" prefWidth="700.0" stylesheets="file:/C:/Users/Dah/Desktop/demo/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="89.0" text="Id" />
-          <TableColumn fx:id="colSujet" prefWidth="275.0" text="Sujet" />
-            <TableColumn fx:id="colMsg" prefWidth="335.0" text="Message" />
+          <TableColumn fx:id="colId" prefWidth="89.0" style="-fx-background-color: black;" text="Id" />
+          <TableColumn fx:id="colSujet" prefWidth="275.0" style="-fx-background-color: black;" text="Sujet" />
+            <TableColumn fx:id="colMsg" prefWidth="335.0" style="-fx-background-color: black;" text="Message" />
         </columns>
       </TableView>
       <JFXButton layoutX="606.0" layoutY="37.0" onAction="#relode" text="Refresh">

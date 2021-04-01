@@ -7,19 +7,25 @@ package tn.gamingroom.gui.Avis;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Avis;
+import tn.gamingroom.entities.Membre;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.Outils;
 import tn.gamingroom.services.AvisService;
 
@@ -43,8 +49,8 @@ public class AjouterAvisController implements Initializable {
     private JFXTextArea txtAvis;
     @FXML
     private Text errAvis;
-    private final int N_SECS = 30;
-    private Task task;
+    private Membre membre;
+
     /**
      * Initializes the controller class.
      */
@@ -53,14 +59,22 @@ public class AjouterAvisController implements Initializable {
         // TODO
         paneLoader.setVisible(false);
         txtAvis.setStyle("-fx-text-fill: white; ");
+        if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
+        }
     }
 
     @FXML
     private void ajouterAvis(ActionEvent event) {
-        task=createTask();
-        loader.progressProperty().bind(task.progressProperty());
+        if (this.membre == null) {
+            int a = JOptionPane.showConfirmDialog(new JFrame(), "vous dois d'abord vous connecter ?");
+            if (a == JOptionPane.YES_OPTION) {
+                goLogin();
+            }
+            return;
+        }
         String avisTXT = txtAvis.getText();
-        int member_id = 2;
+        int member_id = this.membre.getId();
 
         if (avisTXT.length() == 0) {
             errAvis.setText("Message est obligatoire");
@@ -76,13 +90,23 @@ public class AjouterAvisController implements Initializable {
         AvisService avisService = new AvisService();
         int nb = avisService.ajouterAvis(avis);
         if (nb == 0) {
-            task.cancel();
             JOptionPane.showMessageDialog(null, "Une erreur s'est produite, veuillez réessayer plus tard");
         } else {
+            reset();
             JOptionPane.showMessageDialog(null, "Votre avis a été reçu");
-            task.cancel();
         }
 
+    }
+
+    private void goLogin() {
+        try {
+            Parent root = FXMLLoader.
+                    load(getClass().getResource("../Member/LoginMember.fxml"));
+
+            errAvis.getScene().setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     @FXML
@@ -91,39 +115,13 @@ public class AjouterAvisController implements Initializable {
         errAvis.setVisible(false);
     }
 
-    private Task<Void> createTask() {
-        return new Task<Void>() {
-            @Override
-            public Void call() {
-                changeVisiblite(false,true);
-                for (int i = 0; i < N_SECS; i++) {
-                    if (isCancelled()) {
-                        changeVisiblite(true,false);
-                        break;
-                    }
-                    // uncomment updateProgress call if you want to show progress
-                    // rather than let progress remain indeterminate.
-                    // updateProgress(i, N_SECS);
-                    updateMessage((N_SECS - i) + "");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        return null;
-                    }
-                }
+    void changeVisiblite(boolean paneVal1, boolean paneVal2) {
 
-                updateMessage(0 + "");
-                updateProgress(N_SECS, N_SECS);
-
-                return null;
-            }
-        };
-    }
-    
-    void changeVisiblite(boolean paneVal1,boolean paneVal2){
-        
-            paneInfo.setVisible(paneVal1);
-            paneLoader.setVisible(paneVal2);
+        paneInfo.setVisible(paneVal1);
+        paneLoader.setVisible(paneVal2);
     }
 
+    void reset() {
+        txtAvis.setText("");
+    }
 }

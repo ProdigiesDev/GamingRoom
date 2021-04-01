@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,38 +17,55 @@
                   <Image url="file:/C:/Users/Dah/Desktop/demo/images/logo.png" />
                </image>
             </ImageView>
-         <JFXButton fx:id="home" layoutX="340.0" layoutY="24.0" onAction="#gotoHome" text="Home" textFill="WHITE">
+         <JFXButton fx:id="home" layoutX="340.0" layoutY="24.0" onAction="#gotoHome" text="Accueil" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>
          </JFXButton>
-            <FontAwesomeIcon fill="WHITE" glyphName="SHOPPING_CART" layoutX="1075.0" layoutY="49.0" size="2em" />
-            <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" layoutX="1135.0" layoutY="48.0" size="2em" />
-         <JFXButton fx:id="events" layoutX="420.0" layoutY="24.0" text="Events" textFill="WHITE">
+         <JFXButton fx:id="btnshop" layoutX="950.0" layoutY="26.0" text=" " visible="false">
+            <graphic>
+                  <FontAwesomeIcon fx:id="fontshop" fill="WHITE" glyphName="SHOPPING_CART" size="2em" visible="false" />
+            </graphic>
+         </JFXButton>
+         <JFXButton fx:id="signoutbtn" layoutX="1150.0" layoutY="27.0" onAction="#signout" text=" ">
+            <graphic>
+                  <FontAwesomeIcon fx:id="fontsingout" fill="WHITE" glyphName="SIGN_OUT" size="2em" visible="false" />
+            </graphic></JFXButton>
+         <JFXButton fx:id="events" layoutX="420.0" layoutY="24.0" text="Événements" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>
          </JFXButton>
-         <JFXButton fx:id="sotre" layoutX="580.0" layoutY="24.0" text="Store" textFill="WHITE">
+         <JFXButton fx:id="sotre" layoutX="598.0" layoutY="24.0" text="Magasin" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>
          </JFXButton>
-         <JFXButton fx:id="games" layoutX="660.0" layoutY="24.0" onAction="#gotoGames" text="Games" textFill="WHITE">
+         <JFXButton fx:id="games" layoutX="691.0" layoutY="24.0" onAction="#gotoGames" text="Jeux" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>
          </JFXButton>
-         <JFXButton fx:id="cours" layoutX="500.0" layoutY="24.0" text="Cours" textFill="WHITE">
+         <JFXButton fx:id="cours" layoutX="527.0" layoutY="24.0" text="Cours" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>
          </JFXButton>
-         <JFXButton fx:id="games1" layoutX="740.0" layoutY="24.0" onAction="#gotoReclamtion" prefHeight="31.0" prefWidth="92.0" text="Aide" textFill="WHITE">
+         <JFXButton fx:id="games1" layoutX="740.0" layoutY="24.0" onAction="#gotoReclamtion" prefHeight="31.0" prefWidth="58.0" text="Aide" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>
          </JFXButton>
+         <JFXButton fx:id="loginbtn" layoutX="1107.0" layoutY="26.0" onAction="#goLogin" prefHeight="31.0" prefWidth="92.0" text="Login" textFill="WHITE">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </JFXButton>
+         <Label fx:id="nom" layoutX="1000.0" layoutY="27.0" prefHeight="30.0" prefWidth="158.0" textFill="WHITE" visible="false">
+            <font>
+               <Font size="20.0" />
+            </font>
+         </Label>
          </children>
       </Pane>
 </AnchorPane>

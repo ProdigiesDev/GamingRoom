@@ -10,10 +10,10 @@
      <children>
       <TableView fx:id="listJeux" layoutX="6.0" layoutY="94.0" onMouseClicked="#editJeux" opacity="0.59" prefHeight="296.0" prefWidth="735.0" style="-fx-background-color: black;" stylesheets="file:/C:/Users/Dah/Desktop/demo/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="colNom" prefWidth="155.0" text="Nom" />
-            <TableColumn fx:id="colDesc" prefWidth="271.0" text="Description" />
-            <TableColumn fx:id="colPlat" prefWidth="147.0" text="Plateforme" />
+          <TableColumn fx:id="colId" prefWidth="75.0" style="-fx-background-color: black;" text="Id" />
+          <TableColumn fx:id="colNom" prefWidth="155.0" style="-fx-background-color: black;" text="Nom" />
+            <TableColumn fx:id="colDesc" prefWidth="332.0" style="-fx-background-color: black;" text="Description" />
+            <TableColumn fx:id="colPlat" prefWidth="172.0" style="-fx-background-color: black;" text="Plateforme" />
         </columns>
       </TableView>
       <JFXButton fx:id="addGameBtn" layoutX="14.0" layoutY="14.0" onAction="#goAddGame" styleClass="btnMore" text="Ajouter Jeux">

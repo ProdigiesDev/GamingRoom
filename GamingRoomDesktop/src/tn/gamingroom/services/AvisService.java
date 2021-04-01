@@ -35,8 +35,7 @@ public class AvisService implements IAvis {
     public int ajouterAvis(Avis avis) {
         int nb = 0;
         HashMap<String, String> headers = new HashMap();
-        String review=avis.getAvis();
-        review=review.replaceAll(" ","%25");
+        String review=avis.getAvis().replaceAll(" ", "%25");
         System.out.println(review);
         headers.put("Accept", "application/json");
         HttpURLConnection conn = ApiCall.callApi("https://api.meaningcloud.com/sentiment-2.1?verbose=y&key=" + Env.getKeyMeaningcloudApi() + "&lang=en&txt=" + review + "&model=general", headers);
@@ -48,7 +47,6 @@ public class AvisService implements IAvis {
             }
             InputStreamReader in = new InputStreamReader(conn.getInputStream());
             BufferedReader br = new BufferedReader(in);
-            System.out.println(br.readLine());
             JSONObject obj = new JSONObject(br.readLine());
             String reqAjouter = "insert into avis (avis,member_id,sentiment) values(?,?,?)";
             PreparedStatement ps = cnx.prepareStatement(reqAjouter);

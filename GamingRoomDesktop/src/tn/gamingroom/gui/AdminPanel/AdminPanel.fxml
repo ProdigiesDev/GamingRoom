@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,6 +13,11 @@
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1100.0" prefWidth="1350.0" styleClass="body">
             <children>
+            <ImageView fitHeight="1000.0" fitWidth="1350.0" pickOnBounds="true" AnchorPane.topAnchor="120.0">
+               <image>
+                  <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/images/AjoutEvenement.jpg" />
+               </image>
+            </ImageView>
                 <Pane layoutX="-2.0" layoutY="-3.0" prefHeight="112.0" prefWidth="1350.0">
                     <children>
                         <ImageView fitHeight="67.0" fitWidth="200.0" layoutX="55.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
@@ -29,7 +35,7 @@
                                 <Font size="20.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton fx:id="members" layoutX="601.0" layoutY="35.0" text="Membres">
+                        <JFXButton fx:id="members" layoutX="601.0" layoutY="35.0" onAction="#openMembre" text="Membres">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -45,6 +51,17 @@
                             </font>
                         </JFXButton>
                   <JFXButton layoutX="865.0" layoutY="35.0" onAction="#openReclamtion" text="Reclamation">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnsignout" layoutX="1228.0" layoutY="44.0" onAction="#signout" style="-fx-background-color: #F02307;" text="SIGN OUT" textFill="WHITE" />
+                  <Label fx:id="name" layoutX="1040.0" layoutY="42.0" prefHeight="30.0" prefWidth="165.0" text="Label" visible="false">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <JFXButton layoutX="350.0" layoutY="35.0" onAction="#openAvis" text="Avis">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -70,6 +87,16 @@
             <Pane fx:id="cles" layoutX="323.0" layoutY="238.0" prefHeight="844.0" prefWidth="1335.0" visible="false" AnchorPane.leftAnchor="10.0">
                <children>
                   <fx:include fx:id="listjeux111" source="../AjoutCle.fxml" />
+               </children>
+            </Pane>
+            <Pane fx:id="memberPane" layoutX="333.0" layoutY="248.0" prefHeight="844.0" prefWidth="1335.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="150.0">
+               <children>
+                  <fx:include source="../Member/DashboardAdmin.fxml" />
+               </children>
+            </Pane>
+            <Pane fx:id="avisPane" layoutX="313.0" layoutY="228.0" prefHeight="398.0" prefWidth="744.0" visible="false">
+               <children>
+                  <fx:include source="../Avis/listAvis.fxml" />
                </children>
             </Pane>
             </children>

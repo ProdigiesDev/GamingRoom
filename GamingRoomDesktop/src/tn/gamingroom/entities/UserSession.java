@@ -41,9 +41,9 @@ public class UserSession {
         return role;
     }
 
-    public void cleanUserSession() {
-        user=null;// or null
-        role = null;// or null
+    public static void cleanUserSession() {
+        instance=null;
+        
     }
 
     @Override

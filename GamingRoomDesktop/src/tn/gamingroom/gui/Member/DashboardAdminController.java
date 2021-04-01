@@ -90,13 +90,13 @@ public class DashboardAdminController implements Initializable {
     @FXML
     private TableColumn<Membre, String> colonne_role;
     @FXML
-    private TableColumn<Membre,Integer > colonne_pt;
+    private TableColumn<Membre, Integer> colonne_pt;
     @FXML
     private TableColumn<Membre, Boolean> colonne_active;
     @FXML
     private TableColumn<Membre, Integer> colonne_ban;
     @FXML
-    private TableColumn<Membre,Date > colonne_lastban;
+    private TableColumn<Membre, Date> colonne_lastban;
     @FXML
     private JFXTextField textcatid;
     @FXML
@@ -137,7 +137,6 @@ public class DashboardAdminController implements Initializable {
     private JFXButton btn_refuser;
     @FXML
     private Button button_imprimer;
-   
 
     /**
      * Initializes the controller class.
@@ -145,12 +144,11 @@ public class DashboardAdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+
         //Membre 
-        System.out.println(UserSession.getInstance().getUser()+" awka say jawik behi last test");
         addButtonToTable();
         afficherMembre();
-        
+
         //Categorie
         afficherCategorie();
         //Combo Genre
@@ -164,19 +162,19 @@ public class DashboardAdminController implements Initializable {
         tfidmember.setStyle("-fx-text-FILL : white;");
         textcatid.setStyle("-fx-text-FILL : white;");
         textcatname.setStyle("-fx-text-FILL : white;");
-        
-        
-    } 
-    
-    public void afficherCategorie(){
+
+    }
+
+    public void afficherCategorie() {
         CategorieServices cs = new CategorieServices();
-        
+
         ObservableList<Categorie> listCategorie = FXCollections.observableArrayList(cs.DisplayCategorie());
         colonne_idcat.setCellValueFactory(new PropertyValueFactory<Categorie, Integer>("idcat"));
         colonne_namecat.setCellValueFactory(new PropertyValueFactory<Categorie, String>("nomcat"));
         tableCat.setItems(listCategorie);
     }
-    public void afficherMembre(){
+
+    public void afficherMembre() {
         MembreServices s = new MembreServices();
 
         ObservableList<Membre> listMembre = FXCollections.observableArrayList(s.DisplayMembres());
@@ -191,29 +189,27 @@ public class DashboardAdminController implements Initializable {
         colonne_active.setCellValueFactory(new PropertyValueFactory<Membre, Boolean>("active"));
         colonne_ban.setCellValueFactory(new PropertyValueFactory<Membre, Integer>("ban_duration"));
         colonne_lastban.setCellValueFactory(new PropertyValueFactory<Membre, Date>("last_timeban"));
-       
+
         table_memb.setItems(listMembre);
     }
-
-    
 
     @FXML
     private void ajouterCategorie(ActionEvent event) {
         //int idcat = Integer.parseInt(textcatid.getText());
-        String nomcat=textcatname.getText();
-         Categorie c = new Categorie(1,nomcat);
-         
-         CategorieServices cs = new CategorieServices();
-         cs.ajouterCategorie(c);
-         afficherCategorie();
-        
+        String nomcat = textcatname.getText();
+        Categorie c = new Categorie(1, nomcat);
+
+        CategorieServices cs = new CategorieServices();
+        cs.ajouterCategorie(c);
+        afficherCategorie();
+
     }
 
     @FXML
     private void modifierCategorie(ActionEvent event) {
         int idcat = Integer.parseInt(textcatid.getText());
         String nomcat = textcatname.getText();
-        
+
         Categorie c = new Categorie(idcat, nomcat);
 
         CategorieServices cs = new CategorieServices();
@@ -229,9 +225,9 @@ public class DashboardAdminController implements Initializable {
 
     @FXML
     private void supprimerCategorie(ActionEvent event) {
-        
+
         CategorieServices cs = new CategorieServices();
-        
+
         Categorie c = new Categorie();
 
         c = this.tableCat.getSelectionModel().getSelectedItem();
@@ -259,13 +255,13 @@ public class DashboardAdminController implements Initializable {
 
         colonne_idcat.setCellValueFactory(new PropertyValueFactory<Categorie, Integer>("idcat"));
         colonne_namecat.setCellValueFactory(new PropertyValueFactory<Categorie, String>("nomcat"));
- 
+
         tableCat.setItems(list);
     }
 
     @FXML
     private void getSelectedCat(MouseEvent event) {
-         int index = tableCat.getSelectionModel().getSelectedIndex();
+        int index = tableCat.getSelectionModel().getSelectedIndex();
 
         if (index <= -1) {
 
@@ -314,7 +310,7 @@ public class DashboardAdminController implements Initializable {
 
     @FXML
     private void trierMembre(ActionEvent event) {
-        
+
         MembreServices ms = new MembreServices();
         ObservableList<Membre> list = FXCollections.observableArrayList(ms.TrierParId());
 
@@ -331,7 +327,7 @@ public class DashboardAdminController implements Initializable {
         colonne_lastban.setCellValueFactory(new PropertyValueFactory<Membre, Date>("last_timeban"));
         table_memb.setItems(list);
     }
-    
+
     private void addButtonToTable() {
         TableColumn<Membre, Void> colBtn = new TableColumn("");
 
@@ -345,14 +341,14 @@ public class DashboardAdminController implements Initializable {
                     {
                         btn.setStyle("-fx-background-color: #9F7EF7");
                         btn.setTextFill(Paint.valueOf("#f8f7f7"));
-                        btn.setOnAction( event -> {
+                        btn.setOnAction(event -> {
                             Membre membre = getTableView().getItems().get(getIndex());
-                            MembreServices membreServices=new MembreServices();
-                            membre.setBan_duration(membre.getBan_duration()+1);
+                            MembreServices membreServices = new MembreServices();
+                            membre.setBan_duration(membre.getBan_duration() + 1);
                             membre.setActive(false);
                             membre.setLast_timeban(Timestamp.valueOf(LocalDateTime.now()));
                             membreServices.modifierMembreParAdmin(membre);
-                           getTableView().getItems().set(getIndex(), membre);
+                            getTableView().getItems().set(getIndex(), membre);
                         });
                     }
 
@@ -378,31 +374,27 @@ public class DashboardAdminController implements Initializable {
 
     @FXML
     private void getSelectedMember(MouseEvent event) {
-         int index = table_memb.getSelectionModel().getSelectedIndex();
+        int index = table_memb.getSelectionModel().getSelectedIndex();
 //       Membre.Role role =  colonne_role.getCellData(index);
-       int ban = colonne_ban.getCellData(index);
-         boolean active = colonne_active.getCellData(index);
-         
+        int ban = colonne_ban.getCellData(index);
+        boolean active = colonne_active.getCellData(index);
+
         if (index <= -1) {
 
             return;
 
-        }
-        else if( active ==false && ban==0 ){
+        } else if (active == false && ban == 0) {
             tfidmember.setText(colonne_id.getCellData(index).toString());
             txtarea_coachdesc.setVisible(true);
             MembreServices ms = new MembreServices();
             int id = Integer.parseInt(tfidmember.getText());
-            String texte =  ms.getDescParId(id);
+            String texte = ms.getDescParId(id);
             txtarea_coachdesc.setText(texte);
-           
-            
-        }
-        else{
+
+        } else {
             txtarea_coachdesc.setVisible(false);
         }
-        
-        
+
 //        
 //        tfidmember.setText(colonne_id.getCellData(index).toString());
 ////        String active = colonne_active.getCellData(index).toString();
@@ -413,7 +405,7 @@ public class DashboardAdminController implements Initializable {
 //            activateCombo.setValue("Activate");
 //        }
         //activateCombo.setValue(colonne_active.getCellData(index).toString());
-       // tfpoint.setText(colonne_pt.getCellData(index).toString());
+        // tfpoint.setText(colonne_pt.getCellData(index).toString());
     }
 
 //    @FXML
@@ -430,7 +422,6 @@ public class DashboardAdminController implements Initializable {
 //          
 //        
 //    }
-
 //    @FXML
 //    private void modiferPointMembre(ActionEvent event) {
 //        
@@ -450,10 +441,9 @@ public class DashboardAdminController implements Initializable {
 //        }
 //        afficherMembre();
 //    }
-
     @FXML
     private void signout(ActionEvent event) throws IOException {
-        
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setHeaderText("You're about to logout!");
@@ -461,19 +451,19 @@ public class DashboardAdminController implements Initializable {
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(okButton, cancelButton);
-        
-        if(alert.showAndWait().get()== okButton){
-                Parent dashboard ;
-                dashboard = FXMLLoader.load(getClass().getResource("LoginMember.fxml"));
+
+        if (alert.showAndWait().get() == okButton) {
+            Parent dashboard;
+            dashboard = FXMLLoader.load(getClass().getResource("LoginMember.fxml"));
 //             Parent root = loader.load();
 //            DashboardAdminController adc = loader.getController();
-            
-                Scene dashboardScene = new Scene(dashboard);
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-                window.setScene(dashboardScene);
-                window.show(); 
-                UserSession us = UserSession.getInstance();
-                us.cleanUserSession();
+
+            Scene dashboardScene = new Scene(dashboard);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(dashboardScene);
+            window.show();
+            UserSession us = UserSession.getInstance();
+            us.cleanUserSession();
         }
     }
 
@@ -499,9 +489,6 @@ public class DashboardAdminController implements Initializable {
 //            afficherMembre();
 //        }
 //    }
-
-   
-
     @FXML
     private void staticMembre(ActionEvent event) {
          try {
@@ -518,38 +505,37 @@ public class DashboardAdminController implements Initializable {
 
     @FXML
     private void activerCompteCoach(ActionEvent event) {
-        
+
         int idmembre = Integer.parseInt(tfidmember.getText());
         MembreServices ms = new MembreServices();
         String email = ms.getEmailParId(idmembre);
-       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setHeaderText("You're about to logout!");
         alert.setContentText("Are you sure ?");
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(okButton, cancelButton);
-         if(alert.showAndWait().get()== okButton){
-             System.out.println("bla bla");
-          Membre m = new Membre(idmembre,true);
-          ms.activerCompte(m);
-          JOptionPane.showMessageDialog(null, " Account successfully activated");
-          afficherMembre(); 
-          String texte =  "Hello,"+"\n"+" We are glad to let you know that we accepeted your request to be a coach and your account is acctivated now  "+"\n"+"\n"+"GamingRoom";
-        
+        if (alert.showAndWait().get() == okButton) {
+            System.out.println("bla bla");
+            Membre m = new Membre(idmembre, true);
+            ms.activerCompte(m);
+            JOptionPane.showMessageDialog(null, " Account successfully activated");
+            afficherMembre();
+            String texte = "Hello," + "\n" + " We are glad to let you know that we accepeted your request to be a coach and your account is acctivated now  " + "\n" + "\n" + "GamingRoom";
+
             try {
-                boolean b= SendEmail.sendMail(email, "Account activation",texte);
-                 if(b==true){
-                JOptionPane.showMessageDialog(null, "Email sent successfullu");
-            }
-            else{
-                 JOptionPane.showMessageDialog(null,"ERROR! ");
-            } 
+                boolean b = SendEmail.sendMail(email, "Account activation", texte);
+                if (b == true) {
+                    JOptionPane.showMessageDialog(null, "Email sent successfullu");
+                } else {
+                    JOptionPane.showMessageDialog(null, "ERROR! ");
+                }
             } catch (MessagingException ex) {
                 Logger.getLogger(DashboardAdminController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-         }
+
+        }
     }
 
     @FXML
@@ -558,69 +544,63 @@ public class DashboardAdminController implements Initializable {
         MembreServices ms = new MembreServices();
         String email = ms.getEmailParId(idmembre);
         Membre m = new Membre(idmembre);
-       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Refuse Account");
         alert.setHeaderText("You're about to refuse and delete member!");
         alert.setContentText("Are you sure ?");
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(okButton, cancelButton);
-         if(alert.showAndWait().get()== okButton){
-        ms.sumprimerMembres(m);
-        JOptionPane.showMessageDialog(null, " Account successfully deleted");
-        afficherMembre();
-         String texte =  "Hello,"+"\n"+" We are sorry to let you know that we didn't accepet your request to be a coach  "+"\n"+"\n"+"GamingRoom";
-        
+        if (alert.showAndWait().get() == okButton) {
+            ms.sumprimerMembres(m);
+            JOptionPane.showMessageDialog(null, " Account successfully deleted");
+            afficherMembre();
+            String texte = "Hello," + "\n" + " We are sorry to let you know that we didn't accepet your request to be a coach  " + "\n" + "\n" + "GamingRoom";
+
             try {
-                boolean b= SendEmail.sendMail(email, "Account activation",texte);
-                 if(b==true){
-                JOptionPane.showMessageDialog(null, "Email sent successfullu");
-            }
-            else{
-                 JOptionPane.showMessageDialog(null,"ERROR! ");
-            } 
+                boolean b = SendEmail.sendMail(email, "Account activation", texte);
+                if (b == true) {
+                    JOptionPane.showMessageDialog(null, "Email sent successfullu");
+                } else {
+                    JOptionPane.showMessageDialog(null, "ERROR! ");
+                }
             } catch (MessagingException ex) {
                 Logger.getLogger(DashboardAdminController.class.getName()).log(Level.SEVERE, null, ex);
             }
-         }
-        
+        }
+
     }
 
     @FXML
     private void imprimerTable(ActionEvent event) throws SQLException, DocumentException, ClassNotFoundException {
         try {
-              Class.forName("com.mysql.jdbc.Driver");
-                  Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gamingroom","gamingRoomUser","!&_UkTz/Cw`*2#[u");
-      PreparedStatement pt = con.prepareStatement("select * from membre where role != 'Admin'");
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gamingroom", "gamingRoomUser", "!&_UkTz/Cw`*2#[u");
+            PreparedStatement pt = con.prepareStatement("select * from membre where role != 'Admin'");
             ResultSet rs = pt.executeQuery();
-            
-                       /* Step-2: Initialize PDF documents - logical objects */
 
-                       Document my_pdf_report = new Document();
+            /* Step-2: Initialize PDF documents - logical objects */
+            Document my_pdf_report = new Document();
 
-                       PdfWriter.getInstance(my_pdf_report, new FileOutputStream("pdf_report_from_sql_using_java.pdf"));
-                       
-                              my_pdf_report.open();  
+            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("pdf_report_from_sql_using_java.pdf"));
+
+            my_pdf_report.open();
 //                       my_pdf_report.add(new Paragraph(new Date().toString()));
 //                            Image img = Image.getInstance("c:/6.png");
 //                            my_pdf_report.add(img);
-                              my_pdf_report.add(new Paragraph("Listes des Membres:"));
-                              my_pdf_report.add(new Paragraph(" "));
-                              my_pdf_report.addCreationDate();
-              
-                       
-                       //we have seven columns in our table
-                       PdfPTable my_report_table = new PdfPTable(7);
-                   
-                             
-                       //create a cell object
-                       PdfPCell table_cell;
-                       
-                       
-                       
-                                       table_cell=new PdfPCell(new Phrase("ID"));
-                                      table_cell.setBackgroundColor(BaseColor.CYAN);
-                                       my_report_table.addCell(table_cell);
+            my_pdf_report.add(new Paragraph("Listes des Membres:"));
+            my_pdf_report.add(new Paragraph(" "));
+            my_pdf_report.addCreationDate();
+
+            //we have seven columns in our table
+            PdfPTable my_report_table = new PdfPTable(7);
+
+            //create a cell object
+            PdfPCell table_cell;
+
+            table_cell = new PdfPCell(new Phrase("ID"));
+            table_cell.setBackgroundColor(BaseColor.CYAN);
+            my_report_table.addCell(table_cell);
 //                                       table_cell=new PdfPCell(new Phrase("nom"));
 //                                       table_cell.setBackgroundColor(BaseColor.WHITE);
 //                                       my_report_table.addCell(table_cell);
@@ -630,37 +610,33 @@ public class DashboardAdminController implements Initializable {
 //                                       table_cell=new PdfPCell(new Phrase("date_naissance"));
 //                                       table_cell.setBackgroundColor(BaseColor.WHITE);
 //                                       my_report_table.addCell(table_cell);
-                                       table_cell=new PdfPCell(new Phrase("Genre"));
-                                       table_cell.setBackgroundColor(BaseColor.CYAN);
-                                       my_report_table.addCell(table_cell);
-                                       table_cell=new PdfPCell(new Phrase("Telephone"));
-                                       table_cell.setBackgroundColor(BaseColor.CYAN);
-                                       my_report_table.addCell(table_cell);
-                                       table_cell=new PdfPCell(new Phrase("e=Email"));
-                                       table_cell.setBackgroundColor(BaseColor.CYAN);
-                                       my_report_table.addCell(table_cell);
-                                       table_cell=new PdfPCell(new Phrase("Role"));
-                                       table_cell.setBackgroundColor(BaseColor.CYAN);
-                                       my_report_table.addCell(table_cell);
-                                       table_cell=new PdfPCell(new Phrase("Point"));
-                                       table_cell.setBackgroundColor(BaseColor.CYAN);
-                                       my_report_table.addCell(table_cell);
+            table_cell = new PdfPCell(new Phrase("Genre"));
+            table_cell.setBackgroundColor(BaseColor.CYAN);
+            my_report_table.addCell(table_cell);
+            table_cell = new PdfPCell(new Phrase("Telephone"));
+            table_cell.setBackgroundColor(BaseColor.CYAN);
+            my_report_table.addCell(table_cell);
+            table_cell = new PdfPCell(new Phrase("e=Email"));
+            table_cell.setBackgroundColor(BaseColor.CYAN);
+            my_report_table.addCell(table_cell);
+            table_cell = new PdfPCell(new Phrase("Role"));
+            table_cell.setBackgroundColor(BaseColor.CYAN);
+            my_report_table.addCell(table_cell);
+            table_cell = new PdfPCell(new Phrase("Point"));
+            table_cell.setBackgroundColor(BaseColor.CYAN);
+            my_report_table.addCell(table_cell);
 //                                       table_cell=new PdfPCell(new Phrase("ban_duration"));
 //                                       table_cell.setBackgroundColor(BaseColor.WHITE);
 //                                       my_report_table.addCell(table_cell);
-                                       table_cell=new PdfPCell(new Phrase("Last_timeban"));
-                                       table_cell.setBackgroundColor(BaseColor.CYAN);
-                                       my_report_table.addCell(table_cell);
-                                       
-                                       
-                                       
-                                       
+            table_cell = new PdfPCell(new Phrase("Last_timeban"));
+            table_cell.setBackgroundColor(BaseColor.CYAN);
+            my_report_table.addCell(table_cell);
 
-                                      while(rs.next()){
-                                      
-                                       String idRdv= rs.getString("id");
-                                       table_cell=new PdfPCell(new Phrase(idRdv));
-                                       my_report_table.addCell(table_cell);
+            while (rs.next()) {
+
+                String idRdv = rs.getString("id");
+                table_cell = new PdfPCell(new Phrase(idRdv));
+                my_report_table.addCell(table_cell);
 //                                       String type=rs.getString("nom");
 //                                       table_cell=new PdfPCell(new Phrase(type));
 //                                       my_report_table.addCell(table_cell);
@@ -670,52 +646,46 @@ public class DashboardAdminController implements Initializable {
 //                                       String dd=rs.getString("date_naissance");
 //                                       table_cell=new PdfPCell(new Phrase(dd));
 //                                       my_report_table.addCell(table_cell);
-                                       String dn=rs.getString("genre");
-                                       table_cell=new PdfPCell(new Phrase(dn));
-                                       my_report_table.addCell(table_cell);
-                                       String tel=rs.getString("numero_tel");
-                                       table_cell=new PdfPCell(new Phrase(tel));
-                                       my_report_table.addCell(table_cell);
-                                       String email=rs.getString("email");
-                                       table_cell=new PdfPCell(new Phrase(email));
-                                       my_report_table.addCell(table_cell);
-                                       String role=rs.getString("role");
-                                       table_cell=new PdfPCell(new Phrase(role));
-                                       my_report_table.addCell(table_cell);
-                                       String point=rs.getString("point");
-                                       table_cell=new PdfPCell(new Phrase(point));
-                                       my_report_table.addCell(table_cell);
+                String dn = rs.getString("genre");
+                table_cell = new PdfPCell(new Phrase(dn));
+                my_report_table.addCell(table_cell);
+                String tel = rs.getString("numero_tel");
+                table_cell = new PdfPCell(new Phrase(tel));
+                my_report_table.addCell(table_cell);
+                String email = rs.getString("email");
+                table_cell = new PdfPCell(new Phrase(email));
+                my_report_table.addCell(table_cell);
+                String role = rs.getString("role");
+                table_cell = new PdfPCell(new Phrase(role));
+                my_report_table.addCell(table_cell);
+                String point = rs.getString("point");
+                table_cell = new PdfPCell(new Phrase(point));
+                my_report_table.addCell(table_cell);
 //                                       String ban_dur=rs.getString("ban_duration");
 //                                       table_cell=new PdfPCell(new Phrase(ban_dur));
 //                                       my_report_table.addCell(table_cell);
-                                       String lban=rs.getString("last_timeban");
-                                       table_cell=new PdfPCell(new Phrase(lban));
-                                       my_report_table.addCell(table_cell);
-                                       
-                                        
-                       }
-                       /* Attach report table to PDF */
-                       
-                       my_pdf_report.add(my_report_table); 
-                       
-                       System.out.println(my_pdf_report);
-                       my_pdf_report.close();
-                       JOptionPane.showMessageDialog(null, "imprimer avec succes");
+                String lban = rs.getString("last_timeban");
+                table_cell = new PdfPCell(new Phrase(lban));
+                my_report_table.addCell(table_cell);
 
-                       /* Close all DB related objects */
-                       rs.close();
-                       pt.close(); 
-                       con.close();    
-                       
+            }
+            /* Attach report table to PDF */
 
+            my_pdf_report.add(my_report_table);
 
-       } catch (FileNotFoundException e) {
-       // TODO Auto-generated catch block
-       e.printStackTrace();
-       }
+            System.out.println(my_pdf_report);
+            my_pdf_report.close();
+            JOptionPane.showMessageDialog(null, "imprimer avec succes");
+
+            /* Close all DB related objects */
+            rs.close();
+            pt.close();
+            con.close();
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    
-
-    
 }
