@@ -169,11 +169,7 @@ public class LoginMemberController implements Initializable {
 //             Parent root = loader.load();
 //            DashboardAdminController adc = loader.getController();
             
-                Scene dashboardScene = new Scene(dashboard);
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-                window.setScene(dashboardScene);
-                window.show();
-                
+               btnSignup.getScene().setRoot(dashboard);
             }
             else if(user.getRole().toString().equals("Coach")){
                 Parent dashboard ;
@@ -181,10 +177,7 @@ public class LoginMemberController implements Initializable {
 //             Parent root = loader.load();
 //            DashboardAdminController adc = loader.getController();
             
-                Scene dashboardScene = new Scene(dashboard);
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-                window.setScene(dashboardScene);
-                window.show();
+               btnSignup.getScene().setRoot(dashboard);
             }
             else if(user.getRole().toString().equals("Membre")){
                 Parent dashboard ;

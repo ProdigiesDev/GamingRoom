@@ -30,6 +30,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.UserSession;
@@ -64,6 +65,10 @@ public class ProfilMemberController implements Initializable {
     private FontAwesomeIcon btn_reload;
     @FXML
     private Button btn_home;
+    @FXML
+    private Button btn_mesCom;
+    @FXML
+    private Pane paneCom;
 
     /**
      * Initializes the controller class.
@@ -193,6 +198,12 @@ public class ProfilMemberController implements Initializable {
             Logger.getLogger(ProfilMemberController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    
+    @FXML
+    private void afficherMesCours(ActionEvent event) {
+        paneCom.setVisible(true);
     }
 
 }

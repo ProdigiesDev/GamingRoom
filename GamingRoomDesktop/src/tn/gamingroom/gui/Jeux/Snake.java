@@ -133,7 +133,7 @@ public class Snake extends Application {
         primaryStage.setMaxWidth(514);
         primaryStage.setTitle("Snake");
         try {
-            primaryStage.getIcons().add(new Image(new File(Env.getImagePath()+"snake.png").toURI().toURL().toExternalForm()));
+            primaryStage.getIcons().add(new Image(new File(Env.getImagePath()+"//snake.png").toURI().toURL().toExternalForm()));
         } catch (MalformedURLException ex) {
             Logger.getLogger(Snake.class.getName()).log(Level.SEVERE, null, ex);
         }

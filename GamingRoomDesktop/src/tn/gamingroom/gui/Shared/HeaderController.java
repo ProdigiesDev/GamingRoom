@@ -128,15 +128,15 @@ public class HeaderController implements Initializable {
 
     @FXML
     private void gotoReclamtion(ActionEvent event) {
-        if(membre==null){
-            
-         int a = JOptionPane.showConfirmDialog(new JFrame(), "vous dois d'abord vous connecter ?");
+        if (membre == null) {
+
+            int a = JOptionPane.showConfirmDialog(new JFrame(), "vous dois d'abord vous connecter ?");
             if (a == JOptionPane.YES_OPTION) {
                 goLogin();
                 return;
-            }
-            else if (a != JOptionPane.YES_OPTION)
+            } else if (a != JOptionPane.YES_OPTION) {
                 return;
+            }
         }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../Reclamation/AjouterReclamation.fxml"));
@@ -175,8 +175,7 @@ public class HeaderController implements Initializable {
             signoutbtn.setVisible(false);
         }
     }
-    
-    
+
     private void goLogin() {
         try {
             Parent root = FXMLLoader.
@@ -190,13 +189,42 @@ public class HeaderController implements Initializable {
 
     @FXML
     private void goProfil(ActionEvent event) {
-         Parent dashboard;
+        Parent dashboard = null;
         try {
-            dashboard = FXMLLoader.load(getClass().getResource("../Member/ProfilMember.fxml"));
+            if (membre.getRole().equals(Membre.Role.Membre)) {
+                dashboard = FXMLLoader.load(getClass().getResource("../Member/ProfilMember.fxml"));
+            } else {
+                dashboard = FXMLLoader.load(getClass().getResource("../Member/ProfilCoach.fxml"));
+            }
 
             signoutbtn.getScene().setRoot(dashboard);
         } catch (IOException ex) {
             Logger.getLogger(ProfilMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @FXML
+    private void goToPanier(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.
+                    load(getClass().getResource("../FullPanier.fxml"));
+
+            games.getScene().setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void gotToCours(ActionEvent event) {
+         try {
+            Parent root = FXMLLoader.
+                    load(getClass().getResource("../FullMemeberCours.fxml"));
+
+            games.getScene().setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }

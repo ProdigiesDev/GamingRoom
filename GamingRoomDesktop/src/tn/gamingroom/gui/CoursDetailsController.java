@@ -211,8 +211,10 @@ public class CoursDetailsController implements Initializable {
 
     @FXML
     private void ajouterC(ActionEvent event) {
+        System.out.println(verifYouUrl() + " "+verifnom() + " "+verifcat() + " "+verifdate() + " "+verifmo() + " "+verifdes() + " "+verifmo());
         boolean verift = (verifYouUrl() && verifnom() && verifcat() && verifdate() && verifmo() && verifdes() && verifmo());
-        if (!verift) {
+        if (verift) {
+            
             try {
                 Notification.sendNotification("Cours", "Veuillez remplir tous les champs ", TrayIcon.MessageType.INFO);
             } catch (AWTException ex) {
@@ -220,6 +222,8 @@ public class CoursDetailsController implements Initializable {
             } catch (MalformedURLException ex) {
                 Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            return;
+        }
 
             {
                 //try {
@@ -242,7 +246,7 @@ public class CoursDetailsController implements Initializable {
                 c.setCategorie_id(categorie.getIdcat());
                 c.setLienYoutube(lien.getText());
                 ///to do 3awdh l 1 belid melsingelton
-                c.setMembre_id(1);
+                c.setMembre_id(membre.getId());
                 //TODO hethi lazem titbadil dynamique ki tkamil sonia
                 //c.setMembre_id(Integer.parseInt(imem.getText()));
                 String nomImage = moveImage();
@@ -307,7 +311,7 @@ public class CoursDetailsController implements Initializable {
 //            System.out.println(ex.getMessage());
             }
             this.initTable(null);
-        }
+        
     }
 
     @FXML
@@ -321,7 +325,7 @@ public class CoursDetailsController implements Initializable {
         }
 
         //TODO fil verifNb lazem ykon integer 
-        boolean verif = verifcat() || verifdate() || verifdes() || verifmo() || verifmo() || verifnb() || verifnom() || verifYouUrl();
+        boolean verif = verifcat() || verifdate() || verifdes() ||  verifmo() || verifnb() || verifnom() || verifYouUrl();
         if (verif) {
             return;
         }
@@ -427,7 +431,7 @@ public class CoursDetailsController implements Initializable {
         icl.setText(c.getTags());
         ides.setText(c.getDescription());
         inb.setText(String.valueOf(c.getNb_participants()));
-        file = new File(Env.getImagePath() + "cours\\" + c.getImagename());
+        file = new File(Env.getImagePath() + "\\cours\\" + c.getImagename());
         imagevc.setImage(c.getImage().getImage());
         lien.setText(c.getLienYoutube());
         //inb.setText(img.getCellData(index).toString());
@@ -573,7 +577,7 @@ public class CoursDetailsController implements Initializable {
     private void ajouterim(ActionEvent event) {
         //nakhtar fichier
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", ".png", ".jpg", ".jpeg"));
+       // fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter( ".png", ".jpg", ".jpeg"));
 
         file = fileChooser.showOpenDialog(stage);
         if (file != null) {
@@ -587,7 +591,8 @@ public class CoursDetailsController implements Initializable {
             }
 
         } else {
-            alert.setText("veuillez insere une image");
+            verifimage.setText("veuillez insere une image");
+            verifimage.setVisible(true);
         }
 
     }
@@ -598,7 +603,7 @@ public class CoursDetailsController implements Initializable {
                 String fileName = file.getName();
                 int doitIndex = fileName.lastIndexOf(".");
                 String imageName = fileName.substring(0, doitIndex) + new java.util.Date().getTime() + "." + fileName.substring(doitIndex + 1);
-                String imageNameTodb = Env.getImagePath() + "cours\\" + imageName;
+                String imageNameTodb = Env.getImagePath() + "\\cours\\" + imageName;
                 File dest = new File(imageNameTodb);
                 Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 return imageName;
@@ -614,13 +619,13 @@ public class CoursDetailsController implements Initializable {
         ServiceCours es = new ServiceCours();
         CategorieServices cs = new CategorieServices();
         if (listcours == null) {
-            listcours = es.displayCours();
+            listcours = es.displayCours(membre.getId());
         }
         List<Courslm> lIm = new ArrayList<Courslm>();
         listcours.forEach(e -> {
 
             try {
-                File f = new File(Env.getImagePath() + "cours\\" + e.getImage());
+                File f = new File(Env.getImagePath() + "\\cours\\" + e.getImage());
                 Image img = new Image(f.toURI().toURL().toExternalForm());
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);

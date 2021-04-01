@@ -97,7 +97,7 @@ public class CoursByCoachController implements Initializable {
         listcours.forEach(e -> {
 
             try {
-                File f = new File(Env.getImagePath() + "cours\\" + e.getImage());
+                File f = new File(Env.getImagePath() + "\\cours\\" + e.getImage());
                 Image img = new Image(f.toURI().toURL().toExternalForm());
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);

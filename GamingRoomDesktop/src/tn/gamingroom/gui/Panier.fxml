@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="631.0" prefWidth="1028.0" style="-fx-background-image: C:\ProdigiesDev\GamingRoomDesktop\src\tn\gamingroom\gui\AjoutEvenement.jpg;" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.PanierController">
+<AnchorPane id="AnchorPane" prefHeight="631.0" prefWidth="1028.0" style="-fx-background-image: C:\ProdigiesDev\GamingRoomDesktop\src\tn\gamingroom\gui\AjoutEvenement.jpg;" stylesheets="@Design.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.PanierController">
    <children>
       <ImageView fitHeight="489.0" fitWidth="1030.0" layoutX="-2.0" layoutY="151.0" opacity="0.57" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -22,7 +22,7 @@
             <Bloom threshold="0.56" />
          </effect>
       </ImageView>
-      <HBox alignment="CENTER_RIGHT" layoutX="-2.0" layoutY="-1.0" prefHeight="118.0" prefWidth="1030.0" style="-fx-background-color: #6f1075; -fx-border-radius: 0px;">
+      <HBox alignment="CENTER_RIGHT" layoutX="-2.0" layoutY="-1.0" prefHeight="118.0" prefWidth="1030.0" style="-fx-background-color: rgb(8, 3, 37); -fx-border-radius: 0px;">
          <children>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Votre Panier" HBox.hgrow="SOMETIMES">
                <font>
@@ -32,7 +32,7 @@
             <VBox prefHeight="118.0" prefWidth="701.0" />
             <ImageView fitHeight="100.0" fitWidth="187.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                <image>
-                  <Image url="file:/C:/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/shopping-cart-icon-digital-purple-vector-26540175.jpg" />
+                  <Image url="@shopping-cart-icon-digital-purple-vector-26540175.jpg" />
                </image>
             </ImageView>
          </children>

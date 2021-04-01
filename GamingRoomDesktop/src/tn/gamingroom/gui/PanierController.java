@@ -44,10 +44,12 @@ import javax.mail.internet.MimeMultipart;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Cles;
+import tn.gamingroom.entities.Membre;
 
 import tn.gamingroom.entities.PanierProduit;
 import tn.gamingroom.entities.Panier;
 import tn.gamingroom.entities.Produits;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.services.CleService;
 import tn.gamingroom.services.CommandService;
 import tn.gamingroom.services.PanierService;
@@ -74,12 +76,16 @@ public class PanierController implements Initializable {
     @FXML
     private Button btCom;
     private PanierService panierServie=new PanierService();
-
+    private Membre membre;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+          if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
+
+        }
         PanierService panierService = new PanierService();
            colImage.setCellValueFactory(new PropertyValueFactory<PanierProduit, ImageView>("image"));
         colNom.setCellValueFactory(new PropertyValueFactory<PanierProduit, String>("nom"));
@@ -238,7 +244,7 @@ public class PanierController implements Initializable {
         int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
         if (a == JOptionPane.YES_OPTION) {
             CommandService commandService = new CommandService();
-            int memberId = 3;
+            int memberId = membre.getId();
             double totale=0;
             for (int i = 0; i < listTable.getItems().size(); i++) {
                 
@@ -249,30 +255,13 @@ public class PanierController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Erreur lors de la confirmation de votre commande");
             } else {
                 
-                Send("alaa.smeti@esprit.tn");
+                Send(membre.getEmail());
                 JOptionPane.showMessageDialog(null, "Votre commande est en cours de traitement");
                 listTable.getItems().clear();
             }
         }
     }
 
-    private void ajouterProduit(ActionEvent event) throws MessagingException, IOException {
-        JFrame f = new JFrame();
-        PanierService panierService = new PanierService();
-        int memberId = 3;
-//         int nb=panierService.ajouterProd(idpanier);
-//          if(nb==0)
-//          {
-//            JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout du produit au panier!");
-//          }
-//          else{
-//              
-//            JOptionPane.showMessageDialog(null, "Votre produit est ajouté");
-//            listTable.getItems().clear();
-//          }
-//        
-//         Send();
-    }
 
     void initTable() {
         PanierService ps = new PanierService();

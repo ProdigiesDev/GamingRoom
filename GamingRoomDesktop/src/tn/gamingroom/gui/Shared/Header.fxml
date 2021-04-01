@@ -22,7 +22,7 @@
                <Font size="15.0" />
             </font>
          </JFXButton>
-         <JFXButton fx:id="btnshop" layoutX="950.0" layoutY="26.0" text=" " visible="false">
+         <JFXButton fx:id="btnshop" layoutX="950.0" layoutY="26.0" onAction="#goToPanier" text=" " visible="false">
             <graphic>
                   <FontAwesomeIcon fx:id="fontshop" fill="WHITE" glyphName="SHOPPING_CART" size="2em" visible="false" />
             </graphic>
@@ -46,7 +46,7 @@
                <Font size="15.0" />
             </font>
          </JFXButton>
-         <JFXButton fx:id="cours" layoutX="527.0" layoutY="24.0" text="Cours" textFill="WHITE">
+         <JFXButton fx:id="cours" layoutX="527.0" layoutY="24.0" onAction="#gotToCours" text="Cours" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>

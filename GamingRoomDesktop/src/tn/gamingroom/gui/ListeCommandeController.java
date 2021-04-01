@@ -30,6 +30,7 @@ import tn.gamingroom.entities.CommandeGui;
 import tn.gamingroom.entities.Panier;
 import tn.gamingroom.entities.CommandeGui;
 import tn.gamingroom.entities.Produits;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.services.CommandService;
 import tn.gamingroom.services.PanierService;
 import tn.gamingroom.services.ProduitCrud;
@@ -70,6 +71,10 @@ public class ListeCommandeController implements Initializable {
     void initTable(){
          CommandService cs= new CommandService();
          int memberId=3;
+          if (UserSession.getInstance() != null) {
+            memberId = UserSession.getInstance().getUser().getId();
+
+        }
        List<Commande>  commande= cs.consulterMesCommande(memberId) ;
        List<CommandeGui>  commandeGuis=new ArrayList();
       commande.forEach(c->{

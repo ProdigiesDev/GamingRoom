@@ -136,6 +136,34 @@ public class ServiceCours implements ICours {
         }
         return CoursList;
     }
+    public List<Cours> displayCours(int member_id) {
+        List<Cours> CoursList = new ArrayList<>();
+        try {
+            String requeteDs = "SELECT c.*,ca.nomcategorie from cour c , categorie ca where ca.idcat=c.categorie_id and membre_id="+member_id;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requeteDs);
+            while (rs.next()) {
+                Cours c = new Cours();
+                c.setId(rs.getInt("id"));
+                c.setNomCours(rs.getString("nomCours"));
+                c.setDescription(rs.getString("description"));
+                c.setNb_participants(rs.getInt("nb_participant"));
+               // c.setMembre_id(rs.getInt("membre_id"));
+                c.setDate_creation(rs.getDate("date_creation"));
+                c.setTags(rs.getString("tags"));
+                c.setCategorie_id(rs.getInt("categorie_id"));
+                c.setImage(rs.getString("imagecours"));
+                c.setLienYoutube(rs.getString("lienYoutube"));
+             
+                    
+                CoursList.add(c);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return CoursList;
+    }
     @Override
     public List<Cours> displayCoursByCoach() {
         List<Cours> CoursList = new ArrayList<>();

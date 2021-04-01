@@ -24,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -41,6 +42,7 @@ import tn.gamingroom.entities.Cours;
 import tn.gamingroom.entities.Courslm;
 import tn.gamingroom.entities.ParticipantsCours;
 import tn.gamingroom.entities.ReacCours;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.Outils;
 import tn.gamingroom.services.ServiceCours;
 import tn.gamingroom.services.ServiceParticipantsCours;
@@ -69,7 +71,7 @@ public class InfoCoursController implements Initializable {
 
     Courslm c;
 
-    int memberId = 3;
+    int memberId = 0;
     int cour_id;
     @FXML
     private TableView<ReacCours> tablCom;
@@ -101,7 +103,10 @@ public class InfoCoursController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (UserSession.getInstance() != null) {
+            memberId = UserSession.getInstance().getUser().getId();
 
+        }
         colMem.setCellValueFactory(new PropertyValueFactory<ReacCours, Integer>("membre_id"));
         allcom.setCellValueFactory(new PropertyValueFactory<ReacCours, String>("commentaire"));
 
@@ -154,7 +159,11 @@ public class InfoCoursController implements Initializable {
             serviceReacCours.ajouterReacC(cours);
             tablCom.getItems().add(cours);
         } else {
-            JOptionPane.showMessageDialog(null, "depasse pas 10 commentaires");
+            
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setHeaderText("Info");
+                alert2.setContentText("Depasse pas 10 commentaires");
+                alert2.show();
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
                 @Override
@@ -164,7 +173,7 @@ public class InfoCoursController implements Initializable {
                     serviceReacCours.ajouterReacC(cours);
                     tablCom.getItems().add(cours);
                 }
-            }, 2000
+            }, 10000
             );
         }
 
@@ -172,6 +181,20 @@ public class InfoCoursController implements Initializable {
 
     @FXML
     private void react(MouseEvent event) {
+        if (memberId == 0) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("vous dois d'abord vous connecter ?");
+            alert.setContentText("vous dois d'abord vous connecter ?");
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+
+            if (alert.showAndWait().get() == okButton) {
+                goLogin();
+                return;
+            }
+            return;
+        }
         ServiceReacCours serviceReacCours = new ServiceReacCours();
 
         ReacCours rc = serviceReacCours.getFirstReactionById(this.c.getId(), memberId);
@@ -205,6 +228,20 @@ public class InfoCoursController implements Initializable {
 
     @FXML
     private void reacneg(MouseEvent event) {
+        if (memberId == 0) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("vous dois d'abord vous connecter ?");
+            alert.setContentText("vous dois d'abord vous connecter ?");
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+
+            if (alert.showAndWait().get() == okButton) {
+                goLogin();
+                return;
+            }
+            return;
+        }
         ServiceReacCours serviceReacCours = new ServiceReacCours();
 
         ReacCours rc = serviceReacCours.getFirstReactionById(this.c.getId(), memberId);
@@ -237,32 +274,56 @@ public class InfoCoursController implements Initializable {
         ParticipantsCours pc = new ParticipantsCours();
 
         JFrame f = new JFrame();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Êtes-vous sûr?");
+        alert.setContentText("Êtes-vous sûr?");
+        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(okButton, cancelButton);
 
-        int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
-        if (a == JOptionPane.YES_OPTION) {
+        if (alert.showAndWait().get() == okButton) {
             ServiceParticipantsCours spc = new ServiceParticipantsCours();
             Cours c = new Cours();
 
 //            
             int nb = spc.ajouterParticipant(2, cour_id);
             if (nb == 0) {
-                JOptionPane.showMessageDialog(null, "Erreur d'inscription");
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setHeaderText("Erreur");
+                alert2.setContentText("Erreur d'inscription");
+        
+                alert2.show();
             } else {
-                JOptionPane.showMessageDialog(null, "Félicitation vous etes inscrit à ce cours");
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setHeaderText("Félicitation");
+                alert2.setContentText("Félicitation vous etes inscrit à ce cours");
+        
+                alert2.show();
             }
+        }
+    }
+
+    private void goLogin() {
+        try {
+            Parent root = FXMLLoader.
+                    load(getClass().getResource("Member/LoginMember.fxml"));
+
+            dislike.getScene().setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
     @FXML
     private void goToListePart(ActionEvent event) {
-        
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("listeParticipantsCours.fxml"));
             Parent root = loader.load();
-            Scene s=new Scene(root);
+            Scene s = new Scene(root);
             ListeParticipantsCoursController pct = loader.getController();
             pct.initDat(cour_id);
-            Stage prS=new Stage();
+            Stage prS = new Stage();
             prS.setScene(s);
             prS.show();
         } catch (IOException ex) {

@@ -26,6 +26,7 @@ public class ServiceReacCours implements IReacCours {
     @Override
     public int ajouterReacC(ReacCours r) {
         int nb_ajout=0;
+        System.out.println(r.getMembre_id());
         try {
             String requetereac = "INSERT INTO reactioncours(interaction,commentaire,membre_id,cour_id)"
                     + "VALUES (?,?,?,?)";
