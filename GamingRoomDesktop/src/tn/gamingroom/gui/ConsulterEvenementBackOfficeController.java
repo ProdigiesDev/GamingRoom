@@ -28,10 +28,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import tn.gamingroom.entities.CommentaireReact;
 import tn.gamingroom.entities.Evenement;
+import static tn.gamingroom.gui.ConsulterEventFrontOfficeController.browser;
 import tn.gamingroom.services.EvenementService;
 import tn.gamingroom.services.MembreServices;
 
@@ -69,6 +72,9 @@ public class ConsulterEvenementBackOfficeController implements Initializable {
     private Label likes;
     @FXML
     private Label dislikes;
+
+    private String lat;
+    private String lang;
 
     public ImageView getImage() {
         return imageC;
@@ -130,6 +136,11 @@ public class ConsulterEvenementBackOfficeController implements Initializable {
             nbM.setText(nbM.getText() + " " + e.getNbreMax_participant());
             vidYoutube.getEngine().load(e.getLienYoutube());
             s = n;
+            if (!e.getLieu().equals("ONLINE")) {
+                String[] lieuT = e.getLieu().split(",", 3);
+                this.lat = lieuT[0];
+                this.lang = lieuT[1];
+            }
             likes.setText(es.getLikes(idE) + "");
             dislikes.setText(es.getDisikes(idE) + "");
             membreCom.setCellValueFactory(new PropertyValueFactory<CommentaireReact, String>("nomMembre"));
@@ -165,6 +176,40 @@ public class ConsulterEvenementBackOfficeController implements Initializable {
             stage.close();
         } catch (IOException ex) {
             Logger.getLogger(ConsulterEvenementBackOfficeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @FXML
+    private void ListParticipants(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("listeParticipants.fxml"));
+            Parent root= loader.load();
+            ListeParticipantsController pctC = loader.getController();
+            pctC.initDat(id);
+            Scene scene = new Scene(root);
+            Stage primaryStage = new Stage();
+            
+            primaryStage.setTitle(titre.getText());
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(ConsulterEvenementBackOfficeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void openLocation(ActionEvent event) {
+        if (lat != null) {
+            Scene scene;
+            Stage primaryStage = new Stage();
+            primaryStage.setTitle(titre.getText());
+            browser = new Browser(Double.parseDouble(lat), Double.parseDouble(lang), true);
+            scene = new Scene(browser, 500, 500, Color.web("#666970"));
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } else {
+            JOptionPane.showMessageDialog(null, "ONLINE");
         }
 
     }

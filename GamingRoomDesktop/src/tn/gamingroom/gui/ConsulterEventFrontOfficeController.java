@@ -5,6 +5,9 @@
  */
 package tn.gamingroom.gui;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -29,14 +32,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
 import tn.gamingroom.entities.CommentaireReact;
 import tn.gamingroom.entities.Evenement;
 import tn.gamingroom.entities.EvenementImage;
 import tn.gamingroom.entities.ReactionEv;
+import static tn.gamingroom.gui.Mapping.browser;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.EvenementService;
@@ -75,6 +84,12 @@ public class ConsulterEventFrontOfficeController implements Initializable {
     private Label likes;
     @FXML
     private Label dislikes;
+    @FXML
+    private ImageView qrIV;
+    private String lat;
+    private String lang;
+
+    static Browser browser;
 
     /**
      * Initializes the controller class.
@@ -115,15 +130,28 @@ public class ConsulterEventFrontOfficeController implements Initializable {
             nbM.setText(nbM.getText() + " " + e.getNbreMax_participant());
             vidYoutube.getEngine().load(e.getLienYoutube());
             s = n;
-            likes.setText(es.getLikes(idE)+"");
-            dislikes.setText(es.getDisikes(idE)+"");
+            if (!e.getLieu().equals("ONLINE")) {
+                String[] lieuT = e.getLieu().split(",", 3);
+                this.lat = lieuT[0];
+                this.lang = lieuT[1];
+
+            }
+            likes.setText(es.getLikes(idE) + "");
+            dislikes.setText(es.getDisikes(idE) + "");
             membreCom.setCellValueFactory(new PropertyValueFactory<CommentaireReact, String>("nomMembre"));
             commentaire.setCellValueFactory(new PropertyValueFactory<CommentaireReact, String>("commentaire"));
-
+            createQR(e.getDescription());
             initTable();
         } catch (MalformedURLException ex) {
             Logger.getLogger(ConsulterEvenementBackOfficeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void createQR(String Event) {
+        // GENERATE QR CODE
+        ByteArrayOutputStream out = QRCode.from(Event).to(ImageType.PNG).withSize(100, 100).stream();
+        ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+        qrIV.setImage(new Image(in));
     }
 
     @FXML
@@ -138,7 +166,16 @@ public class ConsulterEventFrontOfficeController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Evenement vient d'être saturé!");
             } else {
                 //todo: changer le deuxieme parametre pour y mettre l'id du membre courant
-                es.sinscrirEvenement(id, 1);
+                if (es.sinscrirEvenement(id, 2) != 0) {
+                    JOptionPane.showMessageDialog(null, "Inscription réussite! Vous serez informés de votre adversaire ultérieurement.");
+                } else {
+                    int b = JOptionPane.showConfirmDialog(f, "Vous êtes déjà inscrit! voulez vous annuler votre inscription?");
+                    if (b == JOptionPane.YES_OPTION) {
+                        es.annulerInscription(id, 1);
+
+                    }
+
+                }
             }
         }
     }
@@ -162,6 +199,22 @@ public class ConsulterEventFrontOfficeController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ConsulterEventFrontOfficeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void openLocation(ActionEvent event) {
+        if (lat != null) {
+            Scene scene;
+            Stage primaryStage = new Stage();
+            primaryStage.setTitle(titre.getText());
+            browser = new Browser(Double.parseDouble(lat), Double.parseDouble(lang),true);
+            scene = new Scene(browser, 500, 500, Color.web("#666970"));
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } else {
+            JOptionPane.showMessageDialog(null, "ONLINE");
+        }
+
     }
 
 }
