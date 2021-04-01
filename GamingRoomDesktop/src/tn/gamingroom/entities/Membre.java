@@ -47,6 +47,17 @@ public class Membre {
     public Membre(int id) {
         this.id = id;
     }
+
+    public Membre(int id, String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String image) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.date_naissance = date_naissance;
+        this.genre = genre;
+        this.tel = tel;
+        this.email = email;
+        this.image = image;
+    }
     
     
 

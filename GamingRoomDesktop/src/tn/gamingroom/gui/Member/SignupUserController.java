@@ -335,11 +335,16 @@ public class SignupUserController implements Initializable {
 ////            tf_pathImage.setText(file.getAbsolutePath());
 //        }
 
-            file = fileChooser.showOpenDialog(stage);
-            image = file.getAbsolutePath();
 
-            Image imageForFile = new Image(file.toURI().toURL().toExternalForm());
-            image_membre.setImage(imageForFile);
+file = fileChooser.showOpenDialog(stage);
+if(file != null){
+image = file.getAbsolutePath();
+
+
+Image imageForFile = new Image(file.toURI().toURL().toExternalForm());
+image_membre.setImage(imageForFile);
+}
+
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(SignupUserController.class.getName()).log(Level.SEVERE, null, ex);

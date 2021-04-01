@@ -32,8 +32,7 @@ public interface IMembre<T> {
      public String getDescParId(int id);
      public String getEmailParId(int id);
      public int modifierMDPParMembre(int id,String nvmdp);
-
-     public void fPwd(int id);
      public Membre getById(int id);
+     public Membre getMemberById(int idM);
     
 }

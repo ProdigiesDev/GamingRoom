@@ -62,6 +62,11 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
+                  <JFXButton layoutX="350.0" layoutY="35.0" onAction="#openAvis" text="Avis">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXButton>
                     </children>
                 </Pane>
             <Pane fx:id="listerJeux" layoutX="303.0" layoutY="218.0" prefHeight="398.0" prefWidth="744.0" visible="false">
@@ -88,6 +93,11 @@
             <Pane fx:id="memberPane" layoutX="333.0" layoutY="248.0" prefHeight="844.0" prefWidth="1335.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="150.0">
                <children>
                   <fx:include source="../Member/DashboardAdmin.fxml" />
+               </children>
+            </Pane>
+            <Pane fx:id="avisPane" layoutX="313.0" layoutY="228.0" prefHeight="398.0" prefWidth="744.0" visible="false">
+               <children>
+                  <fx:include source="../Avis/listAvis.fxml" />
                </children>
             </Pane>
             </children>

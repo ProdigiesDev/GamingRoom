@@ -127,7 +127,6 @@ return nbCle;
     }
     
       public List<Cles> Rechercher_Produit_ID(int x ){
-          
              ArrayList<Cles> listOffresTypeX = new ArrayList<>();
                try {
             String req = "Select * from cle where produit_id='"+x+"'";
@@ -153,16 +152,6 @@ return nbCle;
             System.out.println("Il y a aucun cle avec cet ID");
         }
         return listOffresTypeX;
-    }
-          
-          
-          
       }
-    
-    
-    
-    
-    
-    
-  
-    
+     
+}

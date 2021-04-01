@@ -55,12 +55,30 @@ public class CommandService implements ICommande{
                             }
         return nbModifier;
         } 
+    
+    
+    public int confirmerCommande(int memberId,double totale) {
+        System.out.println("Modifier Commande");
+            int nbModifier=0;
+        try {
+            
+            String req="Update commande set etat = ? , totale = ?  where etat='EnCours' and membreid ="+memberId;
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setString(1, Commande.Statu.EnAttente.toString());
+            ps.setDouble(2, totale);
+            nbModifier = ps.executeUpdate();  
+           } catch (SQLException ex) {
+            ex.printStackTrace();
+                            }
+        return nbModifier;
+        }
 
     @Override
     public List<Commande> consulterMesCommande(int memberid) {
         List<Commande> commandes=new ArrayList();
+        System.out.println("Afficher commandes "+memberid);
         try {
-            String reqLister="select * from commande where membreid =" + memberid ;
+            String reqLister="select * from commande where etat!='EnCours' and membreid =" + memberid ;
             Statement statement= cnx.createStatement();
             
             ResultSet rs= statement.executeQuery(reqLister);
@@ -94,6 +112,7 @@ public class CommandService implements ICommande{
             ex.printStackTrace();
         }
            return listCommandes;
+        
    
         }
 

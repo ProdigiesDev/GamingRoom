@@ -101,7 +101,7 @@ public class MembreServices implements IMembre<Membre> {
     public int modifierMembres(Membre m) {
         int nbModifierMembre=0;
         try {
-            String requete = "UPDATE membre SET nom=?,prenom=?,date_naissance=?,genre=?,numero_tel=?,email=?,password=?,image=? WHERE id=? and role != 'Admin'";
+            String requete = "UPDATE membre SET nom=?,prenom=?,date_naissance=?,genre=?,numero_tel=?,email=?,image=? WHERE id=? and role != 'Admin'";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setString(1, m.getNom());
@@ -110,9 +110,8 @@ public class MembreServices implements IMembre<Membre> {
             pst.setString(4, m.getGenre().toString());
             pst.setString(5, m.getTel());
             pst.setString(6, m.getEmail());
-            pst.setString(7, m.getPassword());
-            pst.setString(8, m.getImage());
-            pst.setInt(9, m.getId());
+            pst.setString(7, m.getImage());
+            pst.setInt(8, m.getId());
             nbModifierMembre=pst.executeUpdate();
             System.out.println("Modification membre avec succées");
         } catch (SQLException ex) {
@@ -452,7 +451,19 @@ public class MembreServices implements IMembre<Membre> {
 
     @Override
     public int modifierMDPParMembre(int id, String nvmdp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int nbModifierMembre=0;
+        try {
+            String requete = "UPDATE membre SET password=? WHERE id='"+id+"'";
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requete);
+            pst.setString(1, BCrypt.hashpw(nvmdp, BCrypt.gensalt()));
+           
+            nbModifierMembre=pst.executeUpdate();
+            System.out.println("Modification membre avec succées");
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return nbModifierMembre;
     }
     
     @Override
@@ -485,8 +496,35 @@ public class MembreServices implements IMembre<Membre> {
     }
 
     @Override
-    public void fPwd(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Membre getMemberById(int idM) {
+        Membre m = new Membre();
+        try {
+            String requete = "SELECT * FROM membre where id=" + idM;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if(rs.next()) {
+                m.setId(rs.getInt("id"));
+                m.setNom(rs.getString("nom"));
+                m.setPrenom(rs.getString("prenom"));
+                m.setDate_naissance(rs.getDate("date_naissance"));
+                m.setGenre(Membre.Genre.valueOf(rs.getString("genre")));
+                m.setTel(rs.getString("numero_tel"));
+                m.setEmail(rs.getString("email"));
+                m.setPassword(rs.getString("password"));
+                m.setImage(rs.getString("image"));
+                m.setRole(Membre.Role.valueOf(rs.getString("role")));
+                m.setPoint(rs.getInt("point"));
+                m.setDescription("description");
+                m.setActive(rs.getBoolean("active"));
+                m.setBan_duration(rs.getInt("ban_duration"));
+                m.setLast_timeban(rs.getTimestamp("last_timeban"));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return m;
     }
 
+   
 }

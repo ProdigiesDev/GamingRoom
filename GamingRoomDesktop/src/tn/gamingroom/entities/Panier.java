@@ -15,6 +15,9 @@ public class Panier {
     int commande_id;
     int quantityDemande;
 
+    public Panier() {
+    }
+
     public Panier(int produit_id, int quantityDemande) {
         this.produit_id = produit_id;
         this.quantityDemande = quantityDemande;

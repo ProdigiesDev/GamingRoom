@@ -24,12 +24,12 @@
       </ImageView>
       <Pane opacity="0.4" prefHeight="308.0" prefWidth="1350.0" style="-fx-background-color: rgb(22, 9, 98);" />
           <fx:include fx:id="header" source="../Shared/Header.fxml" />
-      <Label layoutX="120.0" layoutY="100.0" prefHeight="52.0" prefWidth="254.0" text="Welcome" textFill="WHITE">
+      <Label layoutX="120.0" layoutY="150.0" prefHeight="52.0" prefWidth="254.0" text="Bienvenue" textFill="WHITE">
          <font>
             <Font name="Palatino Linotype" size="50.0" />
          </font>
       </Label>
-      <Label layoutX="150.0" layoutY="150.0" prefHeight="118.0" prefWidth="379.0" style="-fx-font-style: italic;" text="GamingRoom GamingRoom GamingRoom GamingRoom" textFill="WHITE">
+      <Label layoutX="150.0" layoutY="150.0" prefHeight="118.0" prefWidth="379.0" style="-fx-font-style: italic;" text="GamingRoom GamingRoom GamingRoom GamingRoom" textFill="WHITE" visible="false">
          <font>
             <Font name="Palatino Linotype" size="14.0" />
          </font>
@@ -42,8 +42,24 @@
                <center>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="420.0" prefWidth="700.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Pane opacity="0.11" prefHeight="438.0" prefWidth="998.0" style="-fx-background-color: black;" />
-                        <JFXButton alignment="CENTER" layoutX="860.0" layoutY="365.0" styleClass="btnMore" text="See More" textFill="WHITE">
+                        <Pane opacity="0.11" prefHeight="1001.0" prefWidth="998.0" style="-fx-background-color: black;" />
+                        <Pane fx:id="paneEvent" layoutX="100.0" layoutY="550.0" opacity="0.57" prefHeight="320.0" prefWidth="840.0">
+                           <children>
+                              <ImageView fitHeight="319.0" fitWidth="295.0" layoutX="6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                              <TextFlow layoutX="320.0" layoutY="28.0" prefHeight="200.0" prefWidth="414.0" />
+                              <JFXButton layoutX="658.0" layoutY="258.0" onAction="#goEvent" styleClass="btnMore" text="En savoir plus">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </Pane>
+                        <Label fx:id="notFoundEvent" layoutX="150.0" layoutY="550.0" text="Il n'y a aucun événement pour le moment" visible="false">
+                           <font>
+                              <Font size="40.0" />
+                           </font>
+                        </Label>
+                        <JFXButton alignment="CENTER" layoutX="830.0" layoutY="365.0" styleClass="btnMore" text="En savoir plus" textFill="WHITE">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -90,7 +106,12 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Label layoutX="100.0" layoutY="20.0" text="Highest Selling Product" textFill="WHITE">
+                        <Label layoutX="100.0" layoutY="450.0" text="Évent le plus proche" textFill="WHITE">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="100.0" layoutY="20.0" text="Produit le plus vendu" textFill="WHITE">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -99,7 +120,7 @@
                   </AnchorPane>
                </center>
             </BorderPane>
-            <AnchorPane layoutX="10.0" layoutY="728.0" minHeight="0.0" minWidth="0.0" prefHeight="421.0" prefWidth="667.0" style="-fx-border-color: rgb(75, 52, 137,0.5); -fx-border-width: 3;" AnchorPane.bottomAnchor="273.0" AnchorPane.rightAnchor="673.0">
+            <AnchorPane fx:id="reviewsAnch" layoutX="10.0" layoutY="728.0" minHeight="0.0" minWidth="0.0" prefHeight="421.0" prefWidth="667.0" style="-fx-border-color: rgb(75, 52, 137,0.5); -fx-border-width: 3;" AnchorPane.bottomAnchor="273.0" AnchorPane.rightAnchor="673.0">
                <children>
                   <Pane layoutX="-2.0" opacity="0.4" prefHeight="420.0" prefWidth="669.0">
                      <children>
@@ -131,7 +152,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <Pane fx:id="avisPane" prefHeight="420.0" prefWidth="673.0" visible="false" AnchorPane.bottomAnchor="272.0" AnchorPane.rightAnchor="0.0">
+            <Pane fx:id="avisPane" prefHeight="420.0" prefWidth="673.0" AnchorPane.bottomAnchor="272.0" AnchorPane.rightAnchor="0.0">
                <children>
                  <fx:include fx:id="ajouteravis" source="../Avis/AjouterAvis.fxml" AnchorPane.bottomAnchor="272.0" AnchorPane.rightAnchor="0.0" />
                </children>

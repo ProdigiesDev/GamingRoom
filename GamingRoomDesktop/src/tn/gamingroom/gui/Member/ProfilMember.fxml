@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #D5C4F4;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.ProfilMemberController">
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1350.0" style="-fx-background-color: #D5C4F4;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.ProfilMemberController">
    <children>
-      <ImageView fitHeight="659.0" fitWidth="1191.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="900.0" fitWidth="1400.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/asus/Desktop/3emeAnnee/semestre2/pidev/images/198677.jpg" />
+            <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/images/198677.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="18.0" layoutY="27.0" opacity="0.56" prefHeight="189.0" prefWidth="587.0" style="-fx-background-color: #000000;">
@@ -50,17 +50,26 @@
          </children>
       </Pane>
       <ImageView fx:id="image_user" fitHeight="171.0" fitWidth="175.0" layoutX="24.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="label_nomprenom" layoutX="211.0" layoutY="40.0" prefHeight="35.0" prefWidth="237.0" text="Label" textFill="WHITE">
+      <Label fx:id="label_nomprenom" layoutX="211.0" layoutY="40.0" prefHeight="53.0" prefWidth="390.0" text="Label" textFill="WHITE">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
       <Label layoutX="68.0" layoutY="310.0" text="Label" />
-      <JFXButton fx:id="btn_signout" layoutX="1063.0" layoutY="28.0" onAction="#SignOut" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: #F02307;" text="SIGN OUT" textFill="WHITE" />
+      <JFXButton fx:id="btn_signout" layoutX="1063.0" layoutY="28.0" onAction="#SignOut" prefHeight="32.0" prefWidth="145.0" style="-fx-background-color: #F02307;" text="SE DÉCONNECTER" textFill="WHITE" />
       <Button fx:id="btn_settings" layoutX="493.0" layoutY="170.0" mnemonicParsing="false" onAction="#afficherSettings" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: #581789;" text="Settings" textFill="WHITE">
          <graphic>
             <FontAwesomeIcon fill="WHITE" glyphName="COG" text="" />
          </graphic>
       </Button>
+      <FontAwesomeIcon fx:id="btn_reload" fill="WHITE" glyphName="REFRESH" layoutX="565.0" layoutY="61.0" onMousePressed="#reloadPage" size="2em" />
+      <Button fx:id="btn_home" layoutX="928.0" layoutY="28.0" mnemonicParsing="false" onAction="#goHome" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: #581789;" text="Accueil" textFill="WHITE" />
+      <Button fx:id="btn_mesCom" layoutX="736.0" layoutY="28.0" mnemonicParsing="false" onAction="#afficherMesCommande" prefHeight="32.0" prefWidth="170.0" style="-fx-background-color: #581789;" text="Mes Commandes" textFill="WHITE" />
+      <Pane fx:id="paneCom" prefHeight="626.0" prefWidth="1013.0" AnchorPane.topAnchor="300.0">
+         <children>
+            
+             <fx:include fx:id="mescomm" source="../ListeCommande.fxml" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -491,13 +491,13 @@ public class DashboardAdminController implements Initializable {
 //    }
     @FXML
     private void staticMembre(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StatistiqueMembres.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Statistiques");
-            stage.setScene(new Scene(root));
-            stage.show();
+         try {
+            FXMLLoader fxmlLoader =new FXMLLoader(getClass().getResource("StatistiqueMembres.fxml"));
+                Parent root = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Statistiques");
+                stage.setScene(new Scene(root));
+                stage.show();
         } catch (IOException ex) {
             Logger.getLogger(DashboardAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
