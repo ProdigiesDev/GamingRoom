@@ -26,12 +26,12 @@ public class HomeEvent extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("listeEvenement.fxml"));
-            //Parent root = FXMLLoader.load(getClass().getResource("ListerEventUser.fxml"));
-//            Parent root = FXMLLoader.load(getClass().getResource("userEvents.fxml"));
+            //Parent root = FXMLLoader.load(getClass().getResource("listeEvenement.fxml"));
+            //Parent root = FXMLLoader.load(getClass().getResource("trajetsController.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("userEvents.fxml"));
 
             Scene scene = new Scene(root);
-            File f = new File(Env.getDossierImageUtilEventPath()+"logo.png");
+            File f = new File(Env.getDossierImageUtilEventPath() + "logo.png");
             Image img = new Image(f.toURI().toURL().toExternalForm());
             primaryStage.getIcons().add(img);
             primaryStage.setTitle("Evenement");

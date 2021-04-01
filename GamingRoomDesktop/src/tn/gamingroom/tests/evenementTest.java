@@ -1,6 +1,5 @@
 package tn.gamingroom.tests;
 
-
 import java.sql.Date;
 import static java.sql.JDBCType.NULL;
 import java.time.format.DateTimeFormatter;
@@ -39,25 +38,27 @@ public class evenementTest {
 //        Evenement eSupp = es.findById(6);
 //        es.suppressionEvenement(eSupp);
 //////////////////////////////////////////////////////Liste        
-       // System.out.println(es.listerEvenement());
+        // System.out.println(es.listerEvenement());
 ///////////////////////////////////////////////////////Reaction Ajout
-        ReactionEv rE=new ReactionEv(2, 4, "très bien");
-       // es.reagirEvenement(rE);
-       System.out.println(es.listerEvenement());
+        //ReactionEv rE=new ReactionEv(2, 4, "très bien");
+        // es.reagirEvenement(rE);
+        //System.out.println(es.listerEvenement());
 //////////////////////////////////////////////////////supprimer reaction
-        ReactionEv rRs=new ReactionEv(6);
+        //ReactionEv rRs=new ReactionEv(6);
         //es.supprimerReacC(rRs);
         //System.out.println(es.listerEvenement());
 //////////////////////////////////////////////////////Chercher Ev
-        System.out.println(es.chercherEvenement("c"));
+        //System.out.println(es.chercherEvenement("c"));
 /////////////////////////////////////////////////////inscription Ev        
-        es.sinscrirEvenement(2, 6);
+        //es.sinscrirEvenement(2, 6);
 /////////////////////////////////////////////////////tri ev
-      // System.out.println(es.triEvenement());
+        // System.out.println(es.triEvenement());
 ////////////////////////////////////////////////upComingEvents
         //
         //System.out.println(es.upComingEvents());
-
+///////////////////////////////////////////////////////Participants dans un event        
+        System.out.println(es.listerEvenement(6));
+        
     }
 
 }

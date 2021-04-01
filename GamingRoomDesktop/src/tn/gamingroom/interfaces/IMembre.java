@@ -37,5 +37,5 @@ public interface IMembre<T> {
     public String findById(int idM);
 
     public T getMemberById(int idM);
-
+    public List<T> getListeParticipants(int idE);
 }

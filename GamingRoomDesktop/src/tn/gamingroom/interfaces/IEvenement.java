@@ -7,6 +7,7 @@ package tn.gamingroom.interfaces;
 
 import java.util.List;
 import tn.gamingroom.entities.Evenement;
+import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.ReactionEv;
 
 /**
@@ -34,4 +35,8 @@ public interface IEvenement {
     public List<ReactionEv> listeCommentaires(int id);
     public int getLikes(int idE);
     public int getDisikes(int idE);
+    public List<Membre> listerEvenement(int idE);
+    public List<String> getListeAutoEvent();
+    public int annulerInscription(int idE, int idM);
+    public List<Evenement> getUserEvents(int idM);
 }
