@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="tn.gamingroom.gui.ChercherListEvController">
+   <children>
+      <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Pane opacity="0.78" prefHeight="559.0" prefWidth="1186.0" style="-fx-background-color: black;">
+               <children>
+                  <Label fx:id="n" alignment="CENTER" contentDisplay="CENTER" layoutX="384.0" layoutY="14.0" prefHeight="22.0" prefWidth="343.0" text="Tous les Evenements" textFill="#f8f7f7">
+                     <font>
+                        <Font name="Yu Gothic Regular" size="19.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="listeEvents" layoutX="15.0" layoutY="82.0" onMouseClicked="#getSelected" prefHeight="383.0" prefWidth="1161.0" style="-fx-background-color: black; -fx-border-color: #6f1075;">
+                     <columns>
+                        <TableColumn fx:id="imL" prefWidth="79.0" />
+                        <TableColumn fx:id="dateDL" prefWidth="116.99996948242188" text="Date début" />
+                        <TableColumn fx:id="dateFL" prefWidth="115.0" text="Date fin" />
+                        <TableColumn fx:id="tL" prefWidth="104.0" text="Titre" />
+                        <TableColumn fx:id="desL" prefWidth="107.0" text="Description" />
+                        <TableColumn fx:id="lieuL" prefWidth="109.0" text="Lieu" />
+                        <TableColumn fx:id="LienYL" prefWidth="92.0" text="Lien Youtube" />
+                        <TableColumn fx:id="idE" prefWidth="79.0" visible="false" />
+                        <TableColumn fx:id="catL" prefWidth="113.0" text="Catégorie" />
+                        <TableColumn fx:id="ouvert" prefWidth="50.0" style="-fx-alignment: CENTER;" text="Expiré" />
+                        <TableColumn fx:id="idCat" prefWidth="113.0" text="idCat" visible="false" />
+                        <TableColumn fx:id="imageURL" prefWidth="131.0" visible="false" />
+                     </columns>
+                  </TableView>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

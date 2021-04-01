@@ -6,54 +6,73 @@
 package tn.gamingroom.entities;
 
 import java.sql.Date;
+import javafx.scene.image.ImageView;
 
 /**
  *
  * @author Asus
  */
-public class Evenement {
+public class EvenementImage {
+
     private int idevent;
     private String nomEvent;
     private Date dateDeb;
     private Date dateFin;
-    private String image;
+    private ImageView image;
+    private String imageUrl;
     private int categorie_id;
+    private String categorieNom;
     private int nbreMax_participant;
     private String description;
     private String lieu;
     private String lienYoutube;
+    private ImageView expire;
+    private ImageView sature;
 
-    public Evenement() {
-    }
-
-    public Evenement(String nomEvent, String image, int categorie_id, int nbreMax_participant, String description, String lienYoutube) {
-        this.nomEvent = nomEvent;
-        this.image = image;
-        this.categorie_id = categorie_id;
-        this.nbreMax_participant = nbreMax_participant;
-        this.description = description;
-        this.lienYoutube = lienYoutube;
-    }
-
-    public Evenement(String nomEvent, Date dateDeb, Date dateFin, String image, int categorie_id, int nbreMax_participant, String description, String lieu, String lienYoutube) {
-        this.nomEvent = nomEvent;
-        this.dateDeb = dateDeb;
-        this.dateFin = dateFin;
-        this.image = image;
-        this.categorie_id = categorie_id;
-        this.nbreMax_participant = nbreMax_participant;
-        this.description = description;
-        this.lieu = lieu;
-        this.lienYoutube = lienYoutube;
-    }
-
-    public Evenement(int idevent, String nomEvent, Date dateDeb, Date dateFin, String image, int categorie_id, int nbreMax_participant, String description, String lieu, String lienYoutube) {
+    public EvenementImage(int idevent, String nomEvent, Date dateDeb, Date dateFin, ImageView image, String imageUrl, int categorie_id, String categorieNom, int nbreMax_participant, String description, String lieu, String lienYoutube, ImageView expire, ImageView sature) {
         this.idevent = idevent;
         this.nomEvent = nomEvent;
         this.dateDeb = dateDeb;
         this.dateFin = dateFin;
         this.image = image;
+        this.imageUrl = imageUrl;
         this.categorie_id = categorie_id;
+        this.categorieNom = categorieNom;
+        this.nbreMax_participant = nbreMax_participant;
+        this.description = description;
+        this.lieu = lieu;
+        this.lienYoutube = lienYoutube;
+        this.expire = expire;
+        this.sature = sature;
+    }
+
+    public EvenementImage(int idevent, String nomEvent, Date dateDeb, Date dateFin, ImageView image, String imageUrl, int categorie_id, String categorieNom, int nbreMax_participant, String description, String lieu, String lienYoutube, ImageView sature) {
+        this.idevent = idevent;
+        this.nomEvent = nomEvent;
+        this.dateDeb = dateDeb;
+        this.dateFin = dateFin;
+        this.image = image;
+        this.imageUrl = imageUrl;
+        this.categorie_id = categorie_id;
+        this.categorieNom = categorieNom;
+        this.nbreMax_participant = nbreMax_participant;
+        this.description = description;
+        this.lieu = lieu;
+        this.lienYoutube = lienYoutube;
+        this.sature = sature;
+    }
+    
+    
+    
+    public EvenementImage(int idevent, String nomEvent, Date dateDeb, Date dateFin, ImageView image, String imageUrl,int categorie_id, String categorieNom,int nbreMax_participant, String description, String lieu, String lienYoutube) {
+        this.idevent = idevent;
+        this.nomEvent = nomEvent;
+        this.dateDeb = dateDeb;
+        this.dateFin = dateFin;
+        this.image = image;
+        this.imageUrl = imageUrl;
+        this.categorie_id = categorie_id;
+        this.categorieNom = categorieNom;
         this.nbreMax_participant = nbreMax_participant;
         this.description = description;
         this.lieu = lieu;
@@ -92,13 +111,22 @@ public class Evenement {
         this.dateFin = dateFin;
     }
 
-    public String getImage() {
+    public ImageView getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(ImageView image) {
         this.image = image;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+      
 
     public int getCategorie_id() {
         return categorie_id;
@@ -140,12 +168,40 @@ public class Evenement {
         this.lienYoutube = lienYoutube;
     }
 
-    @Override
-    public String toString() {
-        return "Evenement{" + "idevent=" + idevent + ", nomEvent=" + nomEvent + ", dateDeb=" + dateDeb + ", dateFin=" + dateFin + ", image=" + image + ", categorie_id=" + categorie_id + ", nbreMax_participant=" + nbreMax_participant + ", description=" + description + ", lieu=" + lieu + ", lienYoutube=" + lienYoutube + '}';
+    public String getCategorieNom() {
+        return categorieNom;
     }
 
+    public void setCategorieNom(String categorieNom) {
+        this.categorieNom = categorieNom;
+    }
+
+    public ImageView getExpire() {
+        return expire;
+    }
+
+    public void setExpire(ImageView expire) {
+        this.expire = expire;
+    }
+
+    public ImageView getSature() {
+        return sature;
+    }
+
+    public void setSature(ImageView sature) {
+        this.sature = sature;
+    }
+
+    @Override
+    public String toString() {
+        return "EvenementImage{" + "idevent=" + idevent + ", nomEvent=" + nomEvent + ", dateDeb=" + dateDeb + ", dateFin=" + dateFin + ", image=" + image + ", imageUrl=" + imageUrl + ", categorie_id=" + categorie_id + ", categorieNom=" + categorieNom + ", nbreMax_participant=" + nbreMax_participant + ", description=" + description + ", lieu=" + lieu + ", lienYoutube=" + lienYoutube + ", expire=" + expire + ", sature=" + sature + '}';
+    }
     
     
     
+    
+    
+   
+    
+
 }
