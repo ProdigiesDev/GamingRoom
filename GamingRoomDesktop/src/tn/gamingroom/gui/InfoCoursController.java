@@ -69,7 +69,7 @@ public class InfoCoursController implements Initializable {
 
     Courslm c;
 
-    int memberId = 1;
+    int memberId = 3;
     int cour_id;
     @FXML
     private TableView<ReacCours> tablCom;

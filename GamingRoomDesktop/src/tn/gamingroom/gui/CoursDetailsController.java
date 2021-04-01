@@ -719,5 +719,16 @@ public class CoursDetailsController implements Initializable {
     private void changeDate(ActionEvent event) {
         verifdate.setVisible(false);
     }
+    
+//        @FXML
+//    private void change(ActionEvent event) {
+//        verifdate.setVisible(false);
+//    }
+//        @FXML
+//    private void changeDate(ActionEvent event) {
+//        verifdate.setVisible(false);
+//    }
+
+
 
 }

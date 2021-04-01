@@ -18,7 +18,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="581.0" prefWidth="1015.0" stylesheets="@AjoutCours.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.CoursDetailsController">
    <children>
-      <ImageView fitHeight="958.0" fitWidth="1889.0" layoutX="-50.0" layoutY="-7.0" pickOnBounds="true">
+      <ImageView fitHeight="958.0" fitWidth="1889.0" layoutX="-50.0" layoutY="-6.0" pickOnBounds="true">
          <image>
             <Image url="file:/C:/Users/eyatr/Desktop/AjoutEvenement.jpg" />
          </image>
@@ -58,12 +58,6 @@
             <JFXTextField fx:id="inb" layoutX="220.0" layoutY="652.0" prefHeight="31.0" prefWidth="315.0" unFocusColor="#FFFFFF" />
             <JFXTextField fx:id="inom" editable="false" layoutX="75.0" layoutY="200.0" prefHeight="31.0" prefWidth="448.0" />
             <JFXDatePicker fx:id="idate" defaultColor="#d917e7" layoutX="184.0" layoutY="370.0" onAction="#changeDate" prefHeight="31.0" prefWidth="348.0" style="-fx-background-color: Ajouter;" />
-            <Label layoutX="17.0" layoutY="733.0" prefHeight="32.0" prefWidth="245.0" text="Membre proprietaire" textFill="#FFFFFF">
-               <font>
-                  <Font name="Bauhaus 93" size="18.0" />
-               </font>
-            </Label>
-            <JFXTextField fx:id="imem" layoutX="220.0" layoutY="721.0" prefHeight="31.0" prefWidth="315.0" />
             <ComboBox fx:id="combocat" layoutX="186.0" layoutY="298.0" prefHeight="28.0" prefWidth="340.0" style="-fx-background-color: #d917e7;" />
             <Button fx:id="ajoutimage" layoutX="57.0" layoutY="130.0" mnemonicParsing="false" onAction="#ajouterim" prefHeight="32.0" prefWidth="126.0" style="-fx-background-color: #6f1075;" text="Image du cours" textFill="#d8d1da" />
             <ImageView fx:id="imagevc" fitHeight="79.0" fitWidth="279.0" layoutX="241.0" layoutY="107.0" pickOnBounds="true" />
@@ -80,17 +74,17 @@
          </children>
       </Pane>
       <Pane layoutY="52.0" prefHeight="5.0" prefWidth="1261.0" style="-fx-background-color: 6f1075;" />
-      <Button fx:id="btnaj" layoutX="1040.0" layoutY="751.0" mnemonicParsing="false" onAction="#ajouterC" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #6f1075;" text="Ajouter" textFill="#eeedee">
+      <Button fx:id="btnaj" layoutX="1053.0" layoutY="751.0" mnemonicParsing="false" onAction="#ajouterC" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #6f1075;" text="Ajouter" textFill="#eeedee">
          <font>
             <Font name="Bauhaus 93" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btns" layoutX="1560.0" layoutY="745.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #6f1075;" text="Supprimer" textFill="#d8d1da">
+      <Button fx:id="btns" layoutX="1580.0" layoutY="745.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #6f1075;" text="Supprimer" textFill="#d8d1da">
          <font>
             <Font name="Bauhaus 93" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnup" layoutX="1293.0" layoutY="751.0" mnemonicParsing="false" onAction="#modifierC" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #6f1075;" text="Modifier" textFill="#f1e5f5">
+      <Button fx:id="btnup" layoutX="1314.0" layoutY="751.0" mnemonicParsing="false" onAction="#modifierC" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #6f1075;" text="Modifier" textFill="#f1e5f5">
          <font>
             <Font name="Bauhaus 93" size="18.0" />
          </font>
@@ -112,27 +106,25 @@
             <Font name="Bauhaus 93" size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="tableCours" editable="true" layoutX="864.0" layoutY="170.0" onMouseClicked="#getSelected" prefHeight="550.0" prefWidth="915.0" style="-fx-background-color: #6f1075;">
+      <TableView fx:id="tableCours" editable="true" layoutX="922.0" layoutY="170.0" onMouseClicked="#getSelected" prefHeight="550.0" prefWidth="872.0" style="-fx-background-color: #6f1075;">
          <columns>
             <TableColumn fx:id="cimage" prefWidth="121.0" text="Image" />
             <TableColumn fx:id="clien" prefWidth="101.0" text="Lien Youtube" />
             <TableColumn fx:id="cnom" prefWidth="78.0" text="Nom " />
             <TableColumn fx:id="cdes" prefWidth="113.0" text="Déscription" />
-            <TableColumn fx:id="cmem" minWidth="0.0" prefWidth="94.0" text="Membres" />
-            <TableColumn fx:id="cdate" prefWidth="108.0" style="color: #6f1075;" text="Date de création" />
+            <TableColumn fx:id="cdate" prefWidth="122.0" style="color: #6f1075;" text="Date de création" />
             <TableColumn fx:id="cmoc" prefWidth="79.0" text="Mots clés" />
-            <TableColumn fx:id="ccat" prefWidth="69.0" text="Catégorie" />
-            <TableColumn fx:id="cnb" prefWidth="144.0" text="Nombre des participants" />
+            <TableColumn fx:id="ccat" prefWidth="75.0" text="Catégorie" />
+            <TableColumn fx:id="cnb" prefWidth="166.0" text="Nombre des participants" />
          </columns>
       </TableView>
       <Label fx:id="verifnom" layoutX="615.0" layoutY="287.0" prefHeight="18.0" prefWidth="205.0" />
       <Label fx:id="verifcat" layoutX="645.0" layoutY="374.0" prefHeight="18.0" prefWidth="199.0" />
-      <Label fx:id="verifdate" layoutX="653.0" layoutY="420.0" prefHeight="18.0" prefWidth="199.0" />
-      <Label fx:id="veriftag" layoutX="653.0" layoutY="489.0" prefHeight="18.0" prefWidth="199.0" />
-      <Label fx:id="verifdes" layoutX="654.0" layoutY="541.0" prefHeight="18.0" prefWidth="199.0" />
-      <Label fx:id="verifimage" layoutX="680.0" layoutY="269.0" onKeyPressed="#verifImage" prefHeight="18.0" prefWidth="171.0" />
-      <Label fx:id="verifnb" layoutX="654.0" layoutY="592.0" prefHeight="18.0" prefWidth="199.0" />
-      <Label fx:id="verifmem" layoutX="648.0" layoutY="645.0" prefHeight="18.0" prefWidth="205.0" />
+      <Label fx:id="verifdate" layoutX="615.0" layoutY="449.0" onKeyPressed="#changeDate" prefHeight="18.0" prefWidth="237.0" />
+      <Label fx:id="veriftag" layoutX="582.0" layoutY="532.0" prefHeight="18.0" prefWidth="270.0" />
+      <Label fx:id="verifdes" layoutX="564.0" layoutY="640.0" prefHeight="18.0" prefWidth="289.0" />
+      <Label fx:id="verifimage" layoutX="580.0" layoutY="188.0" onKeyPressed="#verifImage" prefHeight="18.0" prefWidth="270.0" />
+      <Label fx:id="verifnb" layoutX="583.0" layoutY="738.0" prefHeight="18.0" prefWidth="270.0" />
       <FontAwesomeIconView fill="#ae0ea6" glyphName="SEARCH" layoutX="1803.0" layoutY="41.0" size="20" />
       <Label fx:id="veriflien" layoutX="647.0" layoutY="103.0" prefHeight="18.0" prefWidth="315.0" />
    </children>
