@@ -187,7 +187,6 @@ public class LoginMemberController implements Initializable {
                 window.show();
             }
             else if(user.getRole().toString().equals("Membre")){
-                System.out.println("pew pew pew");
                 Parent dashboard ;
                 dashboard = FXMLLoader.load(getClass().getResource("../Accueil/Accueil.fxml"));
                

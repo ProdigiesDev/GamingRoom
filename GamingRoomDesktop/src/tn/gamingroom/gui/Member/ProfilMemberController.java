@@ -59,10 +59,11 @@ public class ProfilMemberController implements Initializable {
     private JFXButton btn_signout;
     @FXML
     private Button btn_settings;
-    
-     
+
     @FXML
     private FontAwesomeIcon btn_reload;
+    @FXML
+    private Button btn_home;
 
     /**
      * Initializes the controller class.
@@ -71,32 +72,27 @@ public class ProfilMemberController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         Afficherprofil();
-        
-        
-        
-        
-    }  
-    
-    public void Afficherprofil(){
+
+    }
+
+    public void Afficherprofil() {
         UserSession us = UserSession.getInstance();
         Membre m = us.getUser();
 
-            String nom = m.getNom();
-            String prenom = m.getPrenom();
-            Membre.Role role = m.getRole();
-            Membre.Genre sexe = m.getGenre();
-            String email = m.getEmail();
-            String tel = m.getTel();
+        String nom = m.getNom();
+        String prenom = m.getPrenom();
+        Membre.Role role = m.getRole();
+        Membre.Genre sexe = m.getGenre();
+        String email = m.getEmail();
+        String tel = m.getTel();
         try {
-           
-            
+
             image_user.setImage(new Image(new File(Env.getImagePath() + "\\membre\\" + m.getImage()).toURI().toURL().toExternalForm()));
         } catch (MalformedURLException ex) {
             Logger.getLogger(ProfilMemberController.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
-        
-        label_nomprenom.setText(nom+" "+prenom);
+
+        label_nomprenom.setText(nom + " " + prenom);
         label_role.setText(role.toString());
         label_sexe.setText(sexe.toString());
         label_email.setText(email);
@@ -114,18 +110,18 @@ public class ProfilMemberController implements Initializable {
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(okButton, cancelButton);
-        
-        if(alert.showAndWait().get()== okButton){
-                Parent dashboard ;
-                dashboard = FXMLLoader.load(getClass().getResource("LoginMember.fxml"));
+
+        if (alert.showAndWait().get() == okButton) {
+            Parent dashboard;
+            dashboard = FXMLLoader.load(getClass().getResource("LoginMember.fxml"));
 //             Parent root = loader.load();
 //            DashboardAdminController adc = loader.getController();
-            
-                Scene dashboardScene = new Scene(dashboard);
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-                window.setScene(dashboardScene);
-                window.show(); 
-                us.cleanUserSession();
+
+            Scene dashboardScene = new Scene(dashboard);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(dashboardScene);
+            window.show();
+            us.cleanUserSession();
         }
     }
 
@@ -134,62 +130,69 @@ public class ProfilMemberController implements Initializable {
         UserSession us = UserSession.getInstance();
         Membre m = us.getUser();
         try {
-                FXMLLoader fxmlLoader =new FXMLLoader(getClass().getResource("Settings.fxml"));
-                Parent root = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.setTitle("Settings");
-                 SettingsController sc = fxmlLoader.getController();
-                sc.setId(m.getId());
-                sc.setNom(m.getNom());
-                sc.setPrenom(m.getPrenom());
-                sc.setSexe(m.getGenre());
-                sc.set_Date(m.getDate_naissance().toLocalDate());
-                sc.set_Email(m.getEmail());
-                sc.set_image(m);
-                sc.setTel(m.getTel());
-                
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Settings");
+            SettingsController sc = fxmlLoader.getController();
+            sc.setId(m.getId());
+            sc.setNom(m.getNom());
+            sc.setPrenom(m.getPrenom());
+            sc.setSexe(m.getGenre());
+            sc.set_Date(m.getDate_naissance().toLocalDate());
+            sc.set_Email(m.getEmail());
+            sc.set_image(m);
+            sc.setTel(m.getTel());
+
 //                ForgotPasswordController fpc = fxmlLoader.getController();
 //                fpc.setRnom(loginEmail.getText());
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(LoginMemberController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
-   
 
     @FXML
     private void reloadPage(MouseEvent event) {
         UserSession us1 = UserSession.getInstance();
         Membre m = us1.getUser();
-         int id = m.getId();
-                MembreServices ms = new MembreServices();
-                Membre m1 = ms.getMemberById(id);
-                UserSession us = new UserSession(m1, m1.getRole());
-               
+        int id = m.getId();
+        MembreServices ms = new MembreServices();
+        Membre m1 = ms.getMemberById(id);
+        UserSession us = new UserSession(m1, m1.getRole());
 
-            String nom = m1.getNom();
-            String prenom = m1.getPrenom();
-            Membre.Role role = m1.getRole();
-            Membre.Genre sexe = m1.getGenre();
-            String email = m1.getEmail();
-            String tel = m1.getTel();
+        String nom = m1.getNom();
+        String prenom = m1.getPrenom();
+        Membre.Role role = m1.getRole();
+        Membre.Genre sexe = m1.getGenre();
+        String email = m1.getEmail();
+        String tel = m1.getTel();
         try {
-           
-            
+
             image_user.setImage(new Image(new File(Env.getImagePath() + "\\membre\\" + m1.getImage()).toURI().toURL().toExternalForm()));
         } catch (MalformedURLException ex) {
             Logger.getLogger(ProfilMemberController.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
-        
-        label_nomprenom.setText(nom+" "+prenom);
+
+        label_nomprenom.setText(nom + " " + prenom);
         label_role.setText(role.toString());
         label_sexe.setText(sexe.toString());
         label_email.setText(email);
         label_tel.setText(tel);
     }
 
-  
+    @FXML
+    private void goHome(ActionEvent event) {
+        Parent dashboard;
+        try {
+            dashboard = FXMLLoader.load(getClass().getResource("../Accueil/Accueil.fxml"));
+
+            label_tel.getScene().setRoot(dashboard);
+        } catch (IOException ex) {
+            Logger.getLogger(ProfilMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 }

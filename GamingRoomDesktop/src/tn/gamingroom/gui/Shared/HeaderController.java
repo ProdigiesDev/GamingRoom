@@ -30,6 +30,7 @@ import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.gui.Jeux.AjouterJeuxController;
 import tn.gamingroom.gui.Jeux.JeuxController;
+import tn.gamingroom.gui.Member.ProfilMemberController;
 import tn.gamingroom.outils.Env;
 
 /**
@@ -66,6 +67,8 @@ public class HeaderController implements Initializable {
     private JFXButton btnshop;
     @FXML
     private FontAwesomeIcon fontshop;
+    @FXML
+    private JFXButton btnprofil;
 
     /**
      * Initializes the controller class.
@@ -82,6 +85,7 @@ public class HeaderController implements Initializable {
             nom.setVisible(true);
             fontsingout.setVisible(true);
             btnshop.setVisible(true);
+            btnprofil.setVisible(true);
             fontshop.setVisible(true);
             nom.setText(membre.getNom() + " " + membre.getPrenom());
             signoutbtn.setVisible(true);
@@ -166,6 +170,7 @@ public class HeaderController implements Initializable {
             fontsingout.setVisible(false);
             btnshop.setVisible(false);
             fontshop.setVisible(false);
+            btnprofil.setVisible(false);
             nom.setText("");
             signoutbtn.setVisible(false);
         }
@@ -180,6 +185,18 @@ public class HeaderController implements Initializable {
             signoutbtn.getScene().setRoot(root);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void goProfil(ActionEvent event) {
+         Parent dashboard;
+        try {
+            dashboard = FXMLLoader.load(getClass().getResource("../Member/ProfilMember.fxml"));
+
+            signoutbtn.getScene().setRoot(dashboard);
+        } catch (IOException ex) {
+            Logger.getLogger(ProfilMemberController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
