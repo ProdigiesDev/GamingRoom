@@ -62,6 +62,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
+import org.controlsfx.control.textfield.TextFields;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -170,6 +171,8 @@ public class CoursDetailsController implements Initializable {
             membre = UserSession.getInstance().getUser();
 
         }
+        String[] possibleWords ={cnom.getText() ,cdes.getText()};
+        TextFields.bindAutoCompletion(search, possibleWords);
         //getVideoDetails("https://www.youtube.com/watch?v=gbt6cTZSKgo");
         inom.setStyle("-fx-text-fill: white; ");
         icl.setStyle("-fx-text-fill: white; ");
@@ -184,7 +187,7 @@ public class CoursDetailsController implements Initializable {
         cmoc.setCellValueFactory(new PropertyValueFactory<Courslm, String>("tags"));
         //cmem.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("membre_id"));
         cnb.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("nb_participants"));
-        ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
+        ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorieNom"));
         cimage.setCellValueFactory(new PropertyValueFactory<Courslm, ImageView>("image"));
         clien.setCellValueFactory(new PropertyValueFactory<Courslm, String>("lienYoutube"));
 
@@ -624,7 +627,7 @@ public class CoursDetailsController implements Initializable {
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);
                 i.setFitWidth(70);
-                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id());
+                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(),e.getDate_creation(), e.getTags(), i, e.getCategorie_id(),cs.getCategorieById(e.getCategorie_id()).getNomcat());
                 addCours.setImagename(e.getImage());
                 addCours.setLienYoutube(e.getLienYoutube());
                 lIm.add(addCours);
