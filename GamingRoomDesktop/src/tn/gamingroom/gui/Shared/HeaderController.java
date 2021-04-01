@@ -173,6 +173,7 @@ public class HeaderController implements Initializable {
             btnprofil.setVisible(false);
             nom.setText("");
             signoutbtn.setVisible(false);
+            gotoHome(event);
         }
     }
 
@@ -221,6 +222,19 @@ public class HeaderController implements Initializable {
          try {
             Parent root = FXMLLoader.
                     load(getClass().getResource("../FullMemeberCours.fxml"));
+
+            games.getScene().setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void goToStore(ActionEvent event) {
+        
+         try {
+            Parent root = FXMLLoader.
+                    load(getClass().getResource("../ListProduit.fxml"));
 
             games.getScene().setRoot(root);
         } catch (IOException ex) {

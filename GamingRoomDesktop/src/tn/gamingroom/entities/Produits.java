@@ -11,20 +11,17 @@ package tn.gamingroom.entities;
  */
 public class Produits {
 
- 
-
     private int idprod;
-     private int id_cat;
-       private String image;
+    private int id_cat;
+    private String image;
     private String libelle;
     private double prix;
     private String description;
- 
+
     private String nomCat;
 
     public Produits() {
     }
-
 
     public Produits(String image, String libelle, double prix, String description) {
         this.image = image;
@@ -41,7 +38,8 @@ public class Produits {
         this.description = description;
         this.nomCat = nomCat;
     }
-    public Produits(int idprod, String image, String libelle, double prix, String description,String nomCat) {
+
+    public Produits(int idprod, String image, String libelle, double prix, String description, String nomCat) {
         this.id_cat = id_cat;
         this.image = image;
         this.libelle = libelle;
@@ -59,11 +57,6 @@ public class Produits {
         this.description = description;
         this.nomCat = nomCat;
     }
- 
-
-    
-   
-    
 
     public String getNomCat() {
         return nomCat;
@@ -72,8 +65,6 @@ public class Produits {
     public void setNomCat(String nomCat) {
         this.nomCat = nomCat;
     }
- 
-   
 
     public int getIdprod() {
         return idprod;
@@ -94,8 +85,6 @@ public class Produits {
     public String getDescription() {
         return description;
     }
-
-   
 
     public void setIdprod(int idprod) {
         this.idprod = idprod;
@@ -130,10 +119,4 @@ public class Produits {
         return "Produits{" + "idprod=" + idprod + ", image=" + image + ", libelle=" + libelle + ", prix=" + prix + ", description=" + description + '}';
     }
 
-   
-
- 
-
-    
-    
 }

@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="868.0" prefWidth="1142.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="tn.gamingroom.gui.ListProduitController">
+<ScrollPane prefHeight="1500.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.ListProduitController">
+<content>
+<AnchorPane id="AnchorPane" prefHeight="1500.0" prefWidth="1350.0" styleClass="body" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="tvList" layoutX="59.0" layoutY="67.0" prefHeight="622.0" prefWidth="876.0">
+      <ImageView fitHeight="308.0" fitWidth="1350.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/images/banner-bg.jpg" />
+         </image>
+      </ImageView>
+        <fx:include fx:id="header" source="Shared/Header.fxml" />
+      <fx:include fx:id="footer" source="Shared/Footer.fxml" AnchorPane.bottomAnchor="0.0" />
+            
+      <TableView fx:id="tvList" layoutX="59.0" layoutY="67.0" prefHeight="622.0" prefWidth="950.0" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="350.0">
         <columns>
           <TableColumn fx:id="colIMAGE" prefWidth="175.0" text="Image" />
           <TableColumn fx:id="colLibelle" prefWidth="175.0" text="Libelle" />
@@ -16,5 +31,18 @@
             <TableColumn fx:id="COLCAT" prefWidth="175.0" text="Categorie" />
         </columns>
       </TableView>
+      <TextField fx:id="qt" layoutX="927.0" layoutY="316.0" styleClass="btnMore" AnchorPane.topAnchor="316.0" />
+            <Label layoutX="274.0" layoutY="219.0" text="Nos Produits">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Label>
+            <Label layoutX="539.0" layoutY="318.0" prefHeight="21.0" prefWidth="338.0" text="choisir une quantité avant d'ajouter un produit :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
    </children>
 </AnchorPane>
+</content>
+</ScrollPane>

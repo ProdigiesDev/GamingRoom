@@ -14,7 +14,7 @@
       <children>
           <ImageView fitHeight="272.0" fitWidth="1350.0" pickOnBounds="true">
                <image>
-                  <Image url="file:/C:/Users/yasmine/Desktop/pidev/images/footer-bg.jpg" />
+                  <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/images/footer-bg.jpg" />
                </image>
             </ImageView>
             <Pane opacity="0.4" prefHeight="272.0" prefWidth="1350.0" style="-fx-background-color: rgb(22, 9, 98);">

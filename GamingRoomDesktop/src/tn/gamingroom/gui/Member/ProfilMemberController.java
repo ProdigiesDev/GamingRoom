@@ -201,9 +201,13 @@ public class ProfilMemberController implements Initializable {
     }
 
     
-    @FXML
     private void afficherMesCours(ActionEvent event) {
         paneCom.setVisible(true);
+    }
+
+    @FXML
+    private void afficherMesCommande(ActionEvent event) {
+        paneCom.setVisible(false);
     }
 
 }
