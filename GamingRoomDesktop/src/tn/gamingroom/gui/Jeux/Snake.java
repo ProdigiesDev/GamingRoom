@@ -22,6 +22,7 @@ import javafx.stage.Window;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Jeux;
 import tn.gamingroom.entities.Score;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.ScoreService;
 
@@ -234,6 +235,10 @@ public class Snake extends Application {
 
     void GameOver() {
         int memeber_id = 2;
+        if (UserSession.getInstance() != null) {
+            memeber_id = UserSession.getInstance().getUser().getId();
+        } 
+        
         Score score = new Score(counter, jeux.getId(), memeber_id);
         ScoreService scoreService = new ScoreService();
         System.out.println(score);

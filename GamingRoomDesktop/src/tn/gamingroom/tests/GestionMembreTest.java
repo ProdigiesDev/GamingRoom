@@ -29,10 +29,10 @@ public class GestionMembreTest {
         
 
        
-
+        Membre a1 = new Membre("Farhat","Sonia",d,Membre.Genre.Femme,"96431792","sonia.farhat@esprit.tn","123456","eya.jpg",Membre.Role.Admin,true);
         Membre m1 = new Membre("Trifi","Eya",d,Membre.Genre.Femme,"51852630","eya.trifi@esprit.tn","123456","eya.jpg",Membre.Role.Membre,true);
         Membre m2 = new Membre("Ayari","Farah",d,Membre.Genre.Femme,"51852630","farah.ayari@esprit.tn","123456","farah.jpg",Membre.Role.Membre,true);
-        Membre m3 = new Membre(9,"Manita","fedi",d,Membre.Genre.Femme,"51852630","yasmine.manita@esprit.tn","123456","sonia.jpg",Membre.Role.Membre,true);
+        Membre m3 = new Membre("Manita","fedi",d,Membre.Genre.Femme,"51852630","yasmine.manita@esprit.tn","123456","sonia.jpg",Membre.Role.Membre,true);
         
         
         Membre c1 = new Membre("Dahwathi","Amine",d,Membre.Genre.Homme,"98910835","mohamedamine.dahwathi@esprit.tn","123456","yasmine.jpg",Membre.Role.Coach,"je suis amine fan de...",false);
@@ -40,9 +40,10 @@ public class GestionMembreTest {
         Membre c3 = new Membre(12,"Kacem","Mokhtar",d,Membre.Genre.Homme,"98910835","mokhtar.kacem@esprit.tn","123456","mokhtar.jpg",Membre.Role.Coach,"je suis mokhtar fan de...",false);
 ///// Ajouter Membre//////////
 ////        //m.setId(2);
-//       ps.ajouterMembre(m1);
-//       ps.ajouterMembre(m2);
-//       ps.ajouterMembre(m3);
+       ps.ajouterMembre(a1);
+       ps.ajouterMembre(m1);
+       ps.ajouterMembre(m2);
+       ps.ajouterMembre(m3);
 //
 //// ///// Ajouter Coach////////// 
 //
@@ -92,13 +93,13 @@ public class GestionMembreTest {
         Categorie cat4 = new Categorie("Puzzle");
 
 ////          ///// Ajouter categorie////////// 
-        cs.ajouterCategorie(cat1);
-        cs.ajouterCategorie(cat2);
-        cs.ajouterCategorie(cat3);
-        cs.ajouterCategorie(cat4);
+//        cs.ajouterCategorie(cat1);
+//        cs.ajouterCategorie(cat2);
+//        cs.ajouterCategorie(cat3);
+//        cs.ajouterCategorie(cat4);
 //        
             ///// afficher categorie////////// 
-         System.out.println(cs.DisplayCategorie());
+//         System.out.println(cs.DisplayCategorie());
 
   ///// SUPPRIMER categorie////////// 
 //////        cs.supprimerCategorie(cat4);
@@ -117,8 +118,8 @@ public class GestionMembreTest {
         CategorieMembre cm2 = new CategorieMembre(7,3);
 //        
 //       cms.AffecterCategorieMembre(cm1);
-          cms.AffecterCategorieMembre(cm2);
-        System.out.println(cms.DisplayCategorie(7));
+//          cms.AffecterCategorieMembre(cm2);
+//        System.out.println(cms.DisplayCategorie(7));
 //        
 //   
 //            cms.SuprimerCategorieMembre(cm1);

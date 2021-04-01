@@ -11,16 +11,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="808.0" prefWidth="1153.0" style="-fx-background-color: #c264c2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutCleController">
+<AnchorPane id="AnchorPane" prefHeight="808.0" prefWidth="1153.0" style="-fx-background-color: rgb(8, 3, 37);" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutCleController">
    <children>
       <ComboBox fx:id="listProd" layoutX="124.0" layoutY="267.0" prefWidth="150.0" />
       <JFXTextField fx:id="nbCle" layoutX="224.0" layoutY="323.0" prefHeight="31.0" prefWidth="101.0" />
-      <Button fx:id="btnAjouter" layoutX="41.0" layoutY="446.0" mnemonicParsing="false" onAction="#ajouterCle" prefHeight="39.0" prefWidth="240.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Ajouter" textFill="#610d54">
+      <Button fx:id="btnAjouter" layoutX="41.0" layoutY="446.0" mnemonicParsing="false" onAction="#ajouterCle" prefHeight="39.0" prefWidth="240.0" styleClass="btnMore" text="Ajouter" textFill="#610d54">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="tableview" layoutX="380.0" layoutY="127.0" prefHeight="599.0" prefWidth="732.0">
+      <TableView fx:id="tableview" layoutX="380.0" layoutY="127.0" prefHeight="599.0" prefWidth="732.0" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
         <columns>
           <TableColumn fx:id="colid" prefWidth="75.0" text="id" />
           <TableColumn fx:id="colcode" prefWidth="406.0" text="code" />
@@ -37,7 +37,7 @@
             <Font name="Arial Rounded MT Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="963.0" mnemonicParsing="false" onAction="#backToList" prefHeight="39.0" prefWidth="240.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Back" textFill="#610d54">
+      <Button layoutX="963.0" mnemonicParsing="false" onAction="#backToList" prefHeight="39.0" prefWidth="240.0" style="-fx-background-color: #dadada; -fx-border-radius: 0px;" text="Back" textFill="#610d54" visible="false">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -47,9 +47,9 @@
             <Font name="Arial Rounded MT Bold" size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="tfrechProd" layoutX="380.0" layoutY="94.0" onKeyPressed="#RechercherProduit_ID" prefHeight="31.0" prefWidth="314.0" />
-      <FontAwesomeIcon glyphName="SEARCH" layoutX="391.0" layoutY="114.0" wrappingWidth="8.928571701049805" />
-      <Button fx:id="btnload" layoutX="380.0" layoutY="738.0" mnemonicParsing="false" onAction="#LoadTableCle" prefHeight="39.0" prefWidth="240.0" style="-fx-background-color: #dadada; -fx-border-radius: 0 px;" text="Load Table " textFill="#610d54">
+      <TextField fx:id="tfrechProd" layoutX="798.0" layoutY="93.0" onKeyPressed="#RechercherProduit_ID" prefHeight="31.0" prefWidth="314.0" styleClass="btnMore" />
+      <FontAwesomeIcon glyphName="SEARCH" layoutX="1094.0" layoutY="112.0" wrappingWidth="8.928571701049805" />
+      <Button fx:id="btnload" layoutX="380.0" layoutY="738.0" mnemonicParsing="false" onAction="#LoadTableCle" prefHeight="39.0" prefWidth="240.0" styleClass="btnMore" text="Load Table " textFill="#610d54">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>

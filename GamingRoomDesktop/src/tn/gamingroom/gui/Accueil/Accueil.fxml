@@ -99,7 +99,7 @@
                   </AnchorPane>
                </center>
             </BorderPane>
-            <AnchorPane layoutX="10.0" layoutY="728.0" minHeight="0.0" minWidth="0.0" prefHeight="421.0" prefWidth="667.0" AnchorPane.bottomAnchor="271.0" AnchorPane.rightAnchor="673.0">
+            <AnchorPane layoutX="10.0" layoutY="728.0" minHeight="0.0" minWidth="0.0" prefHeight="421.0" prefWidth="667.0" style="-fx-border-color: rgb(75, 52, 137,0.5); -fx-border-width: 3;" AnchorPane.bottomAnchor="273.0" AnchorPane.rightAnchor="673.0">
                <children>
                   <Pane layoutX="-2.0" opacity="0.4" prefHeight="420.0" prefWidth="669.0">
                      <children>
@@ -131,7 +131,11 @@
                   </Label>
                </children>
             </AnchorPane>
-           <fx:include fx:id="ajouteravis" source="../Avis/AjouterAvis.fxml" AnchorPane.bottomAnchor="272.0" AnchorPane.rightAnchor="0.0" />
+            <Pane fx:id="avisPane" prefHeight="420.0" prefWidth="673.0" visible="false" AnchorPane.bottomAnchor="272.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                 <fx:include fx:id="ajouteravis" source="../Avis/AjouterAvis.fxml" AnchorPane.bottomAnchor="272.0" AnchorPane.rightAnchor="0.0" />
+               </children>
+            </Pane>
 
    </children>
 </AnchorPane>

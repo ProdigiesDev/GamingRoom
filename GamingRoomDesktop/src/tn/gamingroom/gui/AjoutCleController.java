@@ -36,6 +36,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JFrame;
@@ -78,43 +79,43 @@ public class AjoutCleController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         nbCle.setStyle("-fx-text-fill: white;");
-        ProduitCrud crud=new ProduitCrud();
-        List<Produits> produitses=crud.displayProduit();
+        nbCle.setStyle("-fx-text-fill: white;");
+        ProduitCrud crud = new ProduitCrud();
+        List<Produits> produitses = crud.displayProduit();
         Callback<ListView<Produits>, ListCell<Produits>> factory = lv -> new ListCell<Produits>() {
-            
+
             @Override
             protected void updateItem(Produits item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(empty ? "" : item.getIdprod()+" "+item.getLibelle());
+                setText(empty ? "" : item.getIdprod() + " " + item.getLibelle());
             }
 
         };
-        
+
         listProd.setCellFactory(factory);
         listProd.setButtonCell(factory.call(null));
         listProd.setItems(FXCollections.observableArrayList(produitses));
         addButtonToTable();
- showCle();
-    }    
+        showCle();
+    }
 
     @FXML
     private void ajouterCle(ActionEvent event) {
-        CleService cleService=new CleService();
-        Produits p=listProd.getValue();
-        int nb=0;
-          try{
-            nb=Integer.parseInt(nbCle.getText());
-        }catch(Exception ex){
+        CleService cleService = new CleService();
+        Produits p = listProd.getValue();
+        int nb = 0;
+        try {
+            nb = Integer.parseInt(nbCle.getText());
+        } catch (Exception ex) {
             nbCle.setText("");
-            JOptionPane.showMessageDialog(null,"Il faut ajouter un entier");
+            JOptionPane.showMessageDialog(null, "Il faut ajouter un entier");
             return;
         }
-        int nbCles=0;
+        int nbCles = 0;
         for (int i = 0; i < nb; i++) {
-           nbCles+= cleService.ajouterCle(new Cles("", p.getIdprod()));
+            nbCles += cleService.ajouterCle(new Cles("", p.getIdprod()));
         }
-        JOptionPane.showMessageDialog(null,nbCles+" clé ajouté");
+        JOptionPane.showMessageDialog(null, nbCles + " clé ajouté");
         showCle();
     }
 
@@ -122,38 +123,31 @@ public class AjoutCleController implements Initializable {
         CleService cle = new CleService();
         ObservableList<Cles> list = FXCollections.observableArrayList(cle.displayCle());
 
-      colid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("idcle"));
+        colid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("idcle"));
         colcode.setCellValueFactory(new PropertyValueFactory<Cles, String>("code"));
         colproduitid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("produit_id"));
         tableview.setItems(list);
     }
 
-  
-
     @FXML
     private void backToList(ActionEvent event) {
-        
-     
+
         try {
-            Parent dashboard ;
+            Parent dashboard;
             dashboard = FXMLLoader.load(getClass().getResource("ADDCle.fxml"));
-            
-            
+
             Scene dashboardScene = new Scene(dashboard);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(dashboardScene);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(AjoutCleController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    
-    
-}
 
+    }
 
     private void supprimerCle(ActionEvent event) {
-        
+
         CleService cle = new CleService();
         Cles c = new Cles();
 
@@ -173,18 +167,16 @@ public class AjoutCleController implements Initializable {
         }
 
         clean(event);
-        
+
     }
 
     private void clean(ActionEvent event) {
         listProd.getSelectionModel().select(null);
-        
+
         nbCle.setText(null);
-        
-        
-        
+
     }
-    
+
     private void addButtonToTable() {
         TableColumn<Cles, Void> colBtn = new TableColumn("");
 
@@ -196,17 +188,21 @@ public class AjoutCleController implements Initializable {
                     private final Button btn = new Button("Supprimer");
 
                     {
-                        btn.setOnAction( event -> {
+                        
+                        btn.setTextFill(Paint.valueOf("#f8f7f7"));
+                        btn.setStyle("-fx-background-color: #6f1075");
+                        btn.setOnAction(event -> {
                             Cles data = getTableView().getItems().get(getIndex());
-                            CleService cleService=new CleService();
-                            JFrame f=new JFrame();
+                            CleService cleService = new CleService();
+                            JFrame f = new JFrame();
 
-                            int a=JOptionPane.showConfirmDialog(f,"Êtes-vous sûr?");
-                            if(a==JOptionPane.YES_OPTION){
-                                    int nb=cleService.supprimerCle(data.getIdcle());
-                                    if(nb>0)
-                                        getTableView().getItems().remove(getIndex());
-                                    
+                            int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
+                            if (a == JOptionPane.YES_OPTION) {
+                                int nb = cleService.supprimerCle(data.getIdcle());
+                                if (nb > 0) {
+                                    getTableView().getItems().remove(getIndex());
+                                }
+
                             }
                         });
                     }
@@ -233,39 +229,36 @@ public class AjoutCleController implements Initializable {
 
     @FXML
     private void RechercherProduit_ID(KeyEvent event) {
-        
-         CleService crud = new CleService();
-  ObservableList<Cles> list = FXCollections.observableArrayList(crud.Rechercher_Produit_ID(Integer.parseInt(tfrechProd.getText())));
 
-        colid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("idcle"));
-        colcode.setCellValueFactory(new PropertyValueFactory<Cles, String>("code"));
-        colproduitid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("produit_id"));
-       
-        tableview.setItems(list);
-        
-        
-        
-        
+        try {
+
+            CleService crud = new CleService();
+            ObservableList<Cles> list = FXCollections.observableArrayList(crud.Rechercher_Produit_ID(Integer.parseInt(tfrechProd.getText())));
+
+            colid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("idcle"));
+            colcode.setCellValueFactory(new PropertyValueFactory<Cles, String>("code"));
+            colproduitid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("produit_id"));
+
+            tableview.setItems(list);
+        } catch (NumberFormatException e) {
+            
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
     private void LoadTableCle(ActionEvent event) {
-        
-          CleService crud = new CleService();
+
+        CleService crud = new CleService();
         ObservableList<Cles> list = FXCollections.observableArrayList(crud.displayCle());
 
         colid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("idcle"));
-           colcode.setCellValueFactory(new PropertyValueFactory<Cles, String>("code"));
+        colcode.setCellValueFactory(new PropertyValueFactory<Cles, String>("code"));
         colproduitid.setCellValueFactory(new PropertyValueFactory<Cles, Integer>("produit_id"));
-       
+
         tableview.setItems(list);
-        
-        
-        
-        
+
     }
 
-    
-
-    
 }

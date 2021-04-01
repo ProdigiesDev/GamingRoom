@@ -20,6 +20,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Avis;
+import tn.gamingroom.entities.Membre;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.Outils;
 import tn.gamingroom.services.AvisService;
 
@@ -45,6 +47,7 @@ public class AjouterAvisController implements Initializable {
     private Text errAvis;
     private final int N_SECS = 30;
     private Task task;
+    private Membre membre;
     /**
      * Initializes the controller class.
      */
@@ -53,6 +56,9 @@ public class AjouterAvisController implements Initializable {
         // TODO
         paneLoader.setVisible(false);
         txtAvis.setStyle("-fx-text-fill: white; ");
+         if(UserSession.getInstance()!=null){
+            membre=UserSession.getInstance().getUser();
+        }
     }
 
     @FXML
@@ -60,7 +66,7 @@ public class AjouterAvisController implements Initializable {
         task=createTask();
         loader.progressProperty().bind(task.progressProperty());
         String avisTXT = txtAvis.getText();
-        int member_id = 2;
+        int member_id = this.membre.getId();
 
         if (avisTXT.length() == 0) {
             errAvis.setText("Message est obligatoire");
@@ -79,6 +85,7 @@ public class AjouterAvisController implements Initializable {
             task.cancel();
             JOptionPane.showMessageDialog(null, "Une erreur s'est produite, veuillez réessayer plus tard");
         } else {
+            reset();
             JOptionPane.showMessageDialog(null, "Votre avis a été reçu");
             task.cancel();
         }
@@ -126,4 +133,7 @@ public class AjouterAvisController implements Initializable {
             paneLoader.setVisible(paneVal2);
     }
 
+    void reset(){
+        txtAvis.setText("");
+    }
 }
