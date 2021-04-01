@@ -119,6 +119,7 @@ public class ViewJeuxController implements Initializable {
             int a = JOptionPane.showConfirmDialog(new JFrame(), "vous dois d'abord vous connecter ?");
             if (a == JOptionPane.YES_OPTION) {
                 goLogin();
+                return;
             }
             return;
         }

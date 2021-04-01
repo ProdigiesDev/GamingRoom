@@ -60,6 +60,8 @@ public class AdminPanelController implements Initializable {
     private JFXButton btnsignout;
     @FXML
     private Label name;
+    @FXML
+    private Pane avisPane;
 
     /**
      * Initializes the controller class.
@@ -87,6 +89,7 @@ public class AdminPanelController implements Initializable {
         produits.setVisible(false);
         cles.setVisible(false);
         memberPane.setVisible(false);
+        avisPane.setVisible(false);
     }
 
     @FXML
@@ -96,6 +99,7 @@ public class AdminPanelController implements Initializable {
         produits.setVisible(false);
         cles.setVisible(false);
         memberPane.setVisible(false);
+        avisPane.setVisible(false);
     }
 
     @FXML
@@ -105,6 +109,7 @@ public class AdminPanelController implements Initializable {
         produits.setVisible(true);
         cles.setVisible(false);
         memberPane.setVisible(false);
+        avisPane.setVisible(false);
     }
 
     @FXML
@@ -114,6 +119,7 @@ public class AdminPanelController implements Initializable {
         produits.setVisible(false);
         cles.setVisible(true);
         memberPane.setVisible(false);
+        avisPane.setVisible(false);
     }
 
     @FXML
@@ -123,6 +129,7 @@ public class AdminPanelController implements Initializable {
         produits.setVisible(false);
         cles.setVisible(false);
         memberPane.setVisible(true);
+        avisPane.setVisible(false);
     }
 
     @FXML
@@ -150,5 +157,16 @@ public class AdminPanelController implements Initializable {
             UserSession us = UserSession.getInstance();
             us.cleanUserSession();
         }
+    }
+
+    @FXML
+    private void openAvis(ActionEvent event) {
+        
+        listerJeux.setVisible(false);
+        listerreclm.setVisible(false);
+        produits.setVisible(false);
+        cles.setVisible(false);
+        memberPane.setVisible(false);
+        avisPane.setVisible(true);
     }
 }
