@@ -38,6 +38,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import org.controlsfx.control.textfield.TextFields;
 import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.services.MembreServices;
@@ -108,6 +109,12 @@ public class LoginMemberController implements Initializable {
             }
         
         });
+        
+        /// autocompile
+        
+        MembreServices ms = new MembreServices();
+       
+        TextFields.bindAutoCompletion(loginEmail,ms.GetEmail());
         
        
     }  

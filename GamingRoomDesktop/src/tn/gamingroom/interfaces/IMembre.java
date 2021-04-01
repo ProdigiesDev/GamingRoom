@@ -34,5 +34,6 @@ public interface IMembre<T> {
      public int modifierMDPParMembre(int id,String nvmdp);
      public Membre getById(int id);
      public Membre getMemberById(int idM);
+     public List<String>  GetEmail();
     
 }

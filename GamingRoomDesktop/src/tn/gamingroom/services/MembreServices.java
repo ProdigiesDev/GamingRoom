@@ -526,5 +526,25 @@ public class MembreServices implements IMembre<Membre> {
         return m;
     }
 
+    @Override
+    public List<String> GetEmail() {
+         List<String> email=new ArrayList<>();
+        try {
+            
+            String requete = "select * from membre";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+ 
+            while (rs.next()) {
+                
+                email.add(rs.getString("email"));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+          return email;  
+    }
+
    
 }
