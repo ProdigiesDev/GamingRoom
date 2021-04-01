@@ -73,7 +73,6 @@ public class Produits {
         this.nomCat = nomCat;
     }
  
-
    
 
     public int getIdprod() {
