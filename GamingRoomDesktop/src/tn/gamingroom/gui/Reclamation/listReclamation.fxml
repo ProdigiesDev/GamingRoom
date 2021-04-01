@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="391.0" prefWidth="700.0" stylesheets="file:/C:/Users/Dah/Desktop/demo/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Reclamation.ListReclamationController">
+   <children>
+      <TableView fx:id="listRec" layoutX="14.0" layoutY="81.0" opacity="0.59" prefHeight="296.0" prefWidth="700.0" stylesheets="file:/C:/Users/Dah/Desktop/demo/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="89.0" style="-fx-background-color: black;" text="Id" />
+          <TableColumn fx:id="colSujet" prefWidth="275.0" style="-fx-background-color: black;" text="Sujet" />
+            <TableColumn fx:id="colMsg" prefWidth="335.0" style="-fx-background-color: black;" text="Message" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="606.0" layoutY="37.0" onAction="#relode" text="Refresh">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

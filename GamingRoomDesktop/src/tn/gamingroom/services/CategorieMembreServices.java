@@ -25,45 +25,51 @@ import tn.gamingroom.outils.MyConnection;
 public class CategorieMembreServices implements ICategorieMembre {
 
     @Override
-    public void AffecterCategorieMembre(CategorieMembre cm) {
+    public int AffecterCategorieMembre(CategorieMembre cm) {
+        int nbAff=0;
         try {
             String requete= "INSERT INTO categori_membre (membre_id,categorie_id) VALUES (?,?)";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setInt(1, cm.getMembre_id());
             ps.setInt(2, cm.getCategorie_id());
             
-            ps.executeUpdate();
+            nbAff=ps.executeUpdate();
             System.out.println("Categorie ajoutée au Membre");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return nbAff;
     }
 
     @Override
-    public void SuprimerCategorieMembre(CategorieMembre cm) {
+    public int SuprimerCategorieMembre(CategorieMembre cm) {
+        int nbCM=0;
          try {
             String requete ="DELETE FROM categori_membre WHERE id=?";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setInt(1, cm.getId());
-            ps.executeUpdate();
+            nbCM=ps.executeUpdate();
             System.out.println("Catégorie affectéé au membre est supprimée avec succés");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+         return nbCM;
     }
 
     @Override
-    public void ModifierCategorieMembre(CategorieMembre cm) {
+    public int ModifierCategorieMembre(CategorieMembre cm) {
+        int nbModCM=0;
         try {
             String requete ="UPDATE categori_membre SET categorie_id=?";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setInt(1, cm.getCategorie_id());
             
-            ps.executeUpdate();
+            nbModCM=ps.executeUpdate();
             System.out.println("Catégorie affectéé au membre est modifiée avec succés");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+        return nbModCM;
     }
 
     @Override

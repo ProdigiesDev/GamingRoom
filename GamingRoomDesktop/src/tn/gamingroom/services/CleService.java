@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.gamingroom.entities.Cles;
@@ -24,29 +25,30 @@ import tn.gamingroom.outils.MyConnection;
 public class CleService implements ICles<Cles> {
 
     @Override
-    public void ajouterCle(Cles c) {
-
+    public int ajouterCle(Cles c) {
+int nbCle=0;
+        c.setCode(createKey());
         try {
             String requete = "insert into cle(code,produit_id)"
                     + "values('" + c.getCode() + "','" + c.getProduit_id() + "' )";
 
             Statement st = MyConnection.getInstance().getCnx().createStatement();
-            st.executeUpdate(requete);
+          nbCle=  st.executeUpdate(requete);
             System.out.println("clé ajouté");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+return nbCle;
     }
 
     @Override
-    public void supprimerCle(int idcle) {
-
+    public int supprimerCle(int idcle) {
+int res=0;
         try {
             String requete = "delete from cle where idcle=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
             pst.setInt(1, idcle);
-            int res = pst.executeUpdate();
+            res = pst.executeUpdate();
             if (res > 0) {
                 System.out.println("clé supprimé");
 
@@ -56,24 +58,24 @@ public class CleService implements ICles<Cles> {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+return res;
     }
 
     @Override
-    public void updateCle(Cles c) {
-
+    public int updateCle(Cles c) {
+int nbCle=0;
         try {
             String requete = "UPDATE cle SET code=? WHERE idcle=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
             pst.setString(1, c.getCode());
             pst.setInt(2, c.getIdcle());
-            pst.executeUpdate();
+           nbCle= pst.executeUpdate();
             System.out.println("clé modifiée");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+return nbCle;
     }
   @Override
     public List<Cles> displayCle() {
@@ -100,8 +102,31 @@ public class CleService implements ICles<Cles> {
 
         return myList;
     }
-       public List<Cles> Rechercher_Produit_ID(int x ){
-          
+    
+    public String createKey(){
+        String s="";
+        for(int i=0;i<5;i++){
+            s=s+this.getSaltString();
+            if(i!=4)
+                s=s+"-";
+        }
+        return s;
+    }
+
+    public String getSaltString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 5) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+
+    }
+    
+      public List<Cles> Rechercher_Produit_ID(int x ){
              ArrayList<Cles> listOffresTypeX = new ArrayList<>();
                try {
             String req = "Select * from cle where produit_id='"+x+"'";
@@ -127,5 +152,6 @@ public class CleService implements ICles<Cles> {
             System.out.println("Il y a aucun cle avec cet ID");
         }
         return listOffresTypeX;
-    }
+      }
+     
 }
