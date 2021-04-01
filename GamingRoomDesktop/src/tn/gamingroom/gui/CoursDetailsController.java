@@ -238,7 +238,6 @@ public class CoursDetailsController implements Initializable {
                 c.setNb_participants(Integer.parseInt(inb.getText()));
                 c.setDate_creation(Date.valueOf(idate.getValue()));
                 c.setTags(icl.getText());
-                System.out.println("c "+categorie.getIdcat());
                 c.setCategorie_id(categorie.getIdcat());
                 c.setLienYoutube(lien.getText());
                 ///to do 3awdh l 1 belid melsingelton

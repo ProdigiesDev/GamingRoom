@@ -30,6 +30,6 @@ public interface ICours {
     
 
     public List<Cours> displayCours();
-    public List<Cours>displayCoursByCoach();
+    public List<Cours>displayCoursByCoach(int membre_id);
 
 }

@@ -137,10 +137,11 @@ public class ServiceCours implements ICours {
         return CoursList;
     }
     @Override
-    public List<Cours> displayCoursByCoach() {
+    public List<Cours> displayCoursByCoach(int membre_id) {
+        System.out.println("idM "+membre_id);
         List<Cours> CoursList = new ArrayList<>();
         try {
-            String requeteDs = "select * from cour c";
+            String requeteDs = "select * from cour  where membre_id="+membre_id;
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requeteDs);
@@ -163,6 +164,7 @@ public class ServiceCours implements ICours {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+         System.out.println("couList "+CoursList);
         return CoursList;
     }
 
