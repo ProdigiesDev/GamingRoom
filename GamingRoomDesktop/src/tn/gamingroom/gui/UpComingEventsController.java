@@ -311,7 +311,17 @@ public class UpComingEventsController implements Initializable {
                                     JOptionPane.showMessageDialog(null, "Evenement vient d'être saturé!");
                                 } else {
                                     //todo: changer le deuxieme parametre pour y mettre l'id du membre courant
-                                    es.sinscrirEvenement(data.getIdevent(), 1);
+                                    if (es.sinscrirEvenement(data.getIdevent(), 1) != 0) {
+                                        System.out.println("ananananan");
+                                        JOptionPane.showMessageDialog(null, "Inscription réussite! Vous serez informés de votre adversaire ultérieurement.");
+                                    } else {
+                                        int b = JOptionPane.showConfirmDialog(f, "Vous êtes déjà inscrit! voulez vous annuler votre inscription?");
+                                        if (b == JOptionPane.YES_OPTION) {
+                                            es.annulerInscription(data.getIdevent(), 1);
+
+                                        }
+
+                                    }
                                 }
                                 initTable();
                             }
@@ -320,6 +330,7 @@ public class UpComingEventsController implements Initializable {
                     }
 
                     @Override
+
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
                         if (empty) {
@@ -364,8 +375,10 @@ public class UpComingEventsController implements Initializable {
             primaryStage.setTitle(tL.getCellData(index));
             primaryStage.setScene(scene);
             primaryStage.show();
+
         } catch (IOException ex) {
-            Logger.getLogger(ListeEvenementController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListeEvenementController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
