@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="1350.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.CoursByCoachController">
+    <stylesheets>
+        <URL value="@coursbycoach.css" />
+    </stylesheets>
+   <children>
+      <ImageView fitHeight="972.0" fitWidth="1889.0" layoutY="-12.0" pickOnBounds="true">
+         <image>
+            <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/AjoutEvenement.jpg" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tableCours" editable="true" layoutX="175.0" layoutY="206.0" onMouseClicked="#getSelected" prefHeight="550.0" prefWidth="1007.0" style="-fx-background-color: #6f1075;">
+         <columns>
+            <TableColumn fx:id="cimage" prefWidth="121.0" text="Image" />
+            <TableColumn fx:id="clien" prefWidth="101.0" text="Lien Youtube" />
+            <TableColumn fx:id="cnom" prefWidth="78.0" text="Nom " />
+            <TableColumn fx:id="cdes" prefWidth="113.0" text="Déscription" />
+            <TableColumn fx:id="cdate" prefWidth="139.0" style="color: #6f1075;" text="Date de création" />
+            <TableColumn fx:id="cmoc" prefWidth="77.0" text="Mots clés" />
+            <TableColumn fx:id="ccat" prefWidth="91.0" text="Catégorie" />
+            <TableColumn fx:id="cnb" prefWidth="192.0" text="Nombre des participants" />
+         </columns>
+      </TableView>
+      <Label fx:id="titre" layoutX="35.0" layoutY="17.0" text="Détails des cours" textFill="#6f1075f0">
+         <font>
+            <Font name="Bauhaus 93" size="42.0" />
+         </font>
+      </Label>
+      <Pane layoutX="-1.0" layoutY="63.0" prefHeight="6.0" prefWidth="1889.0" style="-fx-background-color: #6f1075;" />
+   </children>
+</AnchorPane>

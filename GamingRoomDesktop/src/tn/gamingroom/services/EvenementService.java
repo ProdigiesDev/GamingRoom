@@ -129,7 +129,34 @@ public class EvenementService implements IEvenement {
         }
         return evenementList;
     }
+public Evenement closestEvenement() {
+        List<Evenement> evenementList = new ArrayList<>();
+        try {
+            String requete = "SELECT * FROM evenement where datedeb > "+new java.sql.Date(new java.util.Date().getTime())+" order by datedeb desc";
+            PreparedStatement st = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requete);
+            System.out.println(new java.sql.Date(new java.util.Date().getTime())+" "+new java.util.Date());
+             ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                Evenement e = new Evenement();
+                e.setIdevent(rs.getInt("idevent"));
+                e.setNomEvent(rs.getString("nomevent"));
+                e.setDateDeb(rs.getDate("datedeb"));
+                e.setDateFin(rs.getDate("datefin"));
+                e.setImage(rs.getString("image"));
+                e.setCategorie_id(rs.getInt("categorie_id"));
+                e.setNbreMax_participant(rs.getInt("nbremax_participant"));
+                e.setDescription(rs.getString("description"));
+                e.setLieu(rs.getString("lieu"));
+                e.setLienYoutube(rs.getString("lienyoutube"));
+                return e;
 
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
     @Override
     public int reagirEvenement(ReactionEv rE) {
         int nbModif = 0;
@@ -610,7 +637,7 @@ public class EvenementService implements IEvenement {
                 m.setImage(rs.getString("image"));
                 m.setRole(Membre.Role.valueOf(rs.getString("role")));
                 m.setBan_duration(rs.getInt("ban_duration"));
-                m.setLast_timeban(rs.getDate("last_timeban"));
+                m.setLast_timeban(rs.getTimestamp("last_timeban"));
                 membreList.add(m);
             }
         } catch (SQLException ex) {

@@ -14,6 +14,9 @@ public class Env {
     public static final String keyMeaningcloudApi = "fb2edfd3397580535796144ef45588eb";
     private static String dossierImagePath ="C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/images/";
     private static String dossierImageUtilEventPath ="C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/assetsEvenement/";
+    private static final String youtubeApiKey = "AIzaSyA_8Z1_SB9rtueiZXM3kMLKHlV5kOqTGSY";
+    private static final int port = 8087;
+
     public static String getImagePath() {
         return dossierImagePath;
     }
@@ -22,4 +25,15 @@ public class Env {
         return dossierImageUtilEventPath;
     }
     
+    public static String getYoutubeApiKey() {
+        return youtubeApiKey;
+    }
+
+    public static String getKeyMeaningcloudApi() {
+        return keyMeaningcloudApi;
+    }
+
+    public static int getPort() {
+        return port;
+    }
 }

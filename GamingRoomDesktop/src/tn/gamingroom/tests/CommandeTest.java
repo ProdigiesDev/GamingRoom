@@ -22,7 +22,7 @@ public class CommandeTest {
     public static void main (String arg[]){
         PanierService panierService=new PanierService();
         CommandService commandService=new CommandService();
-        /* Ajouter Commande*/
+       //       /*  Ajouter Commande */
        
          Commande  commande=new Commande(3);
          int nb=commandService.ajouterCommand(commande);
@@ -33,62 +33,70 @@ public class CommandeTest {
          
        
         
-        /* Ajouter produit au panier */
+        // Ajouter produit au panier 
         
-        /*
-            Panier panier=new Panier(1,1,5);
+            Panier panier=new Panier(1,5,10);
            int res=panierService.ajouterProd(panier);
            if(res>0)
-               System.out.println("Produit a ete ajouter au panier");
+               System.out.println("Produit a été ajouter au panier");
            else
                System.out.println("Erreur lors d'ajout d'un produit");
         
-           */
+          
+        /* Modifier qt produit*/ 
         
-        /* Modifier qt produit */
-        
-        Panier p=new Panier(3,1,1,10);
-        int res2=panierService.modifierQuantity(p);
-        if(res2>0)
-            System.out.println("Quantité a ete modifier");
-        else
-            System.out.println("Erreur lors de la modification de la quantité");
+//        Panier p=new Panier(13,1,13,20 );
+//        int res2=panierService.modifierQuantity(p);
+//        if(res2>0)
+//            System.out.println("Quantité a ete modifier");
+//        else
+//            System.out.println("Erreur lors de la modification de la quantité");
         
         
-       /* Supprimer panier id */
-       int res3=panierService.supprimerProd(2);
+       /*Supprimer panier id *
+       int res3=panierService.supprimerProd(10);
        if(res3>0)
            System.out.println("Produit est supprimer");
        else
            System.out.println("Erreur lors de la suppression");
+       */
        
        
        /* Consulter Panier */
-       System.out.println(panierService.consulterPanier(2));
+       System.out.println(panierService.consulterPanier(3));
        
        
-       /* Modifier etat d'un commande */
-        Commande  commande2=new Commande(1,2,new Date(10,10,10),Commande.Statu.Valider);
+       /* Modifier etat d'un commande *
+        Commande  commande2=new Commande(11,3,new Date(10,10,10),Commande.Statu.Valider);
         int res4=commandService.modifierCommand(commande2);
        if(res4>0)
            System.out.println("Commande a  ete  modifier");
        else
            System.out.println("Erreur lors de la modification commande");
+       */
        
-       
-       /* Consulter Mes Commande */
-        System.out.println(commandService.consulterMesCommande(2));
-        
-        
-       /* Consulter all Commande */
-        System.out.println(commandService.consulterCommande());
-        
-       /* Supprimer Commande */
+        /* Supprimer Commande 
        int res5=commandService.supprimerCommand(1);
        if(res5>0)
            System.out.println("Commande est supprimer!");
        else
-           System.out.println("Erreur lors de la suppression");
+           System.out.println("Erreur lors de la suppression");*/
+       
+    //////////////////////////////////////////////////////////////////////   
+       
+       
+       /* Consulter Mes Commande */
+        System.out.println(commandService.consulterMesCommande(3));
+        
+        
+       /* Consulter all Commande */
+//        System.out.println(commandService.consulterCommande());
+        
+        
+        
+        
+        
+      
    }
 
    

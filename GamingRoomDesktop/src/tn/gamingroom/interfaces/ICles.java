@@ -13,10 +13,11 @@ import java.util.List;
  */
 public interface ICles<T> {
     
-       public void ajouterCle(T c); //  T type generique
-    public void supprimerCle(int idcle);
-    public void updateCle(T c);
+       public int ajouterCle(T c); //  T type generique
+    public int supprimerCle(int idcle);
+    public int updateCle(T c);
     public List<T> displayCle();
+      public List<T> Rechercher_Produit_ID(int x );
     
     
 }
