@@ -26,6 +26,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -44,7 +47,9 @@ import net.glxn.qrgen.image.ImageType;
 import tn.gamingroom.entities.CommentaireReact;
 import tn.gamingroom.entities.Evenement;
 import tn.gamingroom.entities.EvenementImage;
+import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.ReactionEv;
+import tn.gamingroom.entities.UserSession;
 import static tn.gamingroom.gui.Mapping.browser;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
@@ -90,13 +95,16 @@ public class ConsulterEventFrontOfficeController implements Initializable {
     private String lang;
 
     static Browser browser;
+    private Membre membre;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
+        }
     }
 
     private void initTable() {
@@ -161,22 +169,57 @@ public class ConsulterEventFrontOfficeController implements Initializable {
 
         int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
         if (a == JOptionPane.YES_OPTION) {
+
+            if (verifMember()) {
+                return;
+            }
+            System.out.println("-------------------");
             EvenementService es = new EvenementService();
             if (es.eventSature(id)) {
                 JOptionPane.showMessageDialog(null, "Evenement vient d'être saturé!");
             } else {
                 //todo: changer le deuxieme parametre pour y mettre l'id du membre courant
-                if (es.sinscrirEvenement(id, 2) != 0) {
+                if (es.sinscrirEvenement(id, membre.getId()) != 0) {
                     JOptionPane.showMessageDialog(null, "Inscription réussite! Vous serez informés de votre adversaire ultérieurement.");
                 } else {
                     int b = JOptionPane.showConfirmDialog(f, "Vous êtes déjà inscrit! voulez vous annuler votre inscription?");
                     if (b == JOptionPane.YES_OPTION) {
-                        es.annulerInscription(id, 1);
+                        es.annulerInscription(id, membre.getId());
 
                     }
 
                 }
             }
+        }
+    }
+
+    boolean verifMember() {
+        if (membre == null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("vous devez d'abord vous connecter ?");
+            alert.setContentText("vous devez d'abord vous connecter ?");
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+
+            if (alert.showAndWait().get() == okButton) {
+                goLogin();
+            }
+            
+        return true;
+        }
+        
+        return false;
+    }
+
+    private void goLogin() {
+        try {
+            Parent root = FXMLLoader.
+                    load(getClass().getResource("Member/LoginMember.fxml"));
+
+            description.getScene().setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -207,7 +250,7 @@ public class ConsulterEventFrontOfficeController implements Initializable {
             Scene scene;
             Stage primaryStage = new Stage();
             primaryStage.setTitle(titre.getText());
-            browser = new Browser(Double.parseDouble(lat), Double.parseDouble(lang),true);
+            browser = new Browser(Double.parseDouble(lat), Double.parseDouble(lang), true);
             scene = new Scene(browser, 500, 500, Color.web("#666970"));
             primaryStage.setScene(scene);
             primaryStage.show();

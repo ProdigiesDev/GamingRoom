@@ -13,7 +13,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane id="AnchorPane" prefHeight="817.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.ConsulterEventFrontOfficeController">
+<?import javafx.scene.control.ScrollPane?>
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="817.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.ConsulterEventFrontOfficeController">
+
+    <content>
+<AnchorPane id="AnchorPane" prefHeight="817.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <ImageView fx:id="imageC" fitHeight="817.0" fitWidth="863.0" pickOnBounds="true" />
       <Pane opacity="0.8" prefHeight="817.0" prefWidth="863.0" style="-fx-background-color: black;">
@@ -67,3 +71,5 @@
       </Pane>
    </children>
 </AnchorPane>
+    </content>
+</ScrollPane>

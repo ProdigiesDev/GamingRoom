@@ -19,7 +19,7 @@
    <children>
       <ImageView fitHeight="704.0" fitWidth="1286.0" layoutX="-46.0" layoutY="-4.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/AjoutEvenement.jpg" />
+            <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/AjoutEvenement.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="271.0" layoutY="8.0" opacity="0.78" prefHeight="681.0" prefWidth="675.0" style="-fx-background-color: black;">
@@ -111,7 +111,7 @@
             </Button>
          </children>
       </Pane>
-      <JFXButton alignment="CENTER" layoutX="14.0" layoutY="14.0" onAction="#backToList" prefHeight="32.0" prefWidth="29.0" style="-fx-background-color: #6f1075;">
+      <JFXButton alignment="CENTER" layoutX="14.0" layoutY="14.0" onAction="#backToList" prefHeight="32.0" prefWidth="29.0" style="-fx-background-color: #6f1075;" visible="false">
          <graphic>
             <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" size="2EM" />
          </graphic>

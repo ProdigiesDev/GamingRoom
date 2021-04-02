@@ -130,7 +130,7 @@ public class HeaderController implements Initializable {
     private void gotoReclamtion(ActionEvent event) {
         if (membre == null) {
 
-            int a = JOptionPane.showConfirmDialog(new JFrame(), "vous dois d'abord vous connecter ?");
+            int a = JOptionPane.showConfirmDialog(new JFrame(), "vous devez d'abord vous connecter ?");
             if (a == JOptionPane.YES_OPTION) {
                 goLogin();
                 return;
@@ -219,7 +219,7 @@ public class HeaderController implements Initializable {
 
     @FXML
     private void gotToCours(ActionEvent event) {
-         try {
+        try {
             Parent root = FXMLLoader.
                     load(getClass().getResource("../FullMemeberCours.fxml"));
 
@@ -231,12 +231,26 @@ public class HeaderController implements Initializable {
 
     @FXML
     private void goToStore(ActionEvent event) {
-        
-         try {
+
+        try {
             Parent root = FXMLLoader.
                     load(getClass().getResource("../ListProduit.fxml"));
 
             games.getScene().setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void gotToEvent(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.
+                    load(getClass().getResource("../userEvents.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

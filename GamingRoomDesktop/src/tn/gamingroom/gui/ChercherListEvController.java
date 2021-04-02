@@ -23,7 +23,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -38,7 +41,9 @@ import javafx.util.Callback;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.EvenementImage;
+import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.ReactionEv;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.EvenementService;
@@ -79,12 +84,16 @@ public class ChercherListEvController implements Initializable {
     @FXML
     private TableColumn<EvenementImage, String> imageURL;
     String rech;
+    private Membre membre;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+         if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
+        }
     }    
     
     public void initData(String rech){
@@ -176,18 +185,21 @@ public class ChercherListEvController implements Initializable {
                             EvenementImage data = getTableView().getItems().get(getIndex());
                             JFrame f = new JFrame();
                             EvenementService es = new EvenementService();
-                            if (es.canReact(data.getIdevent(), 1)) {
-                                es.reagirEvenement(new ReactionEv(data.getIdevent(), 1, 1));
-                            } else if (es.getReact(data.getIdevent(), 1) == (-1)) {
+                            
+                            if(verifMember())
+                                return;
+                            if (es.canReact(data.getIdevent(),membre.getId())) {
+                                es.reagirEvenement(new ReactionEv(data.getIdevent(),membre.getId(), 1));
+                            } else if (es.getReact(data.getIdevent(),membre.getId()) == (-1)) {
                                 int b = JOptionPane.showConfirmDialog(f, "Êtes-vous de vouloir changer votre reaction?");
                                 if (b == JOptionPane.YES_OPTION) {
-                                    es.updateReact(new ReactionEv(data.getIdevent(), 1, 1));
+                                    es.updateReact(new ReactionEv(data.getIdevent(),membre.getId(), 1));
                                     JOptionPane.showMessageDialog(null, "Réaction modifée");
                                 }
                             } else {
                                 int c = JOptionPane.showConfirmDialog(f, "Vous aimez déja cet evenement vous voulez annuler la reaction?");
                                 if (c == JOptionPane.YES_OPTION) {
-                                    es.supprimerReacC(new ReactionEv(data.getIdevent(), 1, 1));
+                                    es.supprimerReacC(new ReactionEv(data.getIdevent(),membre.getId(), 1));
                                     JOptionPane.showMessageDialog(null, "Réaction annulée");
                                 }
                             }
@@ -248,21 +260,25 @@ public class ChercherListEvController implements Initializable {
                         
                         //todo: changer le deuxieme parametre pour y mettre l'id du membre courant
                         btn.setOnAction(event -> {
+                            
+
+if(verifMember())
+                                return;
                             EvenementImage data = getTableView().getItems().get(getIndex());
                             JFrame f = new JFrame();
                             EvenementService es = new EvenementService();
-                            if (es.canReact(data.getIdevent(), 1)) {
-                                es.reagirEvenement(new ReactionEv(data.getIdevent(), 1, -1));
-                            } else if (es.getReact(data.getIdevent(), 1) == 1) {
+                            if (es.canReact(data.getIdevent(), membre.getId())) {
+                                es.reagirEvenement(new ReactionEv(data.getIdevent(), membre.getId(), -1));
+                            } else if (es.getReact(data.getIdevent(), membre.getId()) == 1) {
                                 int b = JOptionPane.showConfirmDialog(f, "Êtes-vous de vouloir changer votre reaction?");
                                 if (b == JOptionPane.YES_OPTION) {
-                                    es.updateReact(new ReactionEv(data.getIdevent(), 1, 1));
+                                    es.updateReact(new ReactionEv(data.getIdevent(), membre.getId(), 1));
                                     JOptionPane.showMessageDialog(null, "Réaction modifée");
                                 }
                             } else {
                                 int c = JOptionPane.showConfirmDialog(f, "Vous avez déja réagie à cet evenement vous voulez annuler la reaction?");
                                 if (c == JOptionPane.YES_OPTION) {
-                                    es.supprimerReacC(new ReactionEv(data.getIdevent(), 1, -1));
+                                    es.supprimerReacC(new ReactionEv(data.getIdevent(), membre.getId(), -1));
                                     JOptionPane.showMessageDialog(null, "Réaction annulée");
                                 }
                             }
@@ -292,6 +308,37 @@ public class ChercherListEvController implements Initializable {
 
     }
 
+   
+     boolean verifMember() {
+        if (membre == null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("vous devez d'abord vous connecter ?");
+            alert.setContentText("vous devez d'abord vous connecter ?");
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+
+            if (alert.showAndWait().get() == okButton) {
+                goLogin();
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    private void goLogin() {
+        try {
+            Parent root = FXMLLoader.
+                    load(getClass().getResource("Member/LoginMember.fxml"));
+
+            listeEvents.getScene().setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
     @FXML
     private void getSelected(MouseEvent event) {
         try {
@@ -307,7 +354,7 @@ public class ChercherListEvController implements Initializable {
             root = loader.load();
             ConsulterEventFrontOfficeController pctC = loader.getController();
             pctC.intData(idE.getCellData(index), n.getScene());
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root,863,600);
             Stage primaryStage = new Stage();
             File f = new File(Env.getDossierImageUtilEventPath() + "logo.png");
             Image img = new Image(f.toURI().toURL().toExternalForm());

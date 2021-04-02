@@ -208,9 +208,10 @@ public class AjoutEvenementController implements Initializable {
                 if (ret == 0) {
                     JOptionPane.showMessageDialog(null, "Erreur evenement non ajouteé");
                 } else {
+                    JOptionPane.showMessageDialog(null, "Evenement ajouteé");
                     try {
                         JOptionPane.showMessageDialog(null, "Evenement ajouteé");
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("listeEvenement.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminPanel/AdminPanel.fxml"));
                         Parent root = loader.load();
 
                         nomevent.getScene().setRoot(root);
@@ -233,7 +234,7 @@ public class AjoutEvenementController implements Initializable {
     @FXML
     private void backToList(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("listeEvenement.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminPanel/AdminPanel.fxml"));
             Parent root = loader.load();
 
             lienyoutube.getScene().setRoot(root);

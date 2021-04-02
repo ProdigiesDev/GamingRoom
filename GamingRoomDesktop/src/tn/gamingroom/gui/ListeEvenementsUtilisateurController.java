@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,6 +38,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import tn.gamingroom.entities.Evenement;
+import tn.gamingroom.entities.Membre;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.EvenementService;
 
@@ -52,14 +55,17 @@ public class ListeEvenementsUtilisateurController implements Initializable {
     @FXML
     private HBox vBoxEv;
     private List<Evenement> listeEvents;
-
+    Membre membre;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         EvenementService es = new EvenementService();
-        listeEvents = es.getUserEvents(1);
+         if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
+            
+        listeEvents = es.getUserEvents(membre.getId());
         listeEvents.forEach(ev -> {
 
             try {
@@ -103,11 +109,12 @@ public class ListeEvenementsUtilisateurController implements Initializable {
                             FXMLLoader loader;
                             loader = new FXMLLoader(getClass().getResource("consulterEventFrontOffice.fxml"));
                             Parent root = loader.load();
-                            Scene s = new Scene(root);
+                            
+            Scene scene = new Scene(root,863,600);
                             ConsulterEventFrontOfficeController evController = loader.getController();
                             evController.intData(ev.getIdevent(), viewMore.getScene());
                             Stage primaryStage = new Stage();
-                            primaryStage.setScene(s);
+                            primaryStage.setScene(scene);
                             primaryStage.show();
                         } catch (IOException ex) {
                             Logger.getLogger(ListeEvenementsUtilisateurController.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,8 +127,9 @@ public class ListeEvenementsUtilisateurController implements Initializable {
                 Logger.getLogger(ListeEvenementsUtilisateurController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        }
     }
-
+   
     private ObservableList getListForEVDesc(String desc, TextFlow textFlow) {
         ObservableList list = textFlow.getChildren();
         List<String> listreviw = Arrays.asList((desc).split("(?<=\\G.{30})"));

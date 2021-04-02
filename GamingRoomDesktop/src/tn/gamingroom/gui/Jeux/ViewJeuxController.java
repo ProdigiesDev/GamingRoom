@@ -120,8 +120,8 @@ public class ViewJeuxController implements Initializable {
             membre = UserSession.getInstance().getUser();
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText("vous dois d'abord vous connecter ?");
-            alert.setContentText("vous dois d'abord vous connecter ?");
+            alert.setHeaderText("vous devez d'abord vous connecter ?");
+            alert.setContentText("vous devez d'abord vous connecter ?");
             ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
             ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(okButton, cancelButton);

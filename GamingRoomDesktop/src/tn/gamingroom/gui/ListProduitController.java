@@ -144,7 +144,7 @@ public class ListProduitController implements Initializable {
                         btn.setOnAction(event -> {
                             if (membre == null) {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setContentText("vous dois d'abord vous connecter ?");
+                                alert.setContentText("vous devez d'abord vous connecter ?");
                                 alert.show();
                                 return;
                             }

@@ -183,7 +183,10 @@ public class ListeEvenementController implements Initializable {
                                 pct.setLienyoutube(data.getLienYoutube());
                                 pct.setLangLat(data.getLieu());
                                 pct.iniData(data.getIdevent());
-                                n.getScene().setRoot(root);
+                                Stage s=new Stage();
+                                Scene scene=new Scene(root);
+                                s.setScene(scene);
+                                s.show();
                             } catch (IOException ex) {
                                 Logger.getLogger(ListeEvenementController.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -218,7 +221,7 @@ public class ListeEvenementController implements Initializable {
         es.listerEvenement().forEach(e -> {
 
             try {
-                File f = new File(e.getImage());
+                File f = new File(Env.getImagePath()+e.getImage());
                 Image img = new Image(f.toURI().toURL().toExternalForm());
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);
@@ -251,10 +254,11 @@ public class ListeEvenementController implements Initializable {
             root = loader.load();
             ConsulterEvenementBackOfficeController pctC = loader.getController();
             pctC.intData(idE.getCellData(index), n.getScene());
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root,863,600);
             Stage primaryStage = new Stage();
             File f = new File(Env.getDossierImageUtilEventPath()+"logo.png");
             Image img = new Image(f.toURI().toURL().toExternalForm());
+            
             primaryStage.getIcons().add(img);
             primaryStage.setTitle(tL.getCellData(index));
             primaryStage.setScene(scene);
