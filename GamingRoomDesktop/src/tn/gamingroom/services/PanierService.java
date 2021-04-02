@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import tn.gamingroom.entities.Panier;
+import tn.gamingroom.entities.Produits;
 import tn.gamingroom.interfaces.IPanier;
 import tn.gamingroom.outils.MyConnection;
 
@@ -59,12 +60,14 @@ public class PanierService implements IPanier {
     @Override
     public int modifierQuantity(Panier p) {
         int nbModifier=0;
+        System.out.println("I am here "+p);
         try {
-            String req="Update panier set quantityDemande = ? where id=?";
+            String req="Update panier set quantityDemande = ? where id = ?";
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setInt(1,p.getQuantityDemande());
             ps.setInt(2,p.getId());
             nbModifier = ps.executeUpdate();  
+            System.out.println(nbModifier+" "+p);
            } catch (SQLException ex) {
             ex.printStackTrace();
            }
@@ -90,4 +93,41 @@ public class PanierService implements IPanier {
         return panier;
     }
     
+    public List<Panier> getPanierByComandeId(int id) {
+            System.out.println("consulterPanier");
+        List<Panier> panier=new ArrayList<>();
+        try {
+            
+            String reqLister="select * from panier where  commande_id =" + id ;
+            Statement statement= cnx.createStatement();
+            ResultSet rs= statement.executeQuery(reqLister);
+            while (rs.next()){
+                panier.add(new Panier(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4)));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return panier;
+    }
+    public Produits getProductById(int produitid){
+        Produits s = null;
+        try {
+            String reqLister="select * from produit where  idprod =" + produitid ;
+            Statement statement= cnx.createStatement();
+            ResultSet rs= statement.executeQuery(reqLister);
+            if (rs.next()){
+               s =  new Produits();
+               s.setDescription(rs.getString(6));
+               s.setId_cat(rs.getInt(2));
+               s.setIdprod(rs.getInt(1));
+               s.setImage(rs.getString(3));
+               s.setLibelle(rs.getString(4));
+               s.setPrix(rs.getDouble(5));
+               return s;
+           }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } 
+        return s;
+    } 
 }

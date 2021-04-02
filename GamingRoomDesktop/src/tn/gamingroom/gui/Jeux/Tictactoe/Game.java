@@ -29,6 +29,9 @@ public class Game {
     private Jeux jeux;
     private int member_id;
     Game(AnchorPane border,Jeux jeux) {
+        if (UserSession.getInstance() != null) {
+            member_id = UserSession.getInstance().getUser().getId();
+        } else 
         this.member_id=2;
         this.border=border;
         this.jeux=jeux;
@@ -112,11 +115,7 @@ public class Game {
     }
     
     void updateOrAddScore(tn.gamingroom.entities.Score score,int val){
-         int memeber_id = 2;
-        if (UserSession.getInstance() != null) {
-            memeber_id = UserSession.getInstance().getUser().getId();
-        } 
-        
+       
         if(score==null){
             score= new tn.gamingroom.entities.Score(val,this.jeux.getId(),member_id);
         }

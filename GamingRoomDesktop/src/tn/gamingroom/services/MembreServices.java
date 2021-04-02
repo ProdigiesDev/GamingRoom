@@ -30,7 +30,8 @@ import java.util.Scanner;
  */
 public class MembreServices implements IMembre<Membre> {
 
-    @Override
+    
+  @Override
     public int ajouterMembre(Membre m) {
         int nbAjoutMembre = 0;
         try {
@@ -626,5 +627,52 @@ public class MembreServices implements IMembre<Membre> {
         }
         return false;
     }
+    public String findById(int idM) {
+        String s = "";
+        try {
+            String requete = "SELECT * FROM membre where id=" + idM;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                s += rs.getString("prenom") + " " + rs.getString("nom");
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return s;
+    }
+
+
+    public List<Membre> getListeParticipants(int idE) {
+        List<Membre> membreList = new ArrayList<>();
+        try {
+            String requete = "SELECT m.* FROM membre m, participant p where m.id=p.member_id AND p.evenement_id="+idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                Membre m = new Membre();
+                m.setId(rs.getInt("id"));
+                m.setNom(rs.getString("nom"));
+                m.setPrenom(rs.getString("prenom"));
+                m.setDate_naissance(rs.getDate("date_naissance"));
+                m.setGenre(Membre.Genre.valueOf(rs.getString("genre")));
+                m.setTel(rs.getString("numero_tel"));
+                m.setEmail(rs.getString("email"));
+                m.setPassword(rs.getString("password"));
+                m.setImage(rs.getString("image"));
+                m.setRole(Membre.Role.valueOf(rs.getString("role")));
+                m.setBan_duration(rs.getInt("ban_duration"));
+                m.setLast_timeban(rs.getTimestamp("last_timeban"));
+                membreList.add(m);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return membreList;
+    }
+
 
 }

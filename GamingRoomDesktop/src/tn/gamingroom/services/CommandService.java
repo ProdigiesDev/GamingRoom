@@ -22,62 +22,96 @@ import tn.gamingroom.outils.MyConnection;
  *
  * @author Admin
  */
-public class CommandService implements ICommande{
+public class CommandService implements ICommande {
 
-    private Connection  cnx=MyConnection.getInstance().getCnx();
-    
+    private Connection cnx = MyConnection.getInstance().getCnx();
+
     @Override
     public int ajouterCommand(Commande c) {
-        int nb=0;
+        int nb = 0;
         try {
-            String reqAjouter="insert into commande (membreid) values (?)";
+            String reqAjouter = "insert into commande (membreid) values (?)";
             PreparedStatement ps = cnx.prepareStatement(reqAjouter);
             ps.setInt(1, c.getMemberid());
-            nb=ps.executeUpdate();
+            nb = ps.executeUpdate();
         } catch (SQLException ex) {
-           ex.printStackTrace();
-        } 
+            ex.printStackTrace();
+        }
         return nb;
     }
 
     @Override
     public int modifierCommand(Commande c) {
         System.out.println("Modifier Commande");
-            int nbModifier=0;
+        int nbModifier = 0;
         try {
-            
-            String req="Update commande set etat = ?";
+
+            String req = "Update commande set etat = ?";
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, c.getEtat().toString());
-            nbModifier = ps.executeUpdate();  
-           } catch (SQLException ex) {
+            nbModifier = ps.executeUpdate();
+        } catch (SQLException ex) {
             ex.printStackTrace();
-                            }
+        }
         return nbModifier;
-        } 
+    }
+
+    public int confirmerCommande(int memberId, double totale) {
+        System.out.println("Modifier Commande");
+        int nbModifier = 0;
+        try {
+
+            String req = "Update commande set etat = ? , totale = ?  where etat='EnCours' and membreid =" + memberId;
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setString(1, Commande.Statu.EnAttente.toString());
+            ps.setDouble(2, totale);
+            nbModifier = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return nbModifier;
+    }
 
     @Override
     public List<Commande> consulterMesCommande(int memberid) {
-        List<Commande> commandes=new ArrayList();
+        List<Commande> commandes = new ArrayList();
+        System.out.println("Afficher commandes " + memberid);
         try {
-            String reqLister="select * from commande where membreid =" + memberid ;
-            Statement statement= cnx.createStatement();
-            
-            ResultSet rs= statement.executeQuery(reqLister);
-            while (rs.next()){
-                commandes.add(new Commande(rs.getInt("idcommande"),rs.getInt("membreid"),rs.getDate("datecommande"),Commande.Statu.valueOf(rs.getString("etat"))));
-                        }
+            String reqLister = "select * from commande where etat!='EnCours' and membreid =" + memberid;
+            Statement statement = cnx.createStatement();
+
+            ResultSet rs = statement.executeQuery(reqLister);
+            while (rs.next()) {
+                commandes.add(new Commande(rs.getInt("idcommande"), rs.getInt("membreid"), rs.getDate("datecommande"), Commande.Statu.valueOf(rs.getString("etat"))));
+            }
             System.out.println("getListCommande");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return commandes;
-                
+
+    }
+
+    public Commande getCurrentCommande(int memberid) {
+        try {
+            String reqLister = "select * from commande where etat='EnCours' and membreid =" + memberid;
+            Statement statement = cnx.createStatement();
+
+            ResultSet rs = statement.executeQuery(reqLister);
+            if (rs.next()) {
+                return  new Commande(rs.getInt("idcommande"), rs.getInt("membreid"), rs.getDate("datecommande"), Commande.Statu.valueOf(rs.getString("etat")));
+            }
+            System.out.println("getListCommande");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+        return null;
+
+    }
 
     @Override
     public List<Commande> consulterCommande() {
-        List<Commande> listCommandes =new ArrayList();
+        List<Commande> listCommandes = new ArrayList();
         try {
             String requete = "select * from commande"; // statique
             Statement st = cnx.createStatement();
@@ -93,26 +127,22 @@ public class CommandService implements ICommande{
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-           return listCommandes;
-   
-        }
+        return listCommandes;
+
+    }
 
     @Override
     public int supprimerCommand(int idcommand) {
-        int nb=0;
+        int nb = 0;
         try {
             String requete = "delete from commande where idcommande=?";
             PreparedStatement pst = cnx.prepareStatement(requete);
             pst.setInt(1, idcommand);
-            nb=pst.executeUpdate();
+            nb = pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return nb;
     }
 
-    
-    
-
-    
 }

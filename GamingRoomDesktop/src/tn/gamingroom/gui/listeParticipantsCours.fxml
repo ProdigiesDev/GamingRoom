@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.ListeParticipantsCoursController">
+   <children>
+      <AnchorPane id="AnchorPane" layoutX="5.0" layoutY="5.0" prefHeight="400.0" prefWidth="697.0">
+         <children>
+            <Pane layoutX="-3.0" opacity="0.8" prefHeight="400.0" prefWidth="698.0" style="-fx-background-color: black;">
+               <children>
+                  <TableView fx:id="table_memb" prefHeight="400.0" prefWidth="699.0" stylesheets="@listeParticipantsCours.css">
+                     <columns>
+                        <TableColumn fx:id="colonne_id" prefWidth="174.0" visible="false" />
+                        <TableColumn fx:id="colonne_name" prefWidth="174.0" text="Nom" />
+                        <TableColumn fx:id="colonne_tel" prefWidth="174.0" text="Tel" />
+                        <TableColumn fx:id="colonne_email" prefWidth="174.0" text="Adresse email" />
+                        <TableColumn fx:id="colonne_pt" prefWidth="174.0" text="Point" />
+                     </columns>
+                  </TableView>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

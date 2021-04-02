@@ -35,6 +35,7 @@ import tn.gamingroom.entities.UserSession;
  */
 public class AdminPanelController implements Initializable {
 
+  
     @FXML
     private JFXButton games;
     @FXML
@@ -62,6 +63,8 @@ public class AdminPanelController implements Initializable {
     private Label name;
     @FXML
     private Pane avisPane;
+    @FXML
+    private Pane eventsPane;
 
     /**
      * Initializes the controller class.
@@ -90,6 +93,7 @@ public class AdminPanelController implements Initializable {
         cles.setVisible(false);
         memberPane.setVisible(false);
         avisPane.setVisible(false);
+        eventsPane.setVisible(false);
     }
 
     @FXML
@@ -100,6 +104,7 @@ public class AdminPanelController implements Initializable {
         cles.setVisible(false);
         memberPane.setVisible(false);
         avisPane.setVisible(false);
+        eventsPane.setVisible(false);
     }
 
     @FXML
@@ -110,6 +115,7 @@ public class AdminPanelController implements Initializable {
         cles.setVisible(false);
         memberPane.setVisible(false);
         avisPane.setVisible(false);
+        eventsPane.setVisible(false);
     }
 
     @FXML
@@ -120,6 +126,7 @@ public class AdminPanelController implements Initializable {
         cles.setVisible(true);
         memberPane.setVisible(false);
         avisPane.setVisible(false);
+        eventsPane.setVisible(false);
     }
 
     @FXML
@@ -130,6 +137,7 @@ public class AdminPanelController implements Initializable {
         cles.setVisible(false);
         memberPane.setVisible(true);
         avisPane.setVisible(false);
+        eventsPane.setVisible(false);
     }
 
     @FXML
@@ -168,5 +176,17 @@ public class AdminPanelController implements Initializable {
         cles.setVisible(false);
         memberPane.setVisible(false);
         avisPane.setVisible(true);
+        eventsPane.setVisible(false);
+    }
+
+    @FXML
+    private void openEvents(ActionEvent event) {
+        listerJeux.setVisible(false);
+        listerreclm.setVisible(false);
+        produits.setVisible(false);
+        cles.setVisible(false);
+        memberPane.setVisible(false);
+        avisPane.setVisible(false);
+        eventsPane.setVisible(true);
     }
 }

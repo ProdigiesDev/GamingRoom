@@ -16,6 +16,9 @@ public class ReactionEv {
     public int interaction;
     public String commentaire;
 
+    public ReactionEv() {
+    }
+    
     public ReactionEv(int id) {
         this.id = id;
     }
@@ -53,9 +56,6 @@ public class ReactionEv {
         this.commentaire = commentaire;
     }
 
-    public ReactionEv() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public int getId() {
         return id;

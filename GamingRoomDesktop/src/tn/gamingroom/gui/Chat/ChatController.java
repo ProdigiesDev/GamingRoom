@@ -84,7 +84,7 @@ public class ChatController implements Initializable {
 
     private void envoyerMsg(ActionEvent event) {
         if (membre == null) {
-            int a = JOptionPane.showConfirmDialog(new JFrame(), "vous dois d'abord vous connecter ?");
+            int a = JOptionPane.showConfirmDialog(new JFrame(), "vous devez d'abord vous connecter ?");
             if (a == JOptionPane.YES_OPTION) {
                 goLogin();
                 return;

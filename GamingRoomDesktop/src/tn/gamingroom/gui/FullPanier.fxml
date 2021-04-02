@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<ScrollPane prefHeight="1500.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.FullPanierController">
+    <content>
+        <AnchorPane id="AnchorPane" prefHeight="1500.0" styleClass="body" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+            <ImageView fitHeight="308.0" fitWidth="1350.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <image>
+                    <Image url="file:/C:/Users/Dah/Desktop/demo/images/banner-bg.jpg" />
+                </image>
+            </ImageView>
+            <fx:include fx:id="header" source="Shared/Header.fxml" AnchorPane.topAnchor="0" />
+            <fx:include fx:id="panier" layoutY="350.0" source="Panier.fxml" AnchorPane.leftAnchor="150.0" />
+            <fx:include fx:id="footer" source="Shared/Footer.fxml" AnchorPane.bottomAnchor="0" />
+
+        </AnchorPane>
+    </content>
+</ScrollPane>

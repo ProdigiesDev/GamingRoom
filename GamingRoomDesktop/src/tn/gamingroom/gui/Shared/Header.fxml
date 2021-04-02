@@ -14,7 +14,7 @@
          <children>
             <ImageView fitHeight="79.0" fitWidth="134.0" layoutX="100.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="file:/C:/Users/Dah/Desktop/demo/images/logo.png" />
+                  <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/images/logo.png" />
                </image>
             </ImageView>
          <JFXButton fx:id="home" layoutX="340.0" layoutY="24.0" onAction="#gotoHome" text="Accueil" textFill="WHITE">
@@ -22,7 +22,7 @@
                <Font size="15.0" />
             </font>
          </JFXButton>
-         <JFXButton fx:id="btnshop" layoutX="950.0" layoutY="26.0" text=" " visible="false">
+         <JFXButton fx:id="btnshop" layoutX="950.0" layoutY="26.0" onAction="#goToPanier" text=" " visible="false">
             <graphic>
                   <FontAwesomeIcon fx:id="fontshop" fill="WHITE" glyphName="SHOPPING_CART" size="2em" visible="false" />
             </graphic>
@@ -31,12 +31,12 @@
             <graphic>
                   <FontAwesomeIcon fx:id="fontsingout" fill="WHITE" glyphName="SIGN_OUT" size="2em" visible="false" />
             </graphic></JFXButton>
-         <JFXButton fx:id="events" layoutX="420.0" layoutY="24.0" text="Événements" textFill="WHITE">
+         <JFXButton fx:id="events" layoutX="420.0" layoutY="24.0" onAction="#gotToEvent" text="Événements" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>
          </JFXButton>
-         <JFXButton fx:id="sotre" layoutX="598.0" layoutY="24.0" text="Magasin" textFill="WHITE">
+         <JFXButton fx:id="sotre" layoutX="598.0" layoutY="24.0" onAction="#goToStore" text="Magasin" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>
@@ -46,7 +46,7 @@
                <Font size="15.0" />
             </font>
          </JFXButton>
-         <JFXButton fx:id="cours" layoutX="527.0" layoutY="24.0" text="Cours" textFill="WHITE">
+         <JFXButton fx:id="cours" layoutX="527.0" layoutY="24.0" onAction="#gotToCours" text="Cours" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>
@@ -66,6 +66,11 @@
                <Font size="20.0" />
             </font>
          </Label>
+         <JFXButton fx:id="btnprofil" layoutX="1200.0" layoutY="25.0" onAction="#goProfil" prefHeight="31.0" prefWidth="92.0" text="Profil" textFill="WHITE" visible="false">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </JFXButton>
          </children>
       </Pane>
 </AnchorPane>

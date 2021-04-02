@@ -67,7 +67,7 @@ public class AjouterAvisController implements Initializable {
     @FXML
     private void ajouterAvis(ActionEvent event) {
         if (this.membre == null) {
-            int a = JOptionPane.showConfirmDialog(new JFrame(), "vous dois d'abord vous connecter ?");
+            int a = JOptionPane.showConfirmDialog(new JFrame(), "vous devez d'abord vous connecter ?");
             if (a == JOptionPane.YES_OPTION) {
                 goLogin();
             }

@@ -144,6 +144,7 @@ public class Evenement {
     public String toString() {
         return "Evenement{" + "idevent=" + idevent + ", nomEvent=" + nomEvent + ", dateDeb=" + dateDeb + ", dateFin=" + dateFin + ", image=" + image + ", categorie_id=" + categorie_id + ", nbreMax_participant=" + nbreMax_participant + ", description=" + description + ", lieu=" + lieu + ", lienYoutube=" + lienYoutube + '}';
     }
+
     
     
     

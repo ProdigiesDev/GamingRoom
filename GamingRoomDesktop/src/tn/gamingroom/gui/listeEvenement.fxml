@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.ListeEvenementController">
+   <children>
+      <ImageView fitHeight="737.0" fitWidth="1286.0" layoutX="-50.0" layoutY="-22.0" pickOnBounds="true">
+         <image>
+            <Image url="file:/C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/AjoutEvenement.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="48.0" layoutY="11.0" opacity="0.78" prefHeight="559.0" prefWidth="1152.0" style="-fx-background-color: black;">
+         <children>
+            <Label fx:id="n" alignment="CENTER" contentDisplay="CENTER" layoutX="384.0" layoutY="14.0" prefHeight="22.0" prefWidth="343.0" text="Evenements" textFill="#f8f7f7">
+               <font>
+                  <Font name="Yu Gothic Regular" size="19.0" />
+               </font>
+            </Label>
+            <TableView fx:id="listeEvents" layoutX="34.0" layoutY="82.0" onMouseClicked="#getSelected" prefHeight="383.0" prefWidth="1085.0" style="-fx-background-color: black; -fx-border-color: #6f1075;" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
+              <columns>
+                <TableColumn fx:id="imL" prefWidth="79.0" />
+                <TableColumn fx:id="dateDL" prefWidth="116.99996948242188" text="Date début" />
+                  <TableColumn fx:id="dateFL" prefWidth="115.0" text="Date fin" />
+                  <TableColumn fx:id="tL" prefWidth="104.0" text="Titre" />
+                  <TableColumn fx:id="desL" prefWidth="107.0" text="Description" />
+                  <TableColumn fx:id="lieuL" prefWidth="109.0" text="Lieu" />
+                  <TableColumn fx:id="LienYL" prefWidth="92.0" text="Lien Youtube" />
+                  <TableColumn fx:id="idE" prefWidth="79.0" visible="false" />
+                  <TableColumn fx:id="catL" prefWidth="113.0" text="Catégorie" />
+                  <TableColumn fx:id="nbML" prefWidth="131.0" text="Nombre maximale" />
+                  <TableColumn fx:id="idCat" prefWidth="113.0" text="idCat" visible="false" />
+                  <TableColumn fx:id="imageURL" prefWidth="131.0" visible="false" />
+              </columns>
+            </TableView>
+            <JFXButton layoutX="443.0" layoutY="499.0" onAction="#goToAjouterEvenement" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: #6f1075;" text="Ajouter un evenement" textFill="#f8f8f8">
+               <graphic>
+                  <FontAwesomeIcon fill="WHITE" glyphName="PLUS" wrappingWidth="36.428571701049805" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
