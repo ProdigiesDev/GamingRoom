@@ -95,6 +95,8 @@ public class InfoCoursController implements Initializable {
     private FontAwesomeIcon dislike;
     @FXML
     private FontAwesomeIcon like;
+    @FXML
+    private Button bntLPart;
 
     private Membre membre;
 
@@ -260,6 +262,7 @@ public class InfoCoursController implements Initializable {
         }
     }
 
+    @FXML
     private void goToListePart(ActionEvent event) {
 
         if (UserSession.getInstance() != null) {

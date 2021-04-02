@@ -220,7 +220,7 @@ public class CoursDetailsController implements Initializable {
     @FXML
     private void ajouterC(ActionEvent event) {
         boolean verift = (verifYouUrl() && verifnom() && verifcat() && verifdate() && verifmo() && verifdes() && verifmo());
-        if (!verift) {
+        if (verift) {
             try {
                 Notification.sendNotification("Cours", "Veuillez remplir tous les champs ", TrayIcon.MessageType.INFO);
             } catch (AWTException ex) {
@@ -548,6 +548,9 @@ public class CoursDetailsController implements Initializable {
             return false;
         }
     }
+    @FXML
+    private void changecat(KeyEvent event) {
+    }
 
     private boolean verifYouUrl() {
 
@@ -778,6 +781,8 @@ public class CoursDetailsController implements Initializable {
             Logger.getLogger(InfoCoursController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    
     }
 
 
