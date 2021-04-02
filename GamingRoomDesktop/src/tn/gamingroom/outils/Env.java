@@ -10,7 +10,7 @@ package tn.gamingroom.outils;
  * @author Dah
  */
 public class Env {
-    private static final String dossierImagePath="C:\\Users\\asus\\Desktop\\ProdigiesDev\\images";
+    private static final String dossierImagePath="C:\\Users\\Dah\\Desktop\\ProdigiesDev\\images\\";
     public static final String keyMeaningcloudApi = "fb2edfd3397580535796144ef45588eb";
     private static String dossierImageUtilEventPath ="C:\\Users\\Dah\\Desktop\\ProdigiesDev\\assetsEvenement\\";
     private static final String youtubeApiKey = "AIzaSyA_8Z1_SB9rtueiZXM3kMLKHlV5kOqTGSY";

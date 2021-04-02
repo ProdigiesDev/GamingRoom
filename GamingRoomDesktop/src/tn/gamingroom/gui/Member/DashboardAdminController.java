@@ -210,6 +210,7 @@ public class DashboardAdminController implements Initializable {
         CategorieServices cs = new CategorieServices();
         if(cs.CategorieExiste(nomcat)== false){
         cs.ajouterCategorie(c);
+        JOptionPane.showMessageDialog(null, "Catégorie ajouté avec succés"); 
         afficherCategorie();
         }
         else{

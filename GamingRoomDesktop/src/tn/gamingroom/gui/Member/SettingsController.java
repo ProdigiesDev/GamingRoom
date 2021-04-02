@@ -39,6 +39,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Membre;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.MembreServices;
 
@@ -150,24 +151,30 @@ public class SettingsController implements Initializable {
                 
                  Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
-        alert.setHeaderText("You're about to logout!");
-        alert.setContentText("Are you sure ?");
+        alert.setHeaderText("vous etes sur le point de supprimer votre compte !");
+        alert.setContentText("etes-vous sur? ?");
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(okButton, cancelButton);
         
         if(alert.showAndWait().get()== okButton){
-            
+            UserSession us = UserSession.getInstance();
+            Membre m =us.getUser();
             MembreServices ms = new MembreServices();
             Membre mm = new Membre(Integer.parseInt(tf_id.getText()));
             
+            
             ms.sumprimerMembres(mm);
+            us.cleanUserSession();
                 FXMLLoader fxmlLoader =new FXMLLoader(getClass().getResource("LoginMember.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setTitle("Login");
                 stage.setScene(new Scene(root));
-                stage.show(); }
+                ((Stage) tf_nv_tel.getScene().getWindow()).close();
+                stage.setMaximized(true);
+                stage.show(); 
+        }
             } catch (IOException ex) {
                 Logger.getLogger(LoginMemberController.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -69,6 +69,10 @@ public class ProfilMemberController implements Initializable {
     private Button btn_mesCom;
     @FXML
     private Pane paneCom;
+    @FXML
+    private Button btn_mesCom1;
+    @FXML
+    private Pane panemembers;
 
     /**
      * Initializes the controller class.
@@ -201,13 +205,16 @@ public class ProfilMemberController implements Initializable {
     }
 
     
-    private void afficherMesCours(ActionEvent event) {
+    @FXML
+    private void afficherMesCommande(ActionEvent event) {
         paneCom.setVisible(true);
+        panemembers.setVisible(false);
     }
 
     @FXML
-    private void afficherMesCommande(ActionEvent event) {
+    private void afficherMembers(ActionEvent event) {
         paneCom.setVisible(false);
+        panemembers.setVisible(true);
     }
 
 }

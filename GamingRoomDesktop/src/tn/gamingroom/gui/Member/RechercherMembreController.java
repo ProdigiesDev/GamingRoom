@@ -63,7 +63,6 @@ public class RechercherMembreController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         /// autocompile
-        pane_table.setVisible(false);
         MembreServices ms = new MembreServices();
 
         TextFields.bindAutoCompletion(textsearch, ms.RechercherMembresProfil());

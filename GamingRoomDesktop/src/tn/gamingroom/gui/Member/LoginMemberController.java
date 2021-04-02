@@ -110,12 +110,6 @@ public class LoginMemberController implements Initializable {
         
         });
         
-        /// autocompile
-        
-        MembreServices ms = new MembreServices();
-       
-        TextFields.bindAutoCompletion(loginEmail,ms.GetEmail());
-        
        
     }  
     

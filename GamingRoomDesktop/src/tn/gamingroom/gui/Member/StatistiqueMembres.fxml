@@ -12,7 +12,7 @@
           <CategoryAxis label="Role" side="BOTTOM" tickLabelFill="#cd2d2d" fx:id="x_role" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="y_numbers" lowerBound="5.0" minorTickCount="10" minorTickLength="0.0" side="LEFT" tickLabelFill="#c61313" tickLabelGap="0.0" tickLength="7.0" tickUnit="0.0" />
+          <NumberAxis fx:id="y_numbers" lowerBound="5.0" minorTickCount="10" minorTickLength="0.0" side="LEFT" tickLabelFill="#8f14c4" tickLabelGap="0.0" tickLength="7.0" tickUnit="0.0" />
         </yAxis>
       </BarChart>
    </children>

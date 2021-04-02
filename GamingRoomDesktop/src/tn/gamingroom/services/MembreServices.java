@@ -213,7 +213,7 @@ public class MembreServices implements IMembre<Membre> {
     public List<Membre> RechercherMembres(String x) {
         ArrayList<Membre> ListMembre = new ArrayList<>();
         try {
-            String requete = "Select * from membre  where email like '%" + x + "%' or nom like '%" + x + "%' or prenom like '%" + x + "' ";
+            String requete = "Select * from membre  where  role!='Admin' and  email like '%" + x + "%' or nom like '%" + x + "%' or prenom like '%" + x + "' ";
             System.out.println("aa: "+x);
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requete);
             ResultSet rs = st.executeQuery();
