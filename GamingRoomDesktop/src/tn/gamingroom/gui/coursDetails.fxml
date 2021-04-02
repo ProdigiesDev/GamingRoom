@@ -67,13 +67,13 @@
                </font>
             </Label>
             <JFXTextField fx:id="lien" layoutX="143.0" layoutY="8.0" prefHeight="31.0" prefWidth="171.0" />
-            <Button fx:id="infoYoutube" layoutX="326.0" layoutY="23.0" mnemonicParsing="false" onAction="#getInformationsYoutube" prefHeight="32.0" prefWidth="179.0"  text="Importer informations" textFill="#e1dcdc" />
+            <Button fx:id="infoYoutube" layoutX="326.0" layoutY="23.0" mnemonicParsing="false" onAction="#getInformationsYoutube" prefHeight="32.0" prefWidth="179.0" style="-fx-background-color: #6f1075;" text="Importer informations" textFill="#e1dcdc" />
             <JFXTextArea fx:id="icl" layoutX="121.0" layoutY="442.0" prefHeight="58.0" prefWidth="418.0" />
             <JFXTextArea fx:id="ides" layoutX="120.0" layoutY="547.0" prefHeight="79.0" prefWidth="418.0" />
          </children>
       </Pane>
       <Pane layoutY="52.0" prefHeight="5.0" prefWidth="1261.0" style="-fx-background-color: 6f1075;" />
-      <Button fx:id="btnaj" layoutX="1053.0" layoutY="751.0" mnemonicParsing="false" onAction="#ajouterC" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #6f1075;" text="Ajouter" textFill="#eeedee">
+      <Button fx:id="btnaj" layoutX="355.0" layoutY="874.0" mnemonicParsing="false" onAction="#ajouterC" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #6f1075;" text="Ajouter" textFill="#eeedee">
          <font>
             <Font name="Bauhaus 93" size="18.0" />
          </font>
@@ -94,7 +94,7 @@
          </font>
       </Label>
       <Pane layoutY="52.0" prefHeight="5.0" prefWidth="1839.0" style="-fx-background-color: #6f1075;" />
-      <Button fx:id="btnclean" layoutX="180.0" layoutY="878.0" mnemonicParsing="false" onAction="#clean" style="-fx-background-color: #6f1075;" text="Vider les champs" textFill="#e1dcdc">
+      <Button fx:id="btnclean" layoutX="95.0" layoutY="877.0" mnemonicParsing="false" onAction="#clean" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #6f1075;" text="Vider les champs" textFill="#e1dcdc">
          <font>
             <Font name="Bauhaus 93" size="18.0" />
          </font>
@@ -127,5 +127,10 @@
       <FontAwesomeIcon fill="#d917e7" glyphName="IMAGE" layoutX="23.0" layoutY="151.0" size="30" />
       <FontAwesomeIcon fill="#ae0ea6" glyphName="SEARCH" layoutX="1803.0" layoutY="41.0" size="20" />
       <Label fx:id="veriflien" layoutX="647.0" layoutY="103.0" prefHeight="18.0" prefWidth="315.0" />
+      <Button fx:id="bntLPart" layoutX="1063.0" layoutY="751.0" mnemonicParsing="false" onAction="#goToListePart" prefHeight="38.0" prefWidth="179.0" style="-fx-background-color: #6f1075;" text="Liste de participants" textFill="#f1e5f5">
+         <font>
+            <Font name="Bauhaus 93" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -40,6 +40,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -162,6 +163,9 @@ public class CoursDetailsController implements Initializable {
     @FXML
     private Label verifimage;
     private Membre membre;
+    @FXML
+    private Button bntLPart;
+    int cour_id;
     /**
      * Initializes the controller class.
      */
@@ -171,8 +175,9 @@ public class CoursDetailsController implements Initializable {
             membre = UserSession.getInstance().getUser();
 
         }
-        String[] possibleWords ={cnom.getText() ,cdes.getText()};
-        TextFields.bindAutoCompletion(search, possibleWords);
+           ServiceCours sc= new ServiceCours();
+        String[] possibleWords ={};
+        TextFields.bindAutoCompletion(search, sc.AutocompleteSearch());
         //getVideoDetails("https://www.youtube.com/watch?v=gbt6cTZSKgo");
         inom.setStyle("-fx-text-fill: white; ");
         icl.setStyle("-fx-text-fill: white; ");
@@ -466,7 +471,7 @@ public class CoursDetailsController implements Initializable {
 
     private boolean verifnom() {
         verifnom.setStyle("-fx-text-fill: white; ");
-        if (inom.getText().isEmpty()) {
+        if (inom.getText()== null) {
             verifnom.setText("Veuillez remplir ce champs");
             return true;
 
@@ -514,6 +519,10 @@ public class CoursDetailsController implements Initializable {
             return false;
         }
     }
+    @FXML
+    private void changeDate(KeyEvent event) {
+        verifdate.setVisible(false);
+    }
 
     
     
@@ -557,7 +566,6 @@ public class CoursDetailsController implements Initializable {
 
     }
 
-    @FXML
     private void verifImage(ActionEvent event) {
         if (imagevc.getImage() == null) {
             btnaj.setDisable(true);
@@ -731,10 +739,7 @@ public class CoursDetailsController implements Initializable {
 //        verifdate.setVisible(false);
 //    }
 
-    @FXML
-    private void changeDate(KeyEvent event) {
-        verifdate.setVisible(false);
-    }
+    
 
     @FXML
     private void verifImage(KeyEvent event) {
@@ -744,6 +749,37 @@ public class CoursDetailsController implements Initializable {
     private void changeDate(ActionEvent event) {
     }
 
+    @FXML
+    private void goToListePart(ActionEvent event) {
+        if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
+            
+        }
+
+        try {
+            clean();
+            ServiceCours s = new ServiceCours();
+            Courslm c = new Courslm();
+             c = this.tableCours.getSelectionModel().getSelectedItem();
+                cour_id=c.getId();
+            if (c == null) {
+                JOptionPane.showMessageDialog(null, "Veuillez selectionner un cours");
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("listeParticipantsCours.fxml"));
+            Parent root = loader.load();
+            Scene s1 = new Scene(root);
+            ListeParticipantsCoursController pct = loader.getController();
+            pct.initDat(cour_id);
+            Stage prS = new Stage();
+            prS.setScene(s1);
+            prS.show();
+        } catch (IOException ex) {
+            Logger.getLogger(InfoCoursController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    }
 
 
-}
+
+

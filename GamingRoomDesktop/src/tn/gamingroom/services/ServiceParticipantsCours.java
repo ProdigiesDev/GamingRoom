@@ -70,7 +70,7 @@ public class ServiceParticipantsCours implements IParticipantsCours {
         return PartCours;
     }
 
-    @Override
+     @Override
     public List<Membre> getListeParticipants(int idE) {
         List<Membre> membreList = new ArrayList<>();
         try {
@@ -97,5 +97,26 @@ public class ServiceParticipantsCours implements IParticipantsCours {
             System.err.println(ex.getMessage());
         }
         return membreList;
+    }
+
+    @Override
+    public int verifInscrit(int idM,int idC) {
+        int nbLigne=0;
+        try {
+            String requeteDs = "SELECT count(id) as nbLigne FROM participantcours where membre_id="+idM+" AND cour_id="+idC;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requeteDs);
+            if (rs.next()) {
+                if(rs.getInt("nbLigne")>0){
+                    nbLigne= 0;
+                }else nbLigne= 1;
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return nbLigne;
+        
     }
 }

@@ -39,8 +39,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Cours;
 import tn.gamingroom.entities.Courslm;
+import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.ParticipantsCours;
 import tn.gamingroom.entities.ReacCours;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.Outils;
 import tn.gamingroom.services.ServiceCours;
 import tn.gamingroom.services.ServiceParticipantsCours;
@@ -93,8 +95,8 @@ public class InfoCoursController implements Initializable {
     private FontAwesomeIcon dislike;
     @FXML
     private FontAwesomeIcon like;
-    @FXML
-    private Button bntLPart;
+
+    private Membre membre;
 
     /**
      * Initializes the controller class.
@@ -242,27 +244,36 @@ public class InfoCoursController implements Initializable {
         if (a == JOptionPane.YES_OPTION) {
             ServiceParticipantsCours spc = new ServiceParticipantsCours();
             Cours c = new Cours();
-
-//            
-            int nb = spc.ajouterParticipant(2, cour_id);
-            if (nb == 0) {
-                JOptionPane.showMessageDialog(null, "Erreur d'inscription");
-            } else {
-                JOptionPane.showMessageDialog(null, "Félicitation vous etes inscrit à ce cours");
+            ////todo member_id tetbadel
+            if (spc.verifInscrit(2, cour_id) > 0) {
+                int nb = spc.ajouterParticipant(2, cour_id);
+                if (nb == 0) {
+                    JOptionPane.showMessageDialog(null, "Erreur d'inscription");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Félicitation vous etes inscrit à ce cours");
+                }
+            }else {
+                JOptionPane.showMessageDialog(null, "Vous êtes déjà inscrit");
             }
+//            
+
         }
     }
 
-    @FXML
     private void goToListePart(ActionEvent event) {
-        
+
+        if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
+            
+        }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("listeParticipantsCours.fxml"));
             Parent root = loader.load();
-            Scene s=new Scene(root);
+            Scene s = new Scene(root);
             ListeParticipantsCoursController pct = loader.getController();
             pct.initDat(cour_id);
-            Stage prS=new Stage();
+            Stage prS = new Stage();
             prS.setScene(s);
             prS.show();
         } catch (IOException ex) {
@@ -271,14 +282,5 @@ public class InfoCoursController implements Initializable {
     }
 }
 
-//        spc.ajouterParticipant(p);
-//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//        alert.setTitle("Confirmation");
-//        alert.setHeaderText("Confirmation d'inscription !");
-//        alert.setContentText("Voulez-Vous Vraiment S'inscrire");
-//        if (nb == 0) {
-//            JOptionPane.showMessageDialog(null, "Erreur d'inscription");
-//        } else {
-//            Optional<ButtonType> btn = alert.showAndWait();
-//            JOptionPane.showMessageDialog(null, "Félicitation vous etes inscrit à ce cours");
+
 

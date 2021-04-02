@@ -307,5 +307,31 @@ public class ServiceCours implements ICours {
         }
         return CoursList;
     }
+    
+    
+    @Override
+    public List<String> AutocompleteSearch() {
+        List<String> l = new ArrayList<>();
+        try {
+            String requete = "SELECT DISTINCT e.nomCours as nom from cour e where e.nomCours is not null";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                l.add(rs.getString("nom"));
+            }
+            requete = "SELECT DISTINCT e.description as description from cour e where e.description is not null ";
+            st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            rs = st.executeQuery(requete);
+            while (rs.next()) {
+                l.add(rs.getString("description"));
+            }
+           
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return l;
+    }
 
 }
