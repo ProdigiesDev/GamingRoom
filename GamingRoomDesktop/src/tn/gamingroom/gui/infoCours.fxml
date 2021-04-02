@@ -59,7 +59,7 @@
       <FontAwesomeIcon fx:id="dislike" glyphName="HEARTBEAT" layoutX="249.0" layoutY="561.0" onMouseClicked="#reacneg" size="40" wrappingWidth="15.0" />
       <FontAwesomeIcon fx:id="like" fill="#ee1919" glyphName="HEART" layoutX="119.0" layoutY="566.0" onMouseClicked="#react" size="40" wrappingWidth="27.000003576278687" />
       <Text fx:id="nbInternegng" layoutX="317.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-      <Button fx:id="inscrire" layoutX="234.0" layoutY="609.0" mnemonicParsing="false" onAction="#inscrirecours" prefHeight="41.0" prefWidth="121.0" style="-fx-background-color: #6f1075;" text="S'inscrire" textFill="#f8f8f8">
+      <Button fx:id="inscrire" layoutX="904.0" layoutY="325.0" mnemonicParsing="false" onAction="#inscrirecours" prefHeight="41.0" prefWidth="121.0" style="-fx-background-color: #6f1075;" text="S'inscrire" textFill="#f8f8f8">
          <font>
             <Font name="Bauhaus 93" size="19.0" />
          </font>
@@ -68,11 +68,6 @@
       <Label fx:id="nom" layoutX="1029.0" layoutY="81.0" prefHeight="21.0" prefWidth="121.0" />
       <Label fx:id="cat" layoutX="1003.0" layoutY="134.0" prefHeight="21.0" prefWidth="112.0" />
       <Label fx:id="des" layoutX="1003.0" layoutY="195.0" prefHeight="21.0" prefWidth="112.0" />
-      <Button fx:id="bntLPart" layoutX="535.0" layoutY="611.0" mnemonicParsing="false" onAction="#goToListePart" prefHeight="38.0" prefWidth="194.0" style="-fx-background-color: #6f1075;" text="Afficher Participants" textFill="#f8f8f8">
-         <font>
-            <Font name="Bauhaus 93" size="18.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
 </content>

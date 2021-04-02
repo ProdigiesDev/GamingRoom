@@ -28,8 +28,11 @@ public interface ICours {
     
     public Cours findById(int id);
     
+    public List<String> AutocompleteSearch();
+    
 
     public List<Cours> displayCours();
-    public List<Cours>displayCoursByCoach();
+    
+    public List<Cours>displayCoursByCoach(int membre_id);
 
 }

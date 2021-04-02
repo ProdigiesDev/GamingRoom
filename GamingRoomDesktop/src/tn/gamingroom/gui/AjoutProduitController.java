@@ -213,7 +213,10 @@ public class AjoutProduitController implements Initializable {
 
         } catch (Exception ex) {
             tfprix.setText("");
-            JOptionPane.showMessageDialog(null, "Il faut ajouter un entier");
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Il faut ajouter un entier ");
+            alert.show();
             return;
 
         }
@@ -225,22 +228,33 @@ public class AjoutProduitController implements Initializable {
 
         // controle de saisie
         if (tflibelle.getText().length() == 0) {
-            JOptionPane.showMessageDialog(null, "Il faut remplir le champ Libelle");
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Il faut remplir le champ Libelle");
+            alert.show();
             return;
         }
 
         if (fileName.length() == 0) {
-            JOptionPane.showMessageDialog(null, "Il faut choisir une image");
+              Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Il faut choisir une image");
+            alert.show();
             return;
         }
         if (textareaProd.getText().length() == 0) {
-            JOptionPane.showMessageDialog(null, "Il faut remplir le champ Description");
+            
+              Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Il faut remplir le champ Description");
+            alert.show();
             return;
         }
 
         if (pcd.ajouterProduit(p2) > 0) {
 
-            JOptionPane.showMessageDialog(null, "produit ajouté");
+            
+              Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("produit ajouté");
+            alert.show();
             initTable(null);
 
         }
@@ -429,10 +443,10 @@ CategorieServices categorieServices=new CategorieServices();
             Parent stat;
             stat = FXMLLoader.load(getClass().getResource("statistique.fxml"));
 
-            Scene dashboardScene = new Scene(stat);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(dashboardScene);
-            window.show();
+            Scene dashboardScene = new Scene(stat,1200,800);
+            Stage s=new Stage();
+            s.setScene(dashboardScene);
+            s.show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -619,7 +633,10 @@ CategorieServices categorieServices=new CategorieServices();
                 page = new Page(pdf, A4.PORTRAIT);
             }
             pdf.flush();
-            JOptionPane.showMessageDialog(null, "PDF enregistré sous le path " + out.getAbsolutePath());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("PDF");
+            alert.setContentText("PDF enregistré sous le path "+ out.getAbsolutePath());
+            alert.show();
             System.out.println("Saved to " + out.getAbsolutePath());
         }
     }

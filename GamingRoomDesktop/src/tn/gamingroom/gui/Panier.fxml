@@ -46,6 +46,6 @@
             <TableColumn fx:id="colPrix" prefWidth="182.0" text="Prix" />
         </columns>
       </TableView>
-      <Button fx:id="btCom" layoutX="824.0" layoutY="661.0" mnemonicParsing="false" onAction="#ajouterCommande" prefHeight="39.0" prefWidth="178.0" text="Passer la commande" />
+      <Button fx:id="btCom" layoutX="824.0" layoutY="661.0" mnemonicParsing="false" onAction="#ajouterCommande" prefHeight="39.0" prefWidth="178.0" style="-fx-background-color: rgb(8, 3, 37);" text="Passer la commande" />
    </children>
 </AnchorPane>

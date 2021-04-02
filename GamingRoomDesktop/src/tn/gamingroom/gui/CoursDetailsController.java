@@ -40,6 +40,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -62,6 +63,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
+import org.controlsfx.control.textfield.TextFields;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -89,7 +91,7 @@ public class CoursDetailsController implements Initializable {
     private TableColumn<Courslm, String> cdes;
     @FXML
     private TableColumn<Courslm, Integer> cnb;
-    
+
     @FXML
     private TableColumn<Courslm, Date> cdate;
     @FXML
@@ -121,7 +123,7 @@ public class CoursDetailsController implements Initializable {
 
     @FXML
     private Button btnclean;
-    
+
     @FXML
     private TextField search;
     @FXML
@@ -151,7 +153,7 @@ public class CoursDetailsController implements Initializable {
     private Label verifdes;
     @FXML
     private Label verifnb;
-    
+
     @FXML
     private JFXTextField lien;
     @FXML
@@ -161,15 +163,26 @@ public class CoursDetailsController implements Initializable {
     @FXML
     private Label verifimage;
     private Membre membre;
+    @FXML
+    private Button bntLPart;
+    int cour_id;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-           if (UserSession.getInstance() != null) {
+        if (UserSession.getInstance() != null) {
             membre = UserSession.getInstance().getUser();
 
         }
+
+        idate.valueProperty().addListener((ov, oldValue, newValue) -> {
+            verifdate.setVisible(false);
+        });
+        ServiceCours sc = new ServiceCours();
+        String[] possibleWords = {};
+        TextFields.bindAutoCompletion(search, sc.AutocompleteSearch());
         //getVideoDetails("https://www.youtube.com/watch?v=gbt6cTZSKgo");
         inom.setStyle("-fx-text-fill: white; ");
         icl.setStyle("-fx-text-fill: white; ");
@@ -184,7 +197,7 @@ public class CoursDetailsController implements Initializable {
         cmoc.setCellValueFactory(new PropertyValueFactory<Courslm, String>("tags"));
         //cmem.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("membre_id"));
         cnb.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("nb_participants"));
-        ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
+        ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorieNom"));
         cimage.setCellValueFactory(new PropertyValueFactory<Courslm, ImageView>("image"));
         clien.setCellValueFactory(new PropertyValueFactory<Courslm, String>("lienYoutube"));
 
@@ -211,10 +224,9 @@ public class CoursDetailsController implements Initializable {
 
     @FXML
     private void ajouterC(ActionEvent event) {
-        System.out.println(verifYouUrl() + " "+verifnom() + " "+verifcat() + " "+verifdate() + " "+verifmo() + " "+verifdes() + " "+verifmo());
-        boolean verift = (verifYouUrl() && verifnom() && verifcat() && verifdate() && verifmo() && verifdes() && verifmo());
+        boolean verift = (verifYouUrl() && verifnom() && verifcat() && verifdate() && verifnb() && verifdes() && verifmo());
+        System.out.println(verifYouUrl() + " " + verifnom() + " " + verifcat() + " " + verifdate() + " " + verifnb() + " " + verifdes() + " " + verifmo());
         if (verift) {
-            
             try {
                 Notification.sendNotification("Cours", "Veuillez remplir tous les champs ", TrayIcon.MessageType.INFO);
             } catch (AWTException ex) {
@@ -225,82 +237,81 @@ public class CoursDetailsController implements Initializable {
             return;
         }
 
-            {
-                //try {
-                //TODO fil verifNb lazem ykon integer
-                boolean verif = verifYouUrl() || verifnom() || verifcat() || verifdate() || verifmo() || verifdes() || verifmo() ;
-                if (verif) {
-                    return;
-                }
+        {
+            //try {
+            //TODO fil verifNb lazem ykon integer
+            boolean verif = verifYouUrl() || verifnom() || verifcat() || verifdate() || verifmo() || verifdes() || verifmo();
+            if (verif) {
+                return;
+            }
 
-                Cours c = new Cours();
-                ServiceCours s = new ServiceCours();
-                Categorie categorie = combocat.getValue();
-                
-                c.setNomCours(inom.getText());
-                c.setDescription(ides.getText());
-                c.setNb_participants(Integer.parseInt(inb.getText()));
-                c.setDate_creation(Date.valueOf(idate.getValue()));
-                c.setTags(icl.getText());
-                System.out.println("c "+categorie.getIdcat());
-                c.setCategorie_id(categorie.getIdcat());
-                c.setLienYoutube(lien.getText());
-                ///to do 3awdh l 1 belid melsingelton
-                c.setMembre_id(membre.getId());
-                //TODO hethi lazem titbadil dynamique ki tkamil sonia
-                //c.setMembre_id(Integer.parseInt(imem.getText()));
-                String nomImage = moveImage();
+            Cours c = new Cours();
+            ServiceCours s = new ServiceCours();
+            Categorie categorie = combocat.getValue();
+
+            c.setNomCours(inom.getText());
+            c.setDescription(ides.getText());
+            c.setNb_participants(Integer.parseInt(inb.getText()));
+            c.setDate_creation(Date.valueOf(idate.getValue()));
+            c.setTags(icl.getText());
+            c.setCategorie_id(categorie.getIdcat());
+            c.setLienYoutube(lien.getText());
+            ///to do 3awdh l 1 belid melsingelton
+            c.setMembre_id(membre.getId());
+            //TODO hethi lazem titbadil dynamique ki tkamil sonia
+            //c.setMembre_id(Integer.parseInt(imem.getText()));
+            String nomImage = moveImage();
+            c.setImage(nomImage);
+            System.out.println(c);
+            if (nomImage.length() == 0) {
+                JOptionPane.showMessageDialog(null, "Veuillez insérer une image");
+                return;
+            }
+            c.setLienYoutube(lien.getText());
+            int nb = s.ajouterCours(c);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+            if (nb != 0) {
+                try {
+                    alert.setTitle("Confirmation");
+                    alert.setHeaderText("Confirmation d'ajout !");
+                    alert.setContentText("Voulez-Vous Vraiment Ajouter");
+                    Notification.sendNotification("Cours", "Cours a été ajouté ", TrayIcon.MessageType.INFO);
+                } catch (AWTException ex) {
+                    Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (nb == 0) {
+                try {
+                    //JOptionPane.showMessageDialog(null, "Erreur cours non ajouteé");
+                    Notification.sendNotification("Cours", "Cours non ajouté ", TrayIcon.MessageType.ERROR);
+                } catch (AWTException ex) {
+                    Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                Optional<ButtonType> btn = alert.showAndWait();
+                //JOptionPane.showMessageDialog(null, "Cours ajouté");
+                Courslm cmm = new Courslm();
+                System.out.println("nom" + c.getNomCours());
+
+                cmm.setNomCours(inom.getText());
+                cmm.setDescription(ides.getText());
+                cmm.setNb_participants(Integer.parseInt(inb.getText()));
+                cmm.setDate_creation(Date.valueOf(idate.getValue()));
+                cmm.setTags(icl.getText());
+                cmm.setCategorie_id(categorie.getIdcat());
+                //cmm.setMembre_id(Integer.parseInt(imem.getText()));
+
                 c.setImage(nomImage);
-                System.out.println(c);
-                if (nomImage.length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Veuillez insérer une image");
-                    return;
-                }
-                c.setLienYoutube(lien.getText());
-                int nb = s.ajouterCours(c);
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                cmm.setLienYoutube(lien.getText());
 
-                if (nb != 0) {
-                    try {
-                        alert.setTitle("Confirmation");
-                        alert.setHeaderText("Confirmation d'ajout !");
-                        alert.setContentText("Voulez-Vous Vraiment Ajouter");
-                        Notification.sendNotification("Cours", "Cours a été ajouté ", TrayIcon.MessageType.INFO);
-                    } catch (AWTException ex) {
-                        Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (MalformedURLException ex) {
-                        Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                if (nb == 0) {
-                    try {
-                        //JOptionPane.showMessageDialog(null, "Erreur cours non ajouteé");
-                        Notification.sendNotification("Cours", "Cours non ajouté ", TrayIcon.MessageType.ERROR);
-                    } catch (AWTException ex) {
-                        Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (MalformedURLException ex) {
-                        Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else {
-                    Optional<ButtonType> btn = alert.showAndWait();
-                    //JOptionPane.showMessageDialog(null, "Cours ajouté");
-                    Courslm cmm = new Courslm();
-                    System.out.println("nom"+c.getNomCours());
+                clean();
 
-                    cmm.setNomCours(inom.getText());
-                    cmm.setDescription(ides.getText());
-                    cmm.setNb_participants(Integer.parseInt(inb.getText()));
-                    cmm.setDate_creation(Date.valueOf(idate.getValue()));
-                    cmm.setTags(icl.getText());
-                    cmm.setCategorie_id(categorie.getIdcat());
-                    //cmm.setMembre_id(Integer.parseInt(imem.getText()));
-
-                    c.setImage(nomImage);
-                    cmm.setLienYoutube(lien.getText());
-
-                    clean();
-
-                }
+            }
 
 //            FXMLLoader loader = new FXMLLoader(getClass().getResource("AjoutCours.fxml"));
 //            //System.out.println(getClass().getResource("AjoutCours.fxml"));
@@ -309,9 +320,9 @@ public class CoursDetailsController implements Initializable {
 //            titre.getScene().setRoot(root);
 //        } catch (IOException ex) {
 //            System.out.println(ex.getMessage());
-            }
-            this.initTable(null);
-        
+        }
+        this.initTable(null);
+
     }
 
     @FXML
@@ -323,9 +334,20 @@ public class CoursDetailsController implements Initializable {
 
             return;
         }
+        boolean verift = (verifYouUrl() && verifnom() && verifcat() && verifdate() && verifnb() && verifdes() && verifmo());
 
+        if (verift) {
+            try {
+                Notification.sendNotification("Cours", "Veuillez remplir tous les champs ", TrayIcon.MessageType.INFO);
+            } catch (AWTException ex) {
+                Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(CoursDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return;
+        }
         //TODO fil verifNb lazem ykon integer 
-        boolean verif = verifcat() || verifdate() || verifdes() ||  verifmo() || verifnb() || verifnom() || verifYouUrl();
+        boolean verif = verifcat() || verifdate() || verifdes() || verifmo() || verifnb() || verifnom() || verifYouUrl();
         if (verif) {
             return;
         }
@@ -422,7 +444,7 @@ public class CoursDetailsController implements Initializable {
             return;
         }
         //id.setText(String.valueOf(c.getId()));
-       //imem.setText(String.valueOf(c.getMembre_id()));
+        //imem.setText(String.valueOf(c.getMembre_id()));
         inom.setText(c.getNomCours());
         combocat.setValue(categorieServices.getCategorieById(c.getCategorie_id()));
         Date d = c.getDate_creation();
@@ -468,12 +490,14 @@ public class CoursDetailsController implements Initializable {
 
     private boolean verifnom() {
         verifnom.setStyle("-fx-text-fill: white; ");
-        if (inom.getText().isEmpty()) {
+        if (inom.getText() == null) {
             verifnom.setText("Veuillez remplir ce champs");
+            verifnom.setVisible(true);
             return true;
 
         } else {
             verifnom.setText("");
+            verifnom.setVisible(true);
             return false;
         }
     }
@@ -482,10 +506,12 @@ public class CoursDetailsController implements Initializable {
         veriftag.setStyle("-fx-text-fill: white; ");
         if (icl.getText().isEmpty()) {
             veriftag.setText("Veuillez remplir ce champs");
+            veriftag.setVisible(true);
             return true;
 
         } else {
             veriftag.setText("");
+            veriftag.setVisible(true);
             return false;
         }
     }
@@ -493,15 +519,29 @@ public class CoursDetailsController implements Initializable {
     private boolean verifnb() {
 
         verifnb.setStyle("-fx-text-fill: white; ");
-        int x = Integer.parseInt(inb.getText());
+
         if (inb.getText().isEmpty()) {
             verifnb.setText("Veuillez remplir ce champs");
+            verifnb.setVisible(true);
             return true;
 
         } else {
-            verifnb.setText("");
-            return false;
+
+            try {
+
+                int x = Integer.parseInt(inb.getText());
+            } catch (Exception e) {
+                verifnb.setText("ce champs est invalide");
+                verifnb.setVisible(true);
+                return true;
+            }
         }
+
+        verifnb.setText("");
+
+        verifnb.setVisible(true);
+        return false;
+
     }
 
     private boolean verifdate() {
@@ -510,65 +550,84 @@ public class CoursDetailsController implements Initializable {
         if (idate.getValue() == null) {
 
             verifdate.setText("Veuillez remplir ce champs");
+
+            verifdate.setVisible(true);
             return true;
         } else {
             verifdate.setText("");
+            verifdate.setVisible(false);
             return false;
         }
     }
 
-    
-    
+    @FXML
+    private void changeDate(KeyEvent event) {
+        verifdate.setVisible(false);
+    }
 
     private boolean verifdes() {
         verifdes.setStyle("-fx-text-fill: white; ");
         if (ides.getText().isEmpty()) {
             verifdes.setText("Veuillez remplir ce champs");
+
+            verifdes.setVisible(true);
             return true;
         } else {
             verifdes.setText("");
+
+            verifdes.setVisible(true);
             return false;
         }
     }
 
     private boolean verifcat() {
         verifcat.setStyle("-fx-text-fill: white; ");
-        if (combocat.getItems().isEmpty()) {
+        if (combocat.getSelectionModel().getSelectedItem() == null) {
             verifcat.setText("Veuillez remplir ce champs");
+
+            verifcat.setVisible(true);
             return true;
         } else {
             verifcat.setText("");
+
+            verifcat.setVisible(true);
             return false;
         }
+    }
+
+    @FXML
+    private void changecat(KeyEvent event) {
+
+        verifcat.setVisible(false);
     }
 
     private boolean verifYouUrl() {
 
         veriflien.setStyle("-fx-text-fill: white; ");
         boolean success;
-        String pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+";
+        String pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/embed/.+";
         if (lien.getText().isEmpty() || !lien.getText().matches(pattern)) {
             veriflien.setText("Veuillez remplir ce champs avec un lien valide");
+            veriflien.setVisible(true);
             success = true;
 
         } else {
             veriflien.setText("");
+            veriflien.setVisible(false);
 
         }
         return false;
 
     }
 
-    @FXML
     private void verifImage(ActionEvent event) {
-        if (imagevc.getImage() == null) {
+        if (file == null) {
             btnaj.setDisable(true);
             verifimage.setText("Veuillez remplir ce champs");
-        } else if (imagevc.getImage().toString().length() > 255) {
-            verifimage.setText("Veuillez choisir une autre image");
-            btnaj.setDisable(true);
+            verifimage.setVisible(true);
         } else {
             verifimage.setText("");
+            verifimage.setVisible(false);
             btnaj.setDisable(false);
         }
     }
@@ -577,10 +636,11 @@ public class CoursDetailsController implements Initializable {
     private void ajouterim(ActionEvent event) {
         //nakhtar fichier
         FileChooser fileChooser = new FileChooser();
-       // fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter( ".png", ".jpg", ".jpeg"));
+        // fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter( ".png", ".jpg", ".jpeg"));
 
         file = fileChooser.showOpenDialog(stage);
         if (file != null) {
+            verifimage.setVisible(false);
             image = file.getAbsolutePath();
             Image imageForFile;
             try {
@@ -630,7 +690,7 @@ public class CoursDetailsController implements Initializable {
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);
                 i.setFitWidth(70);
-                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id());
+                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat());
                 addCours.setImagename(e.getImage());
                 addCours.setLienYoutube(e.getLienYoutube());
                 lIm.add(addCours);
@@ -648,7 +708,7 @@ public class CoursDetailsController implements Initializable {
 
     private void getVideoDetails(String url) {
         HashMap<String, String> hashMap = new HashMap();
-        int idpos = url.indexOf("=") + 1;
+        int idpos = url.lastIndexOf("/") + 1;
         String id = url.substring(idpos, idpos + 11);
         System.out.println(id);
         try {
@@ -667,36 +727,38 @@ public class CoursDetailsController implements Initializable {
                 System.out.println("Check your video ");
                 return;
             }
-            JSONArray tagsjson=null;
-            String descirption="";
-            String title="";
-            try{
-                
+            JSONArray tagsjson = null;
+            String descirption = "";
+            String title = "";
+            try {
+
                 JSONObject snippet = details.getJSONObject(0).getJSONObject("snippet");
 
-                 title = snippet.getString("title");
-                 descirption = snippet.getString("description");
-                 tagsjson = snippet.getJSONArray("tags");
-            }
-            catch(JSONException ex){
+                title = snippet.getString("title");
+                descirption = snippet.getString("description");
+                tagsjson = snippet.getJSONArray("tags");
+            } catch (JSONException ex) {
                 ex.printStackTrace();
             }
 
             String tags = "";
-            if(tagsjson!=null)
-            for (int i = 0; i < tagsjson.length(); i++) {
-                tags += tagsjson.get(i);
+            if (tagsjson != null) {
+                for (int i = 0; i < tagsjson.length(); i++) {
+                    tags += tagsjson.get(i);
+                }
             }
 
             //System.out.println("Title : "+title);*
             //ides.getText().substring(0, 200);
             //icl.getText().substring(0, 200);
             inom.setText(title);
-            if(descirption.length()>200)
-             descirption=descirption.substring(0,200);
+            if (descirption.length() > 200) {
+                descirption = descirption.substring(0, 200);
+            }
             ides.setText(descirption);
-            if(tags.length()>200)
-            tags=tags.substring(0,200);
+            if (tags.length() > 200) {
+                tags = tags.substring(0, 200);
+            }
             icl.setText(tags);
             //System.out.println("descirption : "+descirption);
             //System.out.println("tags : "+tags);
@@ -709,8 +771,8 @@ public class CoursDetailsController implements Initializable {
 
     @FXML
     private void getInformationsYoutube(ActionEvent event) {
-        boolean verify= verifYouUrl();
-        if(verify){
+        boolean verify = verifYouUrl();
+        if (verify) {
             return;
         }
 
@@ -718,13 +780,10 @@ public class CoursDetailsController implements Initializable {
 
     }
 
-   
-
 //    @FXML
 //    private void changeDate(ActionEvent event) {
 //        
 //    }
-    
 //        @FXML
 //    private void change(ActionEvent event) {
 //        verifdate.setVisible(false);
@@ -733,20 +792,61 @@ public class CoursDetailsController implements Initializable {
 //    private void changeDate(ActionEvent event) {
 //        verifdate.setVisible(false);
 //    }
-
-    @FXML
-    private void changeDate(KeyEvent event) {
-        verifdate.setVisible(false);
-    }
-
     @FXML
     private void verifImage(KeyEvent event) {
+        verifimage.setVisible(false);
     }
 
     @FXML
     private void changeDate(ActionEvent event) {
+        verifdate.setVisible(false);
     }
 
+    @FXML
+    private void goToListePart(ActionEvent event) {
+        if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
 
+        }
+
+        try {
+            clean();
+            ServiceCours s = new ServiceCours();
+            Courslm c = new Courslm();
+            c = this.tableCours.getSelectionModel().getSelectedItem();
+            cour_id = c.getId();
+            if (c == null) {
+                JOptionPane.showMessageDialog(null, "Veuillez selectionner un cours");
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("listeParticipantsCours.fxml"));
+            Parent root = loader.load();
+            Scene s1 = new Scene(root);
+            ListeParticipantsCoursController pct = loader.getController();
+            pct.initDat(cour_id);
+            Stage prS = new Stage();
+            prS.setScene(s1);
+            prS.show();
+        } catch (IOException ex) {
+            Logger.getLogger(InfoCoursController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void onchangeCombo(ActionEvent event) {
+        verifcat.setVisible(false);
+    }
+
+    @FXML
+    private void onchangeurl(ActionEvent event) {
+
+        veriflien.setVisible(false);
+    }
+
+    @FXML
+    private void onchangenp(KeyEvent event) {
+
+        verifnb.setVisible(false);
+    }
 
 }

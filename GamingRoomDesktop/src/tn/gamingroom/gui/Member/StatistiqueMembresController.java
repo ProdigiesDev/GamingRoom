@@ -70,7 +70,10 @@ public class StatistiqueMembresController implements Initializable {
                  }
                 chart_statistic.getData().add(series);
                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Probleme ");}
+                             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Probleme");
+            alert.show();
+                            }
         }catch(Exception e){
             e.printStackTrace();
         }
