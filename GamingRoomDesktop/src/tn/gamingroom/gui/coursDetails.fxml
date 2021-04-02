@@ -55,10 +55,10 @@
                   <Font name="Bauhaus 93" size="18.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="inb" layoutX="220.0" layoutY="652.0" prefHeight="31.0" prefWidth="315.0" unFocusColor="#FFFFFF" />
+            <JFXTextField fx:id="inb" layoutX="220.0" layoutY="652.0" onAction="#onchangenp" prefHeight="31.0" prefWidth="315.0" unFocusColor="#FFFFFF" />
             <JFXTextField fx:id="inom" editable="false" layoutX="75.0" layoutY="200.0" prefHeight="31.0" prefWidth="448.0" />
             <JFXDatePicker fx:id="idate" defaultColor="#d917e7" layoutX="184.0" layoutY="370.0" onAction="#changeDate" prefHeight="31.0" prefWidth="348.0" style="-fx-background-color: Ajouter;" />
-            <ComboBox fx:id="combocat" layoutX="186.0" layoutY="298.0" prefHeight="28.0" prefWidth="340.0" style="-fx-background-color: #d917e7;" />
+            <ComboBox fx:id="combocat" layoutX="186.0" layoutY="298.0" onAction="#onchangeCombo" prefHeight="28.0" prefWidth="340.0" style="-fx-background-color: #d917e7;" />
             <Button fx:id="ajoutimage" layoutX="57.0" layoutY="130.0" mnemonicParsing="false" onAction="#ajouterim" prefHeight="32.0" prefWidth="126.0" style="-fx-background-color: #6f1075;" text="Image du cours" textFill="#d8d1da" />
             <ImageView fx:id="imagevc" fitHeight="79.0" fitWidth="279.0" layoutX="241.0" layoutY="107.0" pickOnBounds="true" />
             <Label layoutX="18.0" layoutY="24.0" prefHeight="32.0" prefWidth="112.0" text="Lien Youtube" textFill="#FFFFFF">
@@ -66,7 +66,7 @@
                   <Font name="Bauhaus 93" size="18.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="lien" layoutX="143.0" layoutY="8.0" prefHeight="31.0" prefWidth="171.0" />
+            <JFXTextField fx:id="lien" layoutX="156.0" layoutY="7.0" onAction="#onchangeurl" prefHeight="31.0" prefWidth="171.0" />
             <Button fx:id="infoYoutube" layoutX="326.0" layoutY="23.0" mnemonicParsing="false" onAction="#getInformationsYoutube" prefHeight="32.0" prefWidth="179.0" style="-fx-background-color: #6f1075;" text="Importer informations" textFill="#e1dcdc" />
             <JFXTextArea fx:id="icl" layoutX="121.0" layoutY="442.0" prefHeight="58.0" prefWidth="418.0" />
             <JFXTextArea fx:id="ides" layoutX="120.0" layoutY="547.0" prefHeight="79.0" prefWidth="418.0" />

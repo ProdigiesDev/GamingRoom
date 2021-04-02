@@ -175,6 +175,10 @@ public class CoursDetailsController implements Initializable {
             membre = UserSession.getInstance().getUser();
 
         }
+           
+           idate.valueProperty().addListener((ov, oldValue, newValue) -> {
+    verifdate.setVisible(false);
+});
            ServiceCours sc= new ServiceCours();
         String[] possibleWords ={};
         TextFields.bindAutoCompletion(search, sc.AutocompleteSearch());
@@ -219,8 +223,8 @@ public class CoursDetailsController implements Initializable {
 
     @FXML
     private void ajouterC(ActionEvent event) {
-        boolean verift = (verifYouUrl() && verifnom() && verifcat() && verifdate() && verifmo() && verifdes() && verifmo());
-        if (verift) {
+        boolean verift = (verifYouUrl() && verifnom() && verifcat() && verifdate() && verifnb()&& verifdes() && verifmo());
+        if (!verift) {
             try {
                 Notification.sendNotification("Cours", "Veuillez remplir tous les champs ", TrayIcon.MessageType.INFO);
             } catch (AWTException ex) {
@@ -249,7 +253,7 @@ public class CoursDetailsController implements Initializable {
                 c.setCategorie_id(categorie.getIdcat());
                 c.setLienYoutube(lien.getText());
                 ///to do 3awdh l 1 belid melsingelton
-                c.setMembre_id(1);
+                c.setMembre_id(membre.getId());
                 //TODO hethi lazem titbadil dynamique ki tkamil sonia
                 //c.setMembre_id(Integer.parseInt(imem.getText()));
                 String nomImage = moveImage();
@@ -473,10 +477,12 @@ public class CoursDetailsController implements Initializable {
         verifnom.setStyle("-fx-text-fill: white; ");
         if (inom.getText()== null) {
             verifnom.setText("Veuillez remplir ce champs");
+            verifnom.setVisible(true);
             return true;
 
         } else {
             verifnom.setText("");
+            verifnom.setVisible(true);
             return false;
         }
     }
@@ -485,10 +491,12 @@ public class CoursDetailsController implements Initializable {
         veriftag.setStyle("-fx-text-fill: white; ");
         if (icl.getText().isEmpty()) {
             veriftag.setText("Veuillez remplir ce champs");
+            veriftag.setVisible(true);
             return true;
 
         } else {
             veriftag.setText("");
+            veriftag.setVisible(true);
             return false;
         }
     }
@@ -499,10 +507,13 @@ public class CoursDetailsController implements Initializable {
         int x = Integer.parseInt(inb.getText());
         if (inb.getText().isEmpty()) {
             verifnb.setText("Veuillez remplir ce champs");
+            verifnb.setVisible(true);
             return true;
 
         } else {
             verifnb.setText("");
+            
+            verifnb.setVisible(true);
             return false;
         }
     }
@@ -513,9 +524,12 @@ public class CoursDetailsController implements Initializable {
         if (idate.getValue() == null) {
 
             verifdate.setText("Veuillez remplir ce champs");
+            
+            verifdate.setVisible(true);
             return true;
         } else {
             verifdate.setText("");
+            verifdate.setVisible(false);
             return false;
         }
     }
@@ -531,25 +545,35 @@ public class CoursDetailsController implements Initializable {
         verifdes.setStyle("-fx-text-fill: white; ");
         if (ides.getText().isEmpty()) {
             verifdes.setText("Veuillez remplir ce champs");
+            
+            verifdes.setVisible(true);
             return true;
         } else {
             verifdes.setText("");
+            
+            verifdes.setVisible(true);
             return false;
         }
     }
 
     private boolean verifcat() {
         verifcat.setStyle("-fx-text-fill: white; ");
-        if (combocat.getItems().isEmpty()) {
+        if (combocat.getSelectionModel().getSelectedItem()==null) {
             verifcat.setText("Veuillez remplir ce champs");
+            
+            verifcat.setVisible(true);
             return true;
         } else {
             verifcat.setText("");
+            
+            verifcat.setVisible(true);
             return false;
         }
     }
     @FXML
     private void changecat(KeyEvent event) {
+        
+            verifcat.setVisible(false);
     }
 
     private boolean verifYouUrl() {
@@ -559,10 +583,12 @@ public class CoursDetailsController implements Initializable {
         String pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+";
         if (lien.getText().isEmpty() || !lien.getText().matches(pattern)) {
             veriflien.setText("Veuillez remplir ce champs avec un lien valide");
+            veriflien.setVisible(true);
             success = true;
 
         } else {
             veriflien.setText("");
+            veriflien.setVisible(false);
 
         }
         return false;
@@ -570,14 +596,13 @@ public class CoursDetailsController implements Initializable {
     }
 
     private void verifImage(ActionEvent event) {
-        if (imagevc.getImage() == null) {
+        if (file== null) {
             btnaj.setDisable(true);
             verifimage.setText("Veuillez remplir ce champs");
-        } else if (imagevc.getImage().toString().length() > 255) {
-            verifimage.setText("Veuillez choisir une autre image");
-            btnaj.setDisable(true);
-        } else {
+            verifimage.setVisible(true);
+        }else {
             verifimage.setText("");
+            verifimage.setVisible(false);
             btnaj.setDisable(false);
         }
     }
@@ -590,6 +615,7 @@ public class CoursDetailsController implements Initializable {
 
         file = fileChooser.showOpenDialog(stage);
         if (file != null) {
+            verifimage.setVisible(false);
             image = file.getAbsolutePath();
             Image imageForFile;
             try {
@@ -601,6 +627,8 @@ public class CoursDetailsController implements Initializable {
 
         } else {
             alert.setText("veuillez insere une image");
+            verifimage.setText("veuillez insere une image");
+            verifimage.setVisible(true);
         }
 
     }
@@ -746,10 +774,12 @@ public class CoursDetailsController implements Initializable {
 
     @FXML
     private void verifImage(KeyEvent event) {
+        verifimage.setVisible(false);
     }
 
     @FXML
     private void changeDate(ActionEvent event) {
+        verifdate.setVisible(false);
     }
 
     @FXML
@@ -780,6 +810,22 @@ public class CoursDetailsController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(InfoCoursController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void onchangenp(ActionEvent event) {
+        verifnb.setVisible(false);
+    }
+
+    @FXML
+    private void onchangeCombo(ActionEvent event) {
+        verifcat.setVisible(false);
+    }
+
+    @FXML
+    private void onchangeurl(ActionEvent event) {
+        
+            veriflien.setVisible(false);
     }
 
     
