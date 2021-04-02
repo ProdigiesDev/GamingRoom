@@ -30,6 +30,8 @@ public class MemberHomePage extends Application {
             Parent root = FXMLLoader.
                     
                     load(getClass().getResource("LoginMember.fxml"));
+//                    load(getClass().getResource("RechercherMembre.fxml"));
+                    
             
             Scene scene = new Scene(root);
             

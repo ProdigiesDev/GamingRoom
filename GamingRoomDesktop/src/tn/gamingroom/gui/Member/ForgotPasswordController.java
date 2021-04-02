@@ -105,12 +105,20 @@ public class ForgotPasswordController implements Initializable {
         String verifmdp = tf_verifpass.getText();
         String email = tf_email.getText();
         MembreServices ms = new MembreServices();
+        if(!nvmdp.isEmpty() || !nvmdp.isEmpty()){
         if(nvmdp.equals(verifmdp)){
             ms.forgotPassword(email, nvmdp);
             JOptionPane.showMessageDialog(null, "Reset successfully");
         }
         else {
             JOptionPane.showMessageDialog(null, "Password do not match");
+        }
+    } else {
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+             alert.setTitle("Error ");
+             alert.setHeaderText(null);
+             alert.setContentText("Veuillez remplir vos champs");
+             alert.showAndWait();
         }
     }
     

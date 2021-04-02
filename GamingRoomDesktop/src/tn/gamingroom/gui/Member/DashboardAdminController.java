@@ -16,6 +16,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -59,6 +60,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
+import org.controlsfx.control.textfield.TextFields;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.UserSession;
@@ -126,8 +128,6 @@ public class DashboardAdminController implements Initializable {
     @FXML
     private JFXButton btnsortm;
     @FXML
-    private JFXButton btnsignout;
-    @FXML
     private JFXButton btn_statisticPage;
     @FXML
     private TextArea txtarea_coachdesc;
@@ -137,6 +137,8 @@ public class DashboardAdminController implements Initializable {
     private JFXButton btn_refuser;
     @FXML
     private Button button_imprimer;
+    @FXML
+    private FontAwesomeIcon iconreload;
 
     /**
      * Initializes the controller class.
@@ -162,6 +164,12 @@ public class DashboardAdminController implements Initializable {
         tfidmember.setStyle("-fx-text-FILL : white;");
         textcatid.setStyle("-fx-text-FILL : white;");
         textcatname.setStyle("-fx-text-FILL : white;");
+        
+         /// autocompile
+        
+        MembreServices ms = new MembreServices();
+       
+        TextFields.bindAutoCompletion(tfsearchmember,ms.GetEmail());
 
     }
 
@@ -200,8 +208,13 @@ public class DashboardAdminController implements Initializable {
         Categorie c = new Categorie(1, nomcat);
 
         CategorieServices cs = new CategorieServices();
+        if(cs.CategorieExiste(nomcat)== false){
         cs.ajouterCategorie(c);
         afficherCategorie();
+        }
+        else{
+           JOptionPane.showMessageDialog(null, "Nom catégorie existe déjà "); 
+        }
 
     }
 
@@ -306,6 +319,7 @@ public class DashboardAdminController implements Initializable {
         colonne_ban.setCellValueFactory(new PropertyValueFactory<Membre, Integer>("ban_duration"));
         colonne_lastban.setCellValueFactory(new PropertyValueFactory<Membre, Date>("last_timeban"));
         table_memb.setItems(list);
+        
     }
 
     @FXML
@@ -441,7 +455,6 @@ public class DashboardAdminController implements Initializable {
 //        }
 //        afficherMembre();
 //    }
-    @FXML
     private void signout(ActionEvent event) throws IOException {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -582,12 +595,10 @@ public class DashboardAdminController implements Initializable {
             /* Step-2: Initialize PDF documents - logical objects */
             Document my_pdf_report = new Document();
 
-            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("pdf_report_from_sql_using_java.pdf"));
+            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("ListeMembre.pdf"));
 
             my_pdf_report.open();
-//                       my_pdf_report.add(new Paragraph(new Date().toString()));
-//                            Image img = Image.getInstance("c:/6.png");
-//                            my_pdf_report.add(img);
+
             my_pdf_report.add(new Paragraph("Listes des Membres:"));
             my_pdf_report.add(new Paragraph(" "));
             my_pdf_report.addCreationDate();
@@ -601,22 +612,14 @@ public class DashboardAdminController implements Initializable {
             table_cell = new PdfPCell(new Phrase("ID"));
             table_cell.setBackgroundColor(BaseColor.CYAN);
             my_report_table.addCell(table_cell);
-//                                       table_cell=new PdfPCell(new Phrase("nom"));
-//                                       table_cell.setBackgroundColor(BaseColor.WHITE);
-//                                       my_report_table.addCell(table_cell);
-//                                       table_cell=new PdfPCell(new Phrase("prenom"));
-//                                       table_cell.setBackgroundColor(BaseColor.WHITE);
-//                                       my_report_table.addCell(table_cell);
-//                                       table_cell=new PdfPCell(new Phrase("date_naissance"));
-//                                       table_cell.setBackgroundColor(BaseColor.WHITE);
-//                                       my_report_table.addCell(table_cell);
+
             table_cell = new PdfPCell(new Phrase("Genre"));
             table_cell.setBackgroundColor(BaseColor.CYAN);
             my_report_table.addCell(table_cell);
             table_cell = new PdfPCell(new Phrase("Telephone"));
             table_cell.setBackgroundColor(BaseColor.CYAN);
             my_report_table.addCell(table_cell);
-            table_cell = new PdfPCell(new Phrase("e=Email"));
+            table_cell = new PdfPCell(new Phrase("Email"));
             table_cell.setBackgroundColor(BaseColor.CYAN);
             my_report_table.addCell(table_cell);
             table_cell = new PdfPCell(new Phrase("Role"));
@@ -625,9 +628,7 @@ public class DashboardAdminController implements Initializable {
             table_cell = new PdfPCell(new Phrase("Point"));
             table_cell.setBackgroundColor(BaseColor.CYAN);
             my_report_table.addCell(table_cell);
-//                                       table_cell=new PdfPCell(new Phrase("ban_duration"));
-//                                       table_cell.setBackgroundColor(BaseColor.WHITE);
-//                                       my_report_table.addCell(table_cell);
+
             table_cell = new PdfPCell(new Phrase("Last_timeban"));
             table_cell.setBackgroundColor(BaseColor.CYAN);
             my_report_table.addCell(table_cell);
@@ -637,15 +638,7 @@ public class DashboardAdminController implements Initializable {
                 String idRdv = rs.getString("id");
                 table_cell = new PdfPCell(new Phrase(idRdv));
                 my_report_table.addCell(table_cell);
-//                                       String type=rs.getString("nom");
-//                                       table_cell=new PdfPCell(new Phrase(type));
-//                                       my_report_table.addCell(table_cell);
-//                                       String ds=rs.getString("prenom");
-//                                       table_cell=new PdfPCell(new Phrase(ds));
-//                                       my_report_table.addCell(table_cell);
-//                                       String dd=rs.getString("date_naissance");
-//                                       table_cell=new PdfPCell(new Phrase(dd));
-//                                       my_report_table.addCell(table_cell);
+
                 String dn = rs.getString("genre");
                 table_cell = new PdfPCell(new Phrase(dn));
                 my_report_table.addCell(table_cell);
@@ -661,9 +654,7 @@ public class DashboardAdminController implements Initializable {
                 String point = rs.getString("point");
                 table_cell = new PdfPCell(new Phrase(point));
                 my_report_table.addCell(table_cell);
-//                                       String ban_dur=rs.getString("ban_duration");
-//                                       table_cell=new PdfPCell(new Phrase(ban_dur));
-//                                       my_report_table.addCell(table_cell);
+
                 String lban = rs.getString("last_timeban");
                 table_cell = new PdfPCell(new Phrase(lban));
                 my_report_table.addCell(table_cell);
@@ -686,6 +677,13 @@ public class DashboardAdminController implements Initializable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void ReloadTable(MouseEvent event) {
+         
+             afficherMembre();
+         
     }
 
 }

@@ -216,13 +216,15 @@ public class SignupUserController implements Initializable {
         String mdp = passwordMember.getText();
         String rmdp = retypePassword.getText();
         String description = textAreaDesc.getText();
+        MembreServices ms = new MembreServices();
+        if(ms.EmailExiste(email)==false){
         if (mdp.equals(rmdp)) {
             if (!ckCoach.isSelected()) {
 
                 Membre m = new Membre(1, nom, prenom, java.sql.Date.valueOf(naiss), genre.equals("Homme") ? Membre.Genre.Homme : Membre.Genre.Femme, tel, email, mdp, "", Membre.Role.Membre, true);
                 String nomImage = moveImage();
                 m.setImage(nomImage);
-                MembreServices ms = new MembreServices();
+               
 
                 int i = ms.ajouterMembre(m);
 
@@ -238,7 +240,7 @@ public class SignupUserController implements Initializable {
 
             } else {
                 Membre m1 = new Membre(1, nom, prenom, java.sql.Date.valueOf(naiss), genre.equals("Homme") ? Membre.Genre.Homme : Membre.Genre.Femme, tel, email, mdp, "", Membre.Role.Coach, description, false);
-                MembreServices ms = new MembreServices();
+              
                 String nomImage = moveImage();
                 m1.setImage(nomImage);
                 ms.ajouterCoach(m1);
@@ -258,7 +260,7 @@ public class SignupUserController implements Initializable {
         } else {
             JOptionPane.showMessageDialog(null, "Verifier password");
 
-        }
+        } } else JOptionPane.showMessageDialog(null, "Adresse email existe déja!");
 
     }
 
@@ -290,21 +292,7 @@ public class SignupUserController implements Initializable {
 
         System.out.println(bd);
         tf_age.setText((String.valueOf(bd)));
-        ////////////////methode2///////////////////////////////
-//        Date dateActuelle = new Date();
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-//        int YearNow = Integer.parseInt(sdf.format(dateActuelle));
-//        ZoneId defaultZoneId = ZoneId.systemDefault();
-//        Date Bdate = Date.from(bday.getValue().atStartOfDay(defaultZoneId).toInstant());
-//        int YearBD = Integer.parseInt(sdf.format(Bdate));
-//        int bd = YearNow - YearBD;
-//        tf_age.setText((String.valueOf(bd)));
-
-//////////////////////////////////////////////////////////////
-//    LocalDate today = LocalDate.now();
-//    LocalDate Bday = LocalDate.from(bday.getValue());
-//    int age = Period.between(Bday, today).getYears();
-//    tf_age.setText((String.valueOf(age)));
+       
     }
 
     private String moveImage() {
@@ -328,12 +316,7 @@ public class SignupUserController implements Initializable {
     @FXML
     private void SelectImage(ActionEvent event) {
         try {
-            //
-//        file = fileChooser.showOpenDialog(stage);
-//        if(file != null){
-//            //desktop.open(file);
-////            tf_pathImage.setText(file.getAbsolutePath());
-//        }
+           
 
 
 file = fileChooser.showOpenDialog(stage);

@@ -22,5 +22,6 @@ public interface ICategorie <C> {
      public List<C> RechercherCategorie(String x);
      public ArrayList<C> TrierParIdCat();
      public ArrayList<C> TrierParNomCat();
+     public boolean CategorieExiste(String cat);
  
 }
