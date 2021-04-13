@@ -146,6 +146,7 @@ public class ProduitCrud implements IProduits<Produits> {
         return myList;
 
     }
+    
 
     public ArrayList<Produits> TrierParId() {
         ArrayList<Produits> listProduit = new ArrayList<>();

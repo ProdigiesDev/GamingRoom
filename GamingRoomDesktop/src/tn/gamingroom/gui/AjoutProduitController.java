@@ -552,20 +552,26 @@ CategorieServices categorieServices=new CategorieServices();
             MimeBodyPart textBodyPart = new MimeBodyPart();
             textBodyPart.setText("Bonjour , voila la liste des produits que vous avez ajouté!");
             MimeBodyPart pdfAttatchement = new MimeBodyPart();
-            pdfAttatchement.attachFile("C:/Users/yasmine/Desktop/pidev/GamingRoomDesktop/produits.pdf");
+            pdfAttatchement.attachFile("C:\\Users\\Dah\\Desktop\\ProdigiesDev\\GamingRoomDesktop\\produits.pdf");
             emailContent.addBodyPart(textBodyPart);
             emailContent.addBodyPart(pdfAttatchement);
             message.setContent(emailContent);
             Transport.send(message, Username, Pass);
             // System.out.println("Sent message successfully....");
-            JOptionPane.showMessageDialog(null, "Sent message successfully....");
+               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Sent message successfully....");
+            alert.show();
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            
+               Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erreur lors de l'envois du mail");
+            alert.show();
+            e.printStackTrace();
         }
 
     }
 
-    public void PDF() throws FileNotFoundException, Exception {
+    public String PDF() throws FileNotFoundException, Exception {
         File out = new File("produits.pdf");
         try (FileOutputStream fos = new FileOutputStream(out)) {
             PDF pdf = new PDF(fos);
@@ -633,22 +639,19 @@ CategorieServices categorieServices=new CategorieServices();
                 page = new Page(pdf, A4.PORTRAIT);
             }
             pdf.flush();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("PDF");
-            alert.setContentText("PDF enregistré sous le path "+ out.getAbsolutePath());
-            alert.show();
             System.out.println("Saved to " + out.getAbsolutePath());
+            return out.getAbsolutePath();
         }
     }
 
     @FXML
     private void enregistrerPDF(ActionEvent event) throws Exception {
 
-        PDF();
+        String out=PDF();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Mailing");
         alert.setHeaderText("Confirmation de mailing!");
-        alert.setContentText("Voulez-Vous Vraiment envoyer un email?");
+        alert.setContentText("PDF enregistré sous le path "+ out+ " \n Voulez-Vous Vraiment envoyer un email?");
         Optional<ButtonType> btn = alert.showAndWait();
         if (btn.get() == ButtonType.OK) {
 
