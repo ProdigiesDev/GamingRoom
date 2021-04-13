@@ -1,0 +1,802 @@
+{% extends 'base_clientSide.html.twig' %}
+
+
+{% block body %}
+  
+        <!-- Preloader -->
+<div class="page-preloader preloader-wrapp">
+    
+        <img src="{{asset('assets/images/logo-light.png')}}" alt="">
+    
+    <div class="preloader"></div>
+</div>
+<!-- /Preloader -->
+
+    
+
+    
+
+
+
+
+
+<!-- Navbar -->
+<nav class="navbar-youplay navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="off-canvas" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+                <a class="navbar-brand" href="index.html">
+                    <img src="{{asset('assets/images/logo-light.png')}}" alt="">
+                </a>
+            
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            
+                <ul class="nav navbar-nav">
+                    
+        <li class=" dropdown dropdown-hover">
+            <a href="store-1.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Store
+                
+                <span class="caret"></span>
+                <span class="label">games</span>
+            </a><div class="dropdown-menu">
+    
+        <ul role="menu">
+            
+                
+        <li>
+            <a href="store-1.html">
+                Store Style 1
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="store-2.html">
+                Store Style 2
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="cart.html">
+                Cart
+                
+                
+                
+            </a>
+        </li>
+            
+        </ul>
+    
+        <ul role="menu">
+            
+                
+        <li>
+            <a href="store-product-1.html">
+                Product Style1
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="store-product-2.html">
+                Product Style 2
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="checkout.html">
+                Checkout
+                
+                
+                
+            </a>
+        </li>
+            
+        </ul>
+    
+</div>
+        </li>
+        <li class=" dropdown dropdown-hover">
+            <a href="blog-1.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Blog
+                
+                <span class="caret"></span>
+                <span class="label">news</span>
+            </a><div class="dropdown-menu">
+    
+        <ul role="menu">
+            
+                
+        <li>
+            <a href="blog-1.html">
+                Blog Style 1
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="blog-2.html">
+                Blog Style 2
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="blog-3.html">
+                Blog Style 3
+                
+                
+                
+            </a>
+        </li>
+            
+        </ul>
+    
+        <ul role="menu">
+            
+                
+        <li>
+            <a href="blog-post-1.html">
+                Blog Post 1
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="blog-post-2.html">
+                Blog Post 2
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="blog-post-3.html">
+                Blog Post 3
+                
+                
+                
+            </a>
+        </li>
+            
+        </ul>
+    
+</div>
+        </li>
+        <li class=" dropdown dropdown-hover">
+            <a href="components.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Features
+                
+                <span class="caret"></span>
+                <span class="label">full list</span>
+            </a><div class="dropdown-menu">
+    
+        <ul role="menu">
+            
+                
+        <li>
+            <a href="forums.html">
+                Forums
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="forums-topics.html">
+                Forums Topics
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="forums-single-topic.html">
+                Forums Single Topic
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="matches-list.html">
+                Matches List
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="match.html">
+                Match
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="match-2.html">
+                Match with Maps
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="login.html">
+                Login
+                
+                
+                
+            </a>
+        </li>
+            
+        </ul>
+    
+        <ul role="menu">
+            
+                
+        <li>
+            <a href="widgets.html">
+                Widgets
+                <span class="badge bg-default">New</span>
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="components.html">
+                Components
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="coming-soon.html">
+                Coming Soon
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="contact.html">
+                Contact Us
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="search.html">
+                Search
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="404.html">
+                404
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="blank.html">
+                Blank
+                
+                
+                
+            </a>
+        </li>
+            
+        </ul>
+    
+</div>
+        </li>
+                </ul>
+            
+
+            
+            <ul class="nav navbar-nav navbar-right">
+                
+                    
+        <li class=" dropdown dropdown-hover">
+            <a href="user-activity.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                KuroKy
+                <span class="badge bg-default">8</span>
+                <span class="caret"></span>
+                <span class="label">user</span>
+            </a><div class="dropdown-menu"><ul role="menu">
+                            
+        <li>
+            <a href="user-activity.html">
+                Activity
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="user-profile.html">
+                Profile
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="user-messages.html">
+                Messages
+                <span class="badge bg-default">8</span>
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="user-messages-compose.html">
+                Messages Compose
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="user-settings.html">
+                Settings
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="https://nkdev.info/docs/youplay-html/">
+                Documentation
+                
+                
+                
+            </a>
+        </li>
+        <li>
+            <a href="https://themeforest.net/item/youplay-game-template-based-on-bootstrap/11306207?ref=_nK">
+                Purchase
+                
+                
+                
+            </a>
+        </li>
+                        </ul></div>
+        </li>
+                
+
+                
+                    <li>
+                        <a class="search-toggle" href="search.html">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </li>
+                
+
+                
+                    <li class="dropdown dropdown-hover dropdown-cart">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <div class="row youplay-side-news">
+                                <div class="col-xs-3 col-md-4">
+                                    <a href="#" class="angled-img">
+                                        <div class="img">
+                                            
+                                                <img src="{{asset('assets/images/dark/game-bloodborne-500x375.jpg')}}" alt="">
+                                                
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xs-9 col-md-8">
+                                    <a href="#" class="pull-right mr-10"><i class="fa fa-times"></i></a>
+                                    
+                                        <h4 class="ellipsis"><a href="#">Bloodborne</a></h4>
+                                        
+                                    <span class="quantity">1 × <span class="amount">$50.00</span></span>
+                                </div>
+                            </div>
+
+                            <div class="row youplay-side-news">
+                                <div class="col-xs-3 col-md-4">
+                                    <a href="#" class="angled-img">
+                                        <div class="img">
+                                            
+                                                <img src="{{asset('assets/images/dark/game-kingdoms-of-amalur-reckoning-500x375.jpg')}}" alt="">
+                                            
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xs-9 col-md-8">
+                                    <a href="#" class="pull-right mr-10"><i class="fa fa-times"></i></a>
+                                    
+                                        <h4 class="ellipsis"><a href="#">Kingdoms of Amalur</a></h4>
+                                        
+                                    <span class="quantity">1 × <span class="amount">$20.00</span></span>
+                                </div>
+                            </div>
+
+                            <div class="ml-20 mr-20 pull-right"><strong>Subtotal:</strong> <span class="amount">$70.00</span></div>
+
+                            <div class="btn-group pull-right m-15">
+                                <a href="#" class="btn btn-default btn-sm">View Cart</a>
+                                <a href="#" class="btn btn-default btn-sm">Checkout</a>
+                            </div>
+                        </div>
+                    </li>
+                
+
+                
+                    <li class="dropdown dropdown-hover dropdown-user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                            <i class="fa fa-user"></i>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <form class="navbar-login-form" action="#" method="post">
+                                <p>Username:</p>
+                                <div class="youplay-input">
+                                    <input type="text" name="log">
+                                </div>
+
+                                <p>Password:</p>
+                                <div class="youplay-input">
+                                    <input type="password" name="pwd">
+                                </div>
+
+                                <div class="youplay-checkbox mb-15 ml-5">
+                                    <input type="checkbox" name="rememberme" value="forever" id="nav-rememberme">
+                                    <label for="nav-rememberme">Remember Me</label>
+                                </div>
+
+                                <button class="btn btn-sm ml-0 mr-0" name="submit">Log In</button>
+                                <br>
+
+                                <p>
+                                    <a class="no-fade" href="#">Lost password?</a> | <a href="#" class="no-fade" data-toggle="modal" data-target="#nav-registration">Register</a>
+                                </p>
+                            </form>
+                        </div>
+                    </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</nav>
+<!-- /Navbar -->
+
+
+    <!-- Registration Form -->
+    <div id="nav-registration" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Register</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <div>
+                            <p>Username:</p>
+                            <div class="youplay-input">
+                                <input type="text" name="user_login" />
+                            </div>
+
+                            <p>E-mail:</p>
+                            <div class="youplay-input">
+                                <input type="text" name="user_email" />
+                            </div>
+
+                            <p>
+                                <em>A password will be e-mailed to you.</em>
+                            </p>
+
+                            <button class="btn ml-3" name="submit">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Registration Form -->
+
+
+
+    
+
+    <div class="content-wrap">
+        
+            <!--
+    Banner
+
+    Additional classes:
+        .small
+        .xsmall
+        .big
+        .full
+-->
+<section class="youplay-banner banner-top youplay-banner-parallax">
+    
+        <div class="image" data-speed="0.4">
+            <img src="{{asset('assets/images/dark/banner-bg.jpg')}}" alt="" class="jarallax-img">
+        </div>
+    
+
+    <div class="info">
+        <div>
+            <div class="container">
+                
+                    <div class="row"><div class="col-md-8">
+                
+                
+                    <h1 class="h1">Youplay - Gaming Template</h1>
+                
+                
+                    
+    <p class="lead">
+        You are not limited to the features of this template. It is suitable for gaming site, and for any business project. Pre-packed demos will help you to quickly run your new creative website.
+    </p>
+    <br>
+    <a class="btn btn-md active" href="#demo"><i class="fa fa-eye"></i>&nbsp; Demo</a><a class="btn btn-md" href="https://themeforest.net/item/youplay-game-template-based-on-bootstrap/11306207?ref=_nK"><i class="fa fa-shopping-cart"></i>&nbsp; Purchase</a>
+
+                
+                
+                    </div></div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Banner -->
+
+        
+
+        
+    <!-- Features -->
+    <section class="youplay-features container mt-60 mb-30">
+        <div class="col-sm-4">
+            <div class="feature angled-bg">
+                <i class="fa fa-rss"></i>
+                <h3>Blog</h3>
+                <div>
+                    Youplay can be used for simple blogging, not only full-stack gaming template.
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="feature angled-bg">
+                <i class="fa fa-shopping-cart"></i>
+                <h3>Store</h3>
+                <div>
+                    If you want to sale goods, let's do it. This is so easy with Youplay.
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="feature angled-bg">
+                <i class="fa fa-users"></i>
+                <h3>Social Network</h3>
+                <div>
+                    Build your gaming social network, or forum for Clan members.
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Features -->
+
+    <!-- Demo -->
+    <h2 class="text-center mt-60 fs-40" id="demo">Youplay Comes with 4 Demo</h2>
+    <div class="container mt-60 mb-120">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="row vertical-gutter">
+                    <div class="col-sm-6">
+                        <a href="dark-index.html" target="_blank"><img src="{{asset('assets/images/demo-dark.jpg')}}" alt=""></a>
+                        <h4 class="text-center mt-20">Dark <small>demo</small></h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="shooter-index.html" target="_blank"><img src="{{asset('assets/images/demo-shooter.jpg')}}" alt=""></a>
+                        <h4 class="text-center mt-20">Shooter <small>demo</small></h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="anime-index.html" target="_blank"><img src="{{asset('assets/images/demo-anime.jpg')}}" alt=""></a>
+                        <h4 class="text-center mt-20">Anime <small>demo</small></h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="light-index.html" target="_blank"><img src="{{asset('assets/images/demo-light.jpg')}}" alt=""></a>
+                        <h4 class="text-center mt-20">Light <small>demo</small></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Demo -->
+
+
+    <!-- Realistic Battles -->
+    <section class="youplay-banner youplay-banner-parallax big">
+        <div class="image" data-speed="0.4">
+            <img class="jarallax-img" src="{{asset('assets/images/dark/game-dark-souls-ii-1920x1080.jpg')}}" alt="">
+        </div>
+
+        <div class="info">
+            <div>
+                <div class="container">
+                    <h2 class="fs-40 mt-45">A Bit More Features</h2>
+                    <br>
+                    <div class="youplay-features">
+                        <div class="col-sm-4">
+                            <div class="feature angled-bg">
+                                <i class="fa fa-exclamation-triangle"></i>
+                                <h3>Clan Wars</h3>
+                                <div>
+                                    Manage battles in the games. Add teams and fights.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="feature angled-bg">
+                                <i class="fa fa-clock"></i>
+                                <h3>Coming Soon</h3>
+                                <div>
+                                    Use coming soon page with countdown before release feature or service.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="feature angled-bg">
+                                <i class="fa fa-paper-plane"></i>
+                                <h3>AJAX Contact Form</h3>
+                                <div>
+                                    Everyone can contact you through user friendly ajax form.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Realistic Battles -->
+
+
+    <!-- The True Emotions -->
+    <section class="container mt-120">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="fs-40 mt-0">Have Any Questions?</h2>
+                <p class="lead">Youplay comes with documentation. See it here - <a href="https://nkdev.info/docs/youplay-html/" target="_blank">https://nkdev.info/docs/youplay-html/</a></p>
+                <p class="lead">Also we provide support for our users through ticket system - <a href="https://nk.ticksy.com/" target="_blank">https://nk.ticksy.com/</a></p>
+            </div>
+        </div>
+    </section>
+    <!-- /The True Emotions -->
+
+
+    <!-- Preorder -->
+    <section class="youplay-banner youplay-banner-parallax big mt-120">
+        <div class="image" data-speed="0.4">
+            <img class="jarallax-img" src="{{asset('assets/images/dark/game-bloodborne-1920x1151.jpg')}}" alt="">
+        </div>
+
+        <div class="info container align-center">
+            <div>
+                <h2>Purchase Today for $23</h2>
+                <em class="date">If you interested in WordPress version, see it here - <a href="https://themeforest.net/item/youplay-gaming-wordpress-theme/11959042?ref=_nK">https://themeforest.net/item/youplay-gaming-wordpress-theme/11959042</a></em>
+
+                <br><br><br><br>
+                <a class="btn btn-lg" href="https://themeforest.net/item/youplay-game-template-based-on-bootstrap/11306207?ref=_nK">Purchase</a>
+            </div>
+        </div>
+    </section>
+    <!-- /Preorder -->
+
+
+        
+            <!-- Footer -->
+<footer class="youplay-footer youplay-footer-parallax">
+    
+        <div class="image" data-speed="0.4" data-img-position="50% 0%">
+            <img src="{{asset('assets/images/dark/footer-bg.jpg')}}" alt="" class="jarallax-img">
+        </div>
+    
+
+    <div class="wrapper">
+
+        
+
+        
+            <!-- Social Buttons -->
+            <div class="social">
+                <div class="container">
+                    <h3>Connect socially with <strong>Youplay</strong></h3>
+
+                    <div class="social-icons">
+                        <div class="social-icon">
+                            <a href="#">
+                                <i class="fab fa-discord"></i>
+                                <span>Subscribe to Discord</span>
+                            </a>
+                        </div>
+                        <div class="social-icon">
+                            <a href="#">
+                                <i class="fab fa-twitch"></i>
+                                <span>Watch on Twitch</span>
+                            </a>
+                        </div>
+                        <div class="social-icon">
+                            <a href="#">
+                                <i class="fab fa-youtube"></i>
+                                <span>Watch on Youtube</span>
+                            </a>
+                        </div>
+                        <div class="social-icon">
+                            <a href="#">
+                                <i class="fab fa-twitter-square"></i>
+                                <span>Follow on Twitter</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Social Buttons -->
+        
+
+        
+            <!-- Copyright -->
+            <div class="copyright">
+                <div class="container">
+                    <p>2018 &copy; <strong>nK</strong>. All rights reserved</p>
+                </div>
+            </div>
+            <!-- /Copyright -->
+        
+    </div>
+</footer>
+<!-- /Footer -->
+
+        
+    </div>
+
+    
+
+    
+        <!-- Search Block -->
+<div class="search-block">
+    <a href="#" class="search-toggle">
+        <i class="fa fa-times"></i>
+    </a>
+    <form action="search.html">
+        <div class="youplay-input">
+            <input type="text" name="search" placeholder="Search...">
+        </div>
+    </form>
+</div>
+<!-- /Search Block -->
+{% endblock %}
