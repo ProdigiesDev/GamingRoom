@@ -181,5 +181,16 @@ public class ProfilCoachController implements Initializable {
         label_email.setText(email);
         label_tel.setText(tel);
     }
-    
+    @FXML
+    private void goHome(ActionEvent event) {
+        Parent dashboard;
+        try {
+            dashboard = FXMLLoader.load(getClass().getResource("../Accueil/Accueil.fxml"));
+
+            label_tel.getScene().setRoot(dashboard);
+        } catch (IOException ex) {
+            Logger.getLogger(ProfilMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

@@ -68,6 +68,8 @@ import org.json.JSONObject;
 import tn.gamingroom.entities.Categorie;
 import tn.gamingroom.entities.Cours;
 import tn.gamingroom.entities.Courslm;
+import tn.gamingroom.entities.Membre;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.ApiCall;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
@@ -87,8 +89,7 @@ public class CoursDetailsController implements Initializable {
     private TableColumn<Courslm, String> cdes;
     @FXML
     private TableColumn<Courslm, Integer> cnb;
-    @FXML
-    private TableColumn<Courslm, Integer> cmem;
+    
     @FXML
     private TableColumn<Courslm, Date> cdate;
     @FXML
@@ -120,8 +121,7 @@ public class CoursDetailsController implements Initializable {
 
     @FXML
     private Button btnclean;
-    @FXML
-    private JFXTextField imem;
+    
     @FXML
     private TextField search;
     @FXML
@@ -151,8 +151,7 @@ public class CoursDetailsController implements Initializable {
     private Label verifdes;
     @FXML
     private Label verifnb;
-    @FXML
-    private Label verifmem;
+    
     @FXML
     private JFXTextField lien;
     @FXML
@@ -161,25 +160,29 @@ public class CoursDetailsController implements Initializable {
     private Label veriflien;
     @FXML
     private Label verifimage;
-
+    private Membre membre;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+           if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
+
+        }
         //getVideoDetails("https://www.youtube.com/watch?v=gbt6cTZSKgo");
         inom.setStyle("-fx-text-fill: white; ");
         icl.setStyle("-fx-text-fill: white; ");
         ides.setStyle("-fx-text-fill: white; ");
         inb.setStyle("-fx-text-fill: white; ");
-        imem.setStyle("-fx-text-fill: white; ");
+        //imem.setStyle("-fx-text-fill: white; ");
         idate.setStyle("-fx-text-fill: white; ");
         lien.setStyle("-fx-text-fill: white; ");
         cnom.setCellValueFactory(new PropertyValueFactory<Courslm, String>("nomCours"));
         cdes.setCellValueFactory(new PropertyValueFactory<Courslm, String>("description"));
         cdate.setCellValueFactory(new PropertyValueFactory<Courslm, Date>("date_creation"));
         cmoc.setCellValueFactory(new PropertyValueFactory<Courslm, String>("tags"));
-        cmem.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("membre_id"));
+        //cmem.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("membre_id"));
         cnb.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("nb_participants"));
         ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
         cimage.setCellValueFactory(new PropertyValueFactory<Courslm, ImageView>("image"));
@@ -208,7 +211,7 @@ public class CoursDetailsController implements Initializable {
 
     @FXML
     private void ajouterC(ActionEvent event) {
-        boolean verift = (verifYouUrl() && verifnom() && verifcat() && verifdate() && verifmo() && verifdes() && verifmo() && verifmem());
+        boolean verift = (verifYouUrl() && verifnom() && verifcat() && verifdate() && verifmo() && verifdes() && verifmo());
         if (!verift) {
             try {
                 Notification.sendNotification("Cours", "Veuillez remplir tous les champs ", TrayIcon.MessageType.INFO);
@@ -221,7 +224,7 @@ public class CoursDetailsController implements Initializable {
             {
                 //try {
                 //TODO fil verifNb lazem ykon integer
-                boolean verif = verifYouUrl() || verifnom() || verifcat() || verifdate() || verifmo() || verifdes() || verifmo() || verifmem();
+                boolean verif = verifYouUrl() || verifnom() || verifcat() || verifdate() || verifmo() || verifdes() || verifmo() ;
                 if (verif) {
                     return;
                 }
@@ -235,12 +238,16 @@ public class CoursDetailsController implements Initializable {
                 c.setNb_participants(Integer.parseInt(inb.getText()));
                 c.setDate_creation(Date.valueOf(idate.getValue()));
                 c.setTags(icl.getText());
+                System.out.println("c "+categorie.getIdcat());
                 c.setCategorie_id(categorie.getIdcat());
+                c.setLienYoutube(lien.getText());
+                ///to do 3awdh l 1 belid melsingelton
+                c.setMembre_id(1);
                 //TODO hethi lazem titbadil dynamique ki tkamil sonia
-                c.setMembre_id(Integer.parseInt(imem.getText()));
+                //c.setMembre_id(Integer.parseInt(imem.getText()));
                 String nomImage = moveImage();
                 c.setImage(nomImage);
-                System.out.println(c.getImage());
+                System.out.println(c);
                 if (nomImage.length() == 0) {
                     JOptionPane.showMessageDialog(null, "Veuillez insérer une image");
                     return;
@@ -282,7 +289,7 @@ public class CoursDetailsController implements Initializable {
                     cmm.setDate_creation(Date.valueOf(idate.getValue()));
                     cmm.setTags(icl.getText());
                     cmm.setCategorie_id(categorie.getIdcat());
-                    cmm.setMembre_id(Integer.parseInt(imem.getText()));
+                    //cmm.setMembre_id(Integer.parseInt(imem.getText()));
 
                     c.setImage(nomImage);
                     cmm.setLienYoutube(lien.getText());
@@ -314,7 +321,7 @@ public class CoursDetailsController implements Initializable {
         }
 
         //TODO fil verifNb lazem ykon integer 
-        boolean verif = verifcat() || verifdate() || verifdes() || verifmem() || verifmo() || verifmo() || verifnb() || verifnom() || verifYouUrl();
+        boolean verif = verifcat() || verifdate() || verifdes() || verifmo() || verifmo() || verifnb() || verifnom() || verifYouUrl();
         if (verif) {
             return;
         }
@@ -411,7 +418,7 @@ public class CoursDetailsController implements Initializable {
             return;
         }
         //id.setText(String.valueOf(c.getId()));
-        imem.setText(String.valueOf(c.getMembre_id()));
+       //imem.setText(String.valueOf(c.getMembre_id()));
         inom.setText(c.getNomCours());
         combocat.setValue(categorieServices.getCategorieById(c.getCategorie_id()));
         Date d = c.getDate_creation();
@@ -432,7 +439,7 @@ public class CoursDetailsController implements Initializable {
         //id.setText(null);
         combocat.getSelectionModel().select(null);
         idate.setValue(null);
-        imem.setText(null);
+        //imem.setText(null);
         inb.setText(null);
         ides.setText(null);
         icl.setText(null);
@@ -506,16 +513,8 @@ public class CoursDetailsController implements Initializable {
         }
     }
 
-    private boolean verifmem() {
-        verifmem.setStyle("-fx-text-fill: white; ");
-        if (imem.getText().isEmpty()) {
-            verifmem.setText("Veuillez remplir ce champs");
-            return true;
-        } else {
-            verifmem.setText("");
-            return false;
-        }
-    }
+    
+    
 
     private boolean verifdes() {
         verifdes.setStyle("-fx-text-fill: white; ");
@@ -556,6 +555,7 @@ public class CoursDetailsController implements Initializable {
 
     }
 
+    @FXML
     private void verifImage(ActionEvent event) {
         if (imagevc.getImage() == null) {
             btnaj.setDisable(true);
@@ -625,7 +625,7 @@ public class CoursDetailsController implements Initializable {
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);
                 i.setFitWidth(70);
-                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat());
+                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id());
                 addCours.setImagename(e.getImage());
                 addCours.setLienYoutube(e.getLienYoutube());
                 lIm.add(addCours);
@@ -715,10 +715,10 @@ public class CoursDetailsController implements Initializable {
 
    
 
-    @FXML
-    private void changeDate(ActionEvent event) {
-        verifdate.setVisible(false);
-    }
+//    @FXML
+//    private void changeDate(ActionEvent event) {
+//        
+//    }
     
 //        @FXML
 //    private void change(ActionEvent event) {
@@ -728,6 +728,19 @@ public class CoursDetailsController implements Initializable {
 //    private void changeDate(ActionEvent event) {
 //        verifdate.setVisible(false);
 //    }
+
+    @FXML
+    private void changeDate(KeyEvent event) {
+        verifdate.setVisible(false);
+    }
+
+    @FXML
+    private void verifImage(KeyEvent event) {
+    }
+
+    @FXML
+    private void changeDate(ActionEvent event) {
+    }
 
 
 

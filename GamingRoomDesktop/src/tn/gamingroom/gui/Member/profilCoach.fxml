@@ -10,12 +10,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="tn.gamingroom.gui.Member.ProfilCoachController">
+<AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.ProfilCoachController">
    <children>
-      <ImageView fitHeight="687.0" fitWidth="1191.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1000.0" fitWidth="1350.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/asus/Desktop/3emeAnnee/semestre2/pidev/images/198677.jpg" />
+            <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/images/198677.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="28.0" layoutY="37.0" opacity="0.56" prefHeight="189.0" prefWidth="587.0" style="-fx-background-color: #000000;">
@@ -61,7 +60,8 @@
             <FontAwesomeIcon fill="WHITE" glyphName="COG" text="" />
          </graphic>
       </Button>
-      <JFXButton fx:id="btn_signout" layoutX="1036.0" layoutY="28.0" onAction="#SignOut" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: #F02307;" text="SIGN OUT" textFill="WHITE" />
+      <JFXButton fx:id="btn_signout" layoutX="1185.0" layoutY="46.0" onAction="#SignOut" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: #F02307;" text="SIGN OUT" textFill="WHITE" />
       <FontAwesomeIcon fx:id="btn_reload" fill="WHITE" glyphName="REFRESH" layoutX="575.0" layoutY="71.0" onMousePressed="#reloadPage" size="2em" />
+      <Button fx:id="btn_home" layoutX="1068.0" layoutY="46.0" mnemonicParsing="false" onAction="#goHome" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: #581789;" text="Home" textFill="WHITE" />
    </children>
 </AnchorPane>

@@ -239,7 +239,7 @@ public class PanierController implements Initializable {
         if (a == JOptionPane.YES_OPTION) {
             CommandService commandService = new CommandService();
             int memberId = 3;
-            double totale=0;
+            double totale=0; 
             for (int i = 0; i < listTable.getItems().size(); i++) {
                 
                 totale+=listTable.getItems().get(i).getPrix();
