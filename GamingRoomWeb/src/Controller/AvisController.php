@@ -30,6 +30,6 @@ class AvisController extends AbstractController
          $em->remove($avi);        
          $em->flush();
          $this->addFlash('success','Avis supprimés avec succès');
-         return $this->redirectToRoute("adminReclamtion");
+         return $this->redirectToRoute("adminAvis");
      }
 }

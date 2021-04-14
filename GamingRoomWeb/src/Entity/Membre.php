@@ -279,10 +279,10 @@ class Membre
 
         return $this;
     }
-    
+
     public function getLastTimeban(): ?\DateTimeInterface
     {
-        return date('Y-m-d',strtotime($this->lastTimeban));
+        return $this->lastTimeban;
     }
 
     public function setLastTimeban(?\DateTimeInterface $lastTimeban): self
