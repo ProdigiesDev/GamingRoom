@@ -55,5 +55,58 @@ class Reactionev
      */
     private $membre;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getInteraction(): ?int
+    {
+        return $this->interaction;
+    }
+
+    public function setInteraction(int $interaction): self
+    {
+        $this->interaction = $interaction;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
+
+        return $this;
+    }
+
+    public function getMembre(): ?Membre
+    {
+        return $this->membre;
+    }
+
+    public function setMembre(?Membre $membre): self
+    {
+        $this->membre = $membre;
+
+        return $this;
+    }
+
 
 }

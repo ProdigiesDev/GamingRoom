@@ -28,5 +28,22 @@ class Categorie
      */
     private $nomcategorie;
 
+    public function getIdcat(): ?int
+    {
+        return $this->idcat;
+    }
+
+    public function getNomcategorie(): ?string
+    {
+        return $this->nomcategorie;
+    }
+
+    public function setNomcategorie(string $nomcategorie): self
+    {
+        $this->nomcategorie = $nomcategorie;
+
+        return $this;
+    }
+
 
 }

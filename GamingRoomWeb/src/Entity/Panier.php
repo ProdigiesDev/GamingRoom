@@ -48,5 +48,46 @@ class Panier
      */
     private $produit;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getQuantitydemande(): ?int
+    {
+        return $this->quantitydemande;
+    }
+
+    public function setQuantitydemande(int $quantitydemande): self
+    {
+        $this->quantitydemande = $quantitydemande;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?Commande $commande): self
+    {
+        $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getProduit(): ?Produit
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(?Produit $produit): self
+    {
+        $this->produit = $produit;
+
+        return $this;
+    }
+
 
 }
