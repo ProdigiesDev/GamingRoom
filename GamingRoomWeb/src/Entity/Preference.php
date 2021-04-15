@@ -41,5 +41,34 @@ class Preference
      */
     private $member;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getMember(): ?Membre
+    {
+        return $this->member;
+    }
+
+    public function setMember(?Membre $member): self
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
 
 }

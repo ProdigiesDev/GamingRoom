@@ -42,7 +42,7 @@ class CourController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('imagecours')->getData();
             $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
-            $file->move ($this->getParameter('images_directory'),$fileName);
+            $file->move ($this->getParameter('cours_directory'),$fileName);
             $cour->setImagecours($fileName);
             $cour->setImagecours($fileName);
             $entityManager = $this->getDoctrine()->getManager();

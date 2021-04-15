@@ -3,47 +3,156 @@
 {% block title %}Cours{% endblock %}
 
 {% block body %}
-    <h1>Cours</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nomcours</th>
-                <th>Description</th>
-                <th>NbParticipant</th>
-                <th>DateCreation</th>
-                <th>Tags</th>
-                <th>Imagecours</th>
-                <th>Lienyoutube</th>
-                <th>categorie</th>
-                <th>action</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="container youplay-news">
+
+        <!-- News List -->
+        <div class="col-md-9">
+
         {% for cour in cours %}
-            <tr>
-                <td>{{ cour.id }}</td>
-                <td>{{ cour.nomcours }}</td>
-                <td>{{ cour.description }}</td>
-                <td>{{ cour.nbParticipant }}</td>
-                <td>{{ cour.dateCreation ? cour.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ cour.tags }}</td>
-                <td> <img src="{{ asset('/imagecours/' ~ cour.imagecours) }}" width="40px" height="40px"></td>
-                <td>{{ cour.lienyoutube }}</td>
-                <td>{{ cour.categorie.nomcategorie }}</td>
-                <td>
-                    <a href="{{ path('cour_show', {'id': cour.id}) }}">show</a>
-                    <a href="{{ path('cour_edit', {'id': cour.id}) }}">edit</a>
-                </td>
-            </tr>
+            <!-- Single News Block -->
+            <div class="news-one">
+                <div class="row vertical-gutter">
+                    <div class="col-md-4">
+                        <a href="blog-post-1.html" class="angled-img">
+                            <div class="img">
+                                <img src="{{ asset('/images/cours/' ~ cour.imagecours) }}" alt="">
+                            </div>
+                           </a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="clearfix">
+                            <h3 class="h2 pull-left m-0"><a href="blog-post-1.html">{{ cour.nomcours }}</a></h3>
+                            <span class="date pull-right"><svg class="svg-inline--fa fa-calendar-alt fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm116 204c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40z"></path></svg><!-- <i class="fa fa-calendar"></i> --> Today</span>
+                        </div>
+                        <div class="tags">
+                            <svg class="svg-inline--fa fa-tags fa-w-20" aria-hidden="true" data-prefix="fa" data-icon="tags" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"></path></svg><!-- <i class="fa fa-tags"></i> --> 
+                            {% for  tag in cour.tags |split(' ') %}
+                                <a href="#">{{tag}}</a>,
+                            {% endfor %}
+                        </div>
+                        <div class="description">
+                            <p>
+                                {{ cour.description }}
+                            </p>
+                        </div>
+                        <a href="{{path('cour_show', {id: cour.id})}}" class="btn read-more pull-left">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Single News Block -->
+            
         {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
+            <p> no Cours </p>
         {% endfor %}
-        </tbody>
-    </table>
+            
 
-    <a href="{{ path('cour_new') }}">Create new</a>
+            <!-- Pagination -->
+            <ul class="pagination">
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">Next</a></li>
+            </ul>
+            <!-- /Pagination -->
+        </div>
+        <!-- /News List -->
+
+        <!-- Right Side -->
+        <div class="col-md-3">
+            
+<!-- Side Search -->
+<div class="side-block">
+    <p>Search by News:</p>
+    <form action="search.html">
+        <div class="youplay-input">
+            <input type="text" name="search" placeholder="enter search term">
+        </div>
+    </form>
+</div>
+<!-- /Side Search -->
+
+<!-- Side Categories -->
+<div class="side-block">
+    <h4 class="block-title">Categories</h4>
+    <ul class="block-content">
+        <li><a href="#">All</a></li>
+        <li><a href="#">Announcements</a></li>
+        <li><a href="#">Reviews</a></li>
+        <li><a href="#">Releases</a></li>
+        <li><a href="#">Updates</a></li>
+    </ul>
+</div>
+<!-- /Side Categories -->
+
+<!-- Side Popular News -->
+<div class="side-block">
+    <h4 class="block-title">Popular News</h4>
+    <div class="block-content p-0">
+        <!-- Single News Block -->
+        <div class="row youplay-side-news">
+            <div class="col-xs-3 col-md-4">
+                <a href="blog-post-1.html" class="angled-img">
+                    <div class="img">
+                        <img src="assets/images/dark/game-bloodborne-500x375.jpg" alt="">
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-9 col-md-8">
+                <h4 class="ellipsis"><a href="blog-post-1.html" title="Bloodborne - First Try!">Bloodborne - First Try!</a></h4>
+                <span class="date"><svg class="svg-inline--fa fa-calendar-alt fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm116 204c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40z"></path></svg><!-- <i class="fa fa-calendar"></i> --> Today</span>
+            </div>
+        </div>
+        <!-- /Single News Block -->
+
+        <!-- Single News Block -->
+        <div class="row youplay-side-news">
+            <div class="col-xs-3 col-md-4">
+                <a href="#" class="angled-img">
+                    <div class="img">
+                        <img src="assets/images/dark/game-middle-eart-shadow-of-mordor-500x375.jpg" alt="">
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-9 col-md-8">
+                <h4 class="ellipsis"><a href="#" title="Whats New in Middle-earth">Whats New in Middle-earth</a></h4>
+                <span class="date"><svg class="svg-inline--fa fa-calendar-alt fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm116 204c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40z"></path></svg><!-- <i class="fa fa-calendar"></i> --> February 2, 2015</span>
+            </div>
+        </div>
+        <!-- /Single News Block -->
+
+        <!-- Single News Block -->
+        <div class="row youplay-side-news">
+            <div class="col-xs-3 col-md-4">
+                <a href="#" class="angled-img">
+                    <div class="img">
+                        <img src="assets/images/dark/game-diablo-iii-500x375.jpg" alt="">
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-9 col-md-8">
+                <h4 class="ellipsis"><a href="#" title="Let's Grind Diablo III">Let's Grind Diablo III</a></h4>
+                <span class="date"><svg class="svg-inline--fa fa-calendar-alt fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm116 204c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40z"></path></svg><!-- <i class="fa fa-calendar"></i> --> January 18, 2015</span>
+            </div>
+        </div>
+        <!-- /Single News Block -->
+    </div>
+</div>
+<!-- /Side Popular News -->
+
+<!-- Our Twitter -->
+<div class="side-block">
+    <h4 class="block-title">Our Twitter</h4>
+    <div class="block-content">
+        <div class="youplay-twitter" data-twitter-user-name="nkdevv" data-twitter-count="3" data-twitter-hide-replies="false">Failed to load data</div>
+    </div>
+</div>
+<!-- /Our Twitter -->
+
+        </div>
+        <!-- /Right Side -->
+
+    </div>
+
 {% endblock %}
