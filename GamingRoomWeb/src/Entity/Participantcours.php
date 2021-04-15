@@ -41,5 +41,34 @@ class Participantcours
      */
     private $membre;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCour(): ?Cour
+    {
+        return $this->cour;
+    }
+
+    public function setCour(?Cour $cour): self
+    {
+        $this->cour = $cour;
+
+        return $this;
+    }
+
+    public function getMembre(): ?Membre
+    {
+        return $this->membre;
+    }
+
+    public function setMembre(?Membre $membre): self
+    {
+        $this->membre = $membre;
+
+        return $this;
+    }
+
 
 }
