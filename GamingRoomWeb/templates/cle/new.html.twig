@@ -1,0 +1,10 @@
+{% extends 'base_admin.html.twig' %}
+{% block title %}New Cle{% endblock %}
+
+{% block body %}
+    <h1>Create new Cle</h1>
+
+    {{ include('cle/_form.html.twig') }}
+
+    <a href="{{ path('cle_index') }}">back to list</a>
+{% endblock %}

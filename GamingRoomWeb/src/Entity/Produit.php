@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="produit", indexes={@ORM\Index(name="fk_idcatP", columns={"id_cat"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ProduitRepository")
+ *
  */
 class Produit
 {
@@ -58,6 +60,71 @@ class Produit
      * })
      */
     private $idCat;
+
+    public function getIdprod(): ?int
+    {
+        return $this->idprod;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getIdCat(): ?Categorie
+    {
+        return $this->idCat;
+    }
+
+    public function setIdCat(?Categorie $idCat): self
+    {
+        $this->idCat = $idCat;
+
+        return $this;
+    }
 
 
 }
