@@ -17,8 +17,10 @@ class ProduitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('image',FileType::class,[
+            ->add('image',FileType::class, array('data_class' => null),
+                [
         'label' => 'Image',
+
 
         // unmapped means that this field is not associated to any entity property
         'mapped' => true,

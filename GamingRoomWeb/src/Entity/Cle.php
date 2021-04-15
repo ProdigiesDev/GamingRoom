@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Cle
@@ -31,7 +33,8 @@ class Cle
 
     /**
      * @var int
-     *
+
+     * @Assert\NotBlank()
      * @ORM\Column(name="produit_id", type="integer", nullable=false)
      */
     private $produitId;
