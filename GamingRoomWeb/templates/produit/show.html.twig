@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Produit</h1>
-    <img src="{{ asset('upload/'~produit.image~'') }}">
+    <img src="{{ asset('images/produits/'~produit.image~'') }}">
     <table class="table">
         <tbody>
             <tr>
@@ -14,7 +14,7 @@
             <tr>
                 <th>Image</th>
 
-                <td> <img src="{{ asset('upload/'~produit.image~'') }}" width="40px" height="40px">      </td>
+                <td> <img src="{{ asset('images/produits/'~produit.image~'') }}" width="40px" height="40px">      </td>
             </tr>
             <tr>
                 <th>Libelle</th>
@@ -35,9 +35,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('produit_index') }}">back to list</a>
 
-    <a href="{{ path('produit_edit', {'idprod': produit.idprod}) }}">edit</a>
+
+    <a href="{{ path('produit_edit', {'idprod': produit.idprod}) }}"><button type="button" class="btn btn-outline-warning">modifier</button></a>
 
     {{ include('produit/_delete_form.html.twig') }}
 {% endblock %}

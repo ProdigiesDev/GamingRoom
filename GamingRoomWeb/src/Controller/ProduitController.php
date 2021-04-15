@@ -24,7 +24,7 @@ class ProduitController extends AbstractController
         $produits = $this->getDoctrine()
             ->getRepository(Produit::class)
             ->findAll();
-
+// taamel affichage mta ay haja mawjoud
         return $this->render('produit/index.html.twig', [
             'produits' => $produits,
         ]);
@@ -37,12 +37,12 @@ class ProduitController extends AbstractController
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
-        $form->handleRequest($request);
+        $form->handleRequest($request); // aabit l formulaire w bech nabaathou
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('image')->getData();
             $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
-            $file->move ($this->getParameter('images_directory'),$fileName);
+            $file->move ($this->getParameter('produit_directory'),$fileName);
             $produit->setImage($fileName);
             $produit->setImage($fileName);
             $entityManager = $this->getDoctrine()->getManager();
@@ -73,10 +73,17 @@ class ProduitController extends AbstractController
      */
     public function edit(Request $request, Produit $produit): Response
     {
-        $form = $this->createForm(ProduitType::class, $produit);
-        $form->handleRequest($request);
+        $form = $this->createForm(ProduitType::class, $produit);// creation formulaire
+        $form->handleRequest($request); // tabaath chneya fel formulaire
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()){  // mafama champs feragh
+            /**
+             * @var UploadedFile $file // methode nhabet fiha les fichier
+             */
+            $file = $form->get('image')->getData();//recupere l'image
+            $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
+            $file->move($this->getParameter('produit_directory'),$fileName);
+            $produit->setImage($fileName);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('produit_index');

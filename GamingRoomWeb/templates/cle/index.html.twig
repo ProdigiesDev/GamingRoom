@@ -3,7 +3,7 @@
 
 {% block body %}
     <h1>Cle index</h1>
-
+    <a href="{{ path('cle_new') }}"><button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>create</span></button></a>
     <table class="table">
         <thead>
             <tr>
@@ -20,8 +20,8 @@
                 <td>{{ cle.code }}</td>
                 <td>{{ cle.produitId }}</td>
                 <td>
-                    <a href="{{ path('cle_show', {'idcle': cle.idcle}) }}">show</a>
-                    <a href="{{ path('cle_edit', {'idcle': cle.idcle}) }}">edit</a>
+                    <a href="{{ path('cle_show', {'idcle': cle.idcle}) }}"><button type="button" class="btn btn-outline-info">afficher</button></a>
+                    <a href="{{ path('cle_edit', {'idcle': cle.idcle}) }}"><button type="button" class="btn btn-outline-warning">modifier</button></a>
                 </td>
             </tr>
         {% else %}

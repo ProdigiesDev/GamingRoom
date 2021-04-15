@@ -3,42 +3,62 @@
 {% block title %}Produit index{% endblock %}
 
 {% block body %}
-    <h1>Liste Produits</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Idprod</th>
-                <th>Image</th>
-                <th>Libelle</th>
-                <th>Prix</th>
-                <th>Description</th>
-                <th>Categorie</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for produit in produits %}
-            <tr>
-                <td>{{ produit.idprod }}</td>
 
-                <td> <img src="{{ asset('upload/'~produit.image~'') }}" width="40px" height="40px">      </td>
-                <td>{{ produit.libelle }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>{{ produit.description }}</td>
-                <td>{{ produit.idcat.nomcategorie }}</td>
-                <td>
-                    <a href="{{ path('produit_show', {'idprod': produit.idprod}) }}">show</a>
-                    <a href="{{ path('produit_edit', {'idprod': produit.idprod}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Liste Produits</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dt-buttons btn-group flex-wrap">
+                                        <a href="{{ path('produit_new') }}"><button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>create</span></button></a>
+                                        <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button>  </div> </div></div><div class="col-sm-12 col-md-6"><div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1"></label></div></div></div><div class="row"><div class="col-sm-12"><table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>Idprod</th>
+                                            <th>Image</th>
+                                            <th>Libelle</th>
+                                            <th>Prix</th>
+                                            <th>Description</th>
+                                            <th>Categorie</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for produit in produits %}
+                                            <tr>
+                                                <td>{{ produit.idprod }}</td>
 
-    <a href="{{ path('produit_new') }}">Create new</a>
+                                                <td> <img src="{{ asset('images/produits/'~produit.image~'') }}" width="40px" height="40px">      </td>
+                                                <td>{{ produit.libelle }}</td>
+                                                <td>{{ produit.prix }}</td>
+                                                <td>{{ produit.description }}</td>
+                                                <td>{{ produit.idcat.nomcategorie }}</td>
+                                                <td>
+                                                    <a href="{{ path('produit_show', {'idprod': produit.idprod}) }}"><button type="button" class="btn btn-outline-info">afficher</button></a>
+                                                    <a href="{{ path('produit_edit', {'idprod': produit.idprod}) }}"><button type="button" class="btn btn-outline-warning">modifier</button></a>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="6">no records found</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example1_info" role="status" aria-live="polite"></div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="example1_previous"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+
+            </div></div></div></section>
 {% endblock %}
