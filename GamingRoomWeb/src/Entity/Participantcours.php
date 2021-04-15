@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="participantcours", indexes={@ORM\Index(name="fk_cours_participant", columns={"cour_id"}), @ORM\Index(name="fk_membre_participant", columns={"membre_id"})})
  * @ORM\Entity
+ * * @ORM\Entity(repositoryClass="App\Repository\ParticipantcoursRepository")
  */
 class Participantcours
 {
@@ -40,6 +41,35 @@ class Participantcours
      * })
      */
     private $membre;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCour(): ?Cour
+    {
+        return $this->cour;
+    }
+
+    public function setCour(?Cour $cour): self
+    {
+        $this->cour = $cour;
+
+        return $this;
+    }
+
+    public function getMembre(): ?Membre
+    {
+        return $this->membre;
+    }
+
+    public function setMembre(?Membre $membre): self
+    {
+        $this->membre = $membre;
+
+        return $this;
+    }
 
 
 }

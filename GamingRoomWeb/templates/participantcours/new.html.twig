@@ -1,0 +1,11 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block title %}New Participantcours{% endblock %}
+
+{% block body %}
+    <h1>Create new Participantcours</h1>
+
+    {{ include('participantcours/_form.html.twig') }}
+
+    <a href="{{ path('participantcours_index') }}">back to list</a>
+{% endblock %}

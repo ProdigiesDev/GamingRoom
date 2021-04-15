@@ -1,0 +1,49 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+
+{% block body %}
+    <h1>Cours</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nomcours</th>
+                <th>Description</th>
+                <th>NbParticipant</th>
+                <th>DateCreation</th>
+                <th>Tags</th>
+                <th>Imagecours</th>
+                <th>Lienyoutube</th>
+                <th>categorie</th>
+                <th>action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cour in cours %}
+            <tr>
+                <td>{{ cour.id }}</td>
+                <td>{{ cour.nomcours }}</td>
+                <td>{{ cour.description }}</td>
+                <td>{{ cour.nbParticipant }}</td>
+                <td>{{ cour.dateCreation ? cour.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ cour.tags }}</td>
+                <td> <img src="{{ asset('/imagecours/' ~ cour.imagecours) }}" width="40px" height="40px"></td>
+                <td>{{ cour.lienyoutube }}</td>
+                <td>{{ cour.categorie.nomcategorie }}</td>
+                <td>
+                    <a href="{{ path('cour_show', {'id': cour.id}) }}">show</a>
+                    <a href="{{ path('cour_edit', {'id': cour.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('cour_new') }}">Create new</a>
+{% endblock %}
