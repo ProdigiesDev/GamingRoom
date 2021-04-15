@@ -1,0 +1,35 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Categorie index{% endblock %}
+
+{% block body %}
+    <h1>Categorie index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idcat</th>
+                <th>Nomcategorie</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr>
+                <td>{{ categorie.idcat }}</td>
+                <td>{{ categorie.nomcategorie }}</td>
+                <td>
+                    <a href="{{ path('categorie_show', {'idcat': categorie.idcat}) }}">show</a>
+                    <a href="{{ path('categorie_edit', {'idcat': categorie.idcat}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('categorie_new') }}">Create new</a>
+{% endblock %}

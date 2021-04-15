@@ -1,0 +1,68 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Membre{% endblock %}
+
+{% block body %}
+    <h1>Membre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ membre.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ membre.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ membre.prenom }}</td>
+            </tr>
+            <tr>
+                <th>DateNaissance</th>
+                <td>{{ membre.dateNaissance ? membre.dateNaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ membre.genre }}</td>
+            </tr>
+            <tr>
+                <th>NumeroTel</th>
+                <td>{{ membre.numeroTel }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ membre.email }}</td>
+
+            <tr>
+                <th>Role</th>
+                <td>{{ membre.role }}</td>
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td>{{ membre.description }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{{ membre.active ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>BanDuration</th>
+                <td>{{ membre.banDuration }}</td>
+            </tr>
+            <tr>
+                <th>LastTimeban</th>
+                <td>{{ membre.lastTimeban ? membre.lastTimeban|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('membre_index') }}">back to list</a>
+
+
+    <a href="{{ path('membre_edit', {'id': membre.id}) }}">edit</a>
+
+    {{ include('membre/_delete_form.html.twig') }}
+{% endblock %}
