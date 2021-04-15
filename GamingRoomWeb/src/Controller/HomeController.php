@@ -24,7 +24,7 @@ class HomeController extends AbstractController
     public function index(Request $request): Response
     {
         $avis= new Avis();
-        
+        $listAvis=$this->getDoctrine()->getRepository(Avis::class)->findAll();
         $form = $this->createForm(AvisType::class, $avis);
         
         $form->handleRequest($request);
@@ -54,6 +54,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'form' => $form->createView(),
+            'listAvis' => $listAvis
         ]);
     }
 }
