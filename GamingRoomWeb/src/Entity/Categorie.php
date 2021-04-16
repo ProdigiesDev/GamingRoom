@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * Categorie
@@ -26,6 +28,12 @@ class Categorie
      * @var string
      *
      * @ORM\Column(name="nomcategorie", type="string", length=30, nullable=false)
+     *  @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     * @Assert\Regex(
+     *     pattern = "/^[a-z]+$/i",
+     *     htmlPattern = "^[a-zA-Z]+$",
+     *     message="'{{ value }}' doit etre chaine de caractère"
+     * )
      */
     private $nomcategorie;
 

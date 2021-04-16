@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Regex;
 
 
 
@@ -31,6 +32,11 @@ class Membre implements UserInterface
      *
      * @ORM\Column(name="nom", type="string", length=20, nullable=false)
      * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     * *  @Assert\Regex(
+     *     pattern = "/^[a-z]+$/i",
+     *     htmlPattern = "^[a-zA-Z]+$",
+     *     message="'{{ value }}' doit etre chaine de caractère"
+     * )
      */
     private $nom;
 
@@ -39,6 +45,11 @@ class Membre implements UserInterface
      *
      * @ORM\Column(name="prenom", type="string", length=20, nullable=false)
      * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     *   @Assert\Regex(
+     *     pattern = "/^[a-z]+$/i",
+     *     htmlPattern = "^[a-zA-Z]+$",
+     *     message="'{{ value }}' doit etre chaine de caractère"
+     * )
      */
     private $prenom;
 
