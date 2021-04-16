@@ -1,3 +1,4 @@
+
 {% extends 'base_admin.html.twig' %}
 
 {% block title %}Membre{% endblock %}
@@ -7,6 +8,9 @@
 
     <table class="table">
         <tbody>
+        <tr>
+            <th><img src="{{ asset('images/membre/'~membre.image~'') }}" width="150px" height="150px"></td></th>
+        </tr>
             <tr>
                 <th>Id</th>
                 <td>{{ membre.id }}</td>
@@ -20,15 +24,15 @@
                 <td>{{ membre.prenom }}</td>
             </tr>
             <tr>
-                <th>DateNaissance</th>
+                <th>Date de Naissance</th>
                 <td>{{ membre.dateNaissance ? membre.dateNaissance|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Genre</th>
+                <th>Sexe</th>
                 <td>{{ membre.genre }}</td>
             </tr>
             <tr>
-                <th>NumeroTel</th>
+                <th>Numero Telephone</th>
                 <td>{{ membre.numeroTel }}</td>
             </tr>
             <tr>

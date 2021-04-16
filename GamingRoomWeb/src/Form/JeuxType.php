@@ -2,39 +2,36 @@
 
 namespace App\Form;
 
-use App\Entity\Membre;
+use App\Entity\Jeux;
+use App\Form\StringToFileTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-class MembreType extends AbstractType
-
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
+class JeuxType extends AbstractType
 {
+    private $transformer;
+
+    public function __construct(StringToFileTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $membre = new Membre();
         $builder
-            ->add('nom',TextType::class)
-            ->add('prenom',TextType::class)
-            ->add('dateNaissance',DateType::class)
-            ->add('genre',ChoiceType::class,[
+            ->add('nom')
+            ->add('description',TextareaType::class)
+            ->add('typePlateforme', ChoiceType::class, [
                 'choices'  => [
-                    'Homme' => 'Homme',
-                    'Femme' => 'Femme'
+                    'Desktop' => 'Desktop',
+                    'Web' => 'Web',
+                    'Mobile' => 'Mobile',
                 ],
             ])
-            ->add('numeroTel')
-            ->add('email',EmailType::class)
-            ->add('password',PasswordType::class)
             ->add('image', FileType::class,[
                 'label' => 'Image(jpg,png,jpeg)',
 
@@ -55,20 +52,15 @@ class MembreType extends AbstractType
                     ])
                 ],
             ])
-            ->add('role',ChoiceType::class,[
-                'choices'  => [
-                    'Membre' => 'Membre',
-                    'Coach' => 'Coach'
-                ],
-            ])
-            ->add('description',TextareaType::class)
         ;
+        $builder->get('image')
+        ->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Membre::class,
+            'data_class' => Jeux::class,
         ]);
     }
 }

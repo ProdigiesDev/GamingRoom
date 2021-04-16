@@ -1,4 +1,109 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="button" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+
+
+
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+        <div class="col-md-9">
+            <!-- Billing Information -->
+            <h2 class="mt-0">Register</h2>
+
+    <div class="youplay-input"> 
+    {{ form_widget(form.nom,{'attr':{'placeholder':'Nom '}}) }}
+    {% if form_errors(form.nom) %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.nom) }}
+        </div>
+    {% endif %}
+    </div>
+     <div class="youplay-input"> 
+    {{ form_widget(form.prenom,{'attr':{'placeholder':'Prenom '}}) }}
+    {% if form_errors(form.prenom) %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.prenom) }}
+        </div>
+    {% endif %}
+    </div>
+     <div class="form-group"> 
+     
+  <label for="example-datetime-local-input" class="col-2 col-form-label">Date and time</label>
+    {{ form_widget(form.dateNaissance,{'attr':{'class':'form-control'}}) }}
+    {% if form_errors(form.dateNaissance) %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.dateNaissance) }}
+        </div>
+    {% endif %}
+    </div>
+    <label class="youplay-select">
+    {{ form_widget(form.genre) }}
+    {% if form_errors(form.genre) %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.genre) }}
+        </div>
+    {% endif %}
+    </label>
+     <div class="youplay-input"> 
+    {{ form_widget(form.numeroTel,{'attr':{'placeholder':'Telephone '}}) }}
+    {% if form_errors(form.numeroTel) %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.numeroTel) }}
+        </div>
+        <small>{{ form_help(form.numeroTel) }}</small>
+    {% endif %}
+    </div>
+     <div class="youplay-input"> 
+    {{ form_widget(form.email,{'attr':{'placeholder':'Email '}}) }}
+    {% if form_errors(form.email) %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.email) }}
+        </div>
+         {% endif %}
+    </div>
+     <div class="youplay-input"> 
+    {{ form_widget(form.password,{'attr':{'placeholder':'Mot de passe '}}) }}
+    {% if form_errors(form.password) %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.password) }}
+        </div>
+        
+    {% endif %}
+    </div>
+     <div class="youplay-input"> 
+    {{ form_widget(form.image) }}
+    {% if form_errors(form.image) %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.image) }}
+        </div>
+        
+    {% endif %}
+    </div>
+     
+            <label class="youplay-select">
+    {{ form_widget(form.role) }}
+    {% if form_errors(form.role) %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.role) }}
+        </div>
+        
+    {% endif %}
+    </label>
+
+     <div class="youplay-textarea">
+    {{ form_widget(form.description,{'attr':{'placeholder':'Description '}}) }}
+    {% if form_errors(form.description) %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.description) }}
+        </div>
+         {% endif %}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+        </div></div>
+    </div>
+
+                
+                
+            </div>
+        </div>
+    </div>
 {{ form_end(form) }}

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class MembreController extends AbstractController
 {
@@ -23,19 +24,21 @@ class MembreController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="membre_new", methods={"GET","POST"})
+     * @Route("membre/new", name="membre_new", methods={"GET","POST"})
      */
-    public function ajouterMembre(Request $request): Response
+    public function ajouterMembre(Request $request,UserPasswordEncoderInterface $encoder): Response
     {
         $membre = new Membre();
         $form = $this->createForm(MembreType::class, $membre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $membre->setLastTimeban(  $membre->getDateNaissance());
+            $membre->setActive(1);
+            $membre->setPassword($encoder->encodePassword($membre, $membre->getPassword()));
             $file = $form->get('image')->getData();
             $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
-            $file->move ($this->getParameter('images_directory'),$fileName);
+            $file->move ($this->getParameter('membre_directory'),$fileName);
             $membre->setImage($fileName);
 
 
@@ -43,7 +46,7 @@ class MembreController extends AbstractController
             $entityManager->persist($membre);
             $entityManager->flush();
 
-            return $this->redirectToRoute('membre_index');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('membre/new.html.twig', [

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 /**
@@ -28,6 +30,7 @@ class Membre implements UserInterface
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=20, nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
      */
     private $nom;
 
@@ -35,6 +38,7 @@ class Membre implements UserInterface
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=20, nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
      */
     private $prenom;
 
@@ -42,6 +46,7 @@ class Membre implements UserInterface
      * @var \DateTime
      *
      * @ORM\Column(name="date_naissance", type="date", nullable=false)
+     * @Assert\Date
      */
     private $dateNaissance;
 
@@ -49,6 +54,10 @@ class Membre implements UserInterface
      * @var string
      *
      * @ORM\Column(name="genre", type="string", length=0, nullable=false)
+     *  @Assert\Choice(
+     *     choices = {"Homme", "Femme"},
+     *     message = "Choose a valid genre."
+     * )
      */
     private $genre;
 
@@ -56,6 +65,8 @@ class Membre implements UserInterface
      * @var string
      *
      * @ORM\Column(name="numero_tel", type="string", length=8, nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     * @Assert\Length(8)
      */
     private $numeroTel;
 
@@ -63,6 +74,8 @@ class Membre implements UserInterface
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     * @Assert\Email(message = "Veuillez saisir une adresse email valid .'{{ value }}' n'est pas valide ")
      */
     private $email;
 
@@ -70,6 +83,12 @@ class Membre implements UserInterface
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     * @Assert\Length(
+     *       min=6,
+     *       max = 20,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters")
      */
     private $password;
 
@@ -84,6 +103,10 @@ class Membre implements UserInterface
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=0, nullable=false)
+     *   @Assert\Choice(
+     *     choices = {"Coach", "Membre"},
+     *     message = "Choose a valid role."
+     * )
      */
     private $role;
 
@@ -98,8 +121,13 @@ class Membre implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"="NULL"})
+     *  @Assert\Length(min=0,
+     *       max = 255,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var bool
@@ -286,7 +314,7 @@ class Membre implements UserInterface
 
     public function getLastTimeban(): ?\DateTimeInterface
     {
-        return $this->lastTimeban=="NULL" ? null : $this->lastTimeban;
+        return $this->lastTimeban=="NULL"  ? null : $this->lastTimeban;
     }
 
     public function setLastTimeban(?\DateTimeInterface $lastTimeban): self
