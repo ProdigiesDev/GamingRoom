@@ -393,10 +393,23 @@
                 
             </a>
         </li>
+                    {% if app.user %}
+                    {% if app.user.role=="Admin" %}
+                        <li>
+                            <a href="{{path('admin_home')}}">
+                                Dashboard
+
+
+
+                            </a>
+                        </li>
+
+                    {% endif %}
+                    {% endif %}
 
                     {% if app.user %}
                         <li>
-                            <a href="{{path('app_logout')}}">
+                            <a href="{{path('app_logout')}}" onclick="return confirm('Êtes-vous sûr?')">
                                 Logout
 
 
@@ -472,39 +485,42 @@
                 
 
                 
-                    <li class="dropdown dropdown-hover dropdown-user">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
-                            <i class="fa fa-user"></i>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="dropdown-menu">
-                            <form class="navbar-login-form" action="#" method="post">
-                                <p>Username:</p>
-                                <div class="youplay-input">
-                                    <input type="text" name="log">
-                                </div>
+                   {% if app.user==false %}
+                <li class="dropdown dropdown-hover dropdown-user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                        <i class="fa fa-user"></i>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <form class="navbar-login-form" action="#" method="post">
+                            <p>Username:</p>
+                            <div class="youplay-input">
+                                <input type="text" name="log">
+                            </div>
 
-                                <p>Password:</p>
-                                <div class="youplay-input">
-                                    <input type="password" name="pwd">
-                                </div>
+                            <p>Password:</p>
+                            <div class="youplay-input">
+                                <input type="password" name="pwd">
+                            </div>
 
-                                <div class="youplay-checkbox mb-15 ml-5">
-                                    <input type="checkbox" name="rememberme" value="forever" id="nav-rememberme">
-                                    <label for="nav-rememberme">Remember Me</label>
-                                </div>
-
+                            <div class="youplay-checkbox mb-15 ml-5">
+                                <input type="checkbox" name="rememberme" value="forever" id="nav-rememberme">
+                                <label for="nav-rememberme">Remember Me</label>
+                            </div>
+                            <a href="{{ path('app_login') }}">
                                 <button class="btn btn-sm ml-0 mr-0" name="submit">Log In</button>
-                                <br>
+                            </a>
+                            <br>
 
-                                <p>
-                                    <a class="no-fade" href="#">Lost password?</a> | <a href="#" class="no-fade" data-toggle="modal" data-target="#nav-registration">Register</a>
-                                </p>
-                            </form>
-                        </div>
-                    </li>
-                
+                            <p>
+                                <a class="no-fade" href="#">Lost password?</a> | <a href="{{ path('membre_new') }}" class="no-fade" data-toggle="modal" >Register</a>
+                            </p>
+                        </form>
+                    </div>
+                </li>
+
             </ul>
+            {% endif %}
             
         </div>
     </div>
