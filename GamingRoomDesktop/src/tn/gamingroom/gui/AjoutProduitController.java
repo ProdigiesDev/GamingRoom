@@ -1,3 +1,5 @@
+
+  
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -153,9 +155,8 @@ public class AjoutProduitController implements Initializable {
     private ImageView reduir;
     @FXML
     private AnchorPane DashProduit;
-      @FXML
+    @FXML
     private ImageView btnexit;
-
 
     /**
      * Initializes the controller class.
@@ -202,7 +203,7 @@ public class AjoutProduitController implements Initializable {
         String resImage = "";
         String resLibelle = tflibelle.getText();
         Categorie rescategorie = listCat.getValue();
-         
+
         String resDesc = textareaProd.getText();
         double resPrix = 0;
         // controle de saisie
@@ -212,34 +213,48 @@ public class AjoutProduitController implements Initializable {
 
         } catch (Exception ex) {
             tfprix.setText("");
-            JOptionPane.showMessageDialog(null, "Il faut ajouter un entier");
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Il faut ajouter un entier ");
+            alert.show();
             return;
 
         }
-       resPrix = Double.parseDouble(tfprix.getText());
+        resPrix = Double.parseDouble(tfprix.getText());
         Produits p2 = new Produits(rescategorie.getIdcat(), resImage, resLibelle, resPrix, resDesc);
         ProduitCrud pcd = new ProduitCrud();
         String fileName = moveImage();
         p2.setImage(fileName);
-        
+
         // controle de saisie
-        if (tflibelle.getText().length() == 0){
-            JOptionPane.showMessageDialog(null, "Il faut remplir le champ Libelle");
+        if (tflibelle.getText().length() == 0) {
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Il faut remplir le champ Libelle");
+            alert.show();
             return;
         }
-         
+
         if (fileName.length() == 0) {
-            JOptionPane.showMessageDialog(null, "Il faut choisir une image");
+              Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Il faut choisir une image");
+            alert.show();
             return;
         }
-         if (textareaProd.getText().length()== 0) {
-            JOptionPane.showMessageDialog(null, "Il faut remplir le champ Description");
+        if (textareaProd.getText().length() == 0) {
+            
+              Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Il faut remplir le champ Description");
+            alert.show();
             return;
         }
-        
+
         if (pcd.ajouterProduit(p2) > 0) {
 
-            JOptionPane.showMessageDialog(null, "produit ajouté");
+            
+              Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("produit ajouté");
+            alert.show();
             initTable(null);
 
         }
@@ -270,7 +285,7 @@ public class AjoutProduitController implements Initializable {
         tfprix.setText(null);
         tfid.setText(null);
         prodImage.setImage(null);
-        listCat.getSelectionModel().select(null);
+           listCat.getSelectionModel().select(null);
     }
 
     @FXML
@@ -298,7 +313,7 @@ public class AjoutProduitController implements Initializable {
             return;
 
         }
-        CategorieServices categorieServices=new CategorieServices();
+CategorieServices categorieServices=new CategorieServices();
         listCat.getSelectionModel().select(categorieServices.getById(c.getId_cat()));
         tflibelle.setText(collibelle.getCellData(index).toString());
         tfprix.setText(colprix.getCellData(index).toString());
@@ -324,8 +339,8 @@ public class AjoutProduitController implements Initializable {
             return;
         }
         //  Produits p2 = new Produits(Value5, 0, Value1, Value2, Value3, Value4);
-Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value4, cat.getNomcat());// nbadel fel id_cat nwali 
-        
+        Produits p2 = new Produits(Value5, cat.getIdcat(), nomImage, Value2, Value3, Value4, cat.getNomcat());// nbadel fel id_cat nwali 
+
         ProduitCrud pcd = new ProduitCrud();
         int x = pcd.updateProduit(p2);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -413,12 +428,11 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
     private void loadImage(ActionEvent event) {
 
         file = fileChooser.showOpenDialog(stage);//ykhalini nekhtar fichier
-        if(file!=null)
-            try {
-                prodImage.setImage(new Image(file.toURI().toURL().toExternalForm()));//path image (ligne mtaa file)
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+        try {
+            prodImage.setImage(new Image(file.toURI().toURL().toExternalForm()));//path image (ligne mtaa file)
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
@@ -429,10 +443,10 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
             Parent stat;
             stat = FXMLLoader.load(getClass().getResource("statistique.fxml"));
 
-            Scene dashboardScene = new Scene(stat,1209,600);
-            Stage stage=new Stage();
-            stage.setScene(dashboardScene);
-            stage.show();
+            Scene dashboardScene = new Scene(stat,1200,800);
+            Stage s=new Stage();
+            s.setScene(dashboardScene);
+            s.show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -456,12 +470,10 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
                 maxprice = price;
                 MaxPrix.setText(String.valueOf(maxprice));//tconverti double ->chaine
                 MinPrix.setText(String.valueOf(minprice));
-                
-            }
-                ProduitCrud crud = new ProduitCrud();
-                initTable(crud.RechercherPrix(minprice, maxprice));
 
-            
+            }
+            ProduitCrud crud = new ProduitCrud();
+            initTable(crud.RechercherPrix(minprice, maxprice));
 
         } catch (Exception ex) {
 
@@ -510,7 +522,7 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
         tvbox.setItems(listProduitIm);
     }
 
-    public void Send(String path) throws MessagingException, IOException {
+    public void Send() throws MessagingException, IOException {
         String to = "prodigiesdev@gmail.com";
         String from = "Gamingroom.prodigiesDev@gmail.com";
         String host = "smtp.gmail.com";
@@ -530,128 +542,123 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
                 return new PasswordAuthentication("Gamingroom.prodigiesDev@gmail.com", "Gamingroom2020");
             }
 
-        });try{
-        Message message = new MimeMessage(session);
-	   message.setFrom(new InternetAddress(from));
-	   message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
-	   message.setSubject("liste produits");
-	   Multipart emailContent = new MimeMultipart();
-           MimeBodyPart textBodyPart = new MimeBodyPart();
-           textBodyPart.setText("Bonjour , voila la liste des produits que vous avez ajouté!");
-           MimeBodyPart pdfAttatchement = new MimeBodyPart();
-           pdfAttatchement.attachFile(path);
-           emailContent.addBodyPart(textBodyPart);
-           emailContent.addBodyPart(pdfAttatchement);
-           message.setContent(emailContent);
-           Transport.send(message,Username,Pass);
-	  // System.out.println("Sent message successfully....");
-             JOptionPane.showMessageDialog(null, "Sent message successfully....");
-      } catch (MessagingException e) {
-         throw new RuntimeException(e);
-      }   
+        });
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject("liste produits");
+            Multipart emailContent = new MimeMultipart();
+            MimeBodyPart textBodyPart = new MimeBodyPart();
+            textBodyPart.setText("Bonjour , voila la liste des produits que vous avez ajouté!");
+            MimeBodyPart pdfAttatchement = new MimeBodyPart();
+            pdfAttatchement.attachFile("C:\\Users\\Dah\\Desktop\\ProdigiesDev\\GamingRoomDesktop\\produits.pdf");
+            emailContent.addBodyPart(textBodyPart);
+            emailContent.addBodyPart(pdfAttatchement);
+            message.setContent(emailContent);
+            Transport.send(message, Username, Pass);
+            // System.out.println("Sent message successfully....");
+               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Sent message successfully....");
+            alert.show();
+        } catch (MessagingException e) {
+            
+               Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erreur lors de l'envois du mail");
+            alert.show();
+            e.printStackTrace();
+        }
 
     }
 
-    
-    
-    public String PDF()throws FileNotFoundException,Exception{
-    File out = new File("..\\produitsPdf\\produits"+new java.util.Date().getTime()+".pdf");
+    public String PDF() throws FileNotFoundException, Exception {
+        File out = new File("produits.pdf");
         try (FileOutputStream fos = new FileOutputStream(out)) {
             PDF pdf = new PDF(fos);
             Page page = new Page(pdf, A4.PORTRAIT);
             Font f1 = new Font(pdf, CoreFont.HELVETICA_BOLD);
             Font f2 = new Font(pdf, CoreFont.HELVETICA);
-            
+
             Table table = new Table();
             List<List<Cell>> tableData = new ArrayList<>();
             List<Cell> tableRow = new ArrayList<>();
-            
-            Cell cell = new Cell(f1,colid.getText() );
+
+            Cell cell = new Cell(f1, colid.getText());
             tableRow.add(cell);
-            
+
 //            cell = new Cell(f1,colimage.getText() );
 //            tableRow.add(cell);
 //            
-            cell = new Cell(f1,collibelle.getText() );
+            cell = new Cell(f1, collibelle.getText());
             tableRow.add(cell);
-            
-            cell = new Cell(f1,colprix.getText() );
+
+            cell = new Cell(f1, colprix.getText());
             tableRow.add(cell);
-            
-            cell = new Cell(f1,coldesc.getText() );
+
+            cell = new Cell(f1, coldesc.getText());
             tableRow.add(cell);
-            
-            cell = new Cell(f1,colcat.getText() );
+
+            cell = new Cell(f1, colcat.getText());
             tableRow.add(cell);
-            
+
             tableData.add(tableRow);
-            
+
             List<ImageProduits> items = tvbox.getItems();
-            for(ImageProduits prod :items){
-                Cell IDProd = new Cell(f2,String.valueOf(prod.getIdprod()) );
-              //  Cell ImageProd = new Cell(f2, prod.getImagename());
+            for (ImageProduits prod : items) {
+                Cell IDProd = new Cell(f2, String.valueOf(prod.getIdprod()));
+                //  Cell ImageProd = new Cell(f2, prod.getImagename());
                 Cell libProd = new Cell(f2, prod.getLibelle());
-                Cell PrixProd= new Cell(f2,String.valueOf(prod.getPrix()) );
+                Cell PrixProd = new Cell(f2, String.valueOf(prod.getPrix()));
                 Cell DescProd = new Cell(f2, prod.getDescription());
                 Cell CatProd = new Cell(f2, prod.getNomCat());
-                
-                tableRow =new ArrayList<>();
+
+                tableRow = new ArrayList<>();
                 tableRow.add(IDProd);
-               // tableRow.add(ImageProd);
+                // tableRow.add(ImageProd);
                 tableRow.add(libProd);
                 tableRow.add(PrixProd);
                 tableRow.add(DescProd);
                 tableRow.add(CatProd);
-            tableData.add(tableRow);
-        }
+                tableData.add(tableRow);
+            }
             table.setData(tableData);
             table.setPosition(10f, 60f);
             table.setColumnWidth(0, 40f);
-       
+
             table.setColumnWidth(1, 150f);
             table.setColumnWidth(2, 50f);
             table.setColumnWidth(3, 250f);
             table.setColumnWidth(4, 80f);
-            while(true){
+            while (true) {
                 table.drawOn(page);
-                if(!table.hasMoreData()){
+                if (!table.hasMoreData()) {
                     table.resetRenderedPagesCount();
                     break;
-                    
+
                 }
                 page = new Page(pdf, A4.PORTRAIT);
             }
             pdf.flush();
-        JOptionPane.showMessageDialog(null, "PDF enregistré sous le path "+out.getAbsolutePath());
-        System.out.println("Saved to " +out.getAbsolutePath());
-        return out.getAbsolutePath();
+            System.out.println("Saved to " + out.getAbsolutePath());
+            return out.getAbsolutePath();
         }
     }
-    
-    
+
     @FXML
     private void enregistrerPDF(ActionEvent event) throws Exception {
-        
-        
-        String path=PDF();
-         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+        String out=PDF();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Mailing");
         alert.setHeaderText("Confirmation de mailing!");
-        alert.setContentText("Voulez-Vous Vraiment envoyer un email?");
-         Optional<ButtonType> btn = alert.showAndWait();
-         if(btn.get()==ButtonType.OK){
-         
-              Send(path);
-         
-         
-         
-         
-         }
+        alert.setContentText("PDF enregistré sous le path "+ out+ " \n Voulez-Vous Vraiment envoyer un email?");
+        Optional<ButtonType> btn = alert.showAndWait();
+        if (btn.get() == ButtonType.OK) {
 
-   
-        
-        
-         
+            Send();
+
+        }
+
     }
 
 //    @FXML
@@ -670,14 +677,4 @@ Produits p2=new Produits(Value5, cat.getIdcat(),  nomImage,Value2, Value3, Value
 //        
 //        
 //    }
-
-    
-        
-        
-        
-        
-        
-        
-        
-    
 }

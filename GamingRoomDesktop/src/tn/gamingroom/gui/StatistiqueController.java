@@ -43,6 +43,7 @@ import tn.gamingroom.services.ProduitCrud;
  *
  * @author yasmine
  */
+
 public class StatistiqueController implements Initializable {
 
     @FXML

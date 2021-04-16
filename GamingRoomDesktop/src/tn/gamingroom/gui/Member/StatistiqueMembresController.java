@@ -21,6 +21,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Membre;
 
@@ -70,7 +71,10 @@ public class StatistiqueMembresController implements Initializable {
                  }
                 chart_statistic.getData().add(series);
                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Probleme ");}
+                             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Probleme");
+            alert.show();
+                            }
         }catch(Exception e){
             e.printStackTrace();
         }

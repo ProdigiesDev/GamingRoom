@@ -136,11 +136,40 @@ public class ServiceCours implements ICours {
         }
         return CoursList;
     }
-    @Override
-    public List<Cours> displayCoursByCoach() {
+    public List<Cours> displayCours(int member_id) {
         List<Cours> CoursList = new ArrayList<>();
         try {
-            String requeteDs = "select * from cour c";
+            String requeteDs = "SELECT c.*,ca.nomcategorie from cour c , categorie ca where ca.idcat=c.categorie_id and membre_id="+member_id;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requeteDs);
+            while (rs.next()) {
+                Cours c = new Cours();
+                c.setId(rs.getInt("id"));
+                c.setNomCours(rs.getString("nomCours"));
+                c.setDescription(rs.getString("description"));
+                c.setNb_participants(rs.getInt("nb_participant"));
+               // c.setMembre_id(rs.getInt("membre_id"));
+                c.setDate_creation(rs.getDate("date_creation"));
+                c.setTags(rs.getString("tags"));
+                c.setCategorie_id(rs.getInt("categorie_id"));
+                c.setImage(rs.getString("imagecours"));
+                c.setLienYoutube(rs.getString("lienYoutube"));
+             
+                    
+                CoursList.add(c);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return CoursList;
+    }
+    @Override
+    public List<Cours> displayCoursByCoach(int membre_id) {
+        System.out.println("idM "+membre_id);
+        List<Cours> CoursList = new ArrayList<>();
+        try {
+            String requeteDs = "select * from cour  where membre_id="+membre_id;
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
             ResultSet rs = st.executeQuery(requeteDs);
@@ -163,6 +192,7 @@ public class ServiceCours implements ICours {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+         System.out.println("couList "+CoursList);
         return CoursList;
     }
 
@@ -304,6 +334,32 @@ public class ServiceCours implements ICours {
             ex.printStackTrace();
         }
         return CoursList;
+    }
+    
+    
+    @Override
+    public List<String> AutocompleteSearch() {
+        List<String> l = new ArrayList<>();
+        try {
+            String requete = "SELECT DISTINCT e.nomCours as nom from cour e where e.nomCours is not null";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                l.add(rs.getString("nom"));
+            }
+            requete = "SELECT DISTINCT e.description as description from cour e where e.description is not null ";
+            st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            rs = st.executeQuery(requete);
+            while (rs.next()) {
+                l.add(rs.getString("description"));
+            }
+           
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return l;
     }
 
 }

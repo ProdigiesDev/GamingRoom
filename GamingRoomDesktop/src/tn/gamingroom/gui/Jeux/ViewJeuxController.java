@@ -25,6 +25,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -116,15 +119,27 @@ public class ViewJeuxController implements Initializable {
         if (UserSession.getInstance() != null) {
             membre = UserSession.getInstance().getUser();
         } else {
-            int a = JOptionPane.showConfirmDialog(new JFrame(), "vous dois d'abord vous connecter ?");
-            if (a == JOptionPane.YES_OPTION) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("vous devez d'abord vous connecter ?");
+            alert.setContentText("vous devez d'abord vous connecter ?");
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+
+            if (alert.showAndWait().get() == okButton) {
                 goLogin();
                 return;
             }
             return;
         }
-            int a = JOptionPane.showConfirmDialog(new JFrame(), "Êtes-vous prêt à jouer ?");
-        if (a == JOptionPane.YES_OPTION) {
+       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Êtes-vous prêt à jouer");
+            alert.setContentText("Êtes-vous prêt à jouer");
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType cancelButton = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+
+            if (alert.showAndWait().get() == okButton) {
             switch (jeux.getId()) {
                 case GamesIds.SNAKE_ID:
                     opengame(new Snake(jeux));

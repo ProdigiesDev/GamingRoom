@@ -116,8 +116,15 @@ public class PanierService implements IPanier {
             Statement statement= cnx.createStatement();
             ResultSet rs= statement.executeQuery(reqLister);
             if (rs.next()){
-               s =  new Produits(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5));
-            }
+               s =  new Produits();
+               s.setDescription(rs.getString(6));
+               s.setId_cat(rs.getInt(2));
+               s.setIdprod(rs.getInt(1));
+               s.setImage(rs.getString(3));
+               s.setLibelle(rs.getString(4));
+               s.setPrix(rs.getDouble(5));
+               return s;
+           }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } 

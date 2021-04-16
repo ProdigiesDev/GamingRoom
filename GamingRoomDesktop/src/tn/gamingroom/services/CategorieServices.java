@@ -25,13 +25,13 @@ public class CategorieServices implements ICategorie<Categorie> {
 
     @Override
     public int ajouterCategorie(Categorie c) {
-        int nbAjoutCat=0;
+        int nbAjoutCat = 0;
         try {
-            String requete= "INSERT INTO categorie(nomcategorie) VALUES (?)";
+            String requete = "INSERT INTO categorie(nomcategorie) VALUES (?)";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setString(1, c.getNomcat());
-            
-            nbAjoutCat=ps.executeUpdate();
+
+            nbAjoutCat = ps.executeUpdate();
             System.out.println("Categorie ajoutée");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
@@ -41,12 +41,12 @@ public class CategorieServices implements ICategorie<Categorie> {
 
     @Override
     public int supprimerCategorie(Categorie c) {
-        int nbSuppCat=0;
+        int nbSuppCat = 0;
         try {
-            String requete ="DELETE FROM categorie WHERE idcat=?";
+            String requete = "DELETE FROM categorie WHERE idcat=?";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setInt(1, c.getIdcat());
-            nbSuppCat=ps.executeUpdate();
+            nbSuppCat = ps.executeUpdate();
             System.out.println("Catégorie supprimée avec succés");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
@@ -56,14 +56,14 @@ public class CategorieServices implements ICategorie<Categorie> {
 
     @Override
     public int modifierCategorie(Categorie c) {
-        int nbModifCat=0;
+        int nbModifCat = 0;
         try {
-            String requete ="UPDATE categorie SET nomcategorie=? where idcat=?";
+            String requete = "UPDATE categorie SET nomcategorie=? where idcat=?";
             PreparedStatement ps = new MyConnection().getCnx().prepareStatement(requete);
             ps.setString(1, c.getNomcat());
             ps.setInt(2, c.getIdcat());
-            
-            nbModifCat=ps.executeUpdate();
+
+            nbModifCat = ps.executeUpdate();
             System.out.println("Catégorie modifiée avec succés");
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
@@ -73,17 +73,17 @@ public class CategorieServices implements ICategorie<Categorie> {
 
     @Override
     public List<Categorie> DisplayCategorie() {
-        List <Categorie> CatList = new ArrayList<>();
+        List<Categorie> CatList = new ArrayList<>();
         try {
             String requete = "SELECT * FROM categorie";
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
-            ResultSet rs =  st.executeQuery(requete);
-            while(rs.next()){
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
                 Categorie c = new Categorie();
                 c.setIdcat(rs.getInt("idcat"));
                 c.setNomcat(rs.getString("nomcategorie"));
-               
+
                 CatList.add(c);
             }
         } catch (SQLException ex) {
@@ -115,24 +115,24 @@ public class CategorieServices implements ICategorie<Categorie> {
     
     @Override
     public List<Categorie> RechercherCategorie(String x) {
-         ArrayList<Categorie> ListCategorie = new ArrayList<>();
+        ArrayList<Categorie> ListCategorie = new ArrayList<>();
         try {
-          String requete = "Select * from categorie where nomcategorie like '%"+x+"%'";
+            String requete = "Select * from categorie where nomcategorie like '%" + x + "%'";
             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requete);
             ResultSet rs = st.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Categorie c = new Categorie();
-                
+
                 c.setIdcat(rs.getInt("idcat"));
                 c.setNomcat(rs.getString("nomcategorie"));
-                
+
                 ListCategorie.add(c);
             }
-            
+
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-        if  (ListCategorie.isEmpty()) {
+        if (ListCategorie.isEmpty()) {
             System.out.println("NOT FOUND");
         }
         return ListCategorie;
@@ -140,61 +140,52 @@ public class CategorieServices implements ICategorie<Categorie> {
 
     @Override
     public ArrayList<Categorie> TrierParIdCat() {
-        
+
         ArrayList<Categorie> ListCategorie = new ArrayList<>();
-       try {
-        
-           String requete= "select * from categorie ORDER BY idcat DESC "; 
-           PreparedStatement pst =  MyConnection.getInstance().getCnx().prepareStatement(requete);
-           
-           
-           ResultSet rs = pst.executeQuery(requete);
- 
-        while (rs.next()) {
-          Categorie c = new Categorie();
-                
+        try {
+
+            String requete = "select * from categorie ORDER BY idcat DESC ";
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
+
+            ResultSet rs = pst.executeQuery(requete);
+
+            while (rs.next()) {
+                Categorie c = new Categorie();
+
                 c.setIdcat(rs.getInt("idcat"));
                 c.setNomcat(rs.getString("nomcategorie"));
-               
-                
-                
+
                 ListCategorie.add(c);
-        } 
-         } catch (SQLException ex) {
+            }
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-                 return ListCategorie ;
+        return ListCategorie;
     }
 
     @Override
     public ArrayList<Categorie> TrierParNomCat() {
         ArrayList<Categorie> ListCategorie = new ArrayList<>();
-       try {
-        
-           String requete= "select * from categorie ORDER BY nomcategorie "; 
-           PreparedStatement pst =  MyConnection.getInstance().getCnx().prepareStatement(requete);
-           
-           
-           ResultSet rs = pst.executeQuery(requete);
- 
-        while (rs.next()) {
-          Categorie c = new Categorie();
-                
+        try {
+
+            String requete = "select * from categorie ORDER BY nomcategorie ";
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
+
+            ResultSet rs = pst.executeQuery(requete);
+
+            while (rs.next()) {
+                Categorie c = new Categorie();
+
                 c.setIdcat(rs.getInt("idcat"));
                 c.setNomcat(rs.getString("nomcategorie"));
-               
-                
-                
+
                 ListCategorie.add(c);
-        } 
-         } catch (SQLException ex) {
+            }
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-                 return ListCategorie ;
+        return ListCategorie;
     }
-
-    
-    
 
     public Categorie getById(int x) {
         try {
@@ -214,5 +205,20 @@ public class CategorieServices implements ICategorie<Categorie> {
         }
         return null;
     }
-    
+    public boolean CategorieExiste(String cat) {
+        try {
+            String requete = "select count(nomcategorie) as em from  categorie where  nomcategorie='" + cat + "'";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                return rs.getInt("em") > 0;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MembreServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
 }

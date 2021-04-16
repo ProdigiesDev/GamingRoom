@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -41,13 +42,20 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Cles;
+import tn.gamingroom.entities.Membre;
 
 import tn.gamingroom.entities.PanierProduit;
 import tn.gamingroom.entities.Panier;
 import tn.gamingroom.entities.Produits;
+import tn.gamingroom.entities.UserSession;
+import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CleService;
 import tn.gamingroom.services.CommandService;
 import tn.gamingroom.services.PanierService;
@@ -73,15 +81,20 @@ public class PanierController implements Initializable {
     private TableView<PanierProduit> listTable;
     @FXML
     private Button btCom;
-    private PanierService panierServie=new PanierService();
+    private PanierService panierServie = new PanierService();
+    private Membre membre;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser();
+
+        }
         PanierService panierService = new PanierService();
-           colImage.setCellValueFactory(new PropertyValueFactory<PanierProduit, ImageView>("image"));
+        colImage.setCellValueFactory(new PropertyValueFactory<PanierProduit, ImageView>("image"));
         colNom.setCellValueFactory(new PropertyValueFactory<PanierProduit, String>("nom"));
         colPrixU.setCellValueFactory(new PropertyValueFactory<PanierProduit, Double>("PrixUnitaire"));
         colQuantite.setCellValueFactory(new PropertyValueFactory<PanierProduit, Integer>("quantite"));
@@ -119,7 +132,7 @@ public class PanierController implements Initializable {
                             panier.setId(data.getIdpanier());
                             panier.setQuantityDemande(qt);
                             panierServie.modifierQuantity(panier);
-                                initTable();
+                            initTable();
                         });
                     }
 
@@ -156,22 +169,17 @@ public class PanierController implements Initializable {
                             CleService cleService = new CleService();
                             List<Cles> cleses = cleService.Rechercher_Produit_ID(data.getId());
 
-                            if (qt <0 &&  cleses.size()>0) {
+                            if (qt <= 0 && cleses.size() > 0) {
 
                                 data.setQuantite(1);
                                 initTable();
                                 return;
                             }
-                                else if(qt <0 && cleses.size()==0){
-                                 panierServie.supprimerProd(data.getId());
-                                initTable();
-                                 return;
-                            }
                             Panier panier = new Panier();
                             panier.setId(data.getIdpanier());
                             panier.setQuantityDemande(qt);
                             panierServie.modifierQuantity(panier);
-                                initTable();
+                            initTable();
                         });
                     }
 
@@ -190,8 +198,7 @@ public class PanierController implements Initializable {
         };
 
         colBtnM.setCellFactory(cellFactory3);
-        
-        
+
 //        -------------------------------------------------------
         TableColumn<PanierProduit, Void> colBtn = new TableColumn("");
         Callback<TableColumn<PanierProduit, Void>, TableCell<PanierProduit, Void>> cellFactory = new Callback<TableColumn<PanierProduit, Void>, TableCell<PanierProduit, Void>>() {
@@ -228,7 +235,7 @@ public class PanierController implements Initializable {
 
         colBtn.setCellFactory(cellFactory);
 
-        listTable.getColumns().addAll(colBtnPlus,colBtnM, colBtn);
+        listTable.getColumns().addAll(colBtnPlus, colBtnM, colBtn);
 
     }
 
@@ -238,58 +245,50 @@ public class PanierController implements Initializable {
         int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
         if (a == JOptionPane.YES_OPTION) {
             CommandService commandService = new CommandService();
+<<<<<<< HEAD
             int memberId = 3;
             double totale=0; 
+=======
+            int memberId = membre.getId();
+            double totale = 0;
+>>>>>>> 1afa99f867d5375ff9eb0198d446b37f994dbf67
             for (int i = 0; i < listTable.getItems().size(); i++) {
-                
-                totale+=listTable.getItems().get(i).getPrix();
+
+                totale += listTable.getItems().get(i).getPrix();
             }
-            int nb = commandService.confirmerCommande(memberId,totale);
+            int nb = commandService.confirmerCommande(memberId, totale);
             if (nb == 0) {
                 JOptionPane.showMessageDialog(null, "Erreur lors de la confirmation de votre commande");
             } else {
-                
-                Send("alaa.smeti@esprit.tn");
+
+                Send(membre.getEmail());
                 JOptionPane.showMessageDialog(null, "Votre commande est en cours de traitement");
                 listTable.getItems().clear();
             }
         }
     }
 
-    private void ajouterProduit(ActionEvent event) throws MessagingException, IOException {
-        JFrame f = new JFrame();
-        PanierService panierService = new PanierService();
-        int memberId = 3;
-//         int nb=panierService.ajouterProd(idpanier);
-//          if(nb==0)
-//          {
-//            JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout du produit au panier!");
-//          }
-//          else{
-//              
-//            JOptionPane.showMessageDialog(null, "Votre produit est ajouté");
-//            listTable.getItems().clear();
-//          }
-//        
-//         Send();
-    }
-
     void initTable() {
         PanierService ps = new PanierService();
-        List<Panier> paniers = ps.consulterPanier(3);
+        List<Panier> paniers = ps.consulterPanier(membre.getId());
         List<PanierProduit> panierProduits = new ArrayList<>();
         paniers.forEach(p -> {
-            Produits p1 = ps.getProductById(p.getProduit_id());
-            ImageView imageView = new ImageView(new Image(p1.getImage()));
-            imageView.setFitHeight(200);
-            imageView.setFitWidth(250);
-            panierProduits.add(new PanierProduit(p1.getIdprod(), p.getId(), p1.getLibelle(), p.getQuantityDemande(), imageView, (double) (p1.getPrix() * p.getQuantityDemande()), (double) p1.getPrix()));
+            try {
+                Produits p1 = ps.getProductById(p.getProduit_id());
+                ImageView imageView = new ImageView(new Image(new File(Env.getImagePath()+"\\produits\\"+p1.getImage()).toURI().toURL().toExternalForm()));
+                imageView.setFitHeight(200);
+                imageView.setFitWidth(250);
+                panierProduits.add(new PanierProduit(p1.getIdprod(), p.getId(), p1.getLibelle(), p.getQuantityDemande(), imageView, (double) (p1.getPrix() * p.getQuantityDemande()), (double) p1.getPrix()));
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(PanierController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         });
         ObservableList<PanierProduit> list = FXCollections.observableArrayList(panierProduits);
-     
+
         btCom.setVisible(!panierProduits.isEmpty());
         listTable.setItems(list);
+        
     }
 
     public void Send(String to) throws MessagingException, IOException, AddressException {
@@ -334,6 +333,5 @@ public class PanierController implements Initializable {
         }
 
     }
-
 
 }

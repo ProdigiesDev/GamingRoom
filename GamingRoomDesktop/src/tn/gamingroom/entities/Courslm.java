@@ -26,8 +26,23 @@ public class Courslm {
     private String categorieNom;
     private String imagename;
     private String lienYoutube;
+
     public Courslm() {
     }
+
+    public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView image, int categorie_id, String categorieNom) {
+        this.id = id;
+        this.nomCours = nomCours;
+        this.description = description;
+        this.nb_participants = nb_participants;
+        this.membre_id = membre_id;
+        this.date_creation = date_creation;
+        this.tags = tags;
+        this.image = image;
+        this.categorie_id = categorie_id;
+        this.categorieNom = categorieNom;
+    }
+
     public Courslm(int id, String nomCours, String description, int nb_participants, Date date_creation, String tags, int categorie_id) {
         this.id = id;
         this.nomCours = nomCours;
@@ -37,6 +52,7 @@ public class Courslm {
         this.tags = tags;
         this.categorie_id = categorie_id;
     }
+
     public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView image, int categorie_id, String categorieNom, String imagename, String lienYoutube) {
         this.id = id;
         this.nomCours = nomCours;
@@ -51,21 +67,19 @@ public class Courslm {
         this.imagename = imagename;
         this.lienYoutube = lienYoutube;
     }
-    
-    
 
-    public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView image, int categorie_id, String categorieNom) {
-        this.id = id;
-        this.nomCours = nomCours;
-        this.description = description;
-        this.nb_participants = nb_participants;
-        this.membre_id = membre_id;
-        this.date_creation = date_creation;
-        this.tags = tags;
-        this.image = image;
-        this.categorie_id = categorie_id;
-        this.categorieNom = categorieNom;
-    }
+//    public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView image, int categorie_id, String categorieNom) {
+//        this.id = id;
+//        this.nomCours = nomCours;
+//        this.description = description;
+//        this.nb_participants = nb_participants;
+//        this.membre_id = membre_id;
+//        this.date_creation = date_creation;
+//        this.tags = tags;
+//        this.image = image;
+//        this.categorie_id = categorie_id;
+//        this.categorieNom = categorieNom;
+//    }
 
     public Courslm(int id, String nomCours, String description, int nb_participants, int membre_id, Date date_creation, String tags, ImageView image, int categorie_id) {
         this.id = id;
@@ -102,23 +116,21 @@ public class Courslm {
         this.tags = tags;
         this.lienYoutube = lienYoutube;
         this.image = i;
-        
+
         this.categorie_id = categorie_id;
     }
-    public Courslm(int id, String nomCours, String description, int nb_participants,  Date date_creation, String tags, ImageView i,   int categorie_id) {
+
+    public Courslm(int id, String nomCours, String description, int nb_participants, Date date_creation, String tags, ImageView i, int categorie_id) {
         this.id = id;
         this.nomCours = nomCours;
         this.description = description;
         this.nb_participants = nb_participants;
-        
+
         this.date_creation = date_creation;
         this.tags = tags;
         this.image = i;
         this.categorie_id = categorie_id;
-        
-        
-        
-        
+
     }
 
     public String getImagename() {
@@ -132,8 +144,6 @@ public class Courslm {
     public int getId() {
         return id;
     }
-    
-    
 
     public void setId(int id) {
         this.id = id;
@@ -218,14 +228,10 @@ public class Courslm {
     public void setLienYoutube(String lienYoutube) {
         this.lienYoutube = lienYoutube;
     }
-    
-    
 
     @Override
     public String toString() {
         return "Courslm{" + "id=" + id + ", nomCours=" + nomCours + ", description=" + description + ", nb_participants=" + nb_participants + ", membre_id=" + membre_id + ", date_creation=" + date_creation + ", tags=" + tags + ", image=" + image + ", categorie_id=" + categorie_id + ", categorieNom=" + categorieNom + ", imagename=" + imagename + ", lienYoutube=" + lienYoutube + '}';
     }
-    
-    
 
 }

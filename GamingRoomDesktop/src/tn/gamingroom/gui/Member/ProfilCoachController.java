@@ -29,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.UserSession;
@@ -61,6 +62,16 @@ public class ProfilCoachController implements Initializable {
     
     @FXML
     private FontAwesomeIcon btn_reload;
+    @FXML
+    private Pane paneDetails;
+    @FXML
+    private Button btn_home;
+    @FXML
+    private Button btn_mesCom;
+    @FXML
+    private Button btn_mesCom1;
+    @FXML
+    private Pane paneCom;
     /**
      * Initializes the controller class.
      */
@@ -192,5 +203,17 @@ public class ProfilCoachController implements Initializable {
             Logger.getLogger(ProfilMemberController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    @FXML
+    private void afficherMesCommande(ActionEvent event) {
+        paneCom.setVisible(true);
+        paneDetails.setVisible(false);
+    }
+
+    @FXML
+    private void afficherMesCours(ActionEvent event) {
+        paneCom.setVisible(false);
+        paneDetails.setVisible(true);
     }
 }

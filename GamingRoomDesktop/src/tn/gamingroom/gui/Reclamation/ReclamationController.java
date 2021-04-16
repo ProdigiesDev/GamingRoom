@@ -98,7 +98,7 @@ public class ReclamationController implements Initializable {
         reclamation.setContenue(txtBody.getText());
         reclamation.setSujet(txtSujet.getText());
         //TODO change this
-        reclamation.setMembre_id(2);
+        reclamation.setMembre_id(membre.getId());
 
         ReclamationService reclamationService = new ReclamationService();
         int nb = reclamationService.ajouterReclamation(reclamation);

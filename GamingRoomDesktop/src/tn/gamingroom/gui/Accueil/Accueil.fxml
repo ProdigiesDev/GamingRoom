@@ -13,16 +13,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
+<?import javafx.scene.control.ScrollPane?>
 <ScrollPane prefHeight="2000.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Accueil.AccueilController">
 <content>
 <AnchorPane id="AnchorPane" fx:id="parentControl" prefHeight="2000.0" prefWidth="1350.0" styleClass="body" stylesheets="@accueil.css">
    <children>
       <ImageView fitHeight="308.0" fitWidth="1350.0" pickOnBounds="true">
-         <image>
-            <Image url="file:/C:/Users/Dah/Desktop/demo/images/banner-bg.jpg" />
-         </image>
+               <image>
+                  <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/images/banner-bg.jpg" />
+               </image>
       </ImageView>
-      <Pane opacity="0.4" prefHeight="308.0" prefWidth="1350.0" style="-fx-background-color: rgb(22, 9, 98);" />
           <fx:include fx:id="header" source="../Shared/Header.fxml" />
       <Label layoutX="120.0" layoutY="150.0" prefHeight="52.0" prefWidth="254.0" text="Bienvenue" textFill="WHITE">
          <font>

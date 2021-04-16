@@ -18,6 +18,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.gamingroom.entities.Evenement;
+import tn.gamingroom.entities.Membre;
 import tn.gamingroom.entities.Notification;
 import tn.gamingroom.entities.ReactionEv;
 import tn.gamingroom.interfaces.IEvenement;
@@ -31,7 +32,7 @@ public class EvenementService implements IEvenement {
 
     @Override
     public int ajoutEvenement(Evenement t) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
             String requete = "INSERT INTO evenement(nomevent,datedeb,datefin,image,categorie_id,nbremax_participant,description,lieu,lienyoutube)"
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
@@ -46,7 +47,7 @@ public class EvenementService implements IEvenement {
             pst.setString(7, t.getDescription());
             pst.setString(8, t.getLieu());
             pst.setString(9, t.getLienYoutube());
-            nbModif=pst.executeUpdate();
+            nbModif = pst.executeUpdate();
             System.out.println("Evenement inserée");
 
         } catch (SQLException ex) {
@@ -57,7 +58,7 @@ public class EvenementService implements IEvenement {
 
     @Override
     public int modifierEvenement(Evenement t) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
             String requete = "UPDATE evenement SET nomevent=? , datedeb=? , datefin=? , image=? , categorie_id=? , nbremax_participant=? , description=? , lieu=? , lienyoutube=? WHERE idevent=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
@@ -72,7 +73,7 @@ public class EvenementService implements IEvenement {
             pst.setString(8, t.getLieu());
             pst.setString(9, t.getLienYoutube());
             pst.setInt(10, t.getIdevent());
-            nbModif=pst.executeUpdate();
+            nbModif = pst.executeUpdate();
             System.out.println("Evenement modifiée");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -81,13 +82,13 @@ public class EvenementService implements IEvenement {
     }
 
     @Override
-    public int suppressionEvenement(Evenement t) {
-        int nbModif=0;
+    public int suppressionEvenement(int t) {
+        int nbModif = 0;
         try {
             String requete = "DELETE FROM evenement where idevent=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
-            pst.setInt(1, t.getIdevent());
+            pst.setInt(1, t);
             nbModif = pst.executeUpdate();
             if (nbModif <= 0) {
                 System.out.println("Verifiez vos données");
@@ -158,7 +159,7 @@ public Evenement closestEvenement() {
     }
     @Override
     public int reagirEvenement(ReactionEv rE) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
             String requette = "INSERT INTO reactionev(interaction,commentaire,evenement_id,membre_id)"
                     + "VALUES (?,?,?,?)";
@@ -169,7 +170,7 @@ public Evenement closestEvenement() {
             pst.setInt(3, rE.getEvenement_id());
             pst.setInt(4, rE.getMembre_id());
 
-            nbModif=pst.executeUpdate();
+            nbModif = pst.executeUpdate();
             System.out.println("Réaction ajouté");
 
         } catch (SQLException ex) {
@@ -177,8 +178,8 @@ public Evenement closestEvenement() {
         }
         return nbModif;
     }
-    
-     @Override
+
+    @Override
     public List<ReactionEv> listerReaction() {
         List<ReactionEv> reactionList = new ArrayList<>();
         try {
@@ -203,12 +204,13 @@ public Evenement closestEvenement() {
 
     @Override
     public int supprimerReacC(ReactionEv rE) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
-            String requette = "DELETE FROM reactionev where id=?";
+            String requette = "DELETE FROM reactionev where evenement_id=? AND membre_id=?";
             PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requette);
-            pst.setInt(1, rE.getId());
+            pst.setInt(1, rE.getEvenement_id());
+            pst.setInt(2, rE.getMembre_id());
             nbModif = pst.executeUpdate();
             if (nbModif <= 0) {
                 System.out.println("Verifiez vos données");
@@ -282,7 +284,7 @@ public Evenement closestEvenement() {
 
     @Override
     public int sinscrirEvenement(int idE, int idM) {
-        int nbModif=0;
+        int nbModif = 0;
         try {
             String requete = "SELECT COUNT(p.evenement_id) as nbE, e.nbremax_participant as nbMaxE FROM participant p, evenement e where p.evenement_id=" + idE + " and e.idevent= " + idE;
             Statement st = MyConnection.getInstance().getCnx()
@@ -290,31 +292,50 @@ public Evenement closestEvenement() {
             ResultSet rs = st.executeQuery(requete);
             if (rs.next()) {
 
-                if (rs.getInt("nbE") < rs.getInt("nbMaxE")) {
-                    System.out.println("if2");
-                    requete = "INSERT INTO participant(evenement_id,member_id,round) VALUES (?,?,?)";
-                    PreparedStatement pst = MyConnection.getInstance().getCnx()
-                            .prepareStatement(requete);
-                    pst.setInt(1, idE);
-                    pst.setInt(2, idM);
-                    pst.setInt(3, 1);
-                    nbModif=pst.executeUpdate();
-                    System.out.println("inscription effectuée");
-                } else {
-                    if (!this.repartitionDual(idE)) {
-                        nbModif=1;
-                        System.out.println("Evenement saturé");
+                int nbP = isParticipant(idE, idM);
+                if (nbP == 0) {
+                    System.out.println("innnnnnnnnnn");
+                    if (rs.getInt("nbE") < rs.getInt("nbMaxE")) {
+                        System.out.println("if2");
+                        requete = "INSERT INTO participant(evenement_id,member_id,round) VALUES (?,?,?)";
+                        PreparedStatement pst = MyConnection.getInstance().getCnx()
+                                .prepareStatement(requete);
+                        pst.setInt(1, idE);
+                        pst.setInt(2, idM);
+                        pst.setInt(3, 1);
+                        nbModif = pst.executeUpdate();
+                        System.out.println("inscription effectuée");
+                    } else {
+                        if (!this.repartitionDual(idE)) {
+                            nbModif = 1;
+                            System.out.println("Evenement saturé");
+                        }
                     }
-
                 }
             } else {
-                System.out.println("zzzzzzz");
+                System.out.println("non");
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return nbModif;
+    }
+
+    public int isParticipant(int idE, int idM) {
+        int nbP = 0;
+        try {
+            String requete3 = "SELECT count(member_id) as nbM FROM participant where evenement_id=" + idE + " AND member_id=" + idM;
+            Statement st3 = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs3 = st3.executeQuery(requete3);
+            if (rs3.next()) {
+                nbP = rs3.getInt("nbM");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nbP;
     }
 
     private boolean repartitionDual(int idE) {
@@ -333,7 +354,6 @@ public Evenement closestEvenement() {
             char dual = 'A';
             int i = 1;
             while (!randomMember.isEmpty()) {
-                //randomElement = randomMember.get(rand.nextInt(randomMember.size()-1));
                 int randomnumber = rand.nextInt(randomMember.size());
                 randomElement = randomMember.get(randomnumber);
 
@@ -421,8 +441,8 @@ public Evenement closestEvenement() {
     public List<Evenement> upComingEvents() {
         ArrayList<Evenement> evenementList = new ArrayList<>();
         try {
-
-            String requete = "select * from evenement where datedeb >"+java.time.LocalDate.now();
+            //String requete = "select * from evenement where datedeb >"+java.time.LocalDate.now();
+            String requete = "select * from evenement where DATEDIFF(datedeb,'" + java.time.LocalDate.now() + "') >=0";
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
 
             ResultSet rs = pst.executeQuery(requete);
@@ -444,6 +464,262 @@ public Evenement closestEvenement() {
             System.out.println(ex.getMessage());
         }
         return evenementList;
+    }
+
+    @Override
+    public boolean eventSature(int idE) {
+        int i = 0;
+        try {
+            String requete = "select member_id from participant where duel is not null and evenement_id=" + idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                i++;
+            }
+            requete = "select nbremax_participant from evenement where idevent=" + idE;
+            st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            rs = st.executeQuery(requete);
+            if (rs.next()) {
+                if (i >= rs.getInt("nbremax_participant")) {
+                    return true;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean eventExpire(int idE) {
+        try {
+            String requete = "select * from evenement where DATEDIFF(datedeb,'" + java.time.LocalDate.now() + "') >=0 AND idevent=" + idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canReact(int idE, int idM) {
+        try {
+            String requete = "select * from reactionev where evenement_id=" + idE + " AND membre_id =" + idM;
+            System.out.println("res " + requete);
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+    }
+
+    @Override
+    public int getReact(int idE, int idM) {
+        try {
+            String requete = "select interaction from reactionev where evenement_id=" + idE + " AND membre_id=" + idM;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                return rs.getInt("interaction");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    @Override
+    public int updateReact(ReactionEv rE) {
+        int nbModif = 0;
+        try {
+            String requete = "UPDATE reactionev SET interaction	=? WHERE evenement_id=? AND membre_id=?";
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requete);
+            pst.setInt(1, rE.getInteraction());
+            pst.setInt(2, rE.getEvenement_id());
+            pst.setInt(3, rE.getMembre_id());
+            nbModif = pst.executeUpdate();
+            System.out.println("ReactionEv modifiée");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return nbModif;
+    }
+
+    @Override
+    public List<ReactionEv> listeCommentaires(int id) {
+        List<ReactionEv> reactionList = new ArrayList<>();
+        try {
+            String requete = "SELECT * FROM reactionev where commentaire is not null AND evenement_id=" + id;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                ReactionEv e = new ReactionEv();
+                e.setInteraction(rs.getInt("interaction"));
+                e.setCommentaire(rs.getString("commentaire"));
+                e.setEvenement_id(rs.getInt("evenement_id"));
+                e.setMembre_id(rs.getInt("membre_id"));
+                reactionList.add(e);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return reactionList;
+    }
+
+    @Override
+    public int getLikes(int idE) {
+        int likes = 0;
+        try {
+            String requete = "SELECT count(interaction) as likes FROM reactionev where interaction>0 AND evenement_id=" + idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                likes = rs.getInt("likes");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return likes;
+    }
+
+    @Override
+    public int getDisikes(int idE) {
+        int dislikes = 0;
+        try {
+            String requete = "SELECT count(interaction) as dislikes FROM reactionev where interaction<0 AND evenement_id=" + idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            if (rs.next()) {
+                dislikes = rs.getInt("dislikes");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return dislikes;
+    }
+
+    @Override
+    public List<Membre> listerEvenement(int idE) {
+        List<Membre> membreList = new ArrayList<>();
+        try {
+            String requete = "SELECT * FROM membre m, participant p where p.member_id=m.id AND p.evenement_id=" + idE;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                Membre m = new Membre();
+                m.setId(rs.getInt("id"));
+                m.setNom(rs.getString("nom"));
+                m.setPrenom(rs.getString("prenom"));
+                m.setDate_naissance(rs.getDate("date_naissance"));
+                m.setGenre(Membre.Genre.valueOf(rs.getString("genre")));
+                m.setTel(rs.getString("numero_tel"));
+                m.setEmail(rs.getString("email"));
+                m.setPassword(rs.getString("password"));
+                m.setImage(rs.getString("image"));
+                m.setRole(Membre.Role.valueOf(rs.getString("role")));
+                m.setBan_duration(rs.getInt("ban_duration"));
+                m.setLast_timeban(rs.getTimestamp("last_timeban"));
+                membreList.add(m);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return membreList;
+    }
+
+    @Override
+    public List<String> getListeAutoEvent() {
+        List<String> l = new ArrayList<>();
+        try {
+            String requete = "SELECT DISTINCT e.nomevent as nom from evenement e where e.nomevent is not null";
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                l.add(rs.getString("nom"));
+            }
+            requete = "SELECT DISTINCT e.lieu as lieu from evenement e where e.lieu is not null ";
+            st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            rs = st.executeQuery(requete);
+            while (rs.next()) {
+                l.add(rs.getString("lieu"));
+            }
+            requete = "SELECT DISTINCT c.nomcategorie as cat from categorie c where c.nomcategorie is not null";
+            st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            rs = st.executeQuery(requete);
+            while (rs.next()) {
+                l.add(rs.getString("cat"));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return l;
+    }
+
+    @Override
+    public int annulerInscription(int idE, int idM) {
+        int nbModif = 0;
+        try {
+            String requete = "Delete from participant WHERE evenement_id=? AND member_id=?";
+            PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(requete);
+            pst.setInt(1, idE);
+            pst.setInt(2, idM);
+            nbModif = pst.executeUpdate();
+            System.out.println("Inscription annulée");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return nbModif;
+    }
+
+    @Override
+    public List<Evenement> getUserEvents(int idM) {
+        List<Evenement> listEvents = new ArrayList<>();
+        try {
+            String requete = "SELECT e.* FROM evenement e, participant p where e.idevent=p.evenement_id AND p.member_id="+idM;
+            Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                 Evenement e = new Evenement();
+                e.setIdevent(rs.getInt("idevent"));
+                e.setNomEvent(rs.getString("nomevent"));
+                e.setDateDeb(rs.getDate("datedeb"));
+                e.setDateFin(rs.getDate("datefin"));
+                e.setImage(rs.getString("image"));
+                e.setCategorie_id(rs.getInt("categorie_id"));
+                e.setNbreMax_participant(rs.getInt("nbremax_participant"));
+                e.setDescription(rs.getString("description"));
+                e.setLieu(rs.getString("lieu"));
+                e.setLienYoutube(rs.getString("lienyoutube"));
+                listEvents.add(e);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return listEvents;
     }
 
 }

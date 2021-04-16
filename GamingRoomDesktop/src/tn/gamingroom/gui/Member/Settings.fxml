@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="455.0" style="-fx-background-color: #581789;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.SettingsController">
+<AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="455.0" style="-fx-background-color: #554167;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.SettingsController">
    <children>
       <Label layoutX="150.0" layoutY="14.0" text="Settings" textFill="#d004eb">
          <font>
@@ -70,7 +70,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </JFXButton>
-      <TextField fx:id="tf_id" layoutX="346.0" layoutY="67.0" prefHeight="25.0" prefWidth="30.0" />
+      <TextField fx:id="tf_id" editable="false" layoutX="346.0" layoutY="67.0" prefHeight="25.0" prefWidth="30.0" />
       <JFXButton fx:id="btn_browse" layoutX="309.0" layoutY="232.0" onAction="#selectImage" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #d004eb;" text="Browse" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -84,5 +84,10 @@
          </font>
       </Label>
       <TextField fx:id="tf_nv_tel" layoutX="142.0" layoutY="301.0" prefHeight="25.0" prefWidth="190.0" />
+      <Label fx:id="supprimerCompte" layoutX="33.0" layoutY="572.0" prefHeight="17.0" prefWidth="115.0" text="Supprimer Compte" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

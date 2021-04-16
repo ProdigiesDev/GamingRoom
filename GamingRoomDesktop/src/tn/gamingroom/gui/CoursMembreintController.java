@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,9 +31,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import tn.gamingroom.entities.Cours;
 import tn.gamingroom.entities.Courslm;
+import tn.gamingroom.entities.UserSession;
 import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.CategorieServices;
 import tn.gamingroom.services.ServiceCours;
@@ -55,19 +58,22 @@ public class CoursMembreintController implements Initializable {
     @FXML
     private TableView<Courslm> tbCours;
     @FXML
-    private TextField prefer;
-    @FXML
     private Label titre;
     @FXML
     private TableColumn<Courslm, String> lienYoutube;
-
+int membre=0;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ServiceCours s = new ServiceCours();
-
+   System.out.println(UserSession.getInstance()+" k,kj");
+        if (UserSession.getInstance() != null) {
+            membre = UserSession.getInstance().getUser().getId();
+            
+       
+        }
         //ObservableList<Cours> listCours = FXCollections.observableArrayList(s.displayCours());
         cimg.setCellValueFactory(new PropertyValueFactory<Courslm, ImageView>("image"));
         cnom.setCellValueFactory(new PropertyValueFactory<Courslm, String>("nomCours"));
@@ -76,12 +82,11 @@ public class CoursMembreintController implements Initializable {
         cdes.setCellValueFactory(new PropertyValueFactory<Courslm, String>("description"));
         lienYoutube.setCellValueFactory(new PropertyValueFactory<Courslm, String>("lienYoutube"));
 
-        this.initTable(null);
+        this.preferCours();
 
     }
 
-    @FXML
-    private void preferCours(KeyEvent event) {
+    private void preferCours() {
         ServiceCours s = new ServiceCours();
         //ObservableList<Cours> list = FXCollections.observableArrayList(s.displayprefcours(Integer.parseInt(prefer.getText())));
         cimg.setCellValueFactory(new PropertyValueFactory<Courslm, ImageView>("image"));
@@ -91,7 +96,7 @@ public class CoursMembreintController implements Initializable {
         lienYoutube.setCellValueFactory(new PropertyValueFactory<Courslm, String>("lienYoutube"));
         ccat.setCellValueFactory(new PropertyValueFactory<Courslm, Integer>("categorie_id"));
         //System.out.println("iddperc "+prefer.getText());
-        initTable(s.displayprefcours(Integer.parseInt(prefer.getText())));
+      initTable(s.displayprefcours(membre));
     }
 
     @FXML
@@ -100,7 +105,7 @@ public class CoursMembreintController implements Initializable {
             Parent root = null;
             int index = tbCours.getSelectionModel().getSelectedIndex();
             Courslm c = tbCours.getItems().get(index);
-            System.out.println("c "+c);
+            System.out.println("c " + c);
             if (index <= -1) {
                 return;
             }
@@ -114,10 +119,12 @@ public class CoursMembreintController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("infoCours.fxml"));
             root = loader.load();
             InfoCoursController pct = loader.getController();
-            System.out.println("c "+c);
+            System.out.println("c " + c);
             pct.setCours(c);
-            System.out.println("c1 "+c.getLienYoutube());
-            titre.getScene().setRoot(root);
+            System.out.println("c1 " + c.getLienYoutube());
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException ex) {
             Logger.getLogger(CoursMembreintController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -133,13 +140,13 @@ public class CoursMembreintController implements Initializable {
         listcours.forEach(e -> {
 
             try {
-                File f = new File(Env.getImagePath() + "cours\\" + e.getImage());
+                File f = new File(Env.getImagePath() + "\\cours\\" + e.getImage());
                 Image img = new Image(f.toURI().toURL().toExternalForm());
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);
                 i.setFitWidth(70);
-                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat(),e.getLienYoutube());
-                System.out.println("ima "+addCours.getImage());
+                Courslm addCours = new Courslm(e.getId(), e.getNomCours(), e.getDescription(), e.getNb_participants(), e.getMembre_id(), e.getDate_creation(), e.getTags(), i, e.getCategorie_id(), cs.getCategorieById(e.getCategorie_id()).getNomcat(), e.getLienYoutube());
+                System.out.println("ima " + addCours.getImage());
                 addCours.setImagename(e.getImage());
                 lIm.add(addCours);
             } catch (MalformedURLException ex) {

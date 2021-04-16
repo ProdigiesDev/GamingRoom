@@ -138,7 +138,7 @@ public class AccueilController implements Initializable {
 
             try {
                 System.out.println(Env.getImagePath() + "\\" + evenement.getImage());
-                ((ImageView) paneEvent.getChildren().get(0)).setImage(new Image(new File(Env.getImagePath() + "\\" + evenement.getImage()).toURI().toURL().toExternalForm()));
+                ((ImageView) paneEvent.getChildren().get(0)).setImage(new Image(new File(evenement.getImage()).toURI().toURL().toExternalForm()));
 
                 ObservableList list = ((TextFlow) paneEvent.getChildren().get(1)).getChildren();
                 List<String> listreviw = Arrays.asList(evenement.getDescription().split("(?<=\\G.{20})"));

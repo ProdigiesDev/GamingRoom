@@ -14,7 +14,10 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane id="AnchorPane" prefHeight="494.0" prefWidth="792.0" style="-fx-background-color: #CE93D8;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.InfoCoursController">
+<?import javafx.scene.control.ScrollPane?>
+<ScrollPane prefHeight="494.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="tn.gamingroom.gui.InfoCoursController">
+<content>
+<AnchorPane id="AnchorPane" prefHeight="494.0" prefWidth="792.0" style="-fx-background-color: #CE93D8;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@infocours.css" />
     </stylesheets>
@@ -48,7 +51,7 @@
             <Font name="Bauhaus 93" size="15.0" />
          </font></JFXButton>
       <Text fx:id="nbInter" layoutX="184.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="14.999997854232788" />
-      <Button fx:id="back" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #6f1075;" text="Back" textFill="#f5f3f5">
+      <Button fx:id="back" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #6f1075;" text="Back" textFill="#f5f3f5" visible="false">
          <font>
             <Font name="Bauhaus 93" size="21.0" />
          </font>
@@ -56,7 +59,7 @@
       <FontAwesomeIcon fx:id="dislike" glyphName="HEARTBEAT" layoutX="249.0" layoutY="561.0" onMouseClicked="#reacneg" size="40" wrappingWidth="15.0" />
       <FontAwesomeIcon fx:id="like" fill="#ee1919" glyphName="HEART" layoutX="119.0" layoutY="566.0" onMouseClicked="#react" size="40" wrappingWidth="27.000003576278687" />
       <Text fx:id="nbInternegng" layoutX="317.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-      <Button fx:id="inscrire" layoutX="234.0" layoutY="609.0" mnemonicParsing="false" onAction="#inscrirecours" prefHeight="41.0" prefWidth="121.0" style="-fx-background-color: #6f1075;" text="S'inscrire" textFill="#f8f8f8">
+      <Button fx:id="inscrire" layoutX="904.0" layoutY="325.0" mnemonicParsing="false" onAction="#inscrirecours" prefHeight="41.0" prefWidth="121.0" style="-fx-background-color: #6f1075;" text="S'inscrire" textFill="#f8f8f8">
          <font>
             <Font name="Bauhaus 93" size="19.0" />
          </font>
@@ -65,10 +68,7 @@
       <Label fx:id="nom" layoutX="1029.0" layoutY="81.0" prefHeight="21.0" prefWidth="121.0" />
       <Label fx:id="cat" layoutX="1003.0" layoutY="134.0" prefHeight="21.0" prefWidth="112.0" />
       <Label fx:id="des" layoutX="1003.0" layoutY="195.0" prefHeight="21.0" prefWidth="112.0" />
-      <Button fx:id="bntLPart" layoutX="535.0" layoutY="611.0" mnemonicParsing="false" onAction="#goToListePart" prefHeight="38.0" prefWidth="194.0" style="-fx-background-color: #6f1075;" text="Afficher Participants" textFill="#f8f8f8">
-         <font>
-            <Font name="Bauhaus 93" size="18.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
+</content>
+</ScrollPane>

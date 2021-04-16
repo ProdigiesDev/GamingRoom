@@ -42,7 +42,7 @@ public class TPPOOGameTikTakTok extends Application {
         Scene scene = new Scene(root);
         stage.setTitle("TikTakTok");
         try {
-            stage.getIcons().add(new Image(new File(Env.getImagePath()+"tictactoe.jpg").toURI().toURL().toExternalForm()));
+            stage.getIcons().add(new Image(new File(Env.getImagePath()+"//tictactoe.jpg").toURI().toURL().toExternalForm()));
         } catch (MalformedURLException ex) {
             Logger.getLogger(Snake.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -17,5 +17,6 @@ public interface IParticipantsCours {
     public int ajouterParticipant(int membre_id, int cour_id);
     public List<ParticipantsCours> DisplayParticipants ();
     public List <Membre>getListeParticipants(int idE);
+    public int verifInscrit(int idM,int idC);
  
 }
