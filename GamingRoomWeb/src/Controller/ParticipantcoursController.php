@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Membre;
+use App\Entity\Cour;
 use App\Entity\Participantcours;
 use App\Form\ParticipantcoursType;
+use App\Repository\CourRepository;
+use App\Repository\MembreRepository;
 use App\Repository\ParticipantcoursRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,27 +29,35 @@ class ParticipantcoursController extends AbstractController
         ]);
     }
 
+
+
+
     /**
-     * @Route("/new", name="participantcours_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="participantcours_new")
      */
-    public function new(Request $request): Response
+    public function new($id): Response
     {
-        $participantcour = new Participantcours();
-        $form = $this->createForm(ParticipantcoursType::class, $participantcour);
-        $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
+        $e=$this->getDoctrine()->getRepository(Cour::class)->find($id);
+        $m=$this->getDoctrine()->getRepository(Membre::class)->find(8);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($participantcour);
+        if((sizeof($this->getDoctrine()->getRepository(Participantcours::class)->findOneByME($e,$m)))<=0){
+            $participant = new Participantcours();
+            $participant->setCour($e);
+            $participant->setMembre($m);
+
+
+            // tell Doctrine you want to (eventually) save the Product (no queries yet)
+            $entityManager->persist($participant);
             $entityManager->flush();
-
-            return $this->redirectToRoute('participantcours_index');
         }
 
-        return $this->render('participantcours/new.html.twig', [
-            'participantcour' => $participantcour,
-            'form' => $form->createView(),
-        ]);
+
+
+
+        // actually executes the queries (i.e. the INSERT query)
+
+        return $this->redirectToRoute('cour_show', array('id'=>$id));
     }
 
     /**
@@ -78,17 +90,7 @@ class ParticipantcoursController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="participantcours_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Participantcours $participantcour): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$participantcour->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($participantcour);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('participantcours_index');
-    }
+
+
 }

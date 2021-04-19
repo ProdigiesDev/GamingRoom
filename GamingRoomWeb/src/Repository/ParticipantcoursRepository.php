@@ -47,4 +47,21 @@ class ParticipantcoursRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findOneByME($e,$m): ?array
+    {
+        /*$qb = $this->getEntityManager()->createQueryBuilder('p');
+        $qb->select('p')
+            ->from('App\Entity\Participant', 'p')
+            ->where('p.evenement = ?1')
+            ->andWhere('p.member = ?2')
+            ->setParameter(1, $e)
+            ->setParameter(2, $m);*/
+        $qb = $this->getEntityManager()->createQuery('SELECT p FROM App\Entity\Participantcours p WHERE  p.membre = :m AND p.cour = :e ');
+        $qb->setParameter('e', $e);
+        $qb->setParameter('m', $m);
+        return $qb->getResult();
+
+    }
+
+
 }

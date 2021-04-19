@@ -2,21 +2,29 @@
 
 {% block title %}Cours{% endblock %}
 
+
 {% block body %}
+    <a href="{{ path('cour_new') }}" class="btn read-more pull-left">Create new</a>
+
+
+
 
 <div class="container youplay-news">
 
         <!-- News List -->
-        <div class="col-md-9">
+
+
+    <div class="col-md-9">
 
         {% for cour in cours %}
             <!-- Single News Block -->
+
             <div class="news-one">
                 <div class="row vertical-gutter">
                     <div class="col-md-4">
                         <a href="blog-post-1.html" class="angled-img">
                             <div class="img">
-                                <img src="{{ asset('/images/cours/' ~ cour.imagecours) }}" alt="">
+                                <img src="{{ asset('/images/cours/' ~ cour.imagecours) }}"  alt="">
                             </div>
                            </a>
                     </div>
@@ -61,98 +69,54 @@
 
         <!-- Right Side -->
         <div class="col-md-3">
-            
+
 <!-- Side Search -->
 <div class="side-block">
-    <p>Search by News:</p>
+    <p>Search by cours:</p>
     <form action="search.html">
         <div class="youplay-input">
-            <input type="text" name="search" placeholder="enter search term">
+            <input type="text" name="search" placeholder="enter search term" data-action="cour/rechreche">
         </div>
     </form>
 </div>
 <!-- /Side Search -->
 
-<!-- Side Categories -->
-<div class="side-block">
-    <h4 class="block-title">Categories</h4>
-    <ul class="block-content">
-        <li><a href="#">All</a></li>
-        <li><a href="#">Announcements</a></li>
-        <li><a href="#">Reviews</a></li>
-        <li><a href="#">Releases</a></li>
-        <li><a href="#">Updates</a></li>
-    </ul>
-</div>
-<!-- /Side Categories -->
 
-<!-- Side Popular News -->
-<div class="side-block">
-    <h4 class="block-title">Popular News</h4>
-    <div class="block-content p-0">
-        <!-- Single News Block -->
-        <div class="row youplay-side-news">
-            <div class="col-xs-3 col-md-4">
-                <a href="blog-post-1.html" class="angled-img">
-                    <div class="img">
-                        <img src="assets/images/dark/game-bloodborne-500x375.jpg" alt="">
-                    </div>
-                </a>
-            </div>
-            <div class="col-xs-9 col-md-8">
-                <h4 class="ellipsis"><a href="blog-post-1.html" title="Bloodborne - First Try!">Bloodborne - First Try!</a></h4>
-                <span class="date"><svg class="svg-inline--fa fa-calendar-alt fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm116 204c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40z"></path></svg><!-- <i class="fa fa-calendar"></i> --> Today</span>
-            </div>
-        </div>
-        <!-- /Single News Block -->
 
-        <!-- Single News Block -->
-        <div class="row youplay-side-news">
-            <div class="col-xs-3 col-md-4">
-                <a href="#" class="angled-img">
-                    <div class="img">
-                        <img src="assets/images/dark/game-middle-eart-shadow-of-mordor-500x375.jpg" alt="">
-                    </div>
-                </a>
-            </div>
-            <div class="col-xs-9 col-md-8">
-                <h4 class="ellipsis"><a href="#" title="Whats New in Middle-earth">Whats New in Middle-earth</a></h4>
-                <span class="date"><svg class="svg-inline--fa fa-calendar-alt fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm116 204c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40z"></path></svg><!-- <i class="fa fa-calendar"></i> --> February 2, 2015</span>
-            </div>
-        </div>
-        <!-- /Single News Block -->
-
-        <!-- Single News Block -->
-        <div class="row youplay-side-news">
-            <div class="col-xs-3 col-md-4">
-                <a href="#" class="angled-img">
-                    <div class="img">
-                        <img src="assets/images/dark/game-diablo-iii-500x375.jpg" alt="">
-                    </div>
-                </a>
-            </div>
-            <div class="col-xs-9 col-md-8">
-                <h4 class="ellipsis"><a href="#" title="Let's Grind Diablo III">Let's Grind Diablo III</a></h4>
-                <span class="date"><svg class="svg-inline--fa fa-calendar-alt fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm116 204c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40z"></path></svg><!-- <i class="fa fa-calendar"></i> --> January 18, 2015</span>
-            </div>
-        </div>
-        <!-- /Single News Block -->
-    </div>
-</div>
-<!-- /Side Popular News -->
-
-<!-- Our Twitter -->
-<div class="side-block">
-    <h4 class="block-title">Our Twitter</h4>
-    <div class="block-content">
-        <div class="youplay-twitter" data-twitter-user-name="nkdevv" data-twitter-count="3" data-twitter-hide-replies="false">Failed to load data</div>
-    </div>
-</div>
-<!-- /Our Twitter -->
 
         </div>
-        <!-- /Right Side -->
+
 
     </div>
+
+
+
+ <!--  <script id="ajax-recherche">
+        $(document).ready(function () {
+            $("#search").keyup(function (e) {
+                var value = $("#search").val();
+                console.log(value);
+                $.ajax({
+                    type: 'GET',
+                    url: 'cour/rechreche',
+                    data: {
+                        'valeurRecherche': value
+                    },
+                    success: function (retour) {
+                        if (retour) {
+                            $.each(JSON.parse(retour), function (i, obj) {
+                                $('#pub1').hide();
+                                $('#tableau').empty().append("<tr><td>" + obj.id +  "</td><td>" + obj.description + "</td></tr> ");
+
+                            });
+                        }
+                    }
+                });
+            })
+        });
+    </script> -->
+
+
 
 {% endblock %}
+

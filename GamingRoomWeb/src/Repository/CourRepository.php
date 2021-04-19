@@ -47,4 +47,25 @@ class CourRepository extends ServiceEntityRepository
         ;
     }
     */
+    /*
+    public function findStudentByTitre($nomcours)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.nomcours LIKE :val')
+            ->setParameter('val', $nomcours)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    */
+
+    public function findCoursByTitre($nomcours)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.nomcours LIKE :val')
+            ->setParameter('val', $nomcours)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

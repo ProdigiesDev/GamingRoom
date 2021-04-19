@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Filesystem\Filesystem;
 use GuzzleHttp\Psr7\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonRespImageonse;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/cour")
@@ -36,7 +38,7 @@ class CourController extends AbstractController
     public function new(Request $request): Response
     {
         $cour = new Cour();
-        $form = $this->createForm(CourType::class, $cour);
+        $form = $this->createForm(CourType::class, $cour);//récuperation du formulaire
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -45,15 +47,16 @@ class CourController extends AbstractController
             $file->move ($this->getParameter('cours_directory'),$fileName);
             $cour->setImagecours($fileName);
             $cour->setImagecours($fileName);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($cour);
-            $entityManager->flush();
+            //entity managerpermet l’insertion, la mise à jour et la suppression des données de la base de données
+            $entityManager = $this->getDoctrine()->getManager();//récupérer l’entity manager
+            $entityManager->persist($cour);//pour l‘ajout d’un nouvel objet
+            $entityManager->flush();//envoyer la maj à la bd
 
-            return $this->redirectToRoute('cour_index');
+            return $this->redirectToRoute('cour_index'); //redirection apres l'ajout
         }
 
 
-        return $this->render('cour/new.html.twig', [
+        return $this->render('cour/new.html.twig', [ //envoi du form à la page twig
             'cour' => $cour,
             'form' => $form->createView(),
         ]);
@@ -74,11 +77,19 @@ class CourController extends AbstractController
      */
     public function edit(Request $request, Cour $cour): Response
     {
-        $form = $this->createForm(CourType::class, $cour);
-        $form->handleRequest($request);
+        $form = $this->createForm(CourType::class, $cour);//creation de formulaire
+        $form->handleRequest($request); //envoie le contenu du form
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var UploadedFile $file // methode nhabet fiha les fichier
+             */
+            $file = $form->get('imagecours')->getData();//recupere l'image
+            $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
+            $file->move($this->getParameter('cours_directory'),$fileName);
+            $cour->setImagecours($fileName);
             $this->getDoctrine()->getManager()->flush();
+
 
             return $this->redirectToRoute('cour_index');
         }
@@ -102,4 +113,19 @@ class CourController extends AbstractController
 
         return $this->redirectToRoute('cour_index');
     }
+   // /**
+   //  * @Route("cour/rechreche", name="recherche_cour")
+     //* @throws ExceptionInterface
+     //*/
+    //public function rechercheCours(Request $request, NormalizerInterface $normalizer)
+    //{
+      //  $recherche = $request->get("valeurRecherche");
+        //$nomcours = $this->getDoctrine()->getRepository(Cour::class)->findCoursByTitre($recherche);
+        //$jsonContent = $normalizer->normalize($nomcours, 'json', ['groups' => 'post:read',]);
+        //$retour = json_encode($jsonContent);
+        //return new Response($retour);
+    //}
+
+
+
 }

@@ -3,19 +3,28 @@
 {% block title %}Participantcours index{% endblock %}
 
 {% block body %}
-    <h1>Participantcours index</h1>
+    <h1>Participants cours </h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>actions</th>
+
+                <th>Nom </th>
+                <th>Prenom </th>
+                <th>Sexe </th>
+                <th>Cours</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for participantcour in participantcours %}
             <tr>
-                <td>{{ participantcour.id }}</td>
+
+                <td>{{ participantcour.membre.nom }}</td>
+                <td>{{ participantcour.membre.prenom }}</td>
+                <td>{{ participantcour.membre.genre }}</td>
+                <td>{{ participantcour.cour.nomcours }}</td>
+
                 <td>
                     <a href="{{ path('participantcours_show', {'id': participantcour.id}) }}">show</a>
                     <a href="{{ path('participantcours_edit', {'id': participantcour.id}) }}">edit</a>

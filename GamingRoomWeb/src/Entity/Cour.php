@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Regex;
 
 
 /**
@@ -19,62 +21,74 @@ class Cour
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
+
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="nomCours", type="string", length=100, nullable=false)
+
      */
     private $nomcours;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="description required")
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
 
     /**
      * @var int
-     *
+     * @Assert\NotBlank()
+     * @Assert\Positive(message="the number should be positive")
      * @ORM\Column(name="nb_participant", type="integer", nullable=false)
      */
     private $nbParticipant;
 
     /**
      * @var \DateTime
-     *
+     *  @Assert\NotBlank()
      * @ORM\Column(name="date_creation", type="datetime", nullable=false, options={"default"="current_timestamp()"})
      */
     private $dateCreation = 'current_timestamp()';
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
+     *@Assert\Regex(
+    pattern = "/^[a-z]+$/i",
+    htmlPattern = "^[a-zA-Z]+$",
+    message="'{{ value }}' doit etre chaine de caractère"
+    )
      * @ORM\Column(name="tags", type="string", length=255, nullable=false)
      */
     private $tags;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
+     * @Assert\File(mimeTypes={ "image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml"})
      * @ORM\Column(name="imagecours", type="string", length=250, nullable=false)
      */
     private $imagecours;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
+     *@Assert\Url(
+     *    message = "The url '{{ value }}' is not a valid url",
+     * )
      * @ORM\Column(name="lienYoutube", type="string", length=255, nullable=false)
      */
     private $lienyoutube;
 
     /**
      * @var \Categorie
-     *
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Categorie")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="categorie_id", referencedColumnName="idcat")
@@ -84,13 +98,18 @@ class Cour
 
     /**
      * @var \Membre
-     *
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Membre")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="membre_id", referencedColumnName="id")
      * })
      */
     private $membre;
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime('now');
+
+    }
 
     public function getId(): ?int
     {

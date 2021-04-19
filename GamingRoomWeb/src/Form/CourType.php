@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Categorie;
 use App\Entity\Cour;
 use App\Entity\Membre;
+use phpDocumentor\Reflection\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -17,13 +18,15 @@ class CourType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
             ->add('nomcours')
             ->add('description')
             ->add('nbParticipant')
             ->add('dateCreation')
             ->add('tags')
-            ->add('imagecours', FileType::class,[
+            ->add('imagecours', FileType::class, array('data_class'=>null),[
                 'label' => 'Image',
+
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => true,

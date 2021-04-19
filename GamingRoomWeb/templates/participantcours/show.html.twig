@@ -3,17 +3,36 @@
 {% block title %}Participantcours{% endblock %}
 
 {% block body %}
-    <h1>Participantcours</h1>
+    <h1>Participant cours</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ participantcour.id }}</td>
-            </tr>
+
+        <tr>
+            <th>Nom</th>
+            <td>{{participantcour.membre.nom}}</td>
+        </tr>
+
+
+        <tr>
+            <th>Prénom</th>
+            <td>{{participantcour.membre.prenom }}</td>
+        </tr>
+
+        <tr>
+            <th>Genre</th>
+            <td>{{ participantcour.membre.genre}}</td>
+        </tr>
+        <tr>
+            <th>Cours</th>
+            <td>{{ participantcour.cour.nomcours }}</td>
+        </tr>
+
+
+
+
         </tbody>
     </table>
-
     <a href="{{ path('participantcours_index') }}">back to list</a>
 
     <a href="{{ path('participantcours_edit', {'id': participantcour.id}) }}">edit</a>

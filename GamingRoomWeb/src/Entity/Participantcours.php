@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Participantcours
@@ -19,6 +20,7 @@ class Participantcours
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+
      */
     private $id;
 
@@ -26,6 +28,7 @@ class Participantcours
      * @var \Cour
      *
      * @ORM\ManyToOne(targetEntity="Cour")
+     * @Assert\NotBlank()
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cour_id", referencedColumnName="id")
      * })
@@ -36,6 +39,7 @@ class Participantcours
      * @var \Membre
      *
      * @ORM\ManyToOne(targetEntity="Membre")
+     * @Assert\NotBlank()
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="membre_id", referencedColumnName="id")
      * })
@@ -70,6 +74,7 @@ class Participantcours
 
         return $this;
     }
+
 
 
 }

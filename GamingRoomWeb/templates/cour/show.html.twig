@@ -3,27 +3,18 @@
 {% block title %}Cours{% endblock %}
 
 {% block body %}
-    <h1>Cours</h1>
-    <img src="{{ asset('/imagecours/'~cour.imagecours) }}">
+    <h1> {{cour.nomcours }} </h1>
+    <img src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="400px" height="400px" >
 
     <table class="table">
         <tbody>
-        <tr>
-            <th>Image cours</th>
-            <td> <img src="{{ asset('/imagecours/'~cour.imagecours ) }}" width="40px" height="40px">      </td>
-        </tr>
+
         <tr>
             <th>Lien youtube</th>
             <td>{{ cour.lienyoutube }}</td>
         </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ cour.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom du cours</th>
-                <td>{{ cour.nomcours }}</td>
-            </tr>
+
+
             <tr>
                 <th>Déscription</th>
                 <td>{{ cour.description }}</td>
@@ -50,9 +41,20 @@
         </tbody>
     </table>
 
+
+    <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
+        <button  class="btn read-more pull-left" > Inscription</button>
+
+    </form>
+
+
+
+
     <a href="{{ path('cour_index') }}">back to list</a>
 
     <a href="{{ path('cour_edit', {'id': cour.id}) }}">edit</a>
 
+
     {{ include('cour/_delete_form.html.twig') }}
+
 {% endblock %}

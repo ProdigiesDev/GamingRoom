@@ -15,6 +15,8 @@ class ParticipantcoursType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
+
             ->add('cour',EntityType::class,[
                 'class'=>Cour::class,
                 'choice_label'=>'Cours',
