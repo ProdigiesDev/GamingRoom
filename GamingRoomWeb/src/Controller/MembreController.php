@@ -34,7 +34,13 @@ class MembreController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $membre->setLastTimeban(  $membre->getDateNaissance());
-            $membre->setActive(1);
+
+            if($membre->getRole()=="Coach"){
+                $membre->setActive(0);
+            }
+            if($membre->getRole()=="Membre"){
+                $membre->setActive(1);
+            }
             $membre->setPassword($encoder->encodePassword($membre, $membre->getPassword()));
             $file = $form->get('image')->getData();
             $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();

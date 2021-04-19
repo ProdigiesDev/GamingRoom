@@ -57,6 +57,7 @@ class Membre implements UserInterface
      * @var \DateTime
      *
      * @ORM\Column(name="date_naissance", type="date", nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
      * @Assert\Date
      */
     private $dateNaissance;

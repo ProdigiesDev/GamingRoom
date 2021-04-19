@@ -1,11 +1,10 @@
 
 
 
-
 {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
         <div class="col-md-9">
             <!-- Billing Information -->
-            <h2 class="mt-0">Register</h2>
+            <h1 class="mt-0">Register</h1>
 
     <div class="youplay-input"> 
     {{ form_widget(form.nom,{'attr':{'placeholder':'Nom '}}) }}
@@ -15,6 +14,7 @@
         </div>
     {% endif %}
     </div>
+
      <div class="youplay-input"> 
     {{ form_widget(form.prenom,{'attr':{'placeholder':'Prenom '}}) }}
     {% if form_errors(form.prenom) %}
@@ -23,16 +23,19 @@
         </div>
     {% endif %}
     </div>
-     <div class="form-group"> 
-     
-  <label for="example-datetime-local-input" class="col-2 col-form-label">Date and time</label>
-    {{ form_widget(form.dateNaissance,{'attr':{'class':'form-control'}}) }}
-    {% if form_errors(form.dateNaissance) %}
+
+     <div class="input-group mb-3 ">
+         <h4>Date de naissance:</h4>
+
+   <div>{{ form_widget(form.dateNaissance) }}</div>
+         {% if form_errors(form.dateNaissance) %}
         <div class="alert alert-danger" role="alert">
             {{ form_errors(form.dateNaissance) }}
         </div>
     {% endif %}
     </div>
+        </br>
+
     <label class="youplay-select">
     {{ form_widget(form.genre) }}
     {% if form_errors(form.genre) %}
@@ -41,6 +44,8 @@
         </div>
     {% endif %}
     </label>
+            </br>
+
      <div class="youplay-input"> 
     {{ form_widget(form.numeroTel,{'attr':{'placeholder':'Telephone '}}) }}
     {% if form_errors(form.numeroTel) %}
@@ -50,6 +55,7 @@
         <small>{{ form_help(form.numeroTel) }}</small>
     {% endif %}
     </div>
+
      <div class="youplay-input"> 
     {{ form_widget(form.email,{'attr':{'placeholder':'Email '}}) }}
     {% if form_errors(form.email) %}
@@ -58,6 +64,7 @@
         </div>
          {% endif %}
     </div>
+
      <div class="youplay-input"> 
     {{ form_widget(form.password,{'attr':{'placeholder':'Mot de passe '}}) }}
     {% if form_errors(form.password) %}
@@ -67,6 +74,7 @@
         
     {% endif %}
     </div>
+
      <div class="youplay-input"> 
     {{ form_widget(form.image) }}
     {% if form_errors(form.image) %}
@@ -76,7 +84,7 @@
         
     {% endif %}
     </div>
-     
+
             <label class="youplay-select">
     {{ form_widget(form.role) }}
     {% if form_errors(form.role) %}
@@ -86,6 +94,7 @@
         
     {% endif %}
     </label>
+            </br>
 
      <div class="youplay-textarea">
     {{ form_widget(form.description,{'attr':{'placeholder':'Description '}}) }}
@@ -107,3 +116,4 @@
         </div>
     </div>
 {{ form_end(form) }}
+

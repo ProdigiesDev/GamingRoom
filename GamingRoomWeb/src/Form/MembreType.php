@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Membre;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +26,14 @@ class MembreType extends AbstractType
         $builder
             ->add('nom',TextType::class)
             ->add('prenom',TextType::class)
-            ->add('dateNaissance',DateType::class)
+            ->add('dateNaissance',DateType::class,[
+                'attr' =>['class' => 'form-control js-datepicker'],
+                'label' => 'Date de naissance',
+                'required' => FALSE,
+                'format' => 'yyyy-MM-dd',
+                'widget' => 'single_text'
+
+            ])
             ->add('genre',ChoiceType::class,[
                 'choices'  => [
                     'Homme' => 'Homme',

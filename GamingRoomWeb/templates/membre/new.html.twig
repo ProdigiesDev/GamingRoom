@@ -1,25 +1,27 @@
 {% extends 'base_clientSide.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('assets/datepicker/datepicker.css')}}">
+{% endblock %}
 
 
 {% block body %}   
 
 <section class="youplay-banner banner-top youplay-banner-parallax xsmall">
-    
+
         <div class="image" data-speed="0.4">
             <img src="assets/images/dark/banner-blog-bg.jpg" alt="" class="jarallax-img">
         </div>
-    
+
 
     <div class="info">
         <div>
             <div class="container">
-                
-                
+
+
                     <h1 class="h1">Checkout</h1>
-                
-                
-                
+
+
+
             </div>
         </div>
     </div>
@@ -30,4 +32,12 @@
              {{ include('membre/_form.html.twig') }}
     </div>
 
+{% endblock %}
+{% block javascripts %}
+    <script src="{{asset('assets/datepicker/datepicker.js')}}"></script>
+    <script>
+        jQuery(document).ready(function (){
+            $('.js-datepicker').datepicker();
+        });
+    </script>
 {% endblock %}
