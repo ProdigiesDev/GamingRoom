@@ -31,6 +31,15 @@ class CourController extends AbstractController
             'cours' => $courRepository->findAll(),
         ]);
     }
+    /**
+     * @Route("/admincours", name="cour_index_admin", methods={"GET"})
+     */
+    public function adminindex(CourRepository $courRepository): Response
+    {
+        return $this->render('cour/indexAdmin.html.twig', [
+            'cours' => $courRepository->findAll(),
+        ]);
+    }
 
     /**
      * @Route("/new", name="cour_new", methods={"GET","POST"})
@@ -61,6 +70,35 @@ class CourController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("admin/new", name="cour_new_admin", methods={"GET","POST"})
+     */
+    public function newbyadmin(Request $request): Response
+    {
+        $cour = new Cour();
+        $form = $this->createForm(CourType::class, $cour);//récuperation du formulaire
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('imagecours')->getData();
+            $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
+            $file->move ($this->getParameter('cours_directory'),$fileName);
+            $cour->setImagecours($fileName);
+            $cour->setImagecours($fileName);
+            //entity managerpermet l’insertion, la mise à jour et la suppression des données de la base de données
+            $entityManager = $this->getDoctrine()->getManager();//récupérer l’entity manager
+            $entityManager->persist($cour);//pour l‘ajout d’un nouvel objet
+            $entityManager->flush();//envoyer la maj à la bd
+
+            return $this->redirectToRoute('cour_index'); //redirection apres l'ajout
+        }
+
+
+        return $this->render('cour/newadmin.html.twig', [ //envoi du form à la page twig
+            'cour' => $cour,
+            'form' => $form->createView(),
+        ]);
+    }
 
     /**
      * @Route("/{id}", name="cour_show", methods={"GET"})
@@ -68,6 +106,16 @@ class CourController extends AbstractController
     public function show(Cour $cour): Response
     {
         return $this->render('cour/show.html.twig', [
+            'cour' => $cour,
+        ]);
+    }
+
+    /**
+     * @Route("showadmin/{id}", name="cour_show_admin", methods={"GET"})
+     */
+    public function showforadmin(Cour $cour): Response
+    {
+        return $this->render('cour/showadmin.html.twig', [
             'cour' => $cour,
         ]);
     }
