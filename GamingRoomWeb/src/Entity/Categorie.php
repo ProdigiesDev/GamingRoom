@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Categorie
@@ -12,6 +13,8 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @ORM\Table(name="categorie")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="App\Repository\CategorieRepository")
+ * @UniqueEntity("nomcategorie",
+ *    message="Cette categorie existe déjà" )
  */
 class Categorie
 {

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 
@@ -15,6 +16,8 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @ORM\Table(name="membre", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})})
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="App\Repository\MembreRepository")
+ * @UniqueEntity("email",
+ *    message="Cet email est déja utilisé" )
  */
 class Membre implements UserInterface
 {
@@ -37,6 +40,11 @@ class Membre implements UserInterface
      *     htmlPattern = "^[a-zA-Z]+$",
      *     message="'{{ value }}' doit etre chaine de caractère"
      * )
+     * @Assert\Length(min=3,
+     *       max = 20,
+     *      minMessage = "Cette chaine est trop courte.Elle doit avoir au minimum  {{ limit }} caractères",
+     *      maxMessage = "Cette chaine est trop longue.Ele ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     private $nom;
 
@@ -49,6 +57,11 @@ class Membre implements UserInterface
      *     pattern = "/^[a-z]+$/i",
      *     htmlPattern = "^[a-zA-Z]+$",
      *     message="'{{ value }}' doit etre chaine de caractère"
+     * )
+     * @Assert\Length(min=3,
+     *       max = 20,
+     *      minMessage = "Cette chaine est trop courte.Elle doit avoir au minimum  {{ limit }} caractères",
+     *      maxMessage = "Cette chaine est trop longue.Ele ne doit pas dépasser {{ limit }} caractères"
      * )
      */
     private $prenom;
@@ -79,6 +92,10 @@ class Membre implements UserInterface
      * @ORM\Column(name="numero_tel", type="string", length=8, nullable=false)
      * @Assert\NotBlank(message="Veuillez renseigner ce champs")
      * @Assert\Length(8)
+     * @Assert\Regex(
+     *     pattern = "/^[0-9]+$/",
+     *     message="'{{ value }}' doit etre chaine des nombres"
+     * )
      */
     private $numeroTel;
 
@@ -99,8 +116,8 @@ class Membre implements UserInterface
      * @Assert\Length(
      *       min=6,
      *       max = 20,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters")
+     *      minMessage = "Le mot de passe et trop court.Il doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le mot de passe est trop long.Il ne doit pas dépasser {{ limit }} caractères")
      */
     private $password;
 
@@ -135,8 +152,8 @@ class Membre implements UserInterface
      * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"="NULL"})
      *  @Assert\Length(min=0,
      *       max = 255,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     *      minMessage = "La description est courte.Elle doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "La description est trop longue.Ele ne doit pas dépasser {{ limit }} caractères"
      * )
      */
     private $description;
