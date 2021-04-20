@@ -90,7 +90,7 @@ class CourController extends AbstractController
             $entityManager->persist($cour);//pour l‘ajout d’un nouvel objet
             $entityManager->flush();//envoyer la maj à la bd
 
-            return $this->redirectToRoute('cour_index'); //redirection apres l'ajout
+            return $this->redirectToRoute('cour_index_admin'); //redirection apres l'ajout
         }
 
 
@@ -147,6 +147,33 @@ class CourController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/{id}/editadmin", name="cour_edit_admin", methods={"GET","POST"})
+     */
+    public function editadmin(Request $request, Cour $cour): Response
+    {
+        $form = $this->createForm(CourType::class, $cour);//creation de formulaire
+        $form->handleRequest($request); //envoie le contenu du form
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var UploadedFile $file // methode nhabet fiha les fichier
+             */
+            $file = $form->get('imagecours')->getData();//recupere l'image
+            $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
+            $file->move($this->getParameter('cours_directory'),$fileName);
+            $cour->setImagecours($fileName);
+            $this->getDoctrine()->getManager()->flush();
+
+
+            return $this->redirectToRoute('cour_index_admin');
+        }
+
+        return $this->render('cour/editadmin.html.twig', [
+            'cour' => $cour,
+            'form' => $form->createView(),
+        ]);
+    }
 
     /**
      * @Route("/{id}", name="cour_delete", methods={"POST"})
@@ -160,6 +187,19 @@ class CourController extends AbstractController
         }
 
         return $this->redirectToRoute('cour_index');
+    }
+    /**
+     * @Route("deleteadmin/{id}", name="cour_delete_admin", methods={"POST"})
+     */
+    public function deleteadmin(Request $request, Cour $cour): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($cour);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('cour_index_admin');
     }
    /**
     * @Route("cour/rechreche", name="recherche_cour")
