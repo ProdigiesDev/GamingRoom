@@ -113,18 +113,18 @@ class CourController extends AbstractController
 
         return $this->redirectToRoute('cour_index');
     }
-   // /**
-   //  * @Route("cour/rechreche", name="recherche_cour")
-     //* @throws ExceptionInterface
-     //*/
-    //public function rechercheCours(Request $request, NormalizerInterface $normalizer)
-    //{
-      //  $recherche = $request->get("valeurRecherche");
-        //$nomcours = $this->getDoctrine()->getRepository(Cour::class)->findCoursByTitre($recherche);
-        //$jsonContent = $normalizer->normalize($nomcours, 'json', ['groups' => 'post:read',]);
-        //$retour = json_encode($jsonContent);
-        //return new Response($retour);
-    //}
+   /**
+    * @Route("cour/rechreche", name="recherche_cour")
+     * @throws ExceptionInterface
+     */
+    public function rechercheCours(Request $request, NormalizerInterface $normalizer)
+    {
+        $recherche = $request->get("valeurRecherche");
+        $nomcours = $this->getDoctrine()->getRepository(Cour::class)->findCoursByTitre($recherche);
+        $jsonContent = $normalizer->normalize($nomcours, 'json', ['groups' => 'post:read',]);
+        $retour = json_encode($jsonContent);
+        return new Response($retour);
+    }
 
 
 

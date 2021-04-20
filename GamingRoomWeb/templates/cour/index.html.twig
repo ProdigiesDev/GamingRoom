@@ -73,7 +73,7 @@
 <!-- Side Search -->
 <div class="side-block">
     <p>Search by cours:</p>
-    <form action="search.html">
+    <form action={{ path('recherche_cour') }}>
         <div class="youplay-input">
             <input type="text" name="search" placeholder="enter search term" data-action="cour/rechreche">
         </div>
@@ -91,14 +91,14 @@
 
 
 
- <!--  <script id="ajax-recherche">
+  <script id="ajax-recherche">
         $(document).ready(function () {
             $("#search").keyup(function (e) {
                 var value = $("#search").val();
                 console.log(value);
                 $.ajax({
                     type: 'GET',
-                    url: 'cour/rechreche',
+                    url: 'recherche_cour',
                     data: {
                         'valeurRecherche': value
                     },
@@ -114,7 +114,7 @@
                 });
             })
         });
-    </script> -->
+    </script>
 
 
 

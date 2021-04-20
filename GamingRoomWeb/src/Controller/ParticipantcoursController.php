@@ -50,12 +50,36 @@ class ParticipantcoursController extends AbstractController
             // tell Doctrine you want to (eventually) save the Product (no queries yet)
             $entityManager->persist($participant);
             $entityManager->flush();
+
+        }
+        else{
+
+            $participant=($this->getDoctrine()->getRepository(Participantcours::class)->delete($e,$m));
         }
 
-
-
+        return $this->redirectToRoute('cour_show', array('id'=>$id));
 
         // actually executes the queries (i.e. the INSERT query)
+
+
+    }
+
+
+
+    /**
+     * @Route("/{id}", name="participantcours_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Participantcours $participantcour,$id): Response
+    {
+        $e=$this->getDoctrine()->getRepository(Cour::class)->find($id);
+        $m=$this->getDoctrine()->getRepository(Membre::class)->find(8);
+
+
+        if ((sizeof($this->getDoctrine()->getRepository(Participantcours::class)->delete($e,$m)))<=0){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($participantcour);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute('cour_show', array('id'=>$id));
     }
