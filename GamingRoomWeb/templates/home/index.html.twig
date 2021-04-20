@@ -1,6 +1,5 @@
 {% extends 'base_clientSide.html.twig' %}
 
-
 {% block body %}
   
     <div class="content-wrap">
@@ -16,6 +15,7 @@
 -->
 <section class="youplay-banner banner-top youplay-banner-parallax">
     
+                        <button class="btn btn-default pull-right" onClick="plzSend('plzz')">Send</button>
         <div class="image" data-speed="0.4">
             <img src="{{asset('assets/images/dark/banner-bg.jpg')}}" alt="" class="jarallax-img">
         </div>
@@ -166,17 +166,18 @@
                 
     <!-- Review Form -->
                 <h2>Ajouter Avis</h2>
-                {{form_start(form)}}
+                {{form_start(form,{'attr':{'novalidate': 'novalidate'}})}}
                     <div class="review-cont clearfix">
 
                         <div class="youplay-textarea">
                               {{ form_widget(form.avis,{'attr':{'rows':'5','placeholder':'Votre avis'}}) }}
-                            {% if form_errors(form.avis) %}
+                            
+                        </div>
+                        {% if form_errors(form.avis) %}
                                 <div class="alert alert-danger" role="alert">
                                     {{ form_errors(form.avis) }}
                                 </div>
                             {% endif %}
-                        </div>
                         <div class="youplay-rating pull-right">
                             <input type="radio" id="review-rate-5" name="review-rate" value="5">
                             <label for="review-rate-5"><i class="fa fa-star"></i></label>

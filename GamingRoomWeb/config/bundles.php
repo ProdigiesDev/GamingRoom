@@ -13,4 +13,7 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
+    Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle::class => ['all' => true],
+    Gos\Bundle\WebSocketBundle\GosWebSocketBundle::class => ['all' => true],
+    Symfony\Bundle\MercureBundle\MercureBundle::class => ['all' => true],
 ];

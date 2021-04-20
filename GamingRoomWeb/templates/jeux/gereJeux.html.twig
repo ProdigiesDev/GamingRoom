@@ -36,7 +36,7 @@
                             <!-- /.card-header -->
                             <!-- form start -->
                             
-                            {{form_start(form)}}
+                            {{form_start(form,{'attr':{'novalidate':'novalidate'}})}}
                                 <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nom</label>
@@ -70,10 +70,10 @@
                                     <div class="input-group">
                                     <div class="custom-file">
                                         <label class="custom-file-label" for="exampleInputFile">Image</label>
-                                        {{ form_widget(form.image,{'attr':{'class':'custom-file-input'}}) }}
-                                        {% if form_errors(form.image) %}
+                                        {{ form_widget(form.fileimage,{'attr':{'class':'custom-file-input'}}) }}
+                                        {% if form_errors(form.fileimage) %}
                                             <div class="alert alert-danger" role="alert">
-                                                {{ form_errors(form.image) }}
+                                                {{ form_errors(form.fileimage) }}
                                             </div>
                                         {% endif %}
                                     </div>

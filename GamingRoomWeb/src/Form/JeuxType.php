@@ -32,12 +32,9 @@ class JeuxType extends AbstractType
                     'Mobile' => 'Mobile',
                 ],
             ])
-            ->add('image', FileType::class,[
+            ->add('fileimage', FileType::class,['data_class'=>null],[
+                
                 'label' => 'Image(jpg,png,jpeg)',
-
-                // unmapped means that this field is not associated to any entity property
-                'mapped' => true,
-
                 'required'=>false,
                 // unmapped fields can't define their validation using annotations
                 // in the associated entity, so you can use the PHP constraint classes
@@ -53,8 +50,7 @@ class JeuxType extends AbstractType
                 ],
             ])
         ;
-        $builder->get('image')
-        ->addModelTransformer($this->transformer);
+        
     }
 
     public function configureOptions(OptionsResolver $resolver)

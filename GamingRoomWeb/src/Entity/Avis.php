@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Avis
@@ -20,12 +21,14 @@ class Avis
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+    
 
     /**
      * @var string
      *
      * @ORM\Column(name="avis", type="string", length=255, nullable=false)
-     */
+     * @Assert\NotBlank(message="Avis requis")
+     * */
     private $avis;
 
     /**
@@ -38,6 +41,7 @@ class Avis
      */
     private $membre;
 
+    
     /**
      * @var string
      *
@@ -86,6 +90,8 @@ class Avis
 
         return $this;
     }
+
+   
 
 
 }

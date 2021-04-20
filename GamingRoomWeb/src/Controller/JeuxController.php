@@ -33,15 +33,15 @@ class JeuxController extends AbstractController
     public function add(Request $request,$id): Response{
         $jeux=$this->getDoctrine()->getRepository(Jeux::class)->find($id);
         $jeux=  $jeux ? $jeux :new Jeux();
-        $title=$jeux ? "Modifier" : "Ajouter";
-        $isUpdate=$jeux->getImage()!=null;
-        
+        $title=$id!=0 ? "Modifier" : "Ajouter";
+        $isUpdate=$id!=0;
         $form = $this->createForm(JeuxType::class, $jeux);
         
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $image = $form->get('image')->getData();
-            if($isUpdate){
+            $image = $form->get('fileimage')->getData();
+            
+            if(!$isUpdate && !$image){
                 
                 $this->addFlash('errors',"L'image est requise");
                 return $this->render('jeux/gereJeux.html.twig', [
@@ -72,7 +72,6 @@ class JeuxController extends AbstractController
                 // instead of its contents
                 $jeux->setImage($newFilename);
             }
-
             $em=$this->getDoctrine()->getManager();
             $em->persist($jeux);
             $em->flush();

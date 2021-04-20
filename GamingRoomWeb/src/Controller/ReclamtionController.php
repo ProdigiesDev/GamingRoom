@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Membre;
 use App\Entity\Reclamation;
+use App\Form\ReclamationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class ReclamtionController extends AbstractController
 {
@@ -33,5 +36,33 @@ class ReclamtionController extends AbstractController
         $em->flush();
         $this->addFlash('success','Reclamtion supprimés avec succès');
         return $this->redirectToRoute("adminReclamtion");
+    }
+
+      /**
+     * @Route("/reclamtion", name="adminaddReclamtion")
+     */
+    public function ajouter(Request $request): Response
+    {  
+        $rec= new Reclamation();
+        $form = $this->createForm(ReclamationType::class, $rec);
+        
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $id=6;
+            $rec->setMembre($this->getDoctrine()->getRepository(Membre::class)->find($id));
+             
+               
+            
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($rec);
+            $em->flush();
+            //TODO notif add succ
+            $rec= new Reclamation();
+            $form = $this->createForm(ReclamationType::class, $rec);
+        }
+
+        return $this->render('reclamtion/ajouter.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
