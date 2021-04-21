@@ -1,0 +1,140 @@
+{% extends 'base_clientSide.html.twig' %}
+{% block title %}Evenement{% endblock %}
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+
+     <!-- Magnific Popup -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/magnific-popup/dist/magnific-popup.css')}}"/>
+
+     <!-- Revolution Slider -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/settings.css')}}">
+     <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/layers.css')}}">
+     <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/navigation.css')}}">
+
+     <!-- Bootstrap Sweetalert -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap-sweetalert/dist/sweetalert.css')}}"/>
+
+     <!-- Social Likes -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/social-likes/dist/social-likes_flat.css')}}" />
+
+     <!-- FontAwesome -->
+     <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fontawesome-all.min.js')}}"></script>
+     <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fa-v4-shims.min.js')}}"></script>
+
+     <!-- Youplay -->
+     <link rel="stylesheet" href="{{asset('assets/css/youplay.css')}}">
+
+     <!-- RTL (uncomment this to enable RTL support) -->
+     <!-- <link rel="stylesheet" href="assets/css/youplay-rtl.min.css" /> -->
+
+     <!-- Custom Styles -->
+     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+
+     <!-- END: Styles -->
+
+ {% endblock %}
+
+{% block body %}
+
+    <!-- Preloader -->
+    <div class="page-preloader preloader-wrapp">
+
+        <img src="{{asset('assets/images/logo-light.png')}}" alt="">
+
+        <div class="preloader"></div>
+    </div>
+    <!-- /Preloader -->
+    <div class="content-wrap">
+
+    <!--
+Banner
+
+Additional classes:
+.small
+.xsmall
+.big
+.full
+-->
+    <section class="youplay-banner banner-top youplay-banner-parallax small">
+
+        <div class="image" data-speed="0.4">
+            <img src="{{asset('images/banner-bg.jpg')}}" alt="" class="jarallax-img">
+        </div>
+
+
+        <div class="info">
+            <div>
+                <div class="container">
+                    <h1 class="h1">Evenements</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Banner -->
+
+    <div class="container youplay-news">
+
+        <!-- News List -->
+        <div class="col-md-9">
+            {% set i=0 %}
+            <!-- Single News Block -->
+            {% for evenement in evenements %}
+
+            <div class="news-one">
+                <div class="row vertical-gutter">
+                    <div class="col-md-4">
+                        <a href="blog-post-1.html" class="angled-img">
+                            <div class="img">
+                                <img src="{{ asset('/images/evenement/' ~ evenement.image) }}" >
+                            </div>
+                            <div class="youplay-hexagon-rating youplay-hexagon-rating-small" data-max="10" data-size="50" title="9.1 out of 10"><span>{{ evenement.nbremaxParticipant }}</span></div>
+                        </a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="clearfix">
+                            <h3 class="h2 pull-left m-0"><a href="blog-post-1.html">
+                                    <td>{{ evenement.nomevent }}</td>
+                                </a></h3>
+                            <span class="date pull-right"><i class="fa fa-calendar"></i> <td>{{ evenement.datedeb ? evenement.datedeb|date('Y-m-d') : '' }}</td></span>
+                            <span class="date pull-right"><i class="fa fa-calendar"></i> <td>{{ evenement.datefin ? evenement.datefin|date('Y-m-d') : '' }}</td></span>
+                        </div>
+                        <div class="tags">
+                            <i class="fa fa-tags"></i> <a href="#">{{ evenement.categorie.nomcategorie }}</a>, <a href="#">{{ evenement.lieu }}</a>.
+                        </div>
+                        <div class="description">
+                            <td>{{ evenement.description }}</td>
+                        </div>
+                        <form action="{{ path('actionParticipant',{'id':evenement.idevent}) }}">
+                            <button  class="btn read-more pull-left" >
+                                {{ isParticpant[i]}}</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+                {% set i=i+1 %}
+            {% else %}
+                <tr>
+                    <td colspan="10">no records found</td>
+                </tr>
+
+            {% endfor %}
+            <!-- /Single News Block -->
+
+            <!-- Pagination -->
+            <ul class="pagination">
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">Next</a></li>
+            </ul>
+            <!-- /Pagination -->
+        </div>
+        <!-- /News List -->
+
+        <!-- Right Side -->
+
+
+    </div>
+{% endblock %}

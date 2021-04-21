@@ -1,20 +1,115 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
-{% block title %}Hello EvenementController!{% endblock %}
+{% block title %}Evenement index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header" >
+                        <h3 class="card-title">DataTable with default features</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Idevent</th>
+                                    <th>Nomevent</th>
+                                    <th>Datedeb</th>
+                                    <th>Datefin</th>
+                                    <th>Image</th>
+                                    <th>NbremaxParticipant</th>
+                                    <th>Description</th>
+                                    <th>Categorie</th>
+                                    <th>Lieu</th>
+                                    <th>Lienyoutube</th>
+                                    <th>actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for evenement in evenements %}
+                                <tr>
+                                    <td>{{ evenement.idevent }}</td>
+                                    <td>{{ evenement.nomevent }}</td>
+                                    <td>{{ evenement.datedeb ? evenement.datedeb|date('Y-m-d') : '' }}</td>
+                                    <td>{{ evenement.datefin ? evenement.datefin|date('Y-m-d') : '' }}</td>
+                                    <td><img src="{{ asset('/images/evenement/' ~ evenement.image) }}" width="40px" height="40px"></td>
+                                    <td>{{ evenement.nbremaxParticipant }}</td>
+                                    <td>{{ evenement.description }}</td>
+                                    <td>{{ evenement.categorie.nomcategorie }}</td>
+                                    <td>{{ evenement.lieu }}</td>
+                                    <td>{{ evenement.lienyoutube }}</td>
+                                    <td>
+                                        <a href="{{ path('evenement_show', {'idevent': evenement.idevent}) }}">show</a>
+                                        <a href="{{ path('evenement_edit', {'idevent': evenement.idevent}) }}">edit</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="10">no records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Idevent</th>
+                                    <th>Nomevent</th>
+                                    <th>Datedeb</th>
+                                    <th>Datefin</th>
+                                    <th>Image</th>
+                                    <th>NbremaxParticipant</th>
+                                    <th>Description</th>
+                                    <th>Categorie</th>
+                                    <th>Lieu</th>
+                                    <th>Lienyoutube</th>
+                                    <th>actions</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous disabled" id="example1_previous">
+                                                <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                                            </li>
+                                            <li class="paginate_button page-item active">
+                                                <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                                            </li>
+                                            <li class="paginate_button page-item ">
+                                                <a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                                            </li>
+                                            <li class="paginate_button page-item ">
+                                                <a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0" class="page-link">3</a>
+                                            </li>
+                                            <li class="paginate_button page-item ">
+                                                <a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0" class="page-link">4</a>
+                                            </li>
+                                            <li class="paginate_button page-item ">
+                                                <a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">5</a>
+                                            </li>
+                                            <li class="paginate_button page-item ">
+                                                <a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0" class="page-link">6</a>
+                                            </li>
+                                            <li class="paginate_button page-item next" id="example1_next">
+                                                <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/GamingRoomWeb/src/Controller/EvenementController.php'|file_link(0) }}">src/Controller/EvenementController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/GamingRoomRepo/GamingRoomWeb/templates/evenement/index.html.twig'|file_link(0) }}">templates/evenement/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <a href="{{ path('evenement_new') }}">Create new</a>
 {% endblock %}

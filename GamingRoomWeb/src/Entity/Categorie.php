@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="categorie")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\CategorieRepository")
+ *
  */
 class Categorie
 {
@@ -27,6 +29,35 @@ class Categorie
      * @ORM\Column(name="nomcategorie", type="string", length=30, nullable=false)
      */
     private $nomcategorie;
+
+    public function getIdcat(): ?int
+    {
+        return $this->idcat;
+    }
+
+    public function getNomcategorie(): ?string
+    {
+        return $this->nomcategorie;
+    }
+
+    public function setNomcategorie(string $nomcategorie): self
+    {
+        $this->nomcategorie = $nomcategorie;
+
+        return $this;
+    }
+
+    public function getCtegorie(): ?string
+    {
+        return $this->nomcategorie;
+    }
+
+    public function setCtegorie(string $nomcategorie): self
+    {
+        $this->nomcategorie = $nomcategorie;
+
+        return $this;
+    }
 
 
 }

@@ -1,0 +1,60 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+    <img src="{{ asset('/images/evenement/' ~ evenement.image) }}">
+
+    <h1>Evenement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idevent</th>
+                <td>{{ evenement.idevent }}</td>
+            </tr>
+            <tr>
+                <th>Nomevent</th>
+                <td>{{ evenement.nomevent }}</td>
+            </tr>
+            <tr>
+                <th>Datedeb</th>
+                <td>{{ evenement.datedeb ? evenement.datedeb|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Datefin</th>
+                <td>{{ evenement.datefin ? evenement.datefin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ asset('/images/evenement/' ~ evenement.image)  }}" width="40px" height="40px"></td>
+            </tr>
+            <tr>
+                <th>NbremaxParticipant</th>
+                <td>{{ evenement.nbremaxParticipant }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ evenement.description }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ evenement.categorie.nomcategorie }}</td>
+            </tr>
+            <tr>
+                <th>Lieu</th>
+                <td>{{ evenement.lieu }}</td>
+            </tr>
+            <tr>
+                <th>Lienyoutube</th>
+                <td>{{ evenement.lienyoutube }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('evenement_index') }}">back to list</a>
+
+    <a href="{{ path('evenement_edit', {'idevent': evenement.idevent}) }}">edit</a>
+
+    {{ include('evenement/_delete_form.html.twig') }}
+{% endblock %}
