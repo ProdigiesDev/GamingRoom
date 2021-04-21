@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Evenement
@@ -26,6 +27,7 @@ class Evenement
      * @var string
      *
      * @ORM\Column(name="nomevent", type="string", length=30, nullable=false)
+     * @Assert\NotBlank(message="Titre requis")
      */
     private $nomevent;
 
@@ -33,6 +35,8 @@ class Evenement
      * @var \DateTime
      *
      * @ORM\Column(name="datedeb", type="date", nullable=false)
+     * @Assert\NotBlank(message="veuillez saisir une date")
+     * @Assert\GreaterThan("today")
      */
     private $datedeb;
 
@@ -40,6 +44,8 @@ class Evenement
      * @var \DateTime
      *
      * @ORM\Column(name="datefin", type="date", nullable=false)
+     * @Assert\NotBlank(message="veuillez saisir une date")
+     *@Assert\GreaterThan("today")
      */
     private $datefin;
 
@@ -47,6 +53,13 @@ class Evenement
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Titre requis")
+     *
+     * @Assert\Image(
+     *     allowLandscape = true,
+     *     allowPortrait = true
+     * )
+     *
      */
     private $image;
 
@@ -54,6 +67,8 @@ class Evenement
      * @var int
      *
      * @ORM\Column(name="nbremax_participant", type="integer", nullable=false)
+     * @Assert\NotBlank(message="Nombre de participant requis")
+     * @Assert\DivisibleBy(2)
      */
     private $nbremaxParticipant;
 
@@ -61,6 +76,12 @@ class Evenement
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Description requise")
+     * @Assert\Regex(
+     * pattern = "/^[a-z]+$/i",
+     *htmlPattern = "^[a-zA-Z]+$",
+     *message="'{{ value }}' doit etre une chaine de caractère"
+    )
      */
     private $description;
 
@@ -68,6 +89,7 @@ class Evenement
      * @var string|null
      *
      * @ORM\Column(name="lieu", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @Assert\NotBlank(message="lieu requis")
      */
     private $lieu = 'NULL';
 
@@ -75,6 +97,10 @@ class Evenement
      * @var string|null
      *
      * @ORM\Column(name="lienyoutube", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @Assert\NotBlank(message="URl requis")
+     *  @Assert\Url(
+     *    message = "The url '{{ value }}' is not a valid url",
+     * )
      */
     private $lienyoutube = 'NULL';
 
