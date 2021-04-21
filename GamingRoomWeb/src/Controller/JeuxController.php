@@ -11,9 +11,22 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
-
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 class JeuxController extends AbstractController
 {
+
+    private $encoders ;
+    private $normalizers;
+    private $serializer;
+    public function __construct()
+    {
+        $this->encoders= [ new JsonEncoder()];
+        $this->normalizers= [new ObjectNormalizer()];
+        $this->serializer= new Serializer($this->normalizers, $this->encoders);
+    }
+
     /**
      * @Route("/admin/jeux", name="adminJeux")
      */
@@ -26,7 +39,40 @@ class JeuxController extends AbstractController
             'jeux' => $jeux,
         ]);
     }
+
     
+    /**
+     * @Route("/jeux", name="userJeux")
+     */
+    
+    public function index2(): Response
+    {
+        return $this->render('jeux/list.html.twig');
+    }
+    
+    /**
+     * @Route("/api/jeux/all", name="apiAllJeux")
+     */
+    
+    public function all()
+    {
+        $jeuxRepository = $this->getDoctrine()->getRepository(Jeux::class);
+        $jeux=$jeuxRepository->getWebGames();
+        return new Response($this->serializer->serialize($jeux,'json'));
+    }
+    
+    /**
+     * @Route("/api/jeux/{filter}", name="apiJeux")
+     */
+    
+    public function search($filter)
+    {
+        $jeuxRepository = $this->getDoctrine()->getRepository(Jeux::class);
+        $jeux=$jeuxRepository->search($filter);
+        return new Response($this->serializer->serialize($jeux,'json'));
+    }
+
+
     /**
      * @Route("/admin/gerejeux/{id}", name="adminGereJeux")
      */

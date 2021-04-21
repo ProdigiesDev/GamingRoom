@@ -3,14 +3,23 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
 
 /**
  * Membre
  *
  * @ORM\Table(name="membre", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\MembreRepository")
+ * @UniqueEntity("email",
+ *    message="Cet email est déja utilisé" )
  */
-class Membre
+class Membre implements UserInterface
 {
     /**
      * @var int
@@ -25,6 +34,17 @@ class Membre
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=20, nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     * *  @Assert\Regex(
+     *     pattern = "/^[a-z]+$/i",
+     *     htmlPattern = "^[a-zA-Z]+$",
+     *     message="'{{ value }}' doit etre chaine de caractère"
+     * )
+     * @Assert\Length(min=3,
+     *       max = 20,
+     *      minMessage = "Cette chaine est trop courte.Elle doit avoir au minimum  {{ limit }} caractères",
+     *      maxMessage = "Cette chaine est trop longue.Ele ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     private $nom;
 
@@ -32,6 +52,17 @@ class Membre
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=20, nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     *   @Assert\Regex(
+     *     pattern = "/^[a-z]+$/i",
+     *     htmlPattern = "^[a-zA-Z]+$",
+     *     message="'{{ value }}' doit etre chaine de caractère"
+     * )
+     * @Assert\Length(min=3,
+     *       max = 20,
+     *      minMessage = "Cette chaine est trop courte.Elle doit avoir au minimum  {{ limit }} caractères",
+     *      maxMessage = "Cette chaine est trop longue.Ele ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     private $prenom;
 
@@ -39,6 +70,8 @@ class Membre
      * @var \DateTime
      *
      * @ORM\Column(name="date_naissance", type="date", nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     * @Assert\Date
      */
     private $dateNaissance;
 
@@ -46,6 +79,10 @@ class Membre
      * @var string
      *
      * @ORM\Column(name="genre", type="string", length=0, nullable=false)
+     *  @Assert\Choice(
+     *     choices = {"Homme", "Femme"},
+     *     message = "Choose a valid genre."
+     * )
      */
     private $genre;
 
@@ -53,6 +90,12 @@ class Membre
      * @var string
      *
      * @ORM\Column(name="numero_tel", type="string", length=8, nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     * @Assert\Length(8)
+     * @Assert\Regex(
+     *     pattern = "/^[0-9]+$/",
+     *     message="'{{ value }}' doit etre chaine des nombres"
+     * )
      */
     private $numeroTel;
 
@@ -60,6 +103,8 @@ class Membre
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     * @Assert\Email(message = "Veuillez saisir une adresse email valid .'{{ value }}' n'est pas valide ")
      */
     private $email;
 
@@ -67,6 +112,12 @@ class Membre
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champs")
+     * @Assert\Length(
+     *       min=6,
+     *       max = 20,
+     *      minMessage = "Le mot de passe et trop court.Il doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le mot de passe est trop long.Il ne doit pas dépasser {{ limit }} caractères")
      */
     private $password;
 
@@ -81,6 +132,10 @@ class Membre
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=0, nullable=false)
+     *   @Assert\Choice(
+     *     choices = {"Coach", "Membre"},
+     *     message = "Choose a valid role."
+     * )
      */
     private $role;
 
@@ -95,8 +150,13 @@ class Membre
      * @var string|null
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"="NULL"})
+     *  @Assert\Length(min=0,
+     *       max = 255,
+     *      minMessage = "La description est courte.Elle doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "La description est trop longue.Ele ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var bool
@@ -280,9 +340,10 @@ class Membre
         return $this;
     }
 
+
     public function getLastTimeban(): ?\DateTimeInterface
     {
-        return $this->lastTimeban;
+        return $this->lastTimeban=="NULL"  ? null : $this->lastTimeban;
     }
 
     public function setLastTimeban(?\DateTimeInterface $lastTimeban): self
@@ -293,4 +354,26 @@ class Membre
     }
 
 
+    public function getRoles()
+    {
+        $roles =[ $this->role];
+        if($this->role=="Admin")
+            $roles[] = 'ROLE_ADMIN';
+        return array_unique($roles);
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
 }

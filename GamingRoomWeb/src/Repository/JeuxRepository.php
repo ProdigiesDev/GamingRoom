@@ -22,19 +22,32 @@ class JeuxRepository extends ServiceEntityRepository
     // /**
     //  * @return Jeux[] Returns an array of Jeux objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function search($value)
     {
-        return $this->createQueryBuilder('j')
-            ->andWhere('j.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('j.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $qr=$this->createQueryBuilder('j')
+        ->where("j.typePlateforme =  :plat")
+        ->setParameter('val', "%$value%")
+        ->andwhere('j.nom LIKE  :val or j.description LIKE  :val')
+        ->setParameter('plat', "Web")
+        ->getQuery();
+        return 
+            $qr->getResult()
         ;
     }
-    */
+
+    
+    public function getWebGames()
+    {
+        $qr=$this->createQueryBuilder('j')
+        ->where("j.typePlateforme =  :plat")
+        ->setParameter('plat', "Web")
+        ->getQuery();
+        return 
+            $qr->getResult()
+        ;
+    }
+    
 
     /*
     public function findOneBySomeField($value): ?Jeux
