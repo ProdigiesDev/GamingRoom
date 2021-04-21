@@ -3,9 +3,9 @@
 {% block title %}New Evenement{% endblock %}
 
 {% block body %}
-    <h1>Create new Evenement</h1>
+    <h1>Entrer les données du nouvel evenement</h1>
 
     {{ include('evenement/_form.html.twig') }}
 
-    <a href="{{ path('evenement_index') }}">back to list</a>
+    <a style="width: 100px;align-items: center"  type="button" class="btn btn-primary" href="{{ path('evenement_index') }}">back to list</a>
 {% endblock %}
