@@ -13,6 +13,11 @@
                 <th>Idevent</th>
                 <td>{{ evenement.idevent }}</td>
             </tr>
+
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ asset('/images/evenement/' ~ evenement.image)  }}" width="40px" height="40px"></td>
+            </tr>
             <tr>
                 <th>Nomevent</th>
                 <td>{{ evenement.nomevent }}</td>
@@ -25,10 +30,7 @@
                 <th>Datefin</th>
                 <td>{{ evenement.datefin ? evenement.datefin|date('Y-m-d') : '' }}</td>
             </tr>
-            <tr>
-                <th>Image</th>
-                <td><img src="{{ asset('/images/evenement/' ~ evenement.image)  }}" width="40px" height="40px"></td>
-            </tr>
+
             <tr>
                 <th>NbremaxParticipant</th>
                 <td>{{ evenement.nbremaxParticipant }}</td>
