@@ -1,4 +1,247 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+
+{% block stylesheets %}
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/toastr/toastr.min.css')}}">
+{% endblock %}
+
+<div class="card card-warning">
+    <div class="card-header">
+        <h3 class="card-title"></h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        {{ form_start(form,{'attr':{'novalidate': 'novalidate'}})}}
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Titre</label>
+                        {{ form_widget(form.nomevent,{'attr':{'class':'form-control','placeholder':'Titre'}}) }}
+                        {% if form_errors(form.nomevent) %}
+                            <div role="alert">
+                                {{ form_errors(form.nomevent) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Image</label>
+                        {{ form_widget(form.image,{'attr':{'class':'form-control'}}) }}
+                        {% if form_errors(form.image) %}
+                            <div class="alert alert-warning" role="alert">
+                                {{ form_errors(form.image) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Date début</label>
+                        <div  id="dateStart" data-target-input="nearest">
+                            <div class="input-group-append" data-target="#dateStart" data-toggle="datetimepicker">{{ form_widget(form.datedeb) }}
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                            {% if form_errors(form.datedeb) %}
+                                <div class="alert alert-warning" role="alert">
+                                    {{ form_errors(form.datedeb) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Date fin</label>
+                        <div id="dateEnd" data-target-input="nearest">
+                            <div class="input-group-append" data-target="#dateEnd" data-toggle="datetimepicker">{{ form_widget(form.datefin) }}
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                            {% if form_errors(form.datefin) %}
+                                <div class="alert alert-warning" role="alert">
+                                    {{ form_errors(form.datefin) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Nombre maximale de participants</label>
+                        {{ form_widget(form.nbremaxParticipant,{'attr':{'class':'form-control','placeholder':'Nombre paire requis'}}) }}
+                        {% if form_errors(form.nbremaxParticipant) %}
+                            <div class="alert alert-warning" role="alert">
+                                {{ form_errors(form.nbremaxParticipant) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        {{ form_widget(form.categorie,{'attr':{'class':'form-control'}}) }}
+                        {% if form_errors(form.categorie) %}
+                            <div class="alert alert-warning" role="alert">
+                                {{ form_errors(form.categorie) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Lieu</label>
+                        {{ form_widget(form.lieu,{'attr':{'class':'form-control','placeholder':'Online'}}) }}
+                        {% if form_errors(form.lieu) %}
+                            <div class="alert alert-warning" role="alert">
+                                {{ form_errors(form.lieu) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Lien youtube</label>
+                        {{ form_widget(form.lienyoutube,{'attr':{'class':'form-control','placeholder':'Http://'}}) }}
+                        {% if form_errors(form.lienyoutube) %}
+                            <div class="alert alert-warning" role="alert">
+                                {{ form_errors(form.lienyoutube) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Description</label>
+                        {{ form_widget(form.description,{'attr':{'class':'form-control','placeholder':'description'}}) }}
+
+                    </div>
+                </div>
+            </div>
+
+        <button type="submit" class="btn btn-primary toastsDanger"  style="width: 100px;">{{ button_label|default('Save') }}</button>
+        {{ form_end(form) }}
+
+    </div>
+    <!-- /.card-body -->
+</div>
+
+<button type="button" class="btn btn-danger toastsDefaultDanger">
+    Launch Danger Toast
+</button>
+
+<!--<a  type="button" class="btn btn-app" >"
+        <i class="fas fa-save"></i>
+    </a>-->
+
+{% block javascripts %}
+    <!-- jQuery -->
+    <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+    <!-- Select2 -->
+    <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+    <!-- date-range-picker -->
+    <script src="{{asset('assets/plugins/daterangepicker/daterangepicker.js')}}"></script>
+
+    <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
+
+    <script src="{{asset('assets/dist/js/demo.js')}}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="{{asset('assets/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js')}}"></script>
+    <!-- InputMask -->
+    <script src="{{asset('assets/plugins/moment/moment.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+    <!-- bootstrap color picker -->
+    <script src="{{asset('assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{{asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js')}}"></script>
+    <!-- Bootstrap Switch -->
+    <script src="{{asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"></script>
+    <!-- BS-Stepper -->
+    <script src="{{asset('assets/plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
+    <!-- dropzonejs -->
+    <script src="{{asset('assets/plugins/dropzone/min/dropzone.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/toastr/toastr.min.js')}}"></script>
+
+    <script>
+        $(function () {
+            $('#dateStart').datetimepicker({
+                format: 'L',
+                allowInputToggle: true,
+                format: 'YYYY-MM-DD'
+            });
+
+            $('#dateEnd').datetimepicker({
+                format: 'L',
+                allowInputToggle: true,
+                format: 'YYYY-MM-DD'
+            });
+        });
+
+
+
+
+
+
+        $(function() {
+alert('aaa');
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+
+            $('.toastsDefaultDanger').click(function() {
+                alert("aaa")
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+        });
+
+
+        $('.toastsDanger').click(function() {
+            {% if form_errors(form.nomevent) %}
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: {{ form_errors(form.nomevent) }}
+                })
+
+            {% endif %}
+            {% if form_errors(form.datedeb) %}
+            $(document).Toasts('create', {
+                class: 'bg-danger',
+                title: 'Toast Title',
+                subtitle: 'Subtitle',
+                body: {{ form_errors(form.datedeb) }}
+            })
+
+            {% endif %}
+        });
+    </script>
+{% endblock %}
