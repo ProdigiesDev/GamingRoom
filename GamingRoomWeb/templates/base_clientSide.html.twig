@@ -66,12 +66,18 @@
         {% endblock %}
     </head>
     <body>
-        
+        {% block content %}{% endblock %}
         {% include 'base_header.html.twig' %}
+        {% block bannertop %}
+
+        {% endblock %}
 
         {% block body %}{% endblock %}
-
+        {% block contentfin %} {% endblock %}
         {% include 'base_footer.html.twig' %}
+
+
+
 
     </body>
     
@@ -134,3 +140,4 @@
     <!-- END: Scripts -->
 
 </html>
+

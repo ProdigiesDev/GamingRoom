@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 
 class MembreController extends AbstractController
 {
@@ -103,5 +104,29 @@ class MembreController extends AbstractController
         }
 
         return $this->redirectToRoute('membre_index');
+    }
+
+    /**
+     * @var Security
+     */
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+    /**
+     * @Route("/profil/{id}", name="profil", methods={"GET"})
+     */
+    public function AfficherProfil() : Response
+    {
+        $user = $this->security->getUser(); // null or UserInterface, if logged in
+        // ... do whatever you want with $user
+        if(!$user){
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('membre/profil.html.twig', [
+            'user' => $user,
+        ]);
     }
 }
