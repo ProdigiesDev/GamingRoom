@@ -41,19 +41,18 @@ class EvenementController extends AbstractController
                 $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
                 $file->move ($this->getParameter('images_directory'),$fileName);
                 $evenement->setImage($fileName);
-                $evenement->setImage($fileName);
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($evenement);
                 $entityManager->flush();
 
                 return $this->redirectToRoute('evenement_index');
-            }
+        }
 
-            return $this->render('evenement/new.html.twig', [
-                'evenement' => $evenement,
-                'form' => $form->createView(),
-            ]);
+        return $this->render('evenement/new.html.twig', [
+            'evenement' => $evenement,
+            'form' => $form->createView(),
+        ]);
         }
 
 
@@ -123,6 +122,13 @@ class EvenementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form->get('image')->getData();
+            $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
+            $file->move ($this->getParameter('images_directory'),$fileName);
+            $evenement->setImage($fileName);
+
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('evenement_index');
