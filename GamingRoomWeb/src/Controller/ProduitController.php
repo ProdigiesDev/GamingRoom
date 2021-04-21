@@ -3,31 +3,72 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Entity\RechercheProd;
 use App\Form\ProduitType;
+use App\Form\RechercheproduitType;
+use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use GuzzleHttp\Psr7\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonRespImageonse;
+use Knp\Component\Pager\PaginatorInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
-/**
- * @Route("/produit")
- */
 class ProduitController extends AbstractController
 {
     /**
-     * @Route("/", name="produit_index", methods={"GET"})
+     * @Route("/produit_index", name="produit_index")
      */
-    public function index(): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
-        $produits = $this->getDoctrine()
-            ->getRepository(Produit::class)
-            ->findAll();
-// taamel affichage mta ay haja mawjoud
-        return $this->render('produit/index.html.twig', [
-            'produits' => $produits,
-        ]);
+        $rechercheprod= new RechercheProd();
+        $form = $this->createForm(RechercheproduitType ::class, $rechercheprod);
+        $form->handleRequest($request);
+
+
+        $produits= [];
+        if($form->isSubmitted() && $form->isValid()) {
+            //on récupère le type de suggestion tapé dans le formulaire
+            $desc = $rechercheprod->getDesc();
+
+            if ($desc!="")
+                //si on a fourni un type on affiche tous les suggestions ayant ce nom
+                $produits= $this->getDoctrine()->getRepository(Produit::class)->findBy(['libelle' => $desc] );
+            $produits = $paginator->paginate(
+                $produits, // Requête contenant les données à paginer (ici nos articles)
+                $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+                3 // Nombre de résultats par page
+            );
+
+            return $this->render('produit/index.html.twig', [
+                'produits' => $produits,
+
+                'form' => $form->createView(),
+
+            ]);}
+
+        else
+            $produits = $this->getDoctrine()
+                ->getRepository(Produit::class)
+                ->findAll();
+        $produits = $paginator->paginate(
+            $produits, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            3 // Nombre de résultats par page
+        );
+            return $this->render('produit/index.html.twig', [
+                'produits' => $produits,
+
+
+                'form' => $form->createView(),
+
+            ]);
+
+
+
     }
 
     /**
@@ -108,4 +149,93 @@ class ProduitController extends AbstractController
 
         return $this->redirectToRoute('produit_index');
     }
+
+
+
+
+    /**
+     * @Route("/listp", name="produit_list", methods={"GET"})
+     */
+    public  function  listp (ProduitRepository $produitRepository):Response{
+
+    // Configure Dompdf according to your needs
+    $pdfOptions = new Options();
+    $pdfOptions->set('defaultFont', 'Arial');
+
+    // Instantiate Dompdf with our options
+    $dompdf = new Dompdf($pdfOptions);
+
+    $produits= $produitRepository->findAll();
+
+
+    // Retrieve the HTML generated in our twig file
+    $html = $this->renderView('produit/listeP.html.twig',['produits'=>$produits,
+    ]);
+
+    // Load HTML to Dompdf
+    $dompdf->loadHtml($html);
+
+    // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render the HTML as PDF
+    $dompdf->render();
+
+    // Output the generated PDF to Browser (force download)
+    $dompdf->stream("mypdf.pdf", [
+        "Attachment" => true
+    ]);
+
+
+
+
+
+
+}
+
+    /**
+     * @Route("/rechprod", name="rechprod")
+     */
+    public function rechercherProd(Request $request,ProduitRepository $produitRepository): Response
+
+    {   $rechercheprod= new RechercheProd();
+        $form = $this->createForm(RechercheproduitType ::class, $rechercheprod);
+        $form->handleRequest($request);
+
+
+        $produits= [];
+        if($form->isSubmitted() && $form->isValid()) {
+            //on récupère le type de suggestion tapé dans le formulaire
+            $desc = $rechercheprod->getDesc();
+
+            if ($desc!="")
+                //si on a fourni un type on affiche tous les suggestions ayant ce nom
+                $produits= $this->getDoctrine()->getRepository(Produit::class)->findBy(['description' => $desc] );
+
+
+            return $this->render('produit/index.html.twig', [
+                'produits' => $produits,
+
+                'form' => $form->createView(),
+
+            ]);}
+
+        else
+            return $this->render('produit/index.html.twig', [
+                'produits' => $produitRepository->findAll(),
+
+
+                'form' => $form->createView(),
+
+            ]);
+    }
+
+
+
+
+
+
+
+
+
 }

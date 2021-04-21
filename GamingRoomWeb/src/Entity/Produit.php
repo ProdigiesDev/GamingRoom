@@ -37,6 +37,10 @@ class Produit
     /**
      * @var string
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern     = "/^[a-z]+$/i",
+     *     htmlPattern = "[a-zA-Z]+"
+     * )
      * @ORM\Column(name="libelle", type="string", length=50, nullable=false)
      */
     private $libelle;
@@ -48,6 +52,10 @@ class Produit
      *     type="float",
      *     message="The value {{ value }} is not a valid {{ type }}."
      * )
+
+
+     * @Assert\Positive
+
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
      */
     private $prix;
@@ -55,6 +63,10 @@ class Produit
     /**
      * @var string
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern     = "/^[a-z]+$/i",
+     *     htmlPattern = "[a-zA-Z]+"
+     * )
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;

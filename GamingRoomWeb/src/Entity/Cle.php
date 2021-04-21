@@ -26,7 +26,7 @@ class Cle
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="code", type="string", length=50, nullable=false)
      */
     private $code;
