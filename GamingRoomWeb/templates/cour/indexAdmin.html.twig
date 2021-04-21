@@ -1,24 +1,34 @@
 {% extends 'base_admin.html.twig' %}
 
 {% block title %}Cour index{% endblock %}
+
  {% block stylesheets %}
      <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
      <link rel="stylesheet" href="{{asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
      <link rel="stylesheet" href="{{asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
  {% endblock %}
 
+
 {% block body %}
     <!-- Main content -->
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header" >
+                            {% for message in app.flashes('info') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
                             <h3 class="card-title">Cours</h3>
                         </div>
                         <!-- /.card-header -->
+
                         <div class="card-body">
+
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -111,7 +121,7 @@
                             </div>
                         </div>
                         <button type="button" class="btn btn-outline-primary btn-block">
-                            <i class="fa fa-plus"></i> <a href="{{ path('cour_new_admin') }}">Ajouter un cour</a>
+                            <i class="fa fa-plus"></i> <a href="{{ path('cour_new_admin') }}">Ajouter un cours</a>
                         </button>
                         <!-- /.card-body -->
                     </div>

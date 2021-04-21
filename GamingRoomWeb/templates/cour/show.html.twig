@@ -6,10 +6,13 @@
     <h1> {{cour.nomcours }} </h1>
     <p>
 
+    <div>
+    <img src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="500px" height="300px" >
 
-        <img src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="500px" height="300px" >
-        <embed src="{{cour.lienyoutube}}" allowfullscreen="true" width="700" height="300">
-        <iframe width="560" height="315" src="{{cour.lienyoutube}}"title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="900" height="315" src="{{cour.lienyoutube}}"title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</div>
+
     </p>
 
 

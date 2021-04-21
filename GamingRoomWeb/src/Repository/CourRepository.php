@@ -59,13 +59,13 @@ class CourRepository extends ServiceEntityRepository
     }
     */
 
-    public function findCoursByTitre($nomcours)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.nomcours LIKE :val')
-            ->setParameter('val', $nomcours)
+
+
+    public function findOffreByNsc($nomcours){
+        return $this->createQueryBuilder('cour')
+            ->where('cour.nomcours LIKE :nomcours')
+            ->setParameter('nomcours', '%'.$nomcours.'%')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 }

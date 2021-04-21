@@ -22,6 +22,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class CourController extends AbstractController
 {
+
     /**
      * @Route("/", name="cour_index", methods={"GET"})
      */
@@ -89,6 +90,9 @@ class CourController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();//récupérer l’entity manager
             $entityManager->persist($cour);//pour l‘ajout d’un nouvel objet
             $entityManager->flush();//envoyer la maj à la bd
+            $this->addFlash(
+                'info','Added succesfully'
+            );
 
             return $this->redirectToRoute('cour_index_admin'); //redirection apres l'ajout
         }
@@ -100,6 +104,18 @@ class CourController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/rechreche",name="rechrecheCour")
+     */
+    public function rechreche(Request $request, NormalizerInterface $Normalizer)
+    {
+        $repository = $this->getDoctrine()->getRepository(Cour::class);
+        $requestString = $request->get('searchValue');
+        $offres = $repository->findOffreByNsc($requestString);
+        $jsonContent = $Normalizer->normalize($offres, 'json');
+
+        return new Response(json_encode($jsonContent));
+    }
     /**
      * @Route("/{id}", name="cour_show", methods={"GET"})
      */
@@ -164,6 +180,9 @@ class CourController extends AbstractController
             $file->move($this->getParameter('cours_directory'),$fileName);
             $cour->setImagecours($fileName);
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(
+                'info','uptated succesfully'
+            );
 
 
             return $this->redirectToRoute('cour_index_admin');
@@ -201,18 +220,7 @@ class CourController extends AbstractController
 
         return $this->redirectToRoute('cour_index_admin');
     }
-   /**
-    * @Route("cour/rechreche", name="recherche_cour")
-     * @throws ExceptionInterface
-     */
-    public function rechercheCours(Request $request, NormalizerInterface $normalizer)
-    {
-        $recherche = $request->get("valeurRecherche");
-        $nomcours = $this->getDoctrine()->getRepository(Cour::class)->findCoursByTitre($recherche);
-        $jsonContent = $normalizer->normalize($nomcours, 'json', ['groups' => 'post:read',]);
-        $retour = json_encode($jsonContent);
-        return new Response($retour);
-    }
+
 
 
 

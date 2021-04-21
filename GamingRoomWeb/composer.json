@@ -10,6 +10,7 @@
         "doctrine/doctrine-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.8",
+        "knplabs/knp-paginator-bundle": "5.x-dev",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.4.*",
@@ -39,6 +40,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "laravel/dusk": "^5.0",
         "symfony/browser-kit": "^4.4",
         "symfony/css-selector": "^4.4",
         "symfony/debug-bundle": "^4.4",
@@ -57,6 +59,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Acme\\Bundle\\BlogBundle\\": "src/Acme/Bundle/BlogBundle",
             "App\\": "src/"
         }
     },
@@ -93,5 +96,6 @@
             "allow-contrib": false,
             "require": "4.4.*"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
