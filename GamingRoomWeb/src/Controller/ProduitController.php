@@ -230,6 +230,27 @@ class ProduitController extends AbstractController
             ]);
     }
 
+    /**
+     * @Route("/StatProduit", name="StatProduit")
+     */
+    public function StatProduit(): Response
+    {
+
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+        $libelle = [];
+        $prix = [];
+        foreach ($produits as $produit) {
+            $libelle [] = $produit->getLibelle();
+            $prix [] = $produit->getPrix();
+        }
+        return $this->render('produit/StatProduit.html.twig', [
+            'libelle' => json_encode($libelle),
+            'prix' => json_encode($prix)
+        ]);
+    }
+
+
+
 
 
 
