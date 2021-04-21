@@ -13,16 +13,25 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Knp\Component\Pager\PaginatorInterface;
 
 class MembreController extends AbstractController
 {
     /**
      * @Route("/admin/member", name="membre_index", methods={"GET"})
      */
-    public function index(MembreRepository $membreRepository): Response
+    public function index(MembreRepository $membreRepository,Request $request,PaginatorInterface $paginator): Response
     {
+        $membre = $paginator->paginate(
+        // Doctrine Query, not results
+            $membreRepository->findAll(),
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+        );
         return $this->render('membre/index.html.twig', [
-            'membres' => $membreRepository->findAll(),
+            'membres' => $membre,
         ]);
     }
 
