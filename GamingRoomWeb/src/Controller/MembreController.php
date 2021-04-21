@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class MembreController extends AbstractController
 {
@@ -128,5 +130,33 @@ class MembreController extends AbstractController
         return $this->render('membre/profil.html.twig', [
             'user' => $user,
         ]);
+    }
+    /**
+     * @Route("/admin/member/pdf", name="membre_pdf", methods={"GET"})
+     */
+    public function membrePdf(MembreRepository $membreRepository): Response
+    {
+
+       $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        $dompdf = new Dompdf($pdfOptions);
+
+            $membres = $membreRepository->findAll();
+
+
+        $html = $this->renderView('membre/pdf.html.twig', [
+            'membres' => $membres,
+        ]);
+
+        $dompdf->loadHtml($html);
+
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+       /* return $this->render('membre/pdf.html.twig',['membres'=> $membreRepository->findAll()]);*/
+
     }
 }

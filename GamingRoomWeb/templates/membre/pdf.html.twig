@@ -1,0 +1,48 @@
+
+
+    <div class="card">
+                        <div class="card-header  bg-primary text-white">
+                            <h3 class="card-title">Liste des Membres</h3>
+                        </div>
+           <table>
+
+                                           <thead>
+                                            <tr role="row">
+                                                <th>Id</th>
+                                                <th>Nom</th>
+                                                <th>Prenom</th>
+                                                <th>Sexe</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Active</th>
+                                                <th>BanDuration</th>
+                                                <th>LastTimeban</th>
+                                                <th>actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for membre in membres %}
+                                                <tr>
+                                                    <td>{{ membre.id }}</td>
+                                                    <td>{{ membre.nom }}</td>
+                                                    <td>{{ membre.prenom }}</td>
+                                                    <td>{{ membre.genre }}</td>
+                                                    <td>{{ membre.email }}</td>
+                                                    <td>{{ membre.role }}</td>
+                                                    <td>{{ membre.active ? 'Yes' : 'No' }}</td>
+                                                    <td>{{ membre.banDuration }}</td>
+                                                    <td>{{ membre.lastTimeban ? membre.lastTimeban|date('Y-m-d H:i:s') : '' }}</td>
+
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="16">no records found</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table></div>
+
+
+
+
+
