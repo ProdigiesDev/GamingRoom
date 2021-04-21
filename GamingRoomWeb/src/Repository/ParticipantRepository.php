@@ -47,4 +47,51 @@ class ParticipantRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findOneByME($e,$m): ?array
+    {
+        /*$qb = $this->getEntityManager()->createQueryBuilder('p');
+        $qb->select('p')
+            ->from('App\Entity\Participant', 'p')
+            ->where('p.evenement = ?1')
+            ->andWhere('p.member = ?2')
+            ->setParameter(1, $e)
+            ->setParameter(2, $m);*/
+        $qb = $this->getEntityManager()->createQuery('SELECT p FROM App\Entity\Participant p WHERE  p.member = :m AND p.evenement = :e ');
+        $qb->setParameter('e', $e);
+        $qb->setParameter('m', $m);
+        return $qb->getResult();
+
+    }
+
+    public function delete($e,$m): ?int
+    {
+        /*$qb = $this->getEntityManager()->createQueryBuilder('p');
+        $qb->select('p')
+            ->from('App\Entity\Participant', 'p')
+            ->where('p.evenement = ?1')
+            ->andWhere('p.member = ?2')
+            ->setParameter(1, $e)
+            ->setParameter(2, $m);*/
+        $qb = $this->getEntityManager()->createQuery('DELETE FROM App\Entity\Participant p WHERE  p.member = :m AND p.evenement = :e ');
+        $qb->setParameter('e', $e);
+        $qb->setParameter('m', $m);
+        return $qb->getResult();
+
+    }
+
+    public function updateRound($idp): ?int
+    {
+        /*$qb = $this->getEntityManager()->createQueryBuilder('p');
+        $qb->select('p')
+            ->from('App\Entity\Participant', 'p')
+            ->where('p.evenement = ?1')
+            ->andWhere('p.member = ?2')
+            ->setParameter(1, $e)
+            ->setParameter(2, $m);*/
+        $qb = $this->getEntityManager()->createQuery('UPDATE App\Entity\Participant p set p.round=p.round+1 WHERE  p.id = :id');
+        $qb->setParameter('id', $idp);
+        return $qb->getResult();
+
+    }
 }
