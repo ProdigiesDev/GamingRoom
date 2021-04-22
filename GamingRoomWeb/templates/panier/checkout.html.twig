@@ -1,0 +1,145 @@
+
+{% extends 'base_clientSide.html.twig' %}
+
+
+{% block body %}
+<form action="/checkout" methode="POST">
+    <div class="container youplay-content">
+
+        <div class="col-md-9">
+            <!-- Billing Information -->
+            <h2 class="mt-0">Billing Details</h2>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p>First Name:</p>
+                    <div class="youplay-input">
+                        <input type="text" name="billing_firstname" placeholder="First Name">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <p>Last Name:</p>
+                    <div class="youplay-input">
+                        <input type="text" name="billing_lastname" placeholder="Last Name">
+                    </div>
+                </div>
+            </div>
+
+            <p>Address:</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="youplay-input">
+                        <input type="text" name="billing_street" placeholder="Street Address">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="youplay-input">
+                        <input type="text" name="billing_apartment" placeholder="Apartment, suite, unit etc.">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <p>City:</p>
+                    <div class="youplay-input">
+                        <input type="text" name="billing_city" placeholder="City">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>Country:</p>
+                    <div class="youplay-input">
+                        <input type="text" name="billing_country" placeholder="Country">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>Postcode:</p>
+                    <div class="youplay-input">
+                        <input type="text" name="billing_postcode" placeholder="Postcode">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Email:</p>
+                    <div class="youplay-input">
+                        <input type="text" name="billing_email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <p>Phone:</p>
+                    <div class="youplay-input">
+                        <input type="text" name="billing_phone" placeholder="Phone">
+                    </div>
+                </div>
+            </div>
+
+            <p>Additional Info:</p>
+            <div class="youplay-textarea">
+                <textarea name="billing_textarea" rows="5" placeholder="Additional Info"></textarea>
+            </div>
+
+            <div class="youplay-checkbox">
+                <input type="checkbox" name="create_account" id="checkbox1" checked>
+                <label for="checkbox1">Create an account?</label>
+            </div>
+            <!-- /Billing Information -->
+
+
+            <!-- Cart -->
+            <h2>Your Games in Cart</h2>
+
+                {% for item in items %}
+            <!-- Single Product Block -->
+            <div class="item angled-bg">
+                <div class="row">
+                    <div class="col-xs-6 col-md-9">
+                        <h4 class="ml-20">{{item.produit.libelle }}</h4>
+                    </div>
+                    <div class="col-xs-6 col-md-3 align-right">
+                        <div class="price">
+                             <span class="quantity">{{ item.quantity }} × <span class="amount">{{ item.produit.Prix }}DT</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Single Product Block -->
+        {% endfor %}
+
+            <div class="align-right h3 mr-20 mb-20">
+                Total: <strong>{{total}}DT</strong>
+            </div>
+            <!-- Cart -->
+
+
+            <!-- Payment Type -->
+            <h2>Payment Type</h2>
+            <div class="youplay-radio">
+                <input type="radio" name="payment_type" value="bank" id="radio1">
+                <label for="radio1">Direct Bank Transfer</label>
+            </div>
+            <div class="youplay-radio">
+                <input type="radio" name="payment_type" value="cheque" id="radio2">
+                <label for="radio2">Cheque Payment</label>
+            </div>
+            <div class="youplay-radio">
+                <input type="radio" name="payment_type" value="paypal" id="radio3" checked>
+                <label for="radio3">PayPal</label>
+            </div>
+            <!-- /Payment Type -->
+
+
+            <!-- Order Button -->
+            <div class="align-right">
+                <button type="submit" class="btn btn-lg">Place Order</button>
+            </div>
+            <!-- /Order Button -->
+        </div>
+
+        <!-- /Right Side -->
+
+    </div>
+</form>
+{% endblock %}

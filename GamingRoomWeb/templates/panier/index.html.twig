@@ -1,7 +1,5 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_clientSide.html.twig' %}
 
-{% block title %}Hello CartController!
-{% endblock %}
 
 {% block body %}
     <div class="bg-light p-3">
@@ -12,6 +10,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Image</th>
                     <th>Produit</th>
                     <th>Prix</th>
                     <th>Quantité</th>
@@ -22,18 +21,25 @@
             <tbody>
                 {% for item in items %}
                  <tr>
+                    <td><img src="{{asset('images/panier/')}}{{ item.produit.image }}"  width="200" height="200" /></td>
                     <td>{{ item.produit.libelle }}</td>
                     <td>{{ item.produit.Prix }}</td>
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.produit.Prix * item.quantity }}</td>
                     <td>
-                        <a href="#" class="btn btn-danger btn-sm">
+                        <a href="{{ path('panier_supprime', {'id': item.produit.idprod}) }}" class="btn btn-danger btn-sm">
                             <i class="fas fa-trash"></i>
                         </a>
                     </td>
                  </tr>
                 {% endfor %}
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-right">Total:
+                    </td>
+                    <td>{{ total }}</td>
+                </tr>
         </table>
     {% else %}
         <p>Surprise, c'est vide !</p>

@@ -32,7 +32,14 @@
         <link rel="stylesheet" href="{{asset('assets/plugins/daterangepicker/daterangepicker.css')}}">
         <!-- summernote -->
         <link rel="stylesheet" href="{{asset('assets/plugins/summernote/summernote-bs4.min.css')}}">
-
+        <style>
+                .alert{
+                    width: fit-content;
+                    position: relative;
+                    top: 10px;
+                    left: 10px;
+                }
+        </style>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
     
@@ -47,8 +54,25 @@
 
 
             {% include 'aside.html.twig' %}
-            {% block body %}{% endblock %}
-
+            
+            <div class="content-wrapper">
+                {% for message in app.flashes('errors') %}
+                <div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                 
+                  <i class="icon fas fa-ban"></i> {{message}}
+                </div>
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+               
+                  
+                   <i class="icon fas fa-check"></i>  {{message}}
+                </div>
+                {% endfor %}
+                {% block body %}{% endblock %}
+            </div>
             
             <footer class="main-footer">
                 <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>

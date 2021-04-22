@@ -52,5 +52,58 @@ class Notification
      */
     private $to;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): ?int
+    {
+        return $this->title;
+    }
+
+    public function setTitle(int $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getBody(): ?int
+    {
+        return $this->body;
+    }
+
+    public function setBody(int $body): self
+    {
+        $this->body = $body;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getTo(): ?Membre
+    {
+        return $this->to;
+    }
+
+    public function setTo(?Membre $to): self
+    {
+        $this->to = $to;
+
+        return $this;
+    }
+
 
 }

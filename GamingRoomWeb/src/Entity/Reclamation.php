@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="reclamation", indexes={@ORM\Index(name="fk_member_rec", columns={"membre_id"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass=ReclamationRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\ReclamationRepository")
  */
 class Reclamation
 {
@@ -45,6 +45,47 @@ class Reclamation
      * })
      */
     private $membre;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getSujet(): ?string
+    {
+        return $this->sujet;
+    }
+
+    public function setSujet(string $sujet): self
+    {
+        $this->sujet = $sujet;
+
+        return $this;
+    }
+
+    public function getContenue(): ?string
+    {
+        return $this->contenue;
+    }
+
+    public function setContenue(string $contenue): self
+    {
+        $this->contenue = $contenue;
+
+        return $this;
+    }
+
+    public function getMembre(): ?Membre
+    {
+        return $this->membre;
+    }
+
+    public function setMembre(?Membre $membre): self
+    {
+        $this->membre = $membre;
+
+        return $this;
+    }
 
 
 }

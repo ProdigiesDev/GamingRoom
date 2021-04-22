@@ -66,7 +66,13 @@
         {% endblock %}
     </head>
     <body>
+        
+        {% include 'base_header.html.twig' %}
+
         {% block body %}{% endblock %}
+
+        {% include 'base_footer.html.twig' %}
+
     </body>
     
     

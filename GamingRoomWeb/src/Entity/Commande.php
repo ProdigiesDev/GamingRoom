@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Commande
 {
+
+    public function __construct()
+    {
+        $this->datecommande = new \DateTime(); 
+    }
+
     /**
      * @var int
      *
@@ -25,9 +31,9 @@ class Commande
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datecommande", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="datecommande", type="datetime", nullable=false)
      */
-    private $datecommande = 'current_timestamp()';
+    private $datecommande ;
 
     /**
      * @var string
