@@ -21,6 +21,18 @@ class ProduitRepository extends ServiceEntityRepository
         $this->paginator=$paginator;
     }
 
+    public function sortLibelle(): array{
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.libelle' , 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function sortPrix(): array{
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.prix' , 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Produit[] Returns an array of Produit objects
     //  */

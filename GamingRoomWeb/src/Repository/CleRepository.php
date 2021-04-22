@@ -19,22 +19,23 @@ class CleRepository extends ServiceEntityRepository
         parent::__construct($registry, Cle::class);
     }
 
+
     // /**
     //  * @return Cle[] Returns an array of Cle objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByID($value)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+            ->andWhere('c.$idcle = :val')
             ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
+
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Cle

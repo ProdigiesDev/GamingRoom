@@ -1,35 +1,71 @@
 {% extends 'base_admin.html.twig' %}
-{% block title %}Liste Clés{% endblock %}
-
 {% block body %}
-    <h1>Liste Clés</h1>
-    <a href="{{ path('cle_new') }}"><button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>create</span></button></a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Idcle</th>
-                <th>Code</th>
-                <th>ProduitId</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for cle in cles %}
-            <tr>
-                <td>{{ cle.idcle }}</td>
-                <td>{{ cle.code }}</td>
-                <td>{{ cle.produitId }}</td>
-                <td>
-                    <a href="{{ path('cle_show', {'idcle': cle.idcle}) }}"><button type="button" class="btn btn-outline-info">afficher</button></a>
-                    <a href="{{ path('cle_edit', {'idcle': cle.idcle}) }}"><button type="button" class="btn btn-outline-warning">modifier</button></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <center><input type="text" id="search" placeholder="CHERCHER CLE..."></center>
+
+
+    <a href="{{ path('cle_new') }}"><button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>create</span></button></a>
+
+    <center>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="table-responsive" id="source0">
+                    <table class="table table-bordered"  width="100%" cellspacing="0" id="tableac">
+
+                        <tr>
+                            <th>Idcle</th>
+                            <th>Code</th>
+                            <th>ProduitId</th>
+                            <th>actions</th>
+                        </tr>
+                        <tbody>
+                        {% for cle in cles %}
+                            <tr>
+                                <td>{{ cle.idcle }}</td>
+                                <td>{{ cle.code }}</td>
+                                <td>{{ cle.produitId }}</td>
+                                <td>
+                                    <a href="{{ path('cle_show', {'idcle': cle.idcle}) }}"><button type="button" class="btn btn-outline-info">afficher</button></a>
+                                    <a href="{{ path('cle_edit', {'idcle': cle.idcle}) }}"><button type="button" class="btn btn-outline-warning">modifier</button></a>
+                                </td>
+
+
+
+                                <script>
+                                    $(document).ready(function(){
+                                        $('#search').keyup(function(){
+                                            search_table($(this).val());
+                                        });
+                                        function search_table(value){
+                                            $('#tableac tbody tr').each(function(){
+                                                var found = 'false';
+                                                $(this).each(function(){
+                                                    if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                                                    {
+                                                        found = 'true';
+                                                    }
+                                                });
+                                                if(found == 'true')
+                                                {
+                                                    $(this).show();
+
+                                                }
+                                                else
+                                                {
+                                                    $(this).hide();
+
+                                                }
+                                            });
+                                        }
+                                    });
+                                </script>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </center>
 {% endblock %}

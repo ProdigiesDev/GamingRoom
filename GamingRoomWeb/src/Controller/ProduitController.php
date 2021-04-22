@@ -186,11 +186,6 @@ class ProduitController extends AbstractController
         "Attachment" => true
     ]);
 
-
-
-
-
-
 }
 
     /**
@@ -210,7 +205,7 @@ class ProduitController extends AbstractController
 
             if ($desc!="")
                 //si on a fourni un type on affiche tous les suggestions ayant ce nom
-                $produits= $this->getDoctrine()->getRepository(Produit::class)->findBy(['description' => $desc] );
+                $produits= $this->getDoctrine()->getRepository(Produit::class)->findBy(['libelle' => $desc] );
 
 
             return $this->render('produit/index.html.twig', [
@@ -250,13 +245,38 @@ class ProduitController extends AbstractController
     }
 
 
+    /**
+     * @Route("/sort", name="sort")
+     */
+    public function tri(): Response{
+        $prod = $this->getDoctrine()->getRepository(Produit::class)->sortLibelle();
+        return $this->render('produit/SortedProduit.html.twig', [
+            'controller_name' => 'ProduitController',
+            'produitsorted' => $prod,
+        ]);
+    }
 
 
 
+    /**
+     * @Route("/sortprix", name="sortprix")
+     */
+    public function triprix(): Response{
+        $prod = $this->getDoctrine()->getRepository(Produit::class)->sortPrix();
+        return $this->render('produit/SortedPrix.html.twig', [
+            'controller_name' => 'ProduitController',
+            'prixsorted' => $prod,
+        ]);
+    }
 
+    /**
+     * @Route("/front", name="front")
+     */
 
-
-
-
-
+    public function affichageFront(): Response{
+        $prod = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+        return $this->render('produit/front.html.twig', [
+            'prod' => $prod,
+        ]);
+    }
 }
