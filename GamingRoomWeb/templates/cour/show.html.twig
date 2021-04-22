@@ -3,15 +3,17 @@
 {% block title %}Cours{% endblock %}
 
 {% block body %}
-    <h1> {{cour.nomcours }} </h1>
+    <h1> {{ cour.nomcours }} </h1>
     <p>
 
     <div>
-    <img src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="500px" height="300px" >
+        <img src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="500px" height="300px">
 
-    <iframe width="900" height="315" src="{{cour.lienyoutube}}"title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="900" height="315" src="{{ cour.lienyoutube }}" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
 
-</div>
+    </div>
 
     </p>
 
@@ -25,29 +27,26 @@
         </tr>
 
 
-            <tr>
-                <th>Déscription</th>
-                <td>{{ cour.description }}</td>
-            </tr>
+        <tr>
+            <th>Déscription</th>
+            <td>{{ cour.description }}</td>
+        </tr>
         <tr>
             <th>Catégorie</th>
             <td>{{ cour.categorie.nomcategorie }}</td>
         </tr>
-            <tr>
-                <th>Nombre de Participants</th>
-                <td>{{ cour.nbParticipant }}</td>
-            </tr>
-            <tr>
-                <th>Date de Création</th>
-                <td>{{ cour.dateCreation ? cour.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Mots Clés</th>
-                <td>{{ cour.tags }}</td>
-            </tr>
-
-
-
+        <tr>
+            <th>Nombre de Participants</th>
+            <td>{{ cour.nbParticipant }}</td>
+        </tr>
+        <tr>
+            <th>Date de Création</th>
+            <td>{{ cour.dateCreation ? cour.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Mots Clés</th>
+            <td>{{ cour.tags }}</td>
+        </tr>
 
 
         </tbody>
@@ -56,38 +55,83 @@
     <!-- Add icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-   <p> <!-- Use an element to toggle between a like/dislike icon -->
-    <i onclick="myFunction(this)" class="fa  fa-heart fa-3x" style="color:#9d1e15"></i>
+    <p> <!-- Use an element to toggle between a like/dislike icon -->
+        <i onclick="ajouterLike({{ cour.id }},1)" class="fa  fa-heart fa-3x" style="color:#9d1e15"></i>
 
-    <i onclick="myFunction(this)" class="fa fa-heartbeat fa-3x" style="color: #6B89FF"></i>
-   </p>
+        {% set countLike = 0 %}
+        {% set countDislike = 0 %}
+        {% for reaction in reactions %}
+            {% if reaction.cour.id == cour.id %}
+                {% if reaction.interaction == 1 %}
+                    {% set countLike = countLike + 1 %}
+                {% elseif reaction.interaction == -1 %}
+                    {% set countDislike = countDislike + 1 %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <label id="nb-like-{{ cour.id }}">
+            {{ countLike }}
+        </label>
+        <i onclick="ajouterLike({{ cour.id }},-1)" class="fa fa-heartbeat fa-3x" style="color: #6B89FF"></i>
+        <label id="nb-dislike-{{ cour.id }}">
+            {{ countDislike }}
+        </label>
+    </p>
 
-        <form method="post" id="commentaire">
-            <p>
-                <label for="vos commentaires">Vos commentaires</label><br />
-                <textarea name="vos commentaires" id="vos commentaires" style="color: #0a001f" cols="50" rows="2" PLACEHOLDER="Ajouter votre commentaire"></textarea>
-                <i class="fa fa-arrow-circle-right fa-2x" aria-hidden="true"></i>
-            </p>
-        </form>
+    <form method="post" id="commentaire">
+        <p>
+            <label for="vos commentaires">Vos commentaires</label><br/>
+            <textarea name="vos commentaires" id="vos commentaires" style="color: #0a001f" cols="50" rows="2"
+                      PLACEHOLDER="Ajouter votre commentaire"></textarea>
+            <i class="fa fa-arrow-circle-right fa-2x" aria-hidden="true"></i>
+        </p>
+    </form>
 
-    <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
-        <button  class="btn read-more pull-left"> Inscription</button>
+    <form action="{{ path('reactioncours_new',{'id':cour.id}) }}">
+        <button class="btn read-more pull-left"> j'aime</button>
 
     </form>
     <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
-        <button  class="btn read-more pull-left" > Annuler inscription</button>
+        <button class="btn read-more pull-left"> Inscription</button>
+
+    </form>
+    <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
+        <button class="btn read-more pull-left"> Annuler inscription</button>
 
     </form>
 
     {{ include('cour/_delete_form.html.twig') }}
 
 
-   <br>
+    <br>
 
     <a href="{{ path('cour_index') }}">back to list</a>
 
     <a href="{{ path('cour_edit', {'id': cour.id}) }}">edit</a>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script id="ajax-like-dislike">
+        function ajouterLike(idCour, typeLike) {
+            $.ajax({
+                type: 'GET',
+                url: '/reactioncours/reaction/ajout',
+                data: {
+                    'typeReactioncours': typeLike,
+                    'idCour': idCour
+                },
+                success: function (retour) {
+                    obj = JSON.parse(retour);
+                    console.log("nb like : "+ obj.nbLike + "/ nbDislike : " + obj.nbDislike);
+                    $("#nb-like-" + idCour).empty().append(obj.nbLike);
+                    $("#nb-dislike-" + idCour).empty().append(obj.nbDislike);
+                    //("#like-bar-" + idCour).attr('style', 'width:' + obj.pourcentage + '%');
+                },
+                error: function () {
+                    alert("Connectez vous d'abord");
+                }
+            });
+        }
+    </script>
 
 
 

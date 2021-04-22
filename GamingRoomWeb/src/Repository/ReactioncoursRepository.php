@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Reactioncours;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,9 +49,54 @@ class ReactioncoursRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findlike($e, $m): ?array
+    {
+        /*$qb = $this->getEntityManager()->createQueryBuilder('p');
+        $qb->select('p')
+            ->from('App\Entity\Participant', 'p')
+            ->where('p.evenement = ?1')
+            ->andWhere('p.member = ?2')
+            ->setParameter(1, $e)
+            ->setParameter(2, $m);*/
+        $qb = $this->getEntityManager()->createQuery('SELECT p FROM App\Entity\Reactioncours p WHERE  p.membre = :m AND p.cour = :e');
 
+        $qb->setParameter('e', $e);
+        $qb->setParameter('m', $m);
+        return $qb->getResult();
 
+    }
 
+    public function nombreObjets($idCour)
+    {
+        try {
+            return $this->createQueryBuilder('r')
+                ->select('count(r.id)')
+                ->where('r.cour = :idCour')
+                ->setParameter('idCour', $idCour)
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return 0;
+        } catch (NonUniqueResultException $e) {
+            return 0;
+        }
+    }
 
+    public function nombreLikes($idCour)
+    {
+        try {
+            return $this->createQueryBuilder('r')
+                ->select('count(r.id)')
+                ->andWhere('r.cour = :idCour')
+                ->andWhere('r.interaction = :typInteraction')
+                ->setParameters(['typInteraction' => 1, 'idCour' => $idCour])
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return 0;
+        } catch (NonUniqueResultException $e) {
+            return 0;
+        }
+    }
 
 }

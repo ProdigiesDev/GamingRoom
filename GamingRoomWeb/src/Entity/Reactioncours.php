@@ -94,7 +94,7 @@ class Reactioncours
 
     public function getDateCreation(): ?\DateTimeInterface
     {
-        return $this->dateCreation;
+        return $this->dateCreation=="current_timestamp()" ? null : $this->dateCreation;
     }
 
     public function setDateCreation(\DateTimeInterface $dateCreation): self

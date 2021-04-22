@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cour;
+use App\Entity\Reactioncours;
 use App\Form\CourType;
 use App\Repository\CourRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -28,11 +29,11 @@ class CourController extends AbstractController
     /**
      * @Route("/", name="cour_index", methods={"GET"})
      */
-    public function index(CourRepository $courRepository,PaginatorInterface $paginator, Request $request): Response
+    public function index(CourRepository $courRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $courRepository = $paginator->paginate( $this->getDoctrine()->getRepository(Cour::class)
+        $courRepository = $paginator->paginate($this->getDoctrine()->getRepository(Cour::class)
             ->findAll(),
-            $request->query->getInt('page',1),
+            $request->query->getInt('page', 1),
             5
         );
         return $this->render('cour/index.html.twig', [
@@ -52,6 +53,7 @@ class CourController extends AbstractController
             ->setWorksheet($activesheet);
 
     }
+
     /**
      * @Route("/admincours", name="cour_index_admin", methods={"GET"})
      */
@@ -73,8 +75,8 @@ class CourController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('imagecours')->getData();
-            $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
-            $file->move ($this->getParameter('cours_directory'),$fileName);
+            $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('cours_directory'), $fileName);
             $cour->setImagecours($fileName);
             $cour->setImagecours($fileName);
             //entity managerpermet l’insertion, la mise à jour et la suppression des données de la base de données
@@ -91,6 +93,7 @@ class CourController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("admin/new", name="cour_new_admin", methods={"GET","POST"})
      */
@@ -102,8 +105,8 @@ class CourController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('imagecours')->getData();
-            $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
-            $file->move ($this->getParameter('cours_directory'),$fileName);
+            $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('cours_directory'), $fileName);
             $cour->setImagecours($fileName);
             $cour->setImagecours($fileName);
             //entity managerpermet l’insertion, la mise à jour et la suppression des données de la base de données
@@ -111,7 +114,7 @@ class CourController extends AbstractController
             $entityManager->persist($cour);//pour l‘ajout d’un nouvel objet
             $entityManager->flush();//envoyer la maj à la bd
             $this->addFlash(
-                'info','Added succesfully'
+                'info', 'Added succesfully'
             );
 
             return $this->redirectToRoute('cour_index_admin'); //redirection apres l'ajout
@@ -136,12 +139,14 @@ class CourController extends AbstractController
 
         return new Response(json_encode($jsonContent));
     }
+
     /**
      * @Route("/{id}", name="cour_show", methods={"GET"})
      */
     public function show(Cour $cour): Response
     {
         return $this->render('cour/show.html.twig', [
+            'reactions' => $this->getDoctrine()->getRepository(Reactioncours::class)->findAll(),
             'cour' => $cour,
         ]);
     }
@@ -169,8 +174,8 @@ class CourController extends AbstractController
              * @var UploadedFile $file // methode nhabet fiha les fichier
              */
             $file = $form->get('imagecours')->getData();//recupere l'image
-            $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
-            $file->move($this->getParameter('cours_directory'),$fileName);
+            $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('cours_directory'), $fileName);
             $cour->setImagecours($fileName);
             $this->getDoctrine()->getManager()->flush();
 
@@ -183,6 +188,7 @@ class CourController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/{id}/editadmin", name="cour_edit_admin", methods={"GET","POST"})
      */
@@ -196,12 +202,12 @@ class CourController extends AbstractController
              * @var UploadedFile $file // methode nhabet fiha les fichier
              */
             $file = $form->get('imagecours')->getData();//recupere l'image
-            $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
-            $file->move($this->getParameter('cours_directory'),$fileName);
+            $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('cours_directory'), $fileName);
             $cour->setImagecours($fileName);
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash(
-                'info','uptated succesfully'
+                'info', 'uptated succesfully'
             );
 
 
@@ -219,7 +225,14 @@ class CourController extends AbstractController
      */
     public function delete(Request $request, Cour $cour): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
+        $reactions = $this->getDoctrine()->getRepository(Reactioncours::class)->findBy(["cour" => $cour]);
+
+        foreach ($reactions as $reaction){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($reaction);
+            $entityManager->flush();
+        }
+        if ($this->isCsrfTokenValid('delete' . $cour->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($cour);
             $entityManager->flush();
@@ -227,12 +240,13 @@ class CourController extends AbstractController
 
         return $this->redirectToRoute('cour_index');
     }
+
     /**
      * @Route("deleteadmin/{id}", name="cour_delete_admin", methods={"POST"})
      */
     public function deleteadmin(Request $request, Cour $cour): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $cour->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($cour);
             $entityManager->flush();
@@ -240,8 +254,6 @@ class CourController extends AbstractController
 
         return $this->redirectToRoute('cour_index_admin');
     }
-
-
 
 
 }

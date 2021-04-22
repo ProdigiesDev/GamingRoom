@@ -77,14 +77,5 @@ class CourRepository extends ServiceEntityRepository
         $query->getQuery();
     }
 
-    public function findOneByME($e,$m): ?array
-    {
 
-        $qb = $this->getEntityManager()->createQuery('SELECT p FROM App\Entity\Participantcours p WHERE  p.membre = :m AND p.cour = :e ');
-        
-        $qb->setParameter('e', $e);
-        $qb->setParameter('m', $m);
-        return $qb->getResult();
-
-    }
 }

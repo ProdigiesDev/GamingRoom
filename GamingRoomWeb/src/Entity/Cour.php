@@ -105,6 +105,12 @@ class Cour
      * })
      */
     private $membre;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $pourcentageLike;
+
     public function __construct()
     {
         $this->dateCreation = new \DateTime('now');
@@ -233,6 +239,18 @@ class Cour
     public function setMembre(?Membre $membre): self
     {
         $this->membre = $membre;
+
+        return $this;
+    }
+
+    public function getPourcentageLike(): ?float
+    {
+        return $this->pourcentageLike;
+    }
+
+    public function setPourcentageLike(?float $pourcentageLike): self
+    {
+        $this->pourcentageLike = $pourcentageLike;
 
         return $this;
     }
