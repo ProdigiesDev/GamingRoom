@@ -14,9 +14,34 @@ use Symfony\Component\Security\Core\Security;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 class MembreController extends AbstractController
 {
+
+
+
+    private $encoders ;
+    private $normalizers;
+    private $serializer;
+    /**
+     * @var Security
+     */
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+        $this->encoders= [ new JsonEncoder()];
+        $this->normalizers= [new ObjectNormalizer()];
+        $this->serializer= new Serializer($this->normalizers, $this->encoders);
+    }
+
+
     /**
      * @Route("/admin/member", name="membre_index", methods={"GET"})
      */
@@ -118,15 +143,6 @@ class MembreController extends AbstractController
     }
 
     /**
-     * @var Security
-     */
-    private $security;
-
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
-    /**
      * @Route("/profil/{id}", name="profil", methods={"GET"})
      */
     public function AfficherProfil() : Response
@@ -168,4 +184,23 @@ class MembreController extends AbstractController
        /* return $this->render('membre/pdf.html.twig',['membres'=> $membreRepository->findAll()]);*/
 
     }
+
+    /**
+     * @Route("/sendResetCode/{email}", name="send_Reset_Code", methods={"GET"})
+     */
+    public function sendRestCode($email,MailerInterface $mailer)
+    {
+        $random=random_int(1000, 9999);
+
+        $email = (new Email())
+            ->from('Gaming2020Room@gmail.com')
+            ->to($email)
+            ->subject('Reset password code')
+            ->html('<p>Hello,  Here is your code :'.$random.' </p>');
+
+
+        $mailer->send($email);
+        return new Response($this->serializer->serialize($random,'json'));
+    }
+
 }

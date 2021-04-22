@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 
 class MembreType extends AbstractType
 
@@ -70,6 +71,7 @@ class MembreType extends AbstractType
                 ],
             ])
             ->add('description',TextareaType::class)
+            ->add('captcha', CaptchaType::class)
         ;
     }
 
