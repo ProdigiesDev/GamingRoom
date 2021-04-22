@@ -71,6 +71,7 @@ class MembreController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $membre->setLastTimeban(  $membre->getDateNaissance());
+            $membre->setBanDuration(0);
 
             if($membre->getRole()=="Coach"){
                 $membre->setActive(0);
@@ -191,7 +192,10 @@ class MembreController extends AbstractController
     public function sendRestCode($email,MailerInterface $mailer)
     {
         $random=random_int(1000, 9999);
-
+        $member=$this->getDoctrine()->getRepository(Membre::class)->findByEmail($email);
+        if(sizeof($member)==0){
+            return new Response($this->serializer->serialize(404,'json'));
+        }
         $email = (new Email())
             ->from('Gaming2020Room@gmail.com')
             ->to($email)
@@ -201,6 +205,64 @@ class MembreController extends AbstractController
 
         $mailer->send($email);
         return new Response($this->serializer->serialize($random,'json'));
+    }
+
+    /**
+     * @Route("/resetPass/{email}/{password}", name="send_Reset_Pass", methods={"GET"})
+     */
+    public function resetPass($email,$password,UserPasswordEncoderInterface $encoder)
+    {
+        $membre=$this->getDoctrine()->getRepository(Membre::class)->findByEmail($email);
+
+        if(sizeof($membre)==0){
+            return new Response($this->serializer->serialize(404,'json'));
+        }
+
+        $membre=$membre[0];
+        $membre->setPassword($encoder->encodePassword($membre, $password));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($membre);
+        $entityManager->flush();
+
+
+
+        return new Response($this->serializer->serialize(200,'json'));
+    }
+
+    /**
+     * @Route("/member/{id}/activer", name="membre_activer", methods={"GET","POST"})
+     */
+    public function activerCompte( Membre $membre,$id)
+    {
+        $membre=$this->getDoctrine()->getRepository(Membre::class)->find($id);
+
+
+        $membre->setActive(1);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($membre);
+        $entityManager->flush();
+
+
+
+        return $this->redirectToRoute('membre_index');
+    }
+    /**
+     * @Route("/member/{id}/desactiver", name="membre_desactiver", methods={"GET","POST"})
+     */
+    public function desactiverCompte(Request $request, Membre $membre,$id)
+    {
+        $membre=$this->getDoctrine()->getRepository(Membre::class)->find($id);
+
+
+        $membre->setActive(0);
+        $membre->setBanDuration($membre->getBanDuration()+1);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($membre);
+        $entityManager->flush();
+
+
+
+        return $this->redirectToRoute('membre_index');
     }
 
 }

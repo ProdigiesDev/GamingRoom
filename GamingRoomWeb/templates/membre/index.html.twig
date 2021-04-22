@@ -38,6 +38,7 @@
                                             </thead>
                                             <tbody>
                                             {% for membre in membres %}
+                                                {% if membre.role != "Admin" %}
                                                 <tr>
                                                     <td>{{ membre.id }}</td>
                                                     <td>{{ membre.nom }}</td>
@@ -54,13 +55,25 @@
                                                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ membre.id) }}">
                                                             <button class="btn btn-block btn-outline-danger">Supprimer  </button>
                                                         </form>
+                                                       <!-- {% if membre.active == 1 %}
+                                                            <form action="{{ path('membre_desactiver' , {'id':membre.id}) }}">
+                                                                <button class="btn btn-block btn-outline-danger" >Desactiver</button>
+                                                            </form>
+                                                        {% endif %}-->
+                                                        {% if membre.active == 0 and membre.role=='Coach' and membre.banDuration==0 %}
+                                                            <form action="{{ path('membre_activer' , {'id':membre.id}) }}">
+                                                                <button class="btn btn-block btn-outline-danger" >activer</button>
+                                                            </form>
+                                                        {% endif %}
                                                       <!--  <a href="{{ path('membre_edit', {'id': membre.id}) }}">edit</a> -->
                                                     </td>
                                                 </tr>
+                                                {% endif %}
                                             {% else %}
                                                 <tr>
                                                     <td colspan="16">no records found</td>
                                                 </tr>
+
                                             {% endfor %}
                                             </tbody>
                                         </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination">{{ knp_pagination_render(membres) }}</ul></div></div></div></div>

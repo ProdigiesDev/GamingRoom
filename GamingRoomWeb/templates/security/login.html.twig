@@ -530,9 +530,14 @@
                 <div class="youplay-input">
                     <input type="email" value="{{ last_username }}" name="email" id="inputEmail"  placeholder="Email" required autofocus>
                 </div>
+                <div style="text-align: right;">
+                    <i class="far fa-eye-slash" id="hide" onclick="myFunction()"></i>
+                    <i class="fas fa-eye" id="show" onclick="myFunction()"></i>
+                </div>
                 <div class="youplay-input">
                     <input type="password" name="password" id="inputPassword"  placeholder="Password" required>
                 </div>
+
                 <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
@@ -576,9 +581,9 @@
 
                               <p>Code:</p>
                               <div class="youplay-input">
-                                  <input type="text" name="user_email" />
+                                  <input type="text" id="emailcode" name="user_email" />
                               </div>
-                              <button class="btn ml-3" name="submit">Valider</button>
+                              <button class="btn ml-3" id="submitcode" name="submit" >Valider</button>
 
                           </div>
                       </form>
@@ -588,6 +593,37 @@
       </div>
       <!-- /Registration Form -->
 
+
+      <!-- Registration Form -->
+      <div id="nav-resetpassword" class="modal fade">
+          <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Reset Password</h4>
+                  </div>
+                  <div class="modal-body">
+                      <form action="#" method="post">
+                          <div>
+                              <p>new password</p>
+                              <div class="youplay-input">
+                                  <input type="password" id="password" name="user_login" />
+                              </div>
+
+
+                              <p>Repeat password : </p>
+                              <div class="youplay-input">
+                                  <input type="password" id="confirmpassword" name="user_email" />
+                              </div>
+                              <button class="btn ml-3" id="submitPass" name="submit">Modifier</button>
+
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- /Registration Form -->
  </body>
     
     
@@ -646,6 +682,63 @@
 
     <script>
         $(function(){
+            var code=null;
+            var glemail=null;
+            $("#submitPass").click(function(e){
+
+                e.preventDefault();
+                const pass=$("#password").val();
+                const confirmpassword=$("#confirmpassword").val();
+                if(pass.trim()=='' || confirmpassword.trim()=='' || pass!=confirmpassword){
+                    alert("Please check your password");
+                    return;
+                }
+                if(pass.length<6){
+                    alert("Le mot de passe est trop court.Il doit avoir au minimum 6");
+                    return;
+                }
+                else if(!(/\d/.test(pass) && /[a-zA-Z]/.test(pass))){
+                    alert("Votre mot de passe doit contenir au minimum 1 caractère et au minimum 1 numéro.");
+                    return;
+                }
+                if(glemail==null){
+                    alert("Email not found");
+                    return;
+                }
+                $.get("/resetPass/"+glemail+"/"+pass, function(data, status){
+                    const statuscode=parseInt(JSON.parse(data));
+                    if(statuscode==404){
+                        alert("Email not Found")
+                        return;
+                    }
+                    else if(statuscode==200){
+                        $("#nav-resetpassword").modal('hide');
+                        alert("Pass success");
+                    }
+                    else{
+                        alert("Server Erreur");
+                    }
+                });
+
+            });
+            $("#submitcode").click(function(e){
+               e.preventDefault();
+               const emailcode=$("#emailcode").val();
+               if(emailcode.trim()=='')
+               {
+                   alert("Enter a code");
+                   return;
+               }
+               if(code!=parseInt(emailcode)){
+                   alert("Code invalid");
+               }
+               else{
+                   code=null;
+                   $("#nav-registration").modal('hide');
+                   $("#nav-resetpassword").modal();
+
+               }
+            });
            $("#sendCodebtn").click(function(e){
                e.preventDefault();
                const email=$("#userEmail").val();
@@ -655,13 +748,33 @@
                    return;
                }
                $.get("/sendResetCode/"+email, function(data, status){
-                   data=JSON.parse(data);
-                  console.log(data);
+                   if(parseInt(JSON.parse(data))==404){
+                       alert("Email not Found")
+                       return;
+                   }
+                   code=JSON.parse(data);
+                   glemail=email;
                });
 
 
            })
         });
+    </script>
+
+    <script>
+        function myFunction(){
+            var x = document.getElementById("inputPassword");
+            if(x.type === "password"){
+                x.type = "text";
+                document.getElementById('hide').style.display = "inline-block";
+                document.getElementById('show').style.display = "none";
+            }
+            else{
+                x.type = "password";
+                document.getElementById('hide').style.display = "none";
+                document.getElementById('show').style.display = "inline-block"
+            }
+        }
     </script>
 
     <!-- END: Scripts -->
