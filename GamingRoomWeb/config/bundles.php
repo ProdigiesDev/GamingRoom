@@ -14,4 +14,7 @@ return [
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
+    Gregwar\CaptchaBundle\GregwarCaptchaBundle::class => ['all' => true],
+    Onurb\Bundle\ExcelBundle\OnurbExcelBundle::class => ['all' => true],
+    blackknight467\StarRatingBundle\StarRatingBundle::class => ['all' => true],
 ];

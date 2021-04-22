@@ -12,12 +12,14 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 
 class CourType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        ->add('captcha', CaptchaType::class) // That's all !
 
             ->add('nomcours')
             ->add('description')

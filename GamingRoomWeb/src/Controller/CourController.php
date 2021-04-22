@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Cour;
 use App\Form\CourType;
 use App\Repository\CourRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonRespImageonse;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
+
 /**
  * @Route("/cour")
  */
@@ -26,11 +28,29 @@ class CourController extends AbstractController
     /**
      * @Route("/", name="cour_index", methods={"GET"})
      */
-    public function index(CourRepository $courRepository): Response
+    public function index(CourRepository $courRepository,PaginatorInterface $paginator, Request $request): Response
     {
+        $courRepository = $paginator->paginate( $this->getDoctrine()->getRepository(Cour::class)
+            ->findAll(),
+            $request->query->getInt('page',1),
+            5
+        );
         return $this->render('cour/index.html.twig', [
-            'cours' => $courRepository->findAll(),
+            'cours' => $courRepository,
         ]);
+
+        $writer = $this->get('phpspreadsheet')->createSpreadSheet();
+        $writer->setActiveSheetIndex(0);
+        $activesheet = $writer->getActiveSheet();
+        $drawingobject = $this->get('phpspreadsheet')->createSpreadsheetWorksheetDrawing();
+        $drawingobject->setPath('/path/to/image')
+            ->setName('Image name')
+            ->setDescription('Image description')
+            ->setHeight(60)
+            ->setOffsetY(20)
+            ->setCoordinates('A1')
+            ->setWorksheet($activesheet);
+
     }
     /**
      * @Route("/admincours", name="cour_index_admin", methods={"GET"})
