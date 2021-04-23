@@ -20,6 +20,8 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
 class MembreController extends AbstractController
 {
 
@@ -263,6 +265,18 @@ class MembreController extends AbstractController
 
 
         return $this->redirectToRoute('membre_index');
+    }
+    /**
+     * @Route("/rechreche",name="rechrecheMembre")
+     */
+    public function rechreche(Request $request, NormalizerInterface $Normalizer)
+    {
+        $repository = $this->getDoctrine()->getRepository(Membre::class);
+        $requestString = $request->get('searchValue');
+        $membres = $repository->findByEmailAndRole($requestString);
+        $jsonContent = $Normalizer->normalize($membres, 'json');
+
+        return new Response(json_encode($jsonContent));
     }
 
 }
