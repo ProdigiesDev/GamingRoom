@@ -19,17 +19,62 @@ $("#chat-submit").click(function(e) {
     if(msg.trim() == ''){
     return false;
     }
-    const obj={user:$("#userName").val(),msg}
-    sessionGL.publish("acme/channel", obj);
+    var myHeaders = new Headers();
+    myHeaders.append("apikey", "rSCgL3S97mSJvbM1nD1eTpOmV7JVp4UV");
+
+    var raw = "body";
+
+    var requestOptions = {
+    method: 'POST',
+    redirect: 'follow',
+    headers: myHeaders,
+    body: msg
+    };
+
+    fetch("https://api.promptapi.com/bad_words?censor_character=*", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+        result=JSON.parse(result)
+        msg=result.censored_content?result.censored_content:result.content;
+        const obj={user:$("#userName").val(),msg}
+        sessionGL.publish("acme/channel", obj);
+        if(result.bad_words_total>0){
+            let oldBad=localStorage.getItem('nbBadWord');
+            if(oldBad)
+                localStorage.setItem('nbBadWord',oldBad+1);
+            else
+                localStorage.setItem('nbBadWord',1);
+            let msgAdmin="";
+            let type="warning";
+            if(oldBad+1>=3){  
+               msgAdmin=" <i class='fas fa-info-circle'></i> "+ obj.user +" is banned from the server  ";
+               type="info";
+               localStorage.setItem('nbBadWord',0);
+            } else
+             msgAdmin=" <i class='fas fa-bomb'></i>  <i class='fas fa-bomb'></i>  <i class='fas fa-bomb'></i> "+ obj.user +" don't use bad words you will be banned <i class='fas fa-exclamation-triangle'></i> <i class='fas fa-bomb'></i>  <i class='fas fa-bomb'></i>  <i class='fas fa-bomb'></i> ";
+            const obj2={user:'Admin',msg:msgAdmin,type};
+            sessionGL.publish("acme/channel", obj2);
+        }
+    })
+    .catch(error => console.log('error', error));
     
 })
 
 function generate_message(obj, type) {
     INDEX++;
+    let styleBg="";
+    let styleName="";
+    let bgColor="#ffeb3b";
+    if(obj.type){
+        if(obj.type=="info")
+            bgColor="#cce5ff";
+        styleBg=" style='background:"+bgColor+";color: #f44336;'  ";
+        styleName=" style='color:#f44336' ";
+    }
     var str="";
-    str += "<div id='cm-msg-"+INDEX+"' class=\"chat-msg "+type+"\">";
-   str += "         <span class='userName'> "+obj.user+" : </span> ";
-    str += "          <div class=\"cm-msg-text\">";
+    str += "<div id='cm-msg-"+INDEX+"' class=\"chat-msg "+type+"\" >";
+   str += "         <span class='userName' "+styleName+"> "+obj.user+" : </span> ";
+    str += "          <div class=\"cm-msg-text\" "+styleBg+">";
     str += obj.msg;
     str += "          <\/div>";
     str += "        <\/div>";
