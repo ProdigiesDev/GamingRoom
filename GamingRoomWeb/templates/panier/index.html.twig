@@ -12,9 +12,9 @@
                 <tr>
                     <th>Image</th>
                     <th>Produit</th>
-                    <th>Prix</th>
+                    <th>Prix Unitaire</th>
                     <th>Quantité</th>
-                    <th>Total</th>
+                    <th>Prix</th>
                     <th></th>
                 </tr>
             </thead>
@@ -39,9 +39,12 @@
                     <td colspan="4" class="text-right">Total:
                     </td>
                     <td>{{ total }}</td>
+                    <td colspan="4" class="align-right">
+                         <button type="submit" class="btn btn-lg">Passer une commande</button>
+                    </td>
                 </tr>
         </table>
     {% else %}
-        <p>Surprise, c'est vide !</p>
+        <p>Votre panier est vide! </p>
     {% endif %}
 {% endblock %}
