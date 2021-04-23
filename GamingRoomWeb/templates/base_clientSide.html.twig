@@ -72,9 +72,11 @@
         <script src="{{asset('assets/js/chat.js')}}"></script>
     </head>
     <body>
+        {% block content %}{% endblock %}
         {% include 'base_header.html.twig' %}
+        {% block bannertop %}
 
-        {% block body %}{% endblock %}
+        {% endblock %}
 
         <div id="body"> 
         
@@ -108,11 +110,17 @@
         </div>
 
         </div>
+        {% block body %}{% endblock %}
+        {% block contentfin %} {% endblock %}
         {% include 'base_footer.html.twig' %}
         
         {% if app.user %}
             <input type="hidden" id="userName" value="{{app.user.prenom}}" />
+            <input type="hidden" id="idUser" value="{{app.user.id}}" />
         {% endif %}
+
+
+
 
     </body>
     
@@ -175,3 +183,4 @@
     <!-- END: Scripts -->
 
 </html>
+

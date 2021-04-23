@@ -383,115 +383,7 @@
             
             <ul class="nav navbar-nav navbar-right">
                 
-                    
-        <li class=" dropdown dropdown-hover">
-            <a href="user-activity.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-               {% if app.user %}
 
-                {{ app.user.nom }} {{  app.user.prenom }}
-                {% endif %}
-                {% if app.user == false %}
-                user
-                {% endif %}
-
-                <span class="badge bg-default">8</span>
-                <span class="caret"></span>
-                <span class="label">
-                     {% if app.user %}
-                    <span class="badge bg-default">8</span>
-                    <span class="caret"></span>
-                    <span class="label">
-                        </span>
-                    {{ app.user.role }}
-                     {% endif %}
-
-
-            </a><div class="dropdown-menu"><ul role="menu">
-                            
-        <li>
-            <a href="user-activity.html">
-                Activity
-                
-                
-                
-            </a>
-        </li>
-        <li>
-            <a href="user-profile.html">
-                Profile
-                
-                
-                
-            </a>
-        </li>
-        <li>
-            <a href="user-messages.html">
-                Messages
-                <span class="badge bg-default">8</span>
-                
-                
-            </a>
-        </li>
-        <li>
-            <a href="user-messages-compose.html">
-                Messages Compose
-                
-                
-                
-            </a>
-        </li>
-        <li>
-            <a href="user-settings.html">
-                Settings
-                
-                
-                
-            </a>
-        </li>
-        <li>
-            <a href="https://nkdev.info/docs/youplay-html/">
-                Documentation
-                
-                
-                
-            </a>
-        </li>
-        <li>
-            <a href="https://themeforest.net/item/youplay-game-template-based-on-bootstrap/11306207?ref=_nK">
-                Purchase
-                
-                
-                
-            </a>
-        </li>
-                    <li>
-                        <a href="https://themeforest.net/item/youplay-game-template-based-on-bootstrap/11306207?ref=_nK">
-                            Purchase
-
-
-
-                        </a>
-                    </li>
-
-                    {% if app.user %}
-                        <li>
-                            <a href="{{path('app_logout')}}" onclick="return confirm('Êtes-vous sûr?')">
-                                Logout
-
-
-
-                            </a>
-                        </li>
-
-                    {% endif %}
-
-
-
-                        </ul></div>
-        </li>
-                
-
-                
                     <li>
                         <a class="search-toggle" href="search.html">
                             <i class="fa fa-search"></i>
@@ -594,39 +486,7 @@
 <!-- /Navbar -->
 
 
-    <!-- Registration Form -->
-    <div id="nav-registration" class="modal fade">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Register</h4>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="post">
-                        <div>
-                            <p>Username:</p>
-                            <div class="youplay-input">
-                                <input type="text" name="user_login" />
-                            </div>
 
-                            <p>E-mail:</p>
-                            <div class="youplay-input">
-                                <input type="text" name="user_email" />
-                            </div>
-
-                            <p>
-                                <em>A password will be e-mailed to you.</em>
-                            </p>
-
-                            <button class="btn ml-3" name="submit">Register</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Registration Form -->
 
 
 
@@ -670,16 +530,21 @@
                 <div class="youplay-input">
                     <input type="email" value="{{ last_username }}" name="email" id="inputEmail"  placeholder="Email" required autofocus>
                 </div>
+                <div style="text-align: right;">
+                    <i class="far fa-eye-slash" id="hide" onclick="myFunction()"></i>
+                    <i class="fas fa-eye" id="show" onclick="myFunction()"></i>
+                </div>
                 <div class="youplay-input">
                     <input type="password" name="password" id="inputPassword"  placeholder="Password" required>
                 </div>
+
                 <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
 
                 <button class="btn btn-default db">Login</button>
                 <p>
-                    <a class="no-fade" href="#">Lost password?</a> | <a href="{{ path('membre_new') }}" class="no-fade" data-toggle="modal" >Register</a>
+                    <a href="#" class="no-fade" data-toggle="modal" data-target="#nav-registration">Lost password?</a> | <a href="{{ path('membre_new') }}" class="no-fade" data-toggle="modal" >Register</a>
                 </p>
             </form>
         </div>
@@ -692,7 +557,73 @@
     </div>
 </section>
 <!-- /Banner -->
+      <!-- Registration Form -->
+      <div id="nav-registration" class="modal fade">
+          <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Reset Password</h4>
+                  </div>
+                  <div class="modal-body">
+                      <form action="#" method="post">
+                          <div>
+                              <p>Email:</p>
+                              <div class="youplay-input">
+                                  <input type="email" id="userEmail" name="user_login" />
+                              </div>
 
+                              <p>
+                                  <em>A password will be e-mailed to you.</em>
+                              </p>
+
+                              <button class="btn ml-3" id="sendCodebtn" name="submit">Envoyer</button>
+
+                              <p>Code:</p>
+                              <div class="youplay-input">
+                                  <input type="text" id="emailcode" name="user_email" />
+                              </div>
+                              <button class="btn ml-3" id="submitcode" name="submit" >Valider</button>
+
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- /Registration Form -->
+
+
+      <!-- Registration Form -->
+      <div id="nav-resetpassword" class="modal fade">
+          <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Reset Password</h4>
+                  </div>
+                  <div class="modal-body">
+                      <form action="#" method="post">
+                          <div>
+                              <p>new password</p>
+                              <div class="youplay-input">
+                                  <input type="password" id="password" name="user_login" />
+                              </div>
+
+
+                              <p>Repeat password : </p>
+                              <div class="youplay-input">
+                                  <input type="password" id="confirmpassword" name="user_email" />
+                              </div>
+                              <button class="btn ml-3" id="submitPass" name="submit">Modifier</button>
+
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- /Registration Form -->
  </body>
     
     
@@ -749,7 +680,102 @@
     <script src="{{asset('assets/js/youplay.min.js')}}"></script>
     <script src="{{asset('assets/js/youplay-init.js')}}"></script>
 
+    <script>
+        $(function(){
+            var code=null;
+            var glemail=null;
+            $("#submitPass").click(function(e){
 
+                e.preventDefault();
+                const pass=$("#password").val();
+                const confirmpassword=$("#confirmpassword").val();
+                if(pass.trim()=='' || confirmpassword.trim()=='' || pass!=confirmpassword){
+                    alert("Please check your password");
+                    return;
+                }
+                if(pass.length<6){
+                    alert("Le mot de passe est trop court.Il doit avoir au minimum 6");
+                    return;
+                }
+                else if(!(/\d/.test(pass) && /[a-zA-Z]/.test(pass))){
+                    alert("Votre mot de passe doit contenir au minimum 1 caractère et au minimum 1 numéro.");
+                    return;
+                }
+                if(glemail==null){
+                    alert("Email not found");
+                    return;
+                }
+                $.get("/resetPass/"+glemail+"/"+pass, function(data, status){
+                    const statuscode=parseInt(JSON.parse(data));
+                    if(statuscode==404){
+                        alert("Email not Found")
+                        return;
+                    }
+                    else if(statuscode==200){
+                        $("#nav-resetpassword").modal('hide');
+                        alert("Pass success");
+                    }
+                    else{
+                        alert("Server Erreur");
+                    }
+                });
+
+            });
+            $("#submitcode").click(function(e){
+               e.preventDefault();
+               const emailcode=$("#emailcode").val();
+               if(emailcode.trim()=='')
+               {
+                   alert("Enter a code");
+                   return;
+               }
+               if(code!=parseInt(emailcode)){
+                   alert("Code invalid");
+               }
+               else{
+                   code=null;
+                   $("#nav-registration").modal('hide');
+                   $("#nav-resetpassword").modal();
+
+               }
+            });
+           $("#sendCodebtn").click(function(e){
+               e.preventDefault();
+               const email=$("#userEmail").val();
+               var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+               if(!regex.test(email)){
+                   alert("this email "+email+" not valide");
+                   return;
+               }
+               $.get("/sendResetCode/"+email, function(data, status){
+                   if(parseInt(JSON.parse(data))==404){
+                       alert("Email not Found")
+                       return;
+                   }
+                   code=JSON.parse(data);
+                   glemail=email;
+               });
+
+
+           })
+        });
+    </script>
+
+    <script>
+        function myFunction(){
+            var x = document.getElementById("inputPassword");
+            if(x.type === "password"){
+                x.type = "text";
+                document.getElementById('hide').style.display = "inline-block";
+                document.getElementById('show').style.display = "none";
+            }
+            else{
+                x.type = "password";
+                document.getElementById('hide').style.display = "none";
+                document.getElementById('show').style.display = "inline-block"
+            }
+        }
+    </script>
 
     <!-- END: Scripts -->
 

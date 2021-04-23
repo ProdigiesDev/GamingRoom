@@ -7,6 +7,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Bafford\PasswordStrengthBundle\Validator\Constraints as BAssert;
+
 
 
 
@@ -113,11 +115,14 @@ class Membre implements UserInterface
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
      * @Assert\NotBlank(message="Veuillez renseigner ce champs")
-     * @Assert\Length(
-     *       min=6,
-     *       max = 20,
-     *      minMessage = "Le mot de passe et trop court.Il doit avoir au minimum {{ limit }} caractères",
-     *      maxMessage = "Le mot de passe est trop long.Il ne doit pas dépasser {{ limit }} caractères")
+     * @BAssert\PasswordStrength(
+     *       minLength=6,
+     *       requireNumbers=true,
+     *       requireLetters = true,
+     *       tooShortMessage = "Le mot de passe est trop court.Il doit avoir au minimum {{length}} caractères",
+     *       missingLettersMessage = "Votre mot de passe doit contenir au minimum 1 caractère.",
+     *       missingNumbersMessage = "Votre mot de passe doit contenir au minimum 1 numéro."
+     *     )
      */
     private $password;
 

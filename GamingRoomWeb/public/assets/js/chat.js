@@ -39,7 +39,7 @@ $("#chat-submit").click(function(e) {
         const obj={user:$("#userName").val(),msg}
         sessionGL.publish("acme/channel", obj);
         if(result.bad_words_total>0){
-            let oldBad=localStorage.getItem('nbBadWord');
+            let oldBad=parseInt(localStorage.getItem('nbBadWord'));
             if(oldBad)
                 localStorage.setItem('nbBadWord',oldBad+1);
             else
@@ -50,6 +50,15 @@ $("#chat-submit").click(function(e) {
                msgAdmin=" <i class='fas fa-info-circle'></i> "+ obj.user +" is banned from the server  ";
                type="info";
                localStorage.setItem('nbBadWord',0);
+               fetch("/member/"+$('#idUser').val()+"/desactiver",{method: 'GET'})
+               .then(response => response.text())
+               .then(result => {
+                   result=JSON.parse(result)
+                console.log(result)
+                })
+                .catch(error =>{
+                    window.location.href ="/logout"
+                });
             } else
              msgAdmin=" <i class='fas fa-bomb'></i>  <i class='fas fa-bomb'></i>  <i class='fas fa-bomb'></i> "+ obj.user +" don't use bad words you will be banned <i class='fas fa-exclamation-triangle'></i> <i class='fas fa-bomb'></i>  <i class='fas fa-bomb'></i>  <i class='fas fa-bomb'></i> ";
             const obj2={user:'Admin',msg:msgAdmin,type};
