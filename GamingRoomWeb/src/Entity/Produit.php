@@ -54,7 +54,7 @@ class Produit
      * )
 
 
-     * @Assert\Positive
+     * @Assert\Positive(message ="the numbre should be positive")
 
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
      */
@@ -63,10 +63,7 @@ class Produit
     /**
      * @var string
      * @Assert\NotBlank()
-     * @Assert\Regex(
-     *     pattern     = "/^[a-z]+$/i",
-     *     htmlPattern = "[a-zA-Z]+"
-     * )
+
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
