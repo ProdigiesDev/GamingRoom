@@ -36,9 +36,31 @@ class CleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $length=5;
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($cle);
-            $entityManager->flush();
+            $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $nb=intVal($form->get('number')->getData());
+            if($nb==0)
+                $nb=1;
+
+            $s=1;
+            for($n=0;$n<$nb;$n++){
+                $randomString = '';
+                $s+=1;
+                for($j=0;$j<5;$j++){
+                    for ($i = 0; $i < $length; $i++) {
+                        $randomString .= $characters[rand(0, $charactersLength - 1)];
+                    }
+                    if($j!=4)
+                        $randomString.='-';
+                }
+                $cle2=new Cle();
+                $cle2->setProduit($cle->getProduit());
+                $cle2->setCode( $randomString);
+                $entityManager->persist($cle2);
+                $entityManager->flush();
+            }
 
             return $this->redirectToRoute('cle_index');
         }
@@ -66,7 +88,6 @@ class CleController extends AbstractController
     {
         $form = $this->createForm(CleType::class, $cle);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 

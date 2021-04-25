@@ -26,18 +26,19 @@ class Cle
 
     /**
      * @var string
-     * @Assert\NotBlank()
      * @ORM\Column(name="code", type="string", length=50, nullable=false)
      */
     private $code;
 
     /**
-     * @var int
-
-     * @Assert\NotBlank()
-     * @ORM\Column(name="produit_id", type="integer", nullable=false)
+     * @var \Membre
+     *
+     * @ORM\ManyToOne(targetEntity="Produit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="produit_id ", referencedColumnName="idprod")
+     * })
      */
-    private $produitId;
+    private $produit;
 
     public function getIdcle(): ?int
     {
@@ -56,14 +57,14 @@ class Cle
         return $this;
     }
 
-    public function getProduitId(): ?int
+    public function getProduit()
     {
-        return $this->produitId;
+        return $this->produit;
     }
 
-    public function setProduitId(int $produitId): self
+    public function setProduit(Produit $produit): self
     {
-        $this->produitId = $produitId;
+        $this->produit = $produit;
 
         return $this;
     }
