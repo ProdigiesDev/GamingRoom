@@ -55,7 +55,7 @@ class MembreController extends AbstractController
             // Define the page parameter
             $request->query->getInt('page', 1),
             // Items per page
-            5
+            8
         );
         return $this->render('membre/index.html.twig', [
             'membres' => $membre,
@@ -82,9 +82,13 @@ class MembreController extends AbstractController
                 $membre->setActive(1);
             }
             $membre->setPassword($encoder->encodePassword($membre, $membre->getPassword()));
+            // On récupère les images transmises
             $file = $form->get('image')->getData();
+            // On génère un nouveau nom de fichier
             $fileName = bin2hex(random_bytes(6)).'.'.$file->guessExtension();
+            // On copie le fichier dans le dossier uploads
             $file->move ($this->getParameter('membre_directory'),$fileName);
+            // On crée l'image dans la base de données
             $membre->setImage($fileName);
 
 
@@ -266,17 +270,45 @@ class MembreController extends AbstractController
 
         return $this->redirectToRoute('membre_index');
     }
-    /**
-     * @Route("/rechreche",name="rechrecheMembre")
-     */
-    public function rechreche(Request $request, NormalizerInterface $Normalizer)
-    {
-        $repository = $this->getDoctrine()->getRepository(Membre::class);
-        $requestString = $request->get('searchValue');
-        $membres = $repository->findByEmailAndRole($requestString);
-        $jsonContent = $Normalizer->normalize($membres, 'json');
 
-        return new Response(json_encode($jsonContent));
+
+    /**
+     * @Route("/indexOrdered", name="index_ordered", methods={"GET"})
+     */
+    public function orderedId(MembreRepository $membreRepository,Request $request,PaginatorInterface $paginator):Response{
+        $membre = $paginator->paginate(
+            $membreRepository->findBy(
+            array(),
+            array('id' => 'ASC')
+        ),
+            $request->query->getInt('page', 1),
+            // Items per page
+            8
+        );
+
+
+        return $this->render('membre/index.html.twig', [
+            'membres' => $membre,
+        ]);
+    }
+
+    /**
+     * @Route("/search",name="Search")
+     */
+    public function rechrecheByEmail(Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $user = $em->getRepository(Membre::class)->findAll();
+        if($request->isMethod("POST"))
+        {
+            $email = $request->get('search');
+            $user = $em->getRepository(Membre::class)->findByEmail($email);
+            if(! $user){
+                return $this->redirectToRoute('home');
+            }
+        }
+        return $this->render('membre/rechercheProfil.html.twig',array('user'=> $user));
+
     }
 
 }

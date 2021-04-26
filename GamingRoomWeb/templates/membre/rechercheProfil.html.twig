@@ -12,14 +12,13 @@
             <div class="container">
                 <ul>
                     <li><a href="user-activity.html">Activity</a></li>
-                    <li class="active"><a href="{{ path('profil', {'id': user.id}) }}">Profile</a></li>
-                    <li><a href="user-messages.html">Messages <span class="badge">6</span></a></li>
-                    <li><a href="user-settings.html">Settings</a></li>
+                    <li class="active"><a href="user-profile.html">Profile</a></li>
                     <li><a href="#">Groups</a></li>
                     <li><a href="#">Forums</a></li>
                 </ul>
             </div>
         </div>
+        {% for user in user %}
 
         <div class="info">
             <div>
@@ -60,16 +59,19 @@
                 </div>
             </div>
         </div>
+        {% endfor %}
+
     </section>
 {% endblock %}
-
 {% block content %}
 <div class="content-wrap">
-{% endblock %}
+    {% endblock %}
     {% block contentfin %}
 </div>
 {% endblock %}
 {% block body %}
+    {% for user in user %}
+
     <div class="container youplay-content">
 
         <div class="row">
@@ -142,7 +144,7 @@
             </div>
 
             <!-- Right Side -->
-           <div class="col-md-3">
+            <div class="col-md-3">
                 <div class="side-block">
                     <h4 class="block-title">About</h4>
                     <div class="block-content">
@@ -163,4 +165,6 @@
         </div>
 
     </div>
+    {% endfor %}
+
 {% endblock %}

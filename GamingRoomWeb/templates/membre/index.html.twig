@@ -24,9 +24,11 @@
                                             <a href="#"><button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button></a> <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>CSV</span></button> <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button> <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button> <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button"><span>Print</span></button> <div class="btn-group"><button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" aria-controls="example1" type="button" aria-haspopup="true" aria-expanded="false"><span>Column visibility</span></button></div> </div></div><div class="col-sm-12 col-md-6"><div id="example1_filter" class="dataTables_filter">
                                             <label>Rechercher:
 
-                                                    <input type="search" class="form-control form-control-sm" placeholder="Email ou role" aria-controls="example1"  id="myInput" onkeyup="myFunction()">
+                                                    <input type="search" style="width:180px" class="form-control form-control-sm" placeholder="Email ou role" aria-controls="example1"  id="myInput" onkeyup="myFunction()">
 
                                             </label>
+
+                                           <a href="{{ path('index_ordered') }}"> <button type="button" style="height:50px;width:180px" class="btn btn-block bg-gradient-warning"><i class="fas fa-sort-numeric-down"></i></i> Order by Id </button></a>
                                         </div></div></div><div class="row"><div class="col-sm-12"><table id="affichage_membre" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 
                                             <thead>
@@ -58,18 +60,25 @@
                                                     <td>{{ membre.lastTimeban ? membre.lastTimeban|date('Y-m-d H:i:s') : '' }}</td>
                                                     <td>
                                                         <a href="{{ path('membre_show', {'id': membre.id}) }}"> <button type="button"  class="btn btn-block btn-outline-info" > Afficher</button></a>
+                                                {% if membre.role == 'Coach' and membre.active == 0 and membre.banDuration  %}
                                                         <form method="post" action="{{ path('membre_delete', {'id': membre.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                                                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ membre.id) }}">
                                                             <button class="btn btn-block btn-outline-danger">Supprimer  </button>
                                                         </form>
-                                                       <!-- {% if membre.active == 1 %}
+                                                {% endif %}
+                                                      <!--  {% if membre.active == 1  %}
+                                                            <form action="{{ path('membre_desactiver' , {'id':membre.id}) }}">
+                                                                <button class="btn btn-block btn-outline-danger" >Desactiver</button>
+                                                            </form>
+                                                        {% endif %}
+                                                        {% if membre.active == 0   %}
                                                             <form action="{{ path('membre_desactiver' , {'id':membre.id}) }}">
                                                                 <button class="btn btn-block btn-outline-danger" >Desactiver</button>
                                                             </form>
                                                         {% endif %}-->
                                                         {% if membre.active == 0 and membre.role=='Coach' and membre.banDuration==0 %}
                                                             <form action="{{ path('membre_activer' , {'id':membre.id}) }}">
-                                                                <button class="btn btn-block btn-outline-danger" >activer</button>
+                                                                <button class="btn btn-block btn-outline-success" >activer</button>
                                                             </form>
                                                         {% endif %}
                                                       <!--  <a href="{{ path('membre_edit', {'id': membre.id}) }}">edit</a> -->

@@ -34,7 +34,7 @@
                      <div class="input-group mb-3 ">
                          <h4>Date de naissance:</h4>
 
-                   <div>{{ form_widget(form.dateNaissance,{'attr':{'name':'bday'}}) }}</div>
+                   <div>{{ form_widget(form.dateNaissance,{'attr':{'id':'datepicker'}}) }}</div>
                          {% if form_errors(form.dateNaissance) %}
                         <div class="alert alert-danger" role="alert">
                             {{ form_errors(form.dateNaissance) }}
@@ -46,7 +46,7 @@
                 <div class="col-md-2">
                     <p>Age:</p>
                     <div class="youplay-input">
-                        <input type="number" name="age" placeholder="Age" disabled>
+                        <input type="number" name="age" placeholder="Age" id="age" disabled>
                     </div>
                 </div>
             </div>
@@ -135,7 +135,6 @@
     <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
 
         </div>
-
 
 
 
