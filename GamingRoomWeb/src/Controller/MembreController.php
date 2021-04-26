@@ -238,7 +238,7 @@ class MembreController extends AbstractController
     /**
      * @Route("/member/{id}/activer", name="membre_activer", methods={"GET","POST"})
      */
-    public function activerCompte( Membre $membre,$id)
+    public function activerCompte( Membre $membre,$id,MailerInterface $mailer)
     {
         $membre=$this->getDoctrine()->getRepository(Membre::class)->find($id);
 
@@ -248,6 +248,18 @@ class MembreController extends AbstractController
         $entityManager->persist($membre);
         $entityManager->flush();
 
+        $email = (new Email())
+            ->from('Gaming2020Room@gmail.com')
+            ->to($membre->getEmail())
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Account activation!')
+            ->text('Sending emails is fun again!')
+            ->html('<p>Hello, we are happy to tell you that you have been accepted to be a coach and you is now activated ! WELCOME TO OUR COMMUNITY ! --GamingRoom--</p>');
+
+        $mailer->send($email);
 
 
         return $this->redirectToRoute('membre_index');
