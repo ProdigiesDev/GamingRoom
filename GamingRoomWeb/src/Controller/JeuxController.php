@@ -121,7 +121,9 @@ class JeuxController extends AbstractController
             $em=$this->getDoctrine()->getManager();
             $em->persist($jeux);
             $em->flush();
-            $this->addFlash('success','Jeux Ajouté avec success');
+            $this->addFlash('success','Jeu '.($id==0 ?'Ajouté':'Modifié').' avec succès');
+            if($id==0)
+                $this->addFlash('sendJsAjouter',$jeux->getNom());
             return $this->redirectToRoute('adminJeux');
         }
 

@@ -42,6 +42,7 @@ class JeuxRepository extends ServiceEntityRepository
         $qr=$this->createQueryBuilder('j')
         ->where("j.typePlateforme =  :plat")
         ->setParameter('plat', "Web")
+        ->orderBy('j.id', 'DESC')
         ->getQuery();
         return 
             $qr->getResult()

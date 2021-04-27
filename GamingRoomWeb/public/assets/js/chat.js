@@ -36,7 +36,7 @@ $("#chat-submit").click(function(e) {
     .then(result => {
         result=JSON.parse(result)
         msg=result.censored_content?result.censored_content:result.content;
-        const obj={user:$("#userName").val(),msg}
+        const obj={user:$("#userName").val(),msg,id:$('#idUser').val()}
         sessionGL.publish("acme/channel", obj);
         if(result.bad_words_total>0){
             let oldBad=parseInt(localStorage.getItem('nbBadWord'));
@@ -80,6 +80,11 @@ function generate_message(obj, type) {
         styleBg=" style='background:"+bgColor+";color: #f44336;'  ";
         styleName=" style='color:#f44336' ";
     }
+    if(obj.user!='Admin'){
+        if(obj.id==$('#idUser').val()){
+            obj.user='You'
+        }
+    }
     var str="";
     str += "<div id='cm-msg-"+INDEX+"' class=\"chat-msg "+type+"\" >";
    str += "         <span class='userName' "+styleName+"> "+obj.user+" : </span> ";
@@ -112,4 +117,6 @@ $(".chat-box-toggle").click(function() {
     $(".chat-box").toggle('scale');
 })
 
+
 })
+
