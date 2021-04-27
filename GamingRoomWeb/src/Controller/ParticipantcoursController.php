@@ -50,11 +50,16 @@ class ParticipantcoursController extends AbstractController
             // tell Doctrine you want to (eventually) save the Product (no queries yet)
             $entityManager->persist($participant);
             $entityManager->flush();
+            $this->addFlash(
+                'info', 'successful registration'
+            );
 
         }
         else{
 
+
             $participant=($this->getDoctrine()->getRepository(Participantcours::class)->delete($e,$m));
+
         }
 
         return $this->redirectToRoute('cour_show', array('id'=>$id));
@@ -79,6 +84,10 @@ class ParticipantcoursController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($participantcour);
             $entityManager->flush();
+            $this->addFlash(
+                'info', 'Registration cancelled successfully'
+            );
+
         }
 
         return $this->redirectToRoute('cour_show', array('id'=>$id));

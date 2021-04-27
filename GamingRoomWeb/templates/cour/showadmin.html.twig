@@ -4,17 +4,18 @@
 
 {% block body %}
     <h1> {{cour.nomcours }} </h1>
-    <p>
+    <table>
 
 
-    <img src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="500px" height="300px" >
-    <iframe width="560" height="315" src="{{cour.lienyoutube}}"title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
+        <tr>
+            <td>  <img  src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="500px" height="200px"></td> <h1>   </h1>
 
+            <td><iframe width="900" height="315" src="{{ cour.lienyoutube }}" title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe></td>
 
-    </p>
-
+        </tr>
+    </table>
 
     <table class="table">
         <tbody>
@@ -56,39 +57,20 @@
     <!-- Add icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <p> <!-- Use an element to toggle between a like/dislike icon -->
-        <i onclick="myFunction(this)" class="fa  fa-heart fa-3x" style="color:#9d1e15"></i>
 
-        <i onclick="myFunction(this)" class="fa fa-heartbeat fa-3x" style="color: #6B89FF"></i>
-    </p>
 
-    <form method="post" id="commentaire">
-        <p>
-            <label for="vos commentaires">Vos commentaires</label><br />
-            <textarea name="vos commentaires" id="vos commentaires" style="color: #0a001f" cols="50" rows="2" PLACEHOLDER="Ajouter votre commentaire"></textarea>
-            <i class="fa fa-arrow-circle-right fa-2x" aria-hidden="true"></i>
-        </p>
-    </form>
 
-    <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
-        <button  class="btn read-more pull-left"> Inscription</button>
 
-    </form>
-    <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
-        <button  class="btn read-more pull-left" > Annuler inscription</button>
 
-    </form>
-
-    {{ include('cour/_delete_form.html.twig') }}
-    <a href="{{ path('cour_index') }}">back to list</a>
 
 
 
     <br>
 
-    <a href="{{ path('cour_index') }}">back to list</a>
+    <a href="{{ path('cour_index_admin') }}">back to list</a>
 
-    <a href="{{ path('cour_edit', {'id': cour.id}) }}">edit</a>
+    <a href="{{ path('cour_edit_admin', {'id': cour.id}) }}">edit</a>
+    {{ include('cour/_delete_form.html.twig') }}
 
 
 

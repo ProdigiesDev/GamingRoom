@@ -242,6 +242,17 @@ class Cour
 
         return $this;
     }
+    public function getReactionCours(): ?reactioncours
+    {
+        return $this->reactioncours;
+    }
+
+    public function setReactionCours(?reactioncours $reactioncours): self
+    {
+        $this->$reactioncours = $reactioncours;
+
+        return $this;
+    }
 
     public function getPourcentageLike(): ?float
     {

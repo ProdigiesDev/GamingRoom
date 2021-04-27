@@ -52,6 +52,7 @@ class CourType extends AbstractType
 
 
             ->add('lienyoutube')
+
             ->add('categorie',EntityType::class,[
                 'class'=>Categorie::class,
                 'choice_label'=>'Categorie',

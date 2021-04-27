@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+// Include Dompdf required namespaces
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Cour;
+use App\Entity\Participantcours;
 use App\Entity\Reactioncours;
 use App\Form\CourType;
 use App\Repository\CourRepository;
@@ -18,6 +22,8 @@ use GuzzleHttp\Psr7\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonRespImageonse;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller;
+
 
 
 /**
@@ -57,10 +63,15 @@ class CourController extends AbstractController
     /**
      * @Route("/admincours", name="cour_index_admin", methods={"GET"})
      */
-    public function adminindex(CourRepository $courRepository): Response
+    public function adminindex(CourRepository $courRepository,PaginatorInterface $paginator, Request $request): Response
     {
+        $courRepository = $paginator->paginate($this->getDoctrine()->getRepository(Cour::class)
+            ->findAll(),
+            $request->query->getInt('page', 1),
+            5
+        );
         return $this->render('cour/indexAdmin.html.twig', [
-            'cours' => $courRepository->findAll(),
+            'cours' => $courRepository,
         ]);
     }
 
@@ -207,7 +218,7 @@ class CourController extends AbstractController
             $cour->setImagecours($fileName);
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash(
-                'info', 'uptated succesfully'
+                'info', 'updated succesfully'
             );
 
 
@@ -219,12 +230,62 @@ class CourController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/list", name="cour_pdf, methods={"GET"})
+     */
+
+   /** public function pdf()
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('cour/pdf.html.twig', [
+            'title' => "Welcome to our PDF Test"
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Store PDF Binary Data
+        $output = $dompdf->output();
+
+        // In this case, we want to write the file in the public directory
+        $publicDirectory = $this->get('kernel')->getProjectDir() . '/public';
+        // e.g /var/www/project/public/mypdf.pdf
+        $pdfFilepath =  $publicDirectory . '/mypdf.pdf';
+
+        // Write file to the desired path
+        file_put_contents($pdfFilepath, $output);
+
+        // Send some text response
+        return new Response("The PDF file has been succesfully generated !");
+    }
+*/
 
     /**
      * @Route("/{id}", name="cour_delete", methods={"POST"})
      */
     public function delete(Request $request, Cour $cour): Response
     {
+        $participants = $this->getDoctrine()->getRepository(Participantcours::class)->findBy(["cour" => $cour]);
+
+        foreach ($participants as $participant){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($participant);
+            $entityManager->flush();
+        }
+
         $reactions = $this->getDoctrine()->getRepository(Reactioncours::class)->findBy(["cour" => $cour]);
 
         foreach ($reactions as $reaction){
@@ -236,24 +297,12 @@ class CourController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($cour);
             $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('cour_index');
-    }
-
-    /**
-     * @Route("deleteadmin/{id}", name="cour_delete_admin", methods={"POST"})
-     */
-    public function deleteadmin(Request $request, Cour $cour): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $cour->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($cour);
-            $entityManager->flush();
+            $this->addFlash(
+                'info', 'Deleted succesfully'
+            );
         }
 
         return $this->redirectToRoute('cour_index_admin');
     }
-
 
 }

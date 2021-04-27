@@ -3,17 +3,34 @@
 {% block title %}Cours{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('info') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h1> {{ cour.nomcours }} </h1>
     <p>
 
-    <div>
-        <img src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="500px" height="300px">
 
-        <iframe width="900" height="315" src="{{ cour.lienyoutube }}" title="YouTube video player" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
+    <table>
 
-    </div>
+
+        <tr>
+            <td><img src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="500px" height="200px">
+            </td>
+            <h1></h1>
+
+            <td>
+                <iframe width="900" height="315" src="{{ cour.lienyoutube }}" title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+            </td>
+
+        </tr>
+    </table>
+
+
 
     </p>
 
@@ -76,21 +93,52 @@
         <label id="nb-dislike-{{ cour.id }}">
             {{ countDislike }}
         </label>
-    </p>
-
+<!--barre de progression des like and dislike-->
+        <br>
+        <br>
+        <label id="pource">Likes Progression:</label>
+    <div class="col-md-6 m-auto progress-box">
+        <div class="progress">
+            <div id="like-bar-{{ cour.id }}"
+                 class="progress-bar progress-bar-striped position-relative bg-dark"
+                 style="width:{{ cour.pourcentageLike }}%">
+            </div>
+        </div>
+    </div>
+<!--commentaire-->
     <form method="post" id="commentaire">
         <p>
-            <label for="vos commentaires">Vos commentaires</label><br/>
+            <label for="vos commentaires">Vos commentaires:</label><br/>
             <textarea name="vos commentaires" id="vos commentaires" style="color: #0a001f" cols="50" rows="2"
                       PLACEHOLDER="Ajouter votre commentaire"></textarea>
             <i class="fa fa-arrow-circle-right fa-2x" aria-hidden="true"></i>
         </p>
     </form>
+    <tab
+    <br>
+        <label>Vos commentaires</label>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Membre</th>
+                <th>Commentaire</th>
+            </tr>
 
-    <form action="{{ path('reactioncours_new',{'id':cour.id}) }}">
-        <button class="btn read-more pull-left"> j'aime</button>
+            </thead>
 
-    </form>
+            <tbody>
+            <tr>
+                <td>{{ cour.membre.prenom}}</td>
+
+            </tr>
+            </tbody>
+
+        </table>
+<!--test comm-->
+
+
+<!---->
+
     <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
         <button class="btn read-more pull-left"> Inscription</button>
 
@@ -100,15 +148,18 @@
 
     </form>
 
+
     {{ include('cour/_delete_form.html.twig') }}
 
 
-    <br>
 
-    <a href="{{ path('cour_index') }}">back to list</a>
+    <div>
 
-    <a href="{{ path('cour_edit', {'id': cour.id}) }}">edit</a>
+        <a href="{{ path('cour_index') }}">back to list</a>
+    </div>
 
+    <style <a href="{{ path('cour_edit', {'id': cour.id}) }}" hidden>edit</a>></style>
+    <div id="a" class="a"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script id="ajax-like-dislike">
         function ajouterLike(idCour, typeLike) {
@@ -121,10 +172,12 @@
                 },
                 success: function (retour) {
                     obj = JSON.parse(retour);
-                    console.log("nb like : "+ obj.nbLike + "/ nbDislike : " + obj.nbDislike);
+                    console.log("nb like : " + obj.nbLike + "/ nbDislike : " + obj.nbDislike);
+                    $("#a").append("<div></div>")
                     $("#nb-like-" + idCour).empty().append(obj.nbLike);
                     $("#nb-dislike-" + idCour).empty().append(obj.nbDislike);
-                    //("#like-bar-" + idCour).attr('style', 'width:' + obj.pourcentage + '%');
+                    $("#like-bar-" + idCour).attr('style', 'width:' + obj.pourcentage + '%');
+
                 },
                 error: function () {
                     alert("Connectez vous d'abord");

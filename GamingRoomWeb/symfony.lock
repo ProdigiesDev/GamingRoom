@@ -1,7 +1,4 @@
 {
-    "blackknight467/star-rating-bundle": {
-        "version": "dev-master"
-    },
     "captcha-com/captcha": {
         "version": "4.x-dev"
     },
@@ -91,6 +88,9 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "dompdf/dompdf": {
+        "version": "0.7-dev"
+    },
     "egulias/email-validator": {
         "version": "3.1.1"
     },
@@ -157,6 +157,12 @@
     "onurb/excel-bundle": {
         "version": "dev-master"
     },
+    "phenx/php-font-lib": {
+        "version": "0.5.2"
+    },
+    "phenx/php-svg-lib": {
+        "version": "0.3-dev"
+    },
     "php-webdriver/webdriver": {
         "version": "1.10.0"
     },
@@ -198,6 +204,9 @@
     },
     "psr/simple-cache": {
         "version": "1.0.x-dev"
+    },
+    "sabberworm/php-css-parser": {
+        "version": "8.3.1"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",

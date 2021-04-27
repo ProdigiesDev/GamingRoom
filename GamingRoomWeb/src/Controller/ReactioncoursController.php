@@ -101,7 +101,7 @@ class ReactioncoursController extends AbstractController
      */
     public function like(Request $request)
     {
-        $idMembre = $this->getDoctrine()->getRepository(Membre::class)->find(8);
+        $idMembre = $this->getDoctrine()->getRepository(Membre::class)->find(13);
 
         $likeType = (int)$request->get('typeReactioncours');
         $idCour = $request->get('idCour');
