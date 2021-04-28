@@ -22,19 +22,28 @@ class ScoreRepository extends ServiceEntityRepository
     // /**
     //  * @return Score[] Returns an array of Score objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function findByJeuxAndMembre($jid,$mbmid)
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('s.jeux = :j')
+            ->andWhere('s.membre = :m')
+            ->setParameter('j', $jid)
+            ->setParameter('m', $mbmid)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    public function findByJeuxOrderd($jid)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.jeux = :j')
+            ->setParameter('j', $jid)
+            ->orderBy('s.score', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Score

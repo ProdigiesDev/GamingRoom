@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+
 class JeuxType extends AbstractType
 {
     private $transformer;
@@ -24,7 +26,12 @@ class JeuxType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('description',TextareaType::class)
+            ->add('description', CKEditorType::class, array(
+                'config' => array(
+                    'uiColor' => '#ffffff',
+                    //...
+                ),
+            ))
             ->add('typePlateforme', ChoiceType::class, [
                 'choices'  => [
                     'Desktop' => 'Desktop',

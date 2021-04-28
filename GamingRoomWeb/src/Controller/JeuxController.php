@@ -14,14 +14,17 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Security\Core\Security;
 class JeuxController extends AbstractController
 {
 
     private $encoders ;
     private $normalizers;
     private $serializer;
-    public function __construct()
+    private $security;
+    public function __construct(Security $security)
     {
+        $this->security = $security;
         $this->encoders= [ new JsonEncoder()];
         $this->normalizers= [new ObjectNormalizer()];
         $this->serializer= new Serializer($this->normalizers, $this->encoders);
@@ -50,6 +53,43 @@ class JeuxController extends AbstractController
         return $this->render('jeux/list.html.twig');
     }
     
+    
+    /**
+     * @Route("/jeux/Pac-Man", name="Pac-Man")
+     */
+    
+    public function pacMan(): Response
+    {
+        $user = $this->security->getUser();
+        $pacMan=$this->getDoctrine()->getRepository(Jeux::class)->find(42);
+       
+        
+        if(!$user){
+            return $this->redirect('/login');
+        }
+        return $this->render('jeux/pac-man/index.html.twig',[
+            'pacMan'=>$pacMan
+        ]);
+    }
+    
+    /**
+    * @Route("/jeux/Tap-Tap-Tap", name="Tap-Tap-Tap")
+    */
+   
+   public function TapTapTap(Request $req): Response
+   {
+       $user = $this->security->getUser();
+       $taptap=$this->getDoctrine()->getRepository(Jeux::class)->find(43);
+      
+       
+       if(!$user){
+           return $this->redirect('/login');
+       }
+       return $this->render('jeux/Tap-Tap-Tap/index.html.twig',[
+           'taptap'=>$taptap
+       ]);
+   }
+
     /**
      * @Route("/api/jeux/all", name="apiAllJeux")
      */
