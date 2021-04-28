@@ -20,7 +20,7 @@ public class MyConnection {
 
     
 
-    String url="jdbc:mysql://localhost:3306/gamingroom";
+    String url="jdbc:mysql://localhost:3306/gamingroom?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     String login="gamingRoomUser";
     String pwd="!&_UkTz/Cw`*2#[u";
     Connection cnx;

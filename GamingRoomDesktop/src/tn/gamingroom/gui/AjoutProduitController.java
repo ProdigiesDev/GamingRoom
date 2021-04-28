@@ -264,10 +264,11 @@ public class AjoutProduitController implements Initializable {
         if (file != null) {
             try {
                 String fileName = file.getName();
-                int doitIndex = fileName.lastIndexOf(".");
+                int doitIndex = fileName.lastIndexOf("."); 
                 String imageName = fileName.substring(0, doitIndex) + new java.util.Date().getTime() + "." + fileName.substring(doitIndex + 1);
+              
                 String imageNameTodb = Env.getImagePath() + "produits\\" + imageName;
-                File dest = new File(imageNameTodb);
+                File dest = new File(imageNameTodb); 
                 Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 return imageName;
 
@@ -338,7 +339,7 @@ CategorieServices categorieServices=new CategorieServices();
             JOptionPane.showMessageDialog(null, "Veuillez insérer une image");
             return;
         }
-        //  Produits p2 = new Produits(Value5, 0, Value1, Value2, Value3, Value4);
+    
         Produits p2 = new Produits(Value5, cat.getIdcat(), nomImage, Value2, Value3, Value4, cat.getNomcat());// nbadel fel id_cat nwali 
 
         ProduitCrud pcd = new ProduitCrud();
@@ -586,9 +587,6 @@ CategorieServices categorieServices=new CategorieServices();
             Cell cell = new Cell(f1, colid.getText());
             tableRow.add(cell);
 
-//            cell = new Cell(f1,colimage.getText() );
-//            tableRow.add(cell);
-//            
             cell = new Cell(f1, collibelle.getText());
             tableRow.add(cell);
 

@@ -6,6 +6,8 @@
 parameters:
     membre_directory: '%kernel.project_dir%/public/images/membre'
     jeux_directory: '%kernel.project_dir%/public/images/jeux'
+    produit_directory: '%kernel.project_dir%/public/images/produits'
+
 services:
     # default configuration for services in *this* file
     _defaults:

@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Cle
  *
  * @ORM\Table(name="cle", indexes={@ORM\Index(name="fk_produit_id", columns={"produit_id"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\CleRepository")
  */
 class Cle
 {
@@ -23,17 +26,48 @@ class Cle
 
     /**
      * @var string
-     *
      * @ORM\Column(name="code", type="string", length=50, nullable=false)
      */
     private $code;
 
     /**
-     * @var int
+     * @var \Membre
      *
-     * @ORM\Column(name="produit_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Produit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="produit_id ", referencedColumnName="idprod")
+     * })
      */
-    private $produitId;
+    private $produit;
+
+    public function getIdcle(): ?int
+    {
+        return $this->idcle;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    public function getProduit()
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(Produit $produit): self
+    {
+        $this->produit = $produit;
+
+        return $this;
+    }
 
     public function getIdcle(): ?int
     {

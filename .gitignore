@@ -38,3 +38,4 @@ GamingRoomDesktop/nbdist/
 GamingRoomDesktop/.nb-gradle/
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans,java
+/nbproject/private/
