@@ -57,8 +57,6 @@ class Categorie
         return $this;
     }
 
-<<<<<<< HEAD
-=======
     public function getCategorie(): ?string
     {
         return $this->nomcategorie;
@@ -71,6 +69,5 @@ class Categorie
         return $this;
     }
 
->>>>>>> origin/yasmine
 
 }
