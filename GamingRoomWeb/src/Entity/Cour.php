@@ -58,12 +58,7 @@ class Cour
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     *@Assert\Regex(
-    pattern = "/^[a-z]+$/i",
-    htmlPattern = "^[a-zA-Z]+$",
-    message="'{{ value }}' doit etre chaine de caractère"
-    )
+
      * @ORM\Column(name="tags", type="string", length=255, nullable=false)
      */
     private $tags;
@@ -239,17 +234,6 @@ class Cour
     public function setMembre(?Membre $membre): self
     {
         $this->membre = $membre;
-
-        return $this;
-    }
-    public function getReactionCours(): ?reactioncours
-    {
-        return $this->reactioncours;
-    }
-
-    public function setReactionCours(?reactioncours $reactioncours): self
-    {
-        $this->$reactioncours = $reactioncours;
 
         return $this;
     }

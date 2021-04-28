@@ -25,7 +25,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller;
 
 
-
 /**
  * @Route("/cour")
  */
@@ -63,7 +62,7 @@ class CourController extends AbstractController
     /**
      * @Route("/admincours", name="cour_index_admin", methods={"GET"})
      */
-    public function adminindex(CourRepository $courRepository,PaginatorInterface $paginator, Request $request): Response
+    public function adminindex(CourRepository $courRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $courRepository = $paginator->paginate($this->getDoctrine()->getRepository(Cour::class)
             ->findAll(),
@@ -88,7 +87,9 @@ class CourController extends AbstractController
             $file = $form->get('imagecours')->getData();
             $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
             $file->move($this->getParameter('cours_directory'), $fileName);
-            $cour->setImagecours($fileName);
+            if ($cour->getTags() == null) {
+                $cour->setTags("aucune");
+            }
             $cour->setImagecours($fileName);
             //entity managerpermet l’insertion, la mise à jour et la suppression des données de la base de données
             $entityManager = $this->getDoctrine()->getManager();//récupérer l’entity manager
@@ -119,7 +120,9 @@ class CourController extends AbstractController
             $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
             $file->move($this->getParameter('cours_directory'), $fileName);
             $cour->setImagecours($fileName);
-            $cour->setImagecours($fileName);
+            if ($cour->getTags() == null) {
+                $cour->setTags("aucune");
+            }
             //entity managerpermet l’insertion, la mise à jour et la suppression des données de la base de données
             $entityManager = $this->getDoctrine()->getManager();//récupérer l’entity manager
             $entityManager->persist($cour);//pour l‘ajout d’un nouvel objet
@@ -157,6 +160,7 @@ class CourController extends AbstractController
     public function show(Cour $cour): Response
     {
         return $this->render('cour/show.html.twig', [
+            'participants' => $this->getDoctrine()->getRepository(Participantcours::class)->findAll(),
             'reactions' => $this->getDoctrine()->getRepository(Reactioncours::class)->findAll(),
             'cour' => $cour,
         ]);
@@ -177,6 +181,14 @@ class CourController extends AbstractController
      */
     public function edit(Request $request, Cour $cour): Response
     {
+        /**
+         * @var UploadedFile $file // methode nhabet fiha les fichier
+         */
+        $file = $cour->get('imagecours')->getData();//recupere l'image
+        $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
+        $file->move($this->getParameter('cours_directory'), $fileName);
+        $cour->setImagecours($fileName);
+
         $form = $this->createForm(CourType::class, $cour);//creation de formulaire
         $form->handleRequest($request); //envoie le contenu du form
 
@@ -187,6 +199,9 @@ class CourController extends AbstractController
             $file = $form->get('imagecours')->getData();//recupere l'image
             $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
             $file->move($this->getParameter('cours_directory'), $fileName);
+            if ($cour->getTags() == null) {
+                $cour->setTags("aucune");
+            }
             $cour->setImagecours($fileName);
             $this->getDoctrine()->getManager()->flush();
 
@@ -205,10 +220,16 @@ class CourController extends AbstractController
      */
     public function editadmin(Request $request, Cour $cour): Response
     {
-        $form = $this->createForm(CourType::class, $cour);//creation de formulaire
+        /**
+         * @var UploadedFile $file // methode nhabet fiha les fichier
+         */
+
+        $oldImage = $cour->getImagecours();
+        $form = $this->createForm(CourType::class, $cour);
         $form->handleRequest($request); //envoie le contenu du form
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             /**
              * @var UploadedFile $file // methode nhabet fiha les fichier
              */
@@ -216,6 +237,7 @@ class CourController extends AbstractController
             $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
             $file->move($this->getParameter('cours_directory'), $fileName);
             $cour->setImagecours($fileName);
+
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash(
                 'info', 'updated succesfully'
@@ -234,44 +256,44 @@ class CourController extends AbstractController
      * @Route("/list", name="cour_pdf, methods={"GET"})
      */
 
-   /** public function pdf()
-    {
-        // Configure Dompdf according to your needs
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
-
-        // Instantiate Dompdf with our options
-        $dompdf = new Dompdf($pdfOptions);
-
-        // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('cour/pdf.html.twig', [
-            'title' => "Welcome to our PDF Test"
-        ]);
-
-        // Load HTML to Dompdf
-        $dompdf->loadHtml($html);
-
-        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'portrait');
-
-        // Render the HTML as PDF
-        $dompdf->render();
-
-        // Store PDF Binary Data
-        $output = $dompdf->output();
-
-        // In this case, we want to write the file in the public directory
-        $publicDirectory = $this->get('kernel')->getProjectDir() . '/public';
-        // e.g /var/www/project/public/mypdf.pdf
-        $pdfFilepath =  $publicDirectory . '/mypdf.pdf';
-
-        // Write file to the desired path
-        file_put_contents($pdfFilepath, $output);
-
-        // Send some text response
-        return new Response("The PDF file has been succesfully generated !");
-    }
-*/
+    /** public function pdf()
+     * {
+     * // Configure Dompdf according to your needs
+     * $pdfOptions = new Options();
+     * $pdfOptions->set('defaultFont', 'Arial');
+     *
+     * // Instantiate Dompdf with our options
+     * $dompdf = new Dompdf($pdfOptions);
+     *
+     * // Retrieve the HTML generated in our twig file
+     * $html = $this->renderView('cour/pdf.html.twig', [
+     * 'title' => "Welcome to our PDF Test"
+     * ]);
+     *
+     * // Load HTML to Dompdf
+     * $dompdf->loadHtml($html);
+     *
+     * // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+     * $dompdf->setPaper('A4', 'portrait');
+     *
+     * // Render the HTML as PDF
+     * $dompdf->render();
+     *
+     * // Store PDF Binary Data
+     * $output = $dompdf->output();
+     *
+     * // In this case, we want to write the file in the public directory
+     * $publicDirectory = $this->get('kernel')->getProjectDir() . '/public';
+     * // e.g /var/www/project/public/mypdf.pdf
+     * $pdfFilepath =  $publicDirectory . '/mypdf.pdf';
+     *
+     * // Write file to the desired path
+     * file_put_contents($pdfFilepath, $output);
+     *
+     * // Send some text response
+     * return new Response("The PDF file has been succesfully generated !");
+     * }
+     */
 
     /**
      * @Route("/{id}", name="cour_delete", methods={"POST"})
@@ -280,7 +302,7 @@ class CourController extends AbstractController
     {
         $participants = $this->getDoctrine()->getRepository(Participantcours::class)->findBy(["cour" => $cour]);
 
-        foreach ($participants as $participant){
+        foreach ($participants as $participant) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($participant);
             $entityManager->flush();
@@ -288,7 +310,7 @@ class CourController extends AbstractController
 
         $reactions = $this->getDoctrine()->getRepository(Reactioncours::class)->findBy(["cour" => $cour]);
 
-        foreach ($reactions as $reaction){
+        foreach ($reactions as $reaction) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($reaction);
             $entityManager->flush();

@@ -47,6 +47,7 @@ class ParticipantcoursRepository extends ServiceEntityRepository
         ;
     }
     */
+    //ajouter participant
     public function findOneByME($e,$m): ?array
     {
         /*$qb = $this->getEntityManager()->createQueryBuilder('p');
@@ -62,6 +63,7 @@ class ParticipantcoursRepository extends ServiceEntityRepository
         return $qb->getResult();
 
     }
+    //annuler inscription
     public function delete($e,$m): ?int
     {
         /*$qb = $this->getEntityManager()->createQueryBuilder('p');
@@ -72,8 +74,19 @@ class ParticipantcoursRepository extends ServiceEntityRepository
             ->setParameter(1, $e)
             ->setParameter(2, $m);*/
         $qb = $this->getEntityManager()->createQuery('DELETE FROM App\Entity\Participantcours p WHERE  p.membre = :m AND p.cour = :e ');
+
         $qb->setParameter('e', $e);
         $qb->setParameter('m', $m);
+        return $qb->getResult();
+
+    }
+
+    public function  listeparticipants():?array
+    {
+        $qb = $this->getEntityManager()->createQuery('SELECT m.* FROM App\Entity\Memebre m, App\Entity\Participantcours p WHERE  p.membre = m.membre AND p.cour = m.cour ');
+
+
+
         return $qb->getResult();
 
     }

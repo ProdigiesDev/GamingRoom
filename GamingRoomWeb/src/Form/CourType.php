@@ -66,6 +66,7 @@ class CourType extends AbstractType
                 'expanded'=>false
 
             ])
+
         ;
     }
 

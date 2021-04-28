@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/participantcours")
+ * @Route("/Participantcours")
  */
 class ParticipantcoursController extends AbstractController
 {
@@ -55,12 +55,6 @@ class ParticipantcoursController extends AbstractController
             );
 
         }
-        else{
-
-
-            $participant=($this->getDoctrine()->getRepository(Participantcours::class)->delete($e,$m));
-
-        }
 
         return $this->redirectToRoute('cour_show', array('id'=>$id));
 
@@ -71,6 +65,8 @@ class ParticipantcoursController extends AbstractController
 
 
 
+
+    /*zeyda*/
     /**
      * @Route("/{id}", name="participantcours_delete", methods={"POST"})
      */
@@ -96,8 +92,10 @@ class ParticipantcoursController extends AbstractController
     /**
      * @Route("/{id}", name="participantcours_show", methods={"GET"})
      */
-    public function show(Participantcours $participantcour): Response
+    public function show(Participantcours $participantcour,$id): Response
     {
+
+        $this->getDoctrine()->getRepository(Participantcours::class)->listeparticipants();
         return $this->render('participantcours/show.html.twig', [
             'participantcour' => $participantcour,
         ]);

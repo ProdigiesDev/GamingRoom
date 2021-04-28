@@ -60,7 +60,7 @@ class CourRepository extends ServiceEntityRepository
     */
 
 
-
+    //ajax rechercher
     public function findOffreByNsc($nomcours){
         return $this->createQueryBuilder('cour')
             ->where('cour.nomcours LIKE :nomcours')
@@ -69,7 +69,7 @@ class CourRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
+    //nothing
     public  function  findAllVisibleQuery(): Query
     {
         return $this->findAllVisibleQuery();

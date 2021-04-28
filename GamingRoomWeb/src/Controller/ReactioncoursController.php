@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/reactioncours")
+ * @Route("/Reactioncours")
  */
 class ReactioncoursController extends AbstractController
 {
@@ -106,12 +106,13 @@ class ReactioncoursController extends AbstractController
         $likeType = (int)$request->get('typeReactioncours');
         $idCour = $request->get('idCour');
 
-        $haveReactioncours = $this->getDoctrine()->getRepository(Reactioncours::class)->findOneBy([
-            'membre' => $this->getDoctrine()->getRepository(Membre::class)->find($idMembre),
-            'cour' => $this->getDoctrine()->getRepository(Cour::class)->find($idCour)
-        ]);
+        $haveReactioncours = $this->getDoctrine()->getRepository(Reactioncours::class)->haveLikeDislike(
+            $this->getDoctrine()->getRepository(Cour::class)->find($idCour),
+            $this->getDoctrine()->getRepository(Membre::class)->find($idMembre)
+        );
 
-        $this->addReactioncours($haveReactioncours, $likeType, $idMembre, $idCour);
+
+        $this->addReactioncours($haveReactioncours, $likeType, "NULL", $idMembre, $idCour);
 
 
         $nombreObjets = $this->getDoctrine()->getRepository(Reactioncours::class)->nombreObjets($idCour);
@@ -135,14 +136,58 @@ class ReactioncoursController extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
-    function addReactioncours($haveReactioncours, $typeReactioncours, $membre, $courId)
+    /**
+     * @Route("/commentaire/ajout", name="commentaire")
+     */
+    public function commentaire(Request $request)
     {
+        $idMembre = $this->getDoctrine()->getRepository(Membre::class)->find(13);
 
+        $likeType = (int)$request->get('typeReactioncours');
+        $idCour = $request->get('idCour');
+        $contenuCommentaire = $request->get('contenuCommentaire');
+
+        $this->addCommentaire($likeType, $contenuCommentaire, $idMembre, $idCour);
+
+        $cour = $this->getDoctrine()->getManager()->getRepository(Cour::class)->find($idCour);
+
+        $repository = $this->getDoctrine()->getManager();
+        $repository->persist($cour);
+        $repository->flush();
+
+        $jsonContent['contenuCommentaire'] = $contenuCommentaire;
+        $jsonContent['nomPrenom'] = $idMembre->getNom() . " " . $idMembre->getPrenom();
+        return new Response(json_encode($jsonContent));
+    }
+
+    function addCommentaire($typeReactioncours, $contenuCommentaire, $membre, $courId)
+    {
+        $reactioncours = new Reactioncours();
+        $reactioncours->setInteraction($typeReactioncours);
+        $cour = $this->getDoctrine()->getManager()->getRepository(Cour::class)->find($courId);
+
+        $reactioncours->setCommentaire($contenuCommentaire);
+        $reactioncours->setCour($cour);
+        $reactioncours->setMembre($membre);
+
+        $date = new DateTime('now', new \DateTimeZone('Africa/Tunis'));
+        $reactioncours->setDateCreation($date);
+
+
+        $repository = $this->getDoctrine()->getManager();
+        $repository->persist($reactioncours);
+        $repository->flush();
+
+    }
+
+    function addReactioncours($haveReactioncours, $typeReactioncours, $contenuCommentaire, $membre, $courId)
+    {
         if ($haveReactioncours == null) {
             $reactioncours = new Reactioncours();
             $reactioncours->setInteraction($typeReactioncours);
             $cour = $this->getDoctrine()->getManager()->getRepository(Cour::class)->find($courId);
 
+            $reactioncours->setCommentaire($contenuCommentaire);
             $reactioncours->setCour($cour);
             $reactioncours->setMembre($membre);
 
@@ -155,9 +200,11 @@ class ReactioncoursController extends AbstractController
             $repository->flush();
 
         } else {
-            $missionManager = $this->getDoctrine()->getManager();
-            $missionManager->remove($haveReactioncours);
-            $missionManager->flush();
+            foreach ($haveReactioncours as $haveReactioncour) {
+                $missionManager = $this->getDoctrine()->getManager();
+                $missionManager->remove($haveReactioncour);
+                $missionManager->flush();
+            }
         }
     }
 

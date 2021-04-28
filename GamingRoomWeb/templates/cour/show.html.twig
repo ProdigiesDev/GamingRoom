@@ -93,7 +93,7 @@
         <label id="nb-dislike-{{ cour.id }}">
             {{ countDislike }}
         </label>
-<!--barre de progression des like and dislike-->
+        <!--barre de progression des like and dislike-->
         <br>
         <br>
         <label id="pource">Likes Progression:</label>
@@ -105,17 +105,31 @@
             </div>
         </div>
     </div>
-<!--commentaire-->
-    <form method="post" id="commentaire">
-        <p>
-            <label for="vos commentaires">Vos commentaires:</label><br/>
-            <textarea name="vos commentaires" id="vos commentaires" style="color: #0a001f" cols="50" rows="2"
-                      PLACEHOLDER="Ajouter votre commentaire"></textarea>
-            <i class="fa fa-arrow-circle-right fa-2x" aria-hidden="true"></i>
-        </p>
-    </form>
+    <!--commentaire-->
+
+    <div id="emplacement-commentaires-{{ cour.id }}" class="row m-5 bg-white">
+        <form method="post" id="commentaire" action="javascript:ajouterCommentaire({{ cour.id }} , 0)"
+              class="col-md-10">
+            <p>
+                <label for="vos commentaires">Vos commentaires:</label><br/>
+                <textarea name="vos commentaires" id="contenu-commenataire" style="color: #0a001f" cols="50" rows="2"
+                          PLACEHOLDER="Ajouter votre commentaire"></textarea>
+                <button type="submit"><i class="fa fa-arrow-circle-right fa-2x" aria-hidden="true"></i></button>
+            </p>
+        </form>
+        {% for reaction in reactions %}
+            {% if reaction.cour.id == cour.id %}
+                {% if reaction.interaction == 0 %}
+                    <div class="col-md-10">
+                        <p>{{ reaction.membre.nom }} {{ reaction.membre.prenom }} : {{ reaction.commentaire }}</p>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
     <tab
     <br>
+    <!--
         <label>Vos commentaires</label>
         <table class="table table-bordered table-striped">
             <thead>
@@ -128,32 +142,39 @@
 
             <tbody>
             <tr>
-                <td>{{ cour.membre.prenom}}</td>
+                <td>{{ cour.membre.prenom }}</td>
 
             </tr>
             </tbody>
 
-        </table>
-<!--test comm-->
+        </table> -->
+    <!--test comm-->
 
 
-<!---->
-
-    <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
-        <button class="btn read-more pull-left"> Inscription</button>
-
-    </form>
-    <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
-        <button class="btn read-more pull-left"> Annuler inscription</button>
-
-    </form>
-
-
-    {{ include('cour/_delete_form.html.twig') }}
+    <!---->
+    {% set estInscrit = false %}
+    {% for participant in participants %}
+        {% if participant.cour.id == cour.id %}
+            {% if participant.membre.id == 8 %}
+                {# {% if == app.user.id  %} #}
+                {% set estInscrit = true %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
 
 
 
-    <div>
+    {% if estInscrit %}
+        <h2 class="text-light">Vous êtes inscrit</h2>
+    {% else %}
+        <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
+            <button class="btn read-more pull-left" id="btninscrip"> Inscription</button>
+        </form>
+    {% endif %}
+
+
+
+    <div class="m-5">
 
         <a href="{{ path('cour_index') }}">back to list</a>
     </div>
@@ -165,7 +186,7 @@
         function ajouterLike(idCour, typeLike) {
             $.ajax({
                 type: 'GET',
-                url: '/reactioncours/reaction/ajout',
+                url: '/Reactioncours/reaction/ajout',
                 data: {
                     'typeReactioncours': typeLike,
                     'idCour': idCour
@@ -184,6 +205,57 @@
                 }
             });
         }
+
+        function ajouterCommentaire(idCour, typeLike) {
+            let contenuCommentaire = $("#contenu-commenataire").val();
+            $("#contenu-commenataire").val("");
+            $.ajax({
+                type: 'GET',
+                url: '/Reactioncours/commentaire/ajout',
+                data: {
+                    'typeReactioncours': typeLike,
+                    'idCour': idCour,
+                    'contenuCommentaire': contenuCommentaire,
+                },
+                success: function (retour) {
+                    obj = JSON.parse(retour);
+
+                    $("#emplacement-commentaires-" + idCour).append(
+                        "<div class='col-md-10'>" +
+                        "<p>" + obj.nomPrenom + " : " + obj.contenuCommentaire + "</p>" +
+                        "</div>"
+                    );
+
+                },
+                error: function () {
+                    alert("Connectez vous d'abord");
+                }
+            });
+        }
+    </script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+
+    <script>
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/ParticipantcoursController/new/{id}',
+                data: {},
+                $('#btninscrip').click(function () {
+                $(this).attr("disabled", "disabled");
+            });
+        }
+
+        }
+        success: function (retour) {
+
+
+        }
+        )
+        ;
     </script>
 
 

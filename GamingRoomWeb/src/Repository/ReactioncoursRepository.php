@@ -72,6 +72,7 @@ class ReactioncoursRepository extends ServiceEntityRepository
             return $this->createQueryBuilder('r')
                 ->select('count(r.id)')
                 ->where('r.cour = :idCour')
+                ->andWhere('r.interaction != 0')
                 ->setParameter('idCour', $idCour)
                 ->getQuery()
                 ->getSingleScalarResult();
@@ -97,6 +98,23 @@ class ReactioncoursRepository extends ServiceEntityRepository
         } catch (NonUniqueResultException $e) {
             return 0;
         }
+    }
+
+    public function haveLikeDislike($idCour, $idMembre)
+    {
+        /*$qb = $this->getEntityManager()->createQueryBuilder('p');
+        $qb->select('p')
+            ->from('App\Entity\Participant', 'p')
+            ->where('p.evenement = ?1')
+            ->andWhere('p.member = ?2')
+            ->setParameter(1, $e)
+            ->setParameter(2, $m);*/
+        $qb = $this->getEntityManager()->createQuery('SELECT p FROM App\Entity\Reactioncours p WHERE  ( p.membre = :m ) AND ( p.cour = :e) AND ( p.interaction != 0 ) ');
+
+        $qb->setParameter('e', $idCour);
+        $qb->setParameter('m', $idMembre);
+        return $qb->getResult();
+
     }
 
 }
