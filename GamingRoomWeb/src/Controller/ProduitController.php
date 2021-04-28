@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Entity\Membre;
 use App\Entity\RechercheProd;
 use App\Form\ProduitType;
 use App\Form\RechercheproduitType;
@@ -84,8 +85,9 @@ class ProduitController extends AbstractController
         $form->handleRequest($request); // aabit l formulaire w bech nabaathou
 
         //recuperer tt les membre inscrit
-        //$em=$this->getDoctrine()->getManager();
-       // $membre=$em->getRepository(Membre::class)->findAll();
+
+      $em=$this->getDoctrine()->getManager();
+       $membre=$em->getRepository(Membre::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('image')->getData();
@@ -97,19 +99,19 @@ class ProduitController extends AbstractController
             $entityManager->persist($produit);
             $entityManager->flush();
                       // email
-           // foreach ($membre as $m )
-           //{
+        foreach ($membre as $m )
+          {
             $email = (new Email())
                 ->from('Gamingroom.prodigiesDev@gmail.com')
-               // ->to($m->getEmail())
-                ->to('yasmine.manita@esprit.tn')
+              ->to($m->getEmail())
+                //->to('yasmine.manita@esprit.tn')
                 ->priority(Email::PRIORITY_HIGH)
                 ->subject('[GamingRoom] Traitement d ajout !')
                 //->text('Sending emails is fun again!')
                 ->html('<p>Bonjour cher(e) Mr/Mme </p><br>
-                   <p>un nouveau produit a été ajouté  ');
+                   <p>un nouveau produit a été ajouté ' );
             $mailer->send($email);
-      //  }
+       }
             return $this->redirectToRoute('produit_index');
         }
 
