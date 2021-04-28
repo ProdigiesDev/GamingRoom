@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\JsonRespImageonse;
 use Knp\Component\Pager\PaginatorInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 
 class ProduitController extends AbstractController
 {
@@ -74,11 +77,15 @@ class ProduitController extends AbstractController
     /**
      * @Route("/new", name="produit_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request,MailerInterface $mailer): Response
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request); // aabit l formulaire w bech nabaathou
+
+        //recuperer tt les membre inscrit
+        //$em=$this->getDoctrine()->getManager();
+       // $membre=$em->getRepository(Membre::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('image')->getData();
@@ -89,7 +96,20 @@ class ProduitController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($produit);
             $entityManager->flush();
-
+                      // email
+           // foreach ($membre as $m )
+           //{
+            $email = (new Email())
+                ->from('Gamingroom.prodigiesDev@gmail.com')
+               // ->to($m->getEmail())
+                ->to('yasmine.manita@esprit.tn')
+                ->priority(Email::PRIORITY_HIGH)
+                ->subject('[GamingRoom] Traitement d ajout !')
+                //->text('Sending emails is fun again!')
+                ->html('<p>Bonjour cher(e) Mr/Mme </p><br>
+                   <p>un nouveau produit a été ajouté  ');
+            $mailer->send($email);
+      //  }
             return $this->redirectToRoute('produit_index');
         }
 
