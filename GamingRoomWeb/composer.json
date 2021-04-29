@@ -5,7 +5,9 @@
         "php": ">=7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "captcha-com/symfony-captcha-bundle": "4.*",
         "composer/package-versions-deprecated": "1.11.99.1",
+        "craue/formflow-bundle": "3.4.x-dev",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^3.1",
@@ -16,7 +18,9 @@
         "gregwar/captcha-bundle": "^2.1",
         "jbafford/password-strength-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "^5.4",
+        "php-translation/symfony-bundle": "0.12.x-dev",
         "phpdocumentor/reflection-docblock": "^5.2",
+        "pugx/autocompleter-bundle": "1.x-dev",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
@@ -47,6 +51,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "laravel/dusk": "^5.0",
         "symfony/browser-kit": "^4.4",
         "symfony/css-selector": "^4.4",
         "symfony/debug-bundle": "^4.4",
@@ -65,6 +70,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Acme\\Bundle\\BlogBundle\\": "src/Acme/Bundle/BlogBundle",
             "App\\": "src/"
         }
     },
@@ -101,5 +107,6 @@
             "allow-contrib": false,
             "require": "4.4.*"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }

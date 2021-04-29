@@ -56,7 +56,6 @@ class Categorie
 
         return $this;
     }
-
     public function getCategorie(): ?string
     {
         return $this->nomcategorie;

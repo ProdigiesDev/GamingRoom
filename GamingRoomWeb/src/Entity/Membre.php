@@ -200,6 +200,17 @@ class Membre implements UserInterface
 
         return $this;
     }
+    public function getMembre(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setMembre(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
 
     public function getPrenom(): ?string
     {

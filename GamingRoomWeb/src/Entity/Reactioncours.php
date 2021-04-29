@@ -7,8 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reactioncours
  *
- * @ORM\Table(name="reactioncours", indexes={@ORM\Index(name="fk_member_reaction", columns={"membre_id"}), @ORM\Index(name="fk_cour_reaction", columns={"cour_id"})})
+ * @ORM\Table(name="Reactioncours", indexes={@ORM\Index(name="fk_member_reaction", columns={"membre_id"}), @ORM\Index(name="fk_cour_reaction", columns={"cour_id"})})
  * @ORM\Entity
+ * * @ORM\Entity(repositoryClass="App\Repository\ReactioncoursRepository")
  */
 class Reactioncours
 {
@@ -93,7 +94,7 @@ class Reactioncours
 
     public function getDateCreation(): ?\DateTimeInterface
     {
-        return $this->dateCreation;
+        return $this->dateCreation=="current_timestamp()" ? null : $this->dateCreation;
     }
 
     public function setDateCreation(\DateTimeInterface $dateCreation): self
@@ -126,6 +127,7 @@ class Reactioncours
 
         return $this;
     }
+
 
 
 }
