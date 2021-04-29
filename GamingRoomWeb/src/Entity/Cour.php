@@ -106,6 +106,8 @@ class Cour
      */
     private $pourcentageLike;
 
+
+
     public function __construct()
     {
         $this->dateCreation = new \DateTime('now');

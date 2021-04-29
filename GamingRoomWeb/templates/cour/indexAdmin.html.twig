@@ -124,6 +124,12 @@
                             </div>
                             <div align="center">{{ knp_pagination_render(cours) }}</div>
                         </div>
+
+                        <button type="button" class="btn btn-outline-primary btn-block">
+                            <i class="fa fa-user-circle-o"></i> <a href="{{ path('participantcours_index') }}">Liste Participants</a>
+                        </button>
+
+
                         <button type="button" class="btn btn-outline-primary btn-block">
                             <i class="fa fa-plus"></i> <a href="{{ path('cour_new_admin') }}">Ajouter un cours</a>
                         </button>

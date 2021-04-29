@@ -1,23 +1,17 @@
-{% extends 'base_clientSide.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
 {% block title %}Participantcours{% endblock %}
 
 {% block body %}
-    <h1>Participant cours</h1>
+    <h1>{{participantcour.membre.nom}} {{participantcour.membre.prenom }}</h1>
 
     <table class="table">
         <tbody>
 
-        <tr>
-            <th>Nom</th>
-            <td>{{participantcour.membre.nom}}</td>
-        </tr>
 
 
-        <tr>
-            <th>Prénom</th>
-            <td>{{participantcour.membre.prenom }}</td>
-        </tr>
+
+
 
         <tr>
             <th>Genre</th>
@@ -35,7 +29,7 @@
     </table>
     <a href="{{ path('participantcours_index') }}">back to list</a>
 
-    <a href="{{ path('participantcours_edit', {'id': participantcour.id}) }}">edit</a>
+   <!-- <a href="{{ path('participantcours_edit', {'id': participantcour.id}) }}">edit</a>-->
 
     {{ include('participantcours/_delete_form.html.twig') }}
 {% endblock %}

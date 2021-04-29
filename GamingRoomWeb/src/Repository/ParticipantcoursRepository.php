@@ -81,15 +81,17 @@ class ParticipantcoursRepository extends ServiceEntityRepository
 
     }
 
-    public function  listeparticipants():?array
+    public function  listeparticipants($e):?array
     {
-        $qb = $this->getEntityManager()->createQuery('SELECT m.* FROM App\Entity\Memebre m, App\Entity\Participantcours p WHERE  p.membre = m.membre AND p.cour = m.cour ');
+        $qb = $this->getEntityManager()->createQuery('SELECT p FROM App\Entity\Participantcours p WHERE  p.cour = :e ');
 
-
+        $qb->setParameter('e', $e);
 
         return $qb->getResult();
 
     }
+
+
 
 
 

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 // Include Dompdf required namespaces
+use App\Entity\Membre;
+use App\Form\CourTypeCaptcha;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\Cour;
@@ -22,15 +24,21 @@ use GuzzleHttp\Psr7\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonRespImageonse;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 /**
  * @Route("/cour")
  */
-class CourController extends AbstractController
+class CourController extends Controller
 {
+    private $session;
 
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
     /**
      * @Route("/", name="cour_index", methods={"GET"})
      */
@@ -111,8 +119,63 @@ class CourController extends AbstractController
      */
     public function newbyadmin(Request $request): Response
     {
+
         $cour = new Cour();
-        $form = $this->createForm(CourType::class, $cour);//récuperation du formulaire
+
+        $flow = $this->get('app.form.flow.courTypeFlow'); // must match the flow's service id
+        $flow->bind($cour);
+
+        // form of the current step
+        $form = $flow->createForm();
+        if ($flow->isValid($form)) {
+
+            $flow->saveCurrentStepData($form);
+
+            if($flow->getCurrentStep()==1){
+                $file = $form->get('imagecours')->getData();
+                $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
+                $file->move($this->getParameter('cours_directory'), $fileName);
+                $this->session->set('imageBeforeUploade', $fileName);
+
+            }
+
+
+            if ($flow->nextStep()) {
+                // form for the next step
+
+                if ($flow->getStep(1)) {
+
+
+                }
+
+                $form = $flow->createForm();
+            } else {
+                if ($cour->getTags() == null) {
+                    $cour->setTags("aucune");
+                }
+                $cour->setImagecours($this->session->get('imageBeforeUploade'));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($cour);
+                $em->flush();
+                $flow->reset(); // remove step data from the session
+
+                return $this->redirectToRoute('cour_index_admin'); //redirection apres l'ajout
+            }
+        }
+
+        return $this->render('cour/newadmin.html.twig', [ //envoi du form à la page twig
+            'cour' => $cour,
+            'form' => $form->createView(),
+            'flow' => $flow
+        ]);
+    }
+    /**
+     * @Route("admin/new/captcha", name="cour_new_admin_captcha", methods={"GET","POST"})
+     */
+    public function newbyadminCaptcha(Request $request): Response
+    {
+        $cour = new Cour();
+        $form = $this->createForm(CourTypeCaptcha::class, $cour);//récuperation du formulaire
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -132,10 +195,10 @@ class CourController extends AbstractController
             );
 
             return $this->redirectToRoute('cour_index_admin'); //redirection apres l'ajout
+
         }
 
-
-        return $this->render('cour/newadmin.html.twig', [ //envoi du form à la page twig
+        return $this->render('cour/newadminCaptcha.html.twig', [ //envoi du form à la page twig
             'cour' => $cour,
             'form' => $form->createView(),
         ]);
@@ -152,6 +215,23 @@ class CourController extends AbstractController
         $jsonContent = $Normalizer->normalize($offres, 'json');
 
         return new Response(json_encode($jsonContent));
+    }
+
+
+    /**
+     * @Route("/mine/{id}", name="cour_show_mine", methods={"GET"})
+     */
+    public function showmine(CourRepository $courRepository, Request $request, $id): Response
+    {
+        //$e=$this->getDoctrine()->getRepository(Cour::class)->find($id);
+        $id = 8;
+        //$m=$this->getDoctrine()->getRepository(Membre::class)->find(8);
+        $cour = $this->courRepository->getEventPart($id);
+
+
+        return $this->render('cour/index.html.twig', [
+            'courRepository' => $courRepository,
+        ]);
     }
 
     /**
@@ -189,7 +269,7 @@ class CourController extends AbstractController
         $file->move($this->getParameter('cours_directory'), $fileName);
         $cour->setImagecours($fileName);
 
-        $form = $this->createForm(CourType::class, $cour);//creation de formulaire
+        $form = $this->createForm(CourTypeCaptcha::class, $cour);//creation de formulaire
         $form->handleRequest($request); //envoie le contenu du form
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -225,7 +305,7 @@ class CourController extends AbstractController
          */
 
         $oldImage = $cour->getImagecours();
-        $form = $this->createForm(CourType::class, $cour);
+        $form = $this->createForm(CourTypeCaptcha::class, $cour);
         $form->handleRequest($request); //envoie le contenu du form
 
         if ($form->isSubmitted() && $form->isValid()) {

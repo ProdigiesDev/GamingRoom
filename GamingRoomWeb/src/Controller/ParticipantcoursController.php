@@ -92,10 +92,8 @@ class ParticipantcoursController extends AbstractController
     /**
      * @Route("/{id}", name="participantcours_show", methods={"GET"})
      */
-    public function show(Participantcours $participantcour,$id): Response
+    public function show(Participantcours $participantcour): Response
     {
-
-        $this->getDoctrine()->getRepository(Participantcours::class)->listeparticipants();
         return $this->render('participantcours/show.html.twig', [
             'participantcour' => $participantcour,
         ]);

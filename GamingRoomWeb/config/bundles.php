@@ -15,5 +15,6 @@ return [
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
     Gregwar\CaptchaBundle\GregwarCaptchaBundle::class => ['all' => true],
-    //PUGX\AutocompleterBundle\PUGXAutocompleterBundle::class => ['all' => true],
+    Translation\Bundle\TranslationBundle::class => ['all' => true],
+    Craue\FormFlowBundle\CraueFormFlowBundle::class => ['all' => true],
 ];

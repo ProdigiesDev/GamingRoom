@@ -111,12 +111,14 @@
         <form method="post" id="commentaire" action="javascript:ajouterCommentaire({{ cour.id }} , 0)"
               class="col-md-10">
             <p>
-                <label for="vos commentaires">Vos commentaires:</label><br/>
+
                 <textarea name="vos commentaires" id="contenu-commenataire" style="color: #0a001f" cols="50" rows="2"
                           PLACEHOLDER="Ajouter votre commentaire"></textarea>
                 <button type="submit"><i class="fa fa-arrow-circle-right fa-2x" aria-hidden="true"></i></button>
             </p>
+            <label for="vos commentaires">Vos commentaires:</label><br/>
         </form>
+
         {% for reaction in reactions %}
             {% if reaction.cour.id == cour.id %}
                 {% if reaction.interaction == 0 %}
@@ -165,7 +167,7 @@
 
 
     {% if estInscrit %}
-        <h2 class="text-light">Vous êtes inscrit</h2>
+        <h2 class="text-light">Vous êtes inscrit à {{ cour.nomcours }} Cours</h2>
     {% else %}
         <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
             <button class="btn read-more pull-left" id="btninscrip"> Inscription</button>

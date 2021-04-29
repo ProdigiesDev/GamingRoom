@@ -77,5 +77,15 @@ class CourRepository extends ServiceEntityRepository
         $query->getQuery();
     }
 
+    public function getEventPart($idp): ?array
+    {
+        $qb = $this->getEntityManager()->createQuery('SELECT e FROM App\Entity\Cour e, App\Entity\Participantcours p WHERE  p.membre = :m AND p.cour = e ');
+        $qb->setParameter('m', $idp);
+        return $qb->getResult();
+
+
+
+    }
+
 
 }
