@@ -301,7 +301,7 @@ class MembreController extends AbstractController
     /**
      * @Route("/member/{id}/desactiver", name="membre_desactiver", methods={"GET","POST"})
      */
-    public function desactiverCompte(Request $request, Membre $membre,$id)
+    public function BanCompte(Request $request, Membre $membre,$id)
     {
         $membre=$this->getDoctrine()->getRepository(Membre::class)->find($id);
 
@@ -402,5 +402,34 @@ class MembreController extends AbstractController
         }
 
         return $this->redirectToRoute('home');
+    }
+    /**
+     * @Route("/member/{id}/activerBan", name="membre_activerBan", methods={"GET","POST"})
+     */
+    public function activerCompteBan( Membre $membre,$id,MailerInterface $mailer)
+    {
+        $membre=$this->getDoctrine()->getRepository(Membre::class)->find($id);
+
+
+        $membre->setActive(1);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($membre);
+        $entityManager->flush();
+
+        $email = (new Email())
+            ->from('Gaming2020Room@gmail.com')
+            ->to($membre->getEmail())
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Account activation!')
+            ->text('Sending emails is fun again!')
+            ->html('<p>Hello, Your account has been activated after the last ban --GamingRoom--</p>');
+
+        $mailer->send($email);
+
+
+        return $this->redirectToRoute('membre_index');
     }
 }

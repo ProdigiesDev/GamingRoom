@@ -3,11 +3,17 @@
 {% block title %}Edit Categorie{% endblock %}
 
 {% block body %}
-    <h1>Edit Categorie</h1>
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Ajouter Catégorie</h3>
+    </div>
+
+    <div class="card-body">
 
     {{ include('categorie/_form.html.twig', {'button_label': 'Update'}) }}
-
+    </div>
+</div>
     <a href="{{ path('categorie_index') }}">back to list</a>
 
-    {{ include('categorie/_delete_form.html.twig') }}
+
 {% endblock %}

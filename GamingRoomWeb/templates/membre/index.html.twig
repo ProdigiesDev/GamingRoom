@@ -11,18 +11,21 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header  bg-primary text-white">
+                        <!--<div class="card-header  bg-primary text-white">
                             <h3 class="card-title">Liste des Membres</h3>
-                        </div>
+                        </div>-->
+                        <h1 style="color:royalblue;">Listes des Membres</h1>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <a href="{{ path('membre_pdf') }}"><button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button></a>
-                                            <a href="#"><button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button></a> <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>CSV</span></button> <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button> <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button> <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button"><span>Print</span></button> <div class="btn-group"><button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" aria-controls="example1" type="button" aria-haspopup="true" aria-expanded="false"><span>Column visibility</span></button></div> </div></div><div class="col-sm-12 col-md-6"><div id="example1_filter" class="dataTables_filter">
-                                            <label>Rechercher:
+                                           <!-- <a href="{{ path('membre_pdf') }}"><button class="btn btn-outline-info btn-block btn-flat" tabindex="0" aria-controls="example1" type="button"><span>Imprimer</span></button></a>-->
+                                            <a href="{{ path('membre_pdf') }}"><button type="button" class="btn btn-outline-primary btn-block"><i class="fas fa-file-pdf"></i>Imprimer</button></a>
+
+                                                </div></div><div class="col-sm-12 col-md-6"><div id="example1_filter" class="dataTables_filter">
+                                            <label style="color:royalblue;">Rechercher:
 
                                                     <input type="search" style="width:180px" class="form-control form-control-sm" placeholder="Email" aria-controls="example1"  id="myInput" onkeyup="myFunction()">
 
@@ -34,38 +37,40 @@
                                             </label>
                                             <table>
                                             <td>
-                                            <a href="{{ path('index_ordered') }}"> <button type="button" style="height:50px;width:180px" class="btn btn-block bg-gradient-warning"><i class="fas fa-sort-numeric-down"></i></i> Order by Id </button></a>
+                                            <a href="{{ path('index_ordered') }}"> <button type="button" style="height:50px;width:180px" class="btn btn-block bg-gradient-warning"><i class="fas fa-sort-numeric-down"></i> Order by Id </button></a>
                                             </td>
                                              <td>
-                                            <a href="{{ path('name_ordered') }}"> <button type="button" style="height:50px;width:180px" class="btn btn-block bg-gradient-warning"><i class="fas fa-sort-numeric-down"></i></i> Order by NOM </button></a>
+                                            <a href="{{ path('name_ordered') }}"> <button type="button" style="height:50px;width:180px" class="btn btn-block bg-gradient-warning"><i class="fas fa-sort-alpha-down"></i> Order by NOM </button></a>
                                              </td>
                                             </table>
                                         </div></div></div><div class="row"><div class="col-sm-12"><table id="affichage_membre" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 
                                             <thead>
                                             <tr role="row">
-                                                <th>Id</th>
-                                                <th>Nom</th>
-                                                <th>Prenom</th>
-                                                <th>Sexe</th>
-                                                <th>Email</th>
-                                                <th>Role</th>
-                                                <th>Active</th>
-                                                <th>BanDuration</th>
-                                                <th>LastTimeban</th>
-                                                <th>actions</th>
+                                                <th><h5 style="color:royalblue;">Id </h5></th>
+                                                <th><h5 style="color:royalblue;">Nom</h5></th>
+                                                <th><h5 style="color:royalblue;">Prenom</h5></th>
+                                                <th><h5 style="color:royalblue;">Sexe</h5></th>
+                                                <th><h5 style="color:royalblue;">Email</h5></th>
+                                                <th><h5 style="color:royalblue;">Role</h5></th>
+                                                <th><h5 style="color:royalblue;">Active</h5></th>
+                                                <th><h5 style="color:royalblue;">Ban Duration</h5></th>
+                                                <th><h5 style="color:royalblue;">Last Time ban</h5></th>
+                                                <th><h5 style="color:royalblue;">actions</h5></th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             {% for membre in membres %}
                                                 {% if membre.role != "Admin" %}
                                                 <tr>
-                                                    <td>{{ membre.id }}</td>
+                                                    <td><h5 style="color:royalblue;">{{ membre.id }}</h5></td>
                                                     <td>{{ membre.nom }}</td>
                                                     <td>{{ membre.prenom }}</td>
                                                     <td>{{ membre.genre }}</td>
                                                     <td>{{ membre.email }}</td>
-                                                    <td>{{ membre.role }}</td>
+                                                    <td>{% if membre.role == 'Coach' %}<h5 style="color:#f39c12;">{{ membre.role }}{% endif %}
+                                                            {% if membre.role == 'Membre' %}<h5 style="color:#00a65a;">{{ membre.role }}{% endif %}
+                                                    </td>
                                                     <td>{{ membre.active ? 'Yes' : 'No' }}</td>
                                                     <td>{{ membre.banDuration }}</td>
                                                     <td>{{ membre.lastTimeban ? membre.lastTimeban|date('Y-m-d H:i:s') : '' }}</td>
@@ -82,10 +87,14 @@
                                                         {% endif %}
                                                         {% if membre.active == 1  %}
                                                             <form action="{{ path('membre_desactiver' , {'id':membre.id}) }}">
-                                                                <button class="btn btn-block btn-outline-danger" >Ban</button>
+                                                                <button class="btn btn-block btn-outline-danger" ><i class="fas fa-ban"></i></button>
                                                             </form>
                                                         {% endif %}
-
+                                                        {% if membre.active==0 and membre.lastTimeban != null %}
+                                                            <form action="{{ path('membre_activerBan' , {'id':membre.id}) }}">
+                                                                <button class="btn btn-block btn-outline-success" >Activer</button>
+                                                            </form>
+                                                        {% endif%}
 
                                                       <!--  <a href="{{ path('membre_edit', {'id': membre.id}) }}">edit</a> -->
                                                     </td>
@@ -104,7 +113,7 @@
 
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">
+                                    <h3 class="card-title" style="color:royalblue;" >
                                         <i class="fas fa-chart-pie mr-1"></i>
                                         Membres
                                     </h3>

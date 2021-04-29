@@ -45,7 +45,7 @@ class MembreType extends AbstractType
             ->add('numeroTel')
             ->add('email',EmailType::class)
             ->add('password',PasswordType::class)
-            ->add('image', FileType::class,['data_class'=>null],[
+            ->add('image', FileType::class,[
                 'label' => 'Image(jpg,png,jpeg)',
 
                 // unmapped means that this field is not associated to any entity property

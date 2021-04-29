@@ -17,6 +17,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategorieController extends AbstractController
 {
     /**
+     * @Route("/NameOrdredcat", name="name_orderedcat", methods={"GET"})
+     */
+    public function orderedName(CategorieRepository $categorieRepository,Request $request,PaginatorInterface $paginator):Response{
+        $categorie = $paginator->paginate(
+            $categorieRepository->findBy(
+                array(),
+                array('nomcategorie' => 'ASC')
+            ),
+            $request->query->getInt('page', 1),
+            // Items per page
+            8
+        );
+
+
+        return $this->render('categorie/index.html.twig', [
+            'categories' => $categorie,
+        ]);
+    }
+
+    /**
      * @Route("/", name="categorie_index", methods={"GET"})
      */
     public function index(CategorieRepository $categorieRepository,Request $request,PaginatorInterface $paginator): Response
@@ -27,7 +47,7 @@ class CategorieController extends AbstractController
             // Define the page parameter
             $request->query->getInt('page', 1),
             // Items per page
-            5
+            8
         );
         return $this->render('categorie/index.html.twig', [
             'categories' => $categorie,

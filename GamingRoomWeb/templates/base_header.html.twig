@@ -347,9 +347,11 @@
         </li>
         <li>
             {% if app.user %}
+                {% if app.user.role != 'Admin' %}
                 <a href="{{ path('profil', {'id': app.user.id}) }}">
                     Profile
                 </a>
+                {% endif%}
             {% endif %}
             {% if app.user == false %}
                 <a href="{{ path('app_login') }}">
@@ -374,6 +376,7 @@
             </a>
         </li>
                     {% if app.user %}
+                        {% if app.user.role != 'Admin' %}
         <li>
             <a href="{{ path('membre_edit' , {'id' :app.user.id} )}}">
                 Settings
@@ -382,6 +385,7 @@
                 
             </a>
         </li>
+                            {% endif %}
                     {% endif %}
         <li>
             <a href="https://nkdev.info/docs/youplay-html/">
@@ -519,7 +523,7 @@
                             <br>
 
                             <p>
-                                <a class="no-fade" href="#">Lost password?</a> | <a href="{{ path('membre_new') }}" class="no-fade" data-toggle="modal" >Register</a>
+                                <a href="{{ path('membre_new') }}" class="no-fade" data-toggle="modal" >Register</a>
                             </p>
                         </form>
                     </div>

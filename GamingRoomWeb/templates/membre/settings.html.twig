@@ -55,8 +55,12 @@
                 </div>
 
                 <div class="container mt-20">
-                    <a href="#" class="btn btn-sm btn-default ml-0">Add Friend</a>
-                    <a href="#" class="btn btn-sm btn-default">Private Message</a>
+                    <!--<a href="#" class="btn btn-sm btn-default ml-0">Add Friend</a>
+                    <a href="#" class="btn btn-sm btn-default">Private Message</a>-->
+                    <form method="post" action="{{ path('compte_delete', {'id': app.user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+                        <button class="btn btn-sm btn-default ml-0">supprimer Compte</button>
+                    </form>
                 </div>
             </div>
         </div>
