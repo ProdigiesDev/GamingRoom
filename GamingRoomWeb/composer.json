@@ -19,6 +19,7 @@
         "jbafford/password-strength-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "^5.4",
         "php-translation/symfony-bundle": "0.12.x-dev",
+        "endroid/qr-code-bundle": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.2",
         "pugx/autocompleter-bundle": "1.x-dev",
         "sensio/framework-extra-bundle": "^5.1",
@@ -47,6 +48,8 @@
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
+        "tattali/calendar-bundle": "^1.2",
+        "toiba/fullcalendar-bundle": "^6.2",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },

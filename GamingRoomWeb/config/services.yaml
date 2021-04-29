@@ -8,6 +8,7 @@ parameters:
     jeux_directory: '%kernel.project_dir%/public/images/jeux'
     produit_directory: '%kernel.project_dir%/public/images/produits'
     cours_directory: '%kernel.project_dir%/public/images/cours'
+    images_directory: '%kernel.project_dir%/public/images/evenement'
 
 services:
   # default configuration for services in *this* file
@@ -43,3 +44,6 @@ services:
     class: App\Form\CourTypeFlow
     autoconfigure: true
     public: true
+  App\EventListener\FullCalendarListener:
+      tags:
+          - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: loadEvents }

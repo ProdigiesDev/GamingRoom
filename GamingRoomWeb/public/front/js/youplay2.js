@@ -1,3 +1,4 @@
+console.log("hola");
 /*!-----------------------------------------------------------------
     Name: Youplay - Game Template based on Bootstrap
     Version: 3.3.0
@@ -1319,6 +1320,7 @@ function initMagnificPopup() {
         type: 'image'
     }, mpOptions));
 
+    console.log("!!!!",mpOptions)
     // video popup
     $('.video-popup').magnificPopup($.extend({
         type: 'iframe'

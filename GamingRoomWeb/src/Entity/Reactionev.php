@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="reactionev", indexes={@ORM\Index(name="fk_member_ev_reaction", columns={"membre_id"}), @ORM\Index(name="fk_evenement_reaction", columns={"evenement_id"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ReactionevRepository")
  */
 class Reactionev
 {
@@ -33,7 +34,7 @@ class Reactionev
      *
      * @ORM\Column(name="commentaire", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $commentaire = 'NULL';
+    private $commentaire;
 
     /**
      * @var \Evenement
