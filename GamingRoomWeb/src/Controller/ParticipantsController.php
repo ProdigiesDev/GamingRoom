@@ -48,7 +48,7 @@ class ParticipantsController extends AbstractController
     }
 
     /**
-     * @Route("/listerPAdmin", name="listerPAdmin")
+     * @Route("/admin/listerPAdmin", name="listerPAdmin")
      */
     public function listerPAdmin(): Response
     {
@@ -310,7 +310,7 @@ class ParticipantsController extends AbstractController
 
 
     /**
-     * @Route("/updateRound/{id}", name="updateRound")
+     * @Route("/admin/updateRound/{id}", name="updateRound")
      */
     public function updateRound($id): Response
     {

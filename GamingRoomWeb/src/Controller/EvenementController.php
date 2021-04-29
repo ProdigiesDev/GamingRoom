@@ -18,9 +18,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Security\Core\Security;
 
-/**
- * @Route("/evenement")
- */
 class EvenementController extends AbstractController
 {
     private $security;
@@ -30,7 +27,7 @@ class EvenementController extends AbstractController
         $this->security = $security;
     }
     /**
-     * @Route("/", name="evenement_index", methods={"GET"})
+     * @Route("/admin/evenement", name="evenement_index", methods={"GET"})
      */
     public function index(EvenementRepository $evenementRepository,Request $request,PaginatorInterface $paginator): Response
     {
@@ -48,19 +45,9 @@ class EvenementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/testMap", name="testMap", methods={"GET"})
-     */
-    public function testMap(EvenementRepository $evenementRepository,Request $request,PaginatorInterface $paginator): Response
-    {
-
-
-        return $this->render('evenement/testMap.html.twig', [
-        ]);
-    }
 
     /**
-     * @Route("/showEventFront/{id}", name="show_EventFront")
+     * @Route("/evenement/showEventFront/{id}", name="show_EventFront")
      */
     public function showEventFront($id,Request $request): Response
     {
@@ -128,7 +115,7 @@ class EvenementController extends AbstractController
 
 
     /**
-     * @Route("/new", name="evenement_new", methods={"GET","POST"})
+     * @Route("/admin/evenement/new", name="evenement_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -205,7 +192,7 @@ class EvenementController extends AbstractController
     */
 
     /**
-     * @Route("/showEventFront/5/{id}/like", name="evenement_like")
+     * @Route("/evenement/showEventFront/5/{id}/like", name="evenement_like")
      */
     public function evenement_like($id): Response
     {
@@ -260,7 +247,7 @@ class EvenementController extends AbstractController
     }
 
     /**
-     * @Route("/showEventFront/5/{id}/disLike", name="evenement_disLike")
+     * @Route("/evenement/showEventFront/5/{id}/disLike", name="evenement_disLike")
      */
     public function evenement_disLike($id): Response
     {
@@ -318,7 +305,7 @@ class EvenementController extends AbstractController
 
 
     /**
-     * @Route("/{idevent}", name="evenement_show", methods={"GET"})
+     * @Route("/admin/evenement/{idevent}", name="evenement_show", methods={"GET"})
      */
     public function show(Evenement $evenement): Response
     {
@@ -328,7 +315,7 @@ class EvenementController extends AbstractController
     }
 
     /**
-     * @Route("/{idevent}/edit", name="evenement_edit", methods={"GET","POST"})
+     * @Route("/admin/evenement/{idevent}/edit", name="evenement_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Evenement $evenement): Response
     {
@@ -355,7 +342,7 @@ class EvenementController extends AbstractController
     }
 
     /**
-     * @Route("/{idevent}", name="evenement_delete", methods={"POST"})
+     * @Route("/admin/evenement/{idevent}", name="evenement_delete", methods={"POST"})
      */
     public function delete(Request $request, Evenement $evenement): Response
     {
