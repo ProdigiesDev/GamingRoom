@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Membre;
 use App\Entity\Reactionev;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,4 +48,68 @@ class ReactionevRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getNBLikes($e): ?array
+    {
+        $qb = $this->getEntityManager()->createQuery('SELECT count(r) FROM App\Entity\Reactionev r WHERE r.evenement = :e and r.interaction = 1');
+        $qb->setParameter('e', $e);
+        return $qb->getResult();
+
+
+
+    }
+
+    public function getNBDislikes($e): ?array
+    {
+        $qb = $this->getEntityManager()->createQuery('SELECT count(r) FROM App\Entity\Reactionev r WHERE r.evenement = :e and r.interaction = -1');
+        $qb->setParameter('e', $e);
+        return $qb->getResult();
+
+
+
+    }
+
+    public function getCommentaires($e): ?array
+    {
+        $qb = $this->getEntityManager()->createQuery('SELECT r FROM App\Entity\Reactionev r WHERE r.evenement = :e and r.commentaire is not null');
+        $qb->setParameter('e', $e);
+        return $qb->getResult();
+
+
+
+    }
+
+    public function isLikedByUser($m,$e): ?array
+    {
+        $qb = $this->getEntityManager()->createQuery('SELECT count(r) FROM App\Entity\Reactionev r WHERE r.evenement = :e and r.membre = :m and r.interaction = 1');
+        $qb->setParameter('e', $e);
+        $qb->setParameter('m', $m);
+        return $qb->getResult();
+    }
+
+    public function isDislikedByUser($m,$e): ?array
+    {
+        $qb = $this->getEntityManager()->createQuery('SELECT count(r) FROM App\Entity\Reactionev r WHERE r.evenement = :e and r.membre = :m and r.interaction = -1');
+        $qb->setParameter('e', $e);
+        $qb->setParameter('m', $m);
+        return $qb->getResult();
+    }
+
+    public function likeEvent($m,$e): ?int
+    {
+
+        $qb = $this->getEntityManager()->createQuery('UPDATE App\Entity\Reactionev r set r.interaction=-1 WHERE r.evenement = :e and r.membre = :m and r.interaction = 1');
+        $qb->setParameter('e', $e);
+        $qb->setParameter('m', $m);
+        return $qb->getResult();
+
+    }
+    public function dislikeEvent($m,$e): ?int
+    {
+
+        $qb = $this->getEntityManager()->createQuery('UPDATE App\Entity\Reactionev r set r.interaction=1 WHERE r.evenement = :e and r.membre = :m and r.interaction = -1');
+        $qb->setParameter('e', $e);
+        $qb->setParameter('m', $m);
+        return $qb->getResult();
+
+    }
 }

@@ -39,12 +39,19 @@
                                         <td>
                                             <table>
                                                 <tr>
-                                                    <td>{{ parti.round}}</td>
+                                                    {% if parti.duel != null %}
                                                     <td>
-                                                        <form action="{{ path('updateRound',{'id':parti.id}) }}">
-                                                            <button><i class="fas fa-plus"></i></button>
-                                                        </form>
+                                                        <a href="{{ path('updateRound',{'id':parti.id}) }}" class="bnt btn-primary btn-sm js-plus">
+                                                            <span id="js-round">{{ parti.round}}</span>
+                                                            <i class="fas fa-plus"></i>
+                                                        </a>
                                                     </td>
+                                                        <td>
+                                                            {{ parti.duel }}
+
+                                                        </td>
+
+                                                    {% endif %}
                                                 </tr>
                                             </table>
                                         </td>
@@ -147,5 +154,39 @@
                 "responsive": true,
             });
         });
+    </script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        //window.FontAwesomeConfig = { autoReplaceSvg: false }
+        setTimeout(() => {
+            function onClickBtnPlus(event){
+                event.preventDefault();
+
+                const url=this.href;
+console.log("aaa")
+                //const spanCount=document.querySelector('span.js-likes');
+                const spanCount=this.querySelector('#js-round');
+
+                axios.get(url).then(function (response) {
+                    spanCount.textContent=response.data.rounds;
+
+
+                }).catch(function (error) {
+                    if(error.response.status===403){
+                        window.alert("Vous ne pouvez pas disliker un article si vous n'êtes pas connecté!")
+                    }else {
+                        window.alert("Une erreur s'est produite, réessayer plus tard.")
+                    }
+                });
+            }
+            document.querySelectorAll('a.js-plus').forEach(function (link) {
+                link.addEventListener('click', onClickBtnPlus);
+            })
+
+            console.log("bb")
+        }, 1000);
+
+
+
     </script>
 {% endblock %}
