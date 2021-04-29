@@ -34,7 +34,7 @@ class Reactionev
      *
      * @ORM\Column(name="commentaire", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $commentaire = 'NULL';
+    private $commentaire;
 
     /**
      * @var \Evenement
