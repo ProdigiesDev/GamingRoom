@@ -8,7 +8,7 @@
      <section class="youplay-banner banner-top youplay-banner-parallax">
 
          <div class="image" data-speed="0.4">
-             <img src="{{asset('images/banner-bg.jpg')}}" alt="" class="jarallax-img">
+             <img src="{{asset('assets/images/dark/login3.jpg')}}" alt="" class="jarallax-img">
          </div>
 
 
@@ -21,13 +21,14 @@
 
                              <h1 class="h1">GamingRoom- Welcome</h1>
 
-
+                                <h3>Find gamers just like you</h3>
 
                              <p class="lead">
-                                 You are not limited to the features of this template. It is suitable for gaming site, and for any business project. Pre-packed demos will help you to quickly run your new creative website.
+                                The BETA will go live on November, so sign up to enjoy GamingRoom before anyone else
                              </p>
                              <br>
-                             <a class="btn btn-md active" href="#demo"><i class="fa fa-eye"></i>&nbsp; Demo</a><a class="btn btn-md" href="https://themeforest.net/item/youplay-game-template-based-on-bootstrap/11306207?ref=_nK"><i class="fa fa-shopping-cart"></i>&nbsp; Purchase</a>
+                             <h4> You already have an account </h4>
+                             <a class="btn btn-md active" href="{{ path('app_login') }}"><i class="fas fa-sign-in-alt"></i></i>&nbsp;Login</a>
 
 
 
@@ -77,4 +78,5 @@
             $('.js-datepicker').datepicker();
         });
     </script>
+
 {% endblock %}

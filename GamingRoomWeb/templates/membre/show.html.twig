@@ -4,7 +4,7 @@
 {% block title %}Membre{% endblock %}
 
 {% block body %}
-    <h1>Membre</h1>
+    <h1 style="color:royalblue;">Membre : {{ membre.nom }} {{ membre.prenom }}</h1>
 
     <table class="table">
         <tbody>
@@ -12,7 +12,7 @@
             <th><img src="{{ asset('images/membre/'~membre.image~'') }}" width="150px" height="150px"></td></th>
         </tr>
             <tr>
-                <th>Id</th>
+                <th>Id</h4></th>
                 <td>{{ membre.id }}</td>
             </tr>
             <tr>
@@ -40,24 +40,25 @@
                 <td>{{ membre.email }}</td>
 
             <tr>
-                <th>Role</th>
+                <th><h4 style="color:purple;">Role</th>
                 <td>{{ membre.role }}</td>
             </tr>
-
+            {% if membre.role == 'Coach' %}
             <tr>
                 <th>Description</th>
                 <td>{{ membre.description }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Active</th>
                 <td>{{ membre.active ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>BanDuration</th>
+                <th>Ban Duration</th>
                 <td>{{ membre.banDuration }}</td>
             </tr>
             <tr>
-                <th>LastTimeban</th>
+                <th>Last Time ban</th>
                 <td>{{ membre.lastTimeban ? membre.lastTimeban|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
 
@@ -66,12 +67,12 @@
 
     <a href="{{ path('membre_index') }}">
         <button class="btn btn-block bg-gradient-primary">Retour </button></a>
-
+ {% if membre.role=='Coach' and membre.active==0 and membre.banDuration==0 %}
     <form method="post" action="{{ path('membre_delete', {'id': membre.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ membre.id) }}">
         <button class="btn btn-block bg-gradient-danger">Supprimer</button>
     </form>
-
+{% endif %}
 {% endblock %}
 
 

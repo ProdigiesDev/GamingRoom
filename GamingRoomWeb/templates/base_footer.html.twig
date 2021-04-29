@@ -3,7 +3,7 @@
 <footer class="youplay-footer youplay-footer-parallax">
     
         <div class="image" data-speed="0.4" data-img-position="50% 0%">
-            <img src="assets/images/dark/footer-bg.jpg" alt="" class="jarallax-img">
+            <img src="{{asset('assets/images/dark/login2.png')}}" alt="" class="jarallax-img">
         </div>
     
 
@@ -59,3 +59,22 @@
         
     </div>
 </footer>
+<!-- /Footer -->
+
+        
+    </div>
+
+    
+
+    
+        <!-- Search Block -->
+<div class="search-block">
+    <a href="#" class="search-toggle">
+        <i class="fa fa-times"></i>
+    </a>
+    <form action="{{ path('Search') }}" method="POST">
+        <div class="youplay-input">
+            <input type="text" name="search" placeholder="Search...">
+        </div>
+    </form>
+</div>

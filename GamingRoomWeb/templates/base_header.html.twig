@@ -89,9 +89,11 @@
         </li>
         <li>
             {% if app.user %}
+                {% if app.user.role != 'Admin' %}
                 <a href="{{ path('profil', {'id': app.user.id}) }}">
                     Profile
                 </a>
+                {% endif%}
             {% endif %}
             {% if app.user == false %}
                 <a href="{{ path('app_login') }}">
@@ -115,14 +117,18 @@
                 
             </a>
         </li>
+                    {% if app.user %}
+                        {% if app.user.role != 'Admin' %}
         <li>
-            <a href="user-settings.html">
+            <a href="{{ path('membre_edit' , {'id' :app.user.id} )}}">
                 Settings
                 
                 
                 
             </a>
         </li>
+                            {% endif %}
+                    {% endif %}
         <li>
             <a href="https://nkdev.info/docs/youplay-html/">
                 Documentation
@@ -241,25 +247,25 @@
                         <form class="navbar-login-form" action="#" method="post">
                             <p>Username:</p>
                             <div class="youplay-input">
-                                <input type="text" name="log">
+                                <input type="text" name="log" disabled>
                             </div>
 
                             <p>Password:</p>
                             <div class="youplay-input">
-                                <input type="password" name="pwd">
+                                <input type="password" name="pwd" disabled>
                             </div>
 
-                            <div class="youplay-checkbox mb-15 ml-5">
+                            <!--<div class="youplay-checkbox mb-15 ml-5">
                                 <input type="checkbox" name="rememberme" value="forever" id="nav-rememberme">
                                 <label for="nav-rememberme">Remember Me</label>
-                            </div>
+                            </div>-->
                             <a href="{{ path('app_login') }}">
                                 <button class="btn btn-sm ml-0 mr-0" name="submit">Log In</button>
                             </a>
                             <br>
 
                             <p>
-                                <a class="no-fade" href="#">Lost password?</a> | <a href="{{ path('membre_new') }}" class="no-fade" data-toggle="modal" >Register</a>
+                                <a href="{{ path('membre_new') }}" class="no-fade" data-toggle="modal" >Register</a>
                             </p>
                         </form>
                     </div>

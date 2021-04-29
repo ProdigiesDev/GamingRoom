@@ -67,11 +67,37 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(Membre::class)->findOneBy(['email' => $credentials['email'],'active'=>1]);
+        $user = $this->entityManager->getRepository(Membre::class)->findOneBy(['email' => $credentials['email']]);
+
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('User Not active Or Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+        }
+        /*dump($user->getLastTimeban());
+        dump($user->getActive());
+        dd($user);*/
+        if(!$user->getActive() && $user->getLastTimeban()!=null &&  $user->getBanDuration()!=null ){
+            $currentDate=new \DateTime();
+            $currentDate->sub(new \DateInterval('PT1H'));
+            $dt = $user->getLastTimeban();
+            $dt->add(new \DateInterval('PT'.$user->getBanDuration().'H'));
+          /*  dump($currentDate);
+            dump($user->getLastTimeban());
+            dump($dt);
+            dd($currentDate > $dt);*/
+
+            if($currentDate > $dt){
+                $user->setActive(1);
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+                return $user;
+            }else
+                throw new CustomUserMessageAuthenticationException('Your Account is banned.');
+        }
+        else if(!$user->getActive()){
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException('User Not active .');
         }
 
         return $user;

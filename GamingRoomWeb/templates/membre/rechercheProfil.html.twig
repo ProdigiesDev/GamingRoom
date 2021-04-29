@@ -11,15 +11,14 @@
         <div class="youplay-user-navigation">
             <div class="container">
                 <ul>
-                    <li class="active"><a href="{{ path('profil', {'id': user.id}) }}">Profile</a></li>
                     <li><a href="user-activity.html">Activity</a></li>
-                    <li><a href="user-messages.html">Messages <span class="badge">6</span></a></li>
-                    <li><a href="{{ path('membre_edit' , {'id' :user.id} )}}">Settings</a></li>
+                    <li class="active"><a href="user-profile.html">Profile</a></li>
                     <li><a href="#">Groups</a></li>
                     <li><a href="#">Forums</a></li>
                 </ul>
             </div>
         </div>
+        {% for user in user %}
 
         <div class="info">
             <div>
@@ -54,26 +53,25 @@
                     </div>
                 </div>
 
-              <!--  <div class="container mt-20">-->
-                    <!--<a href="#" class="btn btn-sm btn-default ml-0">Add Friend</a>-->
-                   <!-- <form method="post" action="{{ path('compte_delete', {'id': app.user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
-                        <button class="btn btn-sm btn-default ml-0">supprimer Compte</button>
-                    </form>-->
-                   <!-- <a href="#" class="btn btn-sm btn-default">Private Message</a>-->
-                <!--</div>-->
+                <div class="container mt-20">
+                    <a href="#" class="btn btn-sm btn-default ml-0">Add Friend</a>
+                    <a href="#" class="btn btn-sm btn-default">Private Message</a>
+                </div>
             </div>
         </div>
+        {% endfor %}
+
     </section>
 {% endblock %}
-
 {% block content %}
 <div class="content-wrap">
-{% endblock %}
+    {% endblock %}
     {% block contentfin %}
 </div>
 {% endblock %}
 {% block body %}
+    {% for user in user %}
+
     <div class="container youplay-content">
 
         <div class="row">
@@ -126,7 +124,7 @@
             </div>
 
             <!-- Right Side -->
-           <div class="col-md-3">
+            <div class="col-md-3">
                 <div class="side-block">
                     <h4 class="block-title">About</h4>
                     <div class="block-content">
@@ -147,4 +145,6 @@
         </div>
 
     </div>
+    {% endfor %}
+
 {% endblock %}

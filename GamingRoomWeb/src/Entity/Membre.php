@@ -18,11 +18,8 @@ use Bafford\PasswordStrengthBundle\Validator\Constraints as BAssert;
  * @ORM\Table(name="membre", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})})
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="App\Repository\MembreRepository")
-<<<<<<< HEAD
  * @UniqueEntity("email",
  *    message="Cet email est déja utilisé" )
-=======
->>>>>>> origin/farah
  */
 class Membre implements UserInterface
 {
@@ -133,6 +130,8 @@ class Membre implements UserInterface
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=50, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\File(mimeTypes={ "image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml"})
      */
     private $image;
 
@@ -396,5 +395,12 @@ class Membre implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+    public function serialize() {
+        return serialize($this->id);
+    }
+
+    public function unserialize($data) {
+        $this->id = unserialize($data);
     }
 }

@@ -11,13 +11,31 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/categorie")
- */
+
 class CategorieController extends AbstractController
 {
     /**
-     * @Route("/", name="categorie_index", methods={"GET"})
+     * @Route("/admin/categorie/NameOrdredcat", name="name_orderedcat", methods={"GET"})
+     */
+    public function orderedName(CategorieRepository $categorieRepository,Request $request,PaginatorInterface $paginator):Response{
+        $categorie = $paginator->paginate(
+            $categorieRepository->findBy(
+                array(),
+                array('nomcategorie' => 'ASC')
+            ),
+            $request->query->getInt('page', 1),
+            // Items per page
+            8
+        );
+
+
+        return $this->render('categorie/index.html.twig', [
+            'categories' => $categorie,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/categorie", name="categorie_index", methods={"GET"})
      */
     public function index(CategorieRepository $categorieRepository,Request $request,PaginatorInterface $paginator): Response
     {
@@ -27,7 +45,7 @@ class CategorieController extends AbstractController
             // Define the page parameter
             $request->query->getInt('page', 1),
             // Items per page
-            5
+            8
         );
         return $this->render('categorie/index.html.twig', [
             'categories' => $categorie,
@@ -35,7 +53,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="categorie_new", methods={"GET","POST"})
+     * @Route("/admin/categorie/new", name="categorie_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -58,7 +76,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{idcat}", name="categorie_show", methods={"GET"})
+     * @Route("/admin/categorie/{idcat}", name="categorie_show", methods={"GET"})
      */
     public function show(Categorie $categorie): Response
     {
@@ -68,7 +86,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{idcat}/edit", name="categorie_edit", methods={"GET","POST"})
+     * @Route("/admin/categorie/{idcat}/edit", name="categorie_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Categorie $categorie): Response
     {
@@ -88,7 +106,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{idcat}", name="categorie_delete", methods={"POST"})
+     * @Route("/admin/categorie/{idcat}", name="categorie_delete", methods={"POST"})
      */
     public function delete(Request $request, Categorie $categorie): Response
     {
@@ -100,4 +118,6 @@ class CategorieController extends AbstractController
 
         return $this->redirectToRoute('categorie_index');
     }
+
+
 }
