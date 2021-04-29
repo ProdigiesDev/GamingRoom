@@ -11,13 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/categorie")
- */
+
 class CategorieController extends AbstractController
 {
     /**
-     * @Route("/NameOrdredcat", name="name_orderedcat", methods={"GET"})
+     * @Route("/admin/categorie/NameOrdredcat", name="name_orderedcat", methods={"GET"})
      */
     public function orderedName(CategorieRepository $categorieRepository,Request $request,PaginatorInterface $paginator):Response{
         $categorie = $paginator->paginate(
@@ -37,7 +35,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/", name="categorie_index", methods={"GET"})
+     * @Route("/admin/categorie", name="categorie_index", methods={"GET"})
      */
     public function index(CategorieRepository $categorieRepository,Request $request,PaginatorInterface $paginator): Response
     {
@@ -55,7 +53,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="categorie_new", methods={"GET","POST"})
+     * @Route("/admin/categorie/new", name="categorie_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -78,7 +76,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{idcat}", name="categorie_show", methods={"GET"})
+     * @Route("/admin/categorie/{idcat}", name="categorie_show", methods={"GET"})
      */
     public function show(Categorie $categorie): Response
     {
@@ -88,7 +86,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{idcat}/edit", name="categorie_edit", methods={"GET","POST"})
+     * @Route("/admin/categorie/{idcat}/edit", name="categorie_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Categorie $categorie): Response
     {
@@ -108,7 +106,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{idcat}", name="categorie_delete", methods={"POST"})
+     * @Route("/admin/categorie/{idcat}", name="categorie_delete", methods={"POST"})
      */
     public function delete(Request $request, Categorie $categorie): Response
     {

@@ -110,15 +110,7 @@ class MembreController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/member/{id}", name="membre_show", methods={"GET"})
-     */
-    public function afficherMembre(Membre $membre): Response
-    {
-        return $this->render('membre/show.html.twig', [
-            'membre' => $membre,
-        ]);
-    }
+
 
     /**
      * @Route("/member/{id}/edit", name="membre_edit", methods={"GET","POST"})
@@ -169,19 +161,7 @@ class MembreController extends AbstractController
         ]);*/
     }
 
-    /**
-     * @Route("/member/{id}", name="membre_delete", methods={"POST"})
-     */
-    public function supprimerMembre(Request $request, Membre $membre): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$membre->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($membre);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('membre_index');
-    }
 
     /**
      * @Route("/profil/{id}", name="profil", methods={"GET"})
@@ -270,7 +250,7 @@ class MembreController extends AbstractController
     }
 
     /**
-     * @Route("/member/{id}/activer", name="membre_activer", methods={"GET","POST"})
+     * @Route("/admin/member/{id}/activer", name="membre_activer", methods={"GET","POST"})
      */
     public function activerCompte( Membre $membre,$id,MailerInterface $mailer)
     {
@@ -299,7 +279,7 @@ class MembreController extends AbstractController
         return $this->redirectToRoute('membre_index');
     }
     /**
-     * @Route("/member/{id}/desactiver", name="membre_desactiver", methods={"GET","POST"})
+     * @Route("/admin/member/{id}/desactiver", name="membre_desactiver", methods={"GET","POST"})
      */
     public function BanCompte(Request $request, Membre $membre,$id)
     {
@@ -322,7 +302,7 @@ class MembreController extends AbstractController
 
 
     /**
-     * @Route("/indexOrdered", name="index_ordered", methods={"GET"})
+     * @Route("/admin/member/indexOrdered", name="index_ordered", methods={"GET"})
      */
     public function orderedId(MembreRepository $membreRepository,Request $request,PaginatorInterface $paginator):Response{
         $membre = $paginator->paginate(
@@ -343,7 +323,7 @@ class MembreController extends AbstractController
     }
 
     /**
-     * @Route("/NameOrdred", name="name_ordered", methods={"GET"})
+     * @Route("/admin/member/NameOrdred", name="name_ordered", methods={"GET"})
      */
     public function orderedName(MembreRepository $membreRepository,Request $request,PaginatorInterface $paginator):Response{
         $membre = $paginator->paginate(
@@ -404,7 +384,7 @@ class MembreController extends AbstractController
         return $this->redirectToRoute('home');
     }
     /**
-     * @Route("/member/{id}/activerBan", name="membre_activerBan", methods={"GET","POST"})
+     * @Route("/admin/member/{id}/activerBan", name="membre_activerBan", methods={"GET","POST"})
      */
     public function activerCompteBan( Membre $membre,$id,MailerInterface $mailer)
     {
@@ -429,6 +409,30 @@ class MembreController extends AbstractController
 
         $mailer->send($email);
 
+
+        return $this->redirectToRoute('membre_index');
+    }
+
+    /**
+     * @Route("/admin/member/{id}", name="membre_show", methods={"GET"})
+     */
+    public function afficherMembre(Membre $membre): Response
+    {
+        return $this->render('membre/show.html.twig', [
+            'membre' => $membre,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/member/{id}", name="membre_delete", methods={"POST"})
+     */
+    public function supprimerMembre(Request $request, Membre $membre): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$membre->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($membre);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute('membre_index');
     }

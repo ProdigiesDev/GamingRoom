@@ -383,4 +383,11 @@ class Membre implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
+    public function serialize() {
+        return serialize($this->id);
+    }
+
+    public function unserialize($data) {
+        $this->id = unserialize($data);
+    }
 }
