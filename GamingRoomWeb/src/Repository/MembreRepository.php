@@ -22,32 +22,18 @@ class MembreRepository extends ServiceEntityRepository
     // /**
     //  * @return Membre[] Returns an array of Membre objects
     //  */
-<<<<<<< HEAD
 
     public function findByEmailAndRole($text)
     {
         return $this->createQueryBuilder('membre')
             ->Where('membre.email LIKE :email')
             ->setParameter('email', '%'.$text.'%')
-=======
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
->>>>>>> origin/eya
             ->getQuery()
             ->getResult()
         ;
     }
-<<<<<<< HEAD
 
-=======
-    */
->>>>>>> origin/eya
+    
 
     /*
     public function findOneBySomeField($value): ?Membre

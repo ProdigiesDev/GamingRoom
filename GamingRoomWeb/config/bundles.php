@@ -22,4 +22,6 @@ return [
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
     Translation\Bundle\TranslationBundle::class => ['all' => true],
     Craue\FormFlowBundle\CraueFormFlowBundle::class => ['all' => true],
+    Captcha\Bundle\CaptchaBundle\CaptchaBundle::class => ['all' => true],
+    PUGX\AutocompleterBundle\PUGXAutocompleterBundle::class => ['all' => true],
 ];

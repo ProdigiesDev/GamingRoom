@@ -69,34 +69,6 @@ class Cle
         return $this;
     }
 
-    public function getIdcle(): ?int
-    {
-        return $this->idcle;
-    }
-
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    public function setCode(string $code): self
-    {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    public function getProduitId(): ?int
-    {
-        return $this->produitId;
-    }
-
-    public function setProduitId(int $produitId): self
-    {
-        $this->produitId = $produitId;
-
-        return $this;
-    }
 
 
 }
