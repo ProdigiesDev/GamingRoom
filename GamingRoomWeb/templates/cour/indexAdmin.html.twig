@@ -1,4 +1,4 @@
-{% extends 'base_admin.html.twig' %}
+{% extends 'base_coach.html.twig' %}
 
 {% block title %}Cour index{% endblock %}
 
@@ -165,6 +165,7 @@
 
     <script>
         $(function () {
+            $("#example1_paginate").hide();
             $("#example1").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]

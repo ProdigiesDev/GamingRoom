@@ -26,6 +26,7 @@ use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Security;
 
 
 /**
@@ -34,10 +35,12 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class CourController extends Controller
 {
     private $session;
+    private $security;
 
-    public function __construct(SessionInterface $session)
+    public function __construct(SessionInterface $session,Security $security)
     {
         $this->session = $session;
+        $this->security = $security;
     }
     /**
      * @Route("/", name="cour_index", methods={"GET"})
@@ -68,7 +71,7 @@ class CourController extends Controller
     }
 
     /**
-     * @Route("/admincours", name="cour_index_admin", methods={"GET"})
+     * @Route("/coach/cours", name="cour_index_admin", methods={"GET"})
      */
     public function adminindex(CourRepository $courRepository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -82,40 +85,9 @@ class CourController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/new", name="cour_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $cour = new Cour();
-        $form = $this->createForm(CourType::class, $cour);//récuperation du formulaire
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $file = $form->get('imagecours')->getData();
-            $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
-            $file->move($this->getParameter('cours_directory'), $fileName);
-            if ($cour->getTags() == null) {
-                $cour->setTags("aucune");
-            }
-            $cour->setImagecours($fileName);
-            //entity managerpermet l’insertion, la mise à jour et la suppression des données de la base de données
-            $entityManager = $this->getDoctrine()->getManager();//récupérer l’entity manager
-            $entityManager->persist($cour);//pour l‘ajout d’un nouvel objet
-            $entityManager->flush();//envoyer la maj à la bd
-
-            return $this->redirectToRoute('cour_index'); //redirection apres l'ajout
-        }
-
-
-        return $this->render('cour/new.html.twig', [ //envoi du form à la page twig
-            'cour' => $cour,
-            'form' => $form->createView(),
-        ]);
-    }
 
     /**
-     * @Route("admin/new", name="cour_new_admin", methods={"GET","POST"})
+     * @Route("/coach/new", name="cour_new_admin", methods={"GET","POST"})
      */
     public function newbyadmin(Request $request): Response
     {
@@ -154,6 +126,7 @@ class CourController extends Controller
                     $cour->setTags("aucune");
                 }
                 $cour->setImagecours($this->session->get('imageBeforeUploade'));
+                $cour->setMembre( $this->security->getUser());
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($cour);
                 $em->flush();
@@ -170,7 +143,7 @@ class CourController extends Controller
         ]);
     }
     /**
-     * @Route("admin/new/captcha", name="cour_new_admin_captcha", methods={"GET","POST"})
+     * @Route("/coach/new/captcha", name="cour_new_admin_captcha", methods={"GET","POST"})
      */
     public function newbyadminCaptcha(Request $request): Response
     {
@@ -247,7 +220,7 @@ class CourController extends Controller
     }
 
     /**
-     * @Route("showadmin/{id}", name="cour_show_admin", methods={"GET"})
+     * @Route("/coach/showcoach/{id}", name="cour_show_admin", methods={"GET"})
      */
     public function showforadmin(Cour $cour): Response
     {
@@ -256,47 +229,9 @@ class CourController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="cour_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Cour $cour): Response
-    {
-        /**
-         * @var UploadedFile $file // methode nhabet fiha les fichier
-         */
-        $file = $cour->get('imagecours')->getData();//recupere l'image
-        $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
-        $file->move($this->getParameter('cours_directory'), $fileName);
-        $cour->setImagecours($fileName);
-
-        $form = $this->createForm(CourTypeCaptcha::class, $cour);//creation de formulaire
-        $form->handleRequest($request); //envoie le contenu du form
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var UploadedFile $file // methode nhabet fiha les fichier
-             */
-            $file = $form->get('imagecours')->getData();//recupere l'image
-            $fileName = bin2hex(random_bytes(6)) . '.' . $file->guessExtension();
-            $file->move($this->getParameter('cours_directory'), $fileName);
-            if ($cour->getTags() == null) {
-                $cour->setTags("aucune");
-            }
-            $cour->setImagecours($fileName);
-            $this->getDoctrine()->getManager()->flush();
-
-
-            return $this->redirectToRoute('cour_index');
-        }
-
-        return $this->render('cour/edit.html.twig', [
-            'cour' => $cour,
-            'form' => $form->createView(),
-        ]);
-    }
 
     /**
-     * @Route("/{id}/editadmin", name="cour_edit_admin", methods={"GET","POST"})
+     * @Route("/coach/{id}/editcoach", name="cour_edit_admin", methods={"GET","POST"})
      */
     public function editadmin(Request $request, Cour $cour): Response
     {
@@ -376,7 +311,7 @@ class CourController extends Controller
      */
 
     /**
-     * @Route("/{id}", name="cour_delete", methods={"POST"})
+     * @Route("/coach/{id}", name="cour_delete", methods={"POST"})
      */
     public function delete(Request $request, Cour $cour): Response
     {

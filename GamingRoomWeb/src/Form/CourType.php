@@ -69,14 +69,7 @@ class CourType extends AbstractType
                         'multiple' => false,
                         'expanded' => false
                     ])
-
-                    ->add('membre', EntityType::class, [
-                        'class' => Membre::class,
-                        'choice_label' => 'Membre',
-                        'multiple' => false,
-                        'expanded' => false
-
-                    ]);//->add('captcha', CaptchaType::class); // That's all !;
+                    ;//->add('captcha', CaptchaType::class); // That's all !;
             break;
         }
     }

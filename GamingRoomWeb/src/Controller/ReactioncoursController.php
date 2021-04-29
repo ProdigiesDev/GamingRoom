@@ -12,12 +12,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/Reactioncours")
  */
 class ReactioncoursController extends AbstractController
 {
+
+    
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+
+    }
     /**
      * @Route("/", name="reactioncours_index", methods={"GET"})
      */
@@ -101,7 +111,12 @@ class ReactioncoursController extends AbstractController
      */
     public function like(Request $request)
     {
-        $idMembre = $this->getDoctrine()->getRepository(Membre::class)->find(13);
+        $user = $this->security->getUser();
+        if(!$user){
+            $jsonContent['notFound'] = 404;
+            return new Response(json_encode($jsonContent));
+        }
+        $idMembre = $user;
 
         $likeType = (int)$request->get('typeReactioncours');
         $idCour = $request->get('idCour');
@@ -141,7 +156,13 @@ class ReactioncoursController extends AbstractController
      */
     public function commentaire(Request $request)
     {
-        $idMembre = $this->getDoctrine()->getRepository(Membre::class)->find(13);
+        $user = $this->security->getUser();
+        if(!$user){
+            $jsonContent['notFound'] = 404;
+            return new Response(json_encode($jsonContent));
+        }
+        $idMembre = $user;
+
 
         $likeType = (int)$request->get('typeReactioncours');
         $idCour = $request->get('idCour');

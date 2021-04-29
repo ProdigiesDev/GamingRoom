@@ -157,9 +157,12 @@
     {% set estInscrit = false %}
     {% for participant in participants %}
         {% if participant.cour.id == cour.id %}
-            {% if participant.membre.id == 8 %}
-                {# {% if == app.user.id  %} #}
-                {% set estInscrit = true %}
+            {% if app.user %}
+                {% if participant.membre.id == app.user.id %}
+                    {# {% if == app.user.id  %} #}
+                    {% set estInscrit = true %}
+                {% endif %}
+
             {% endif %}
         {% endif %}
     {% endfor %}
@@ -181,7 +184,6 @@
         <a href="{{ path('cour_index') }}">back to list</a>
     </div>
 
-    <style <a href="{{ path('cour_edit', {'id': cour.id}) }}" hidden>edit</a>></style>
     <div id="a" class="a"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script id="ajax-like-dislike">
@@ -195,6 +197,10 @@
                 },
                 success: function (retour) {
                     obj = JSON.parse(retour);
+                    if(obj.notFound){
+                        alert("You have to login first");
+                        return;
+                    }
                     console.log("nb like : " + obj.nbLike + "/ nbDislike : " + obj.nbDislike);
                     $("#a").append("<div></div>")
                     $("#nb-like-" + idCour).empty().append(obj.nbLike);
@@ -221,7 +227,10 @@
                 },
                 success: function (retour) {
                     obj = JSON.parse(retour);
-
+                    if(obj.notFound){
+                        alert("You have to login first");
+                        return;
+                    }
                     $("#emplacement-commentaires-" + idCour).append(
                         "<div class='col-md-10'>" +
                         "<p>" + obj.nomPrenom + " : " + obj.contenuCommentaire + "</p>" +
@@ -237,29 +246,7 @@
     </script>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
-
-    <script>
-        $(function () {
-            $.ajax({
-                type: 'GET',
-                url: '/ParticipantcoursController/new/{id}',
-                data: {},
-                $('#btninscrip').click(function () {
-                $(this).attr("disabled", "disabled");
-            });
-        }
-
-        }
-        success: function (retour) {
-
-
-        }
-        )
-        ;
-    </script>
-
+    
 
 
 

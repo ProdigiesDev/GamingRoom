@@ -13,12 +13,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/Participantcours")
  */
 class ParticipantcoursController extends AbstractController
 {
+
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+
+    }
+
     /**
      * @Route("/", name="participantcours_index", methods={"GET"})
      */
@@ -37,9 +47,13 @@ class ParticipantcoursController extends AbstractController
      */
     public function new($id): Response
     {
+        $user = $this->security->getUser();
+        if(!$user){
+            return $this->redirect("/login");
+        }
         $entityManager = $this->getDoctrine()->getManager();
         $e=$this->getDoctrine()->getRepository(Cour::class)->find($id);
-        $m=$this->getDoctrine()->getRepository(Membre::class)->find(8);
+        $m= $user;
 
         if((sizeof($this->getDoctrine()->getRepository(Participantcours::class)->findOneByME($e,$m)))<=0){
             $participant = new Participantcours();

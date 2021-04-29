@@ -375,6 +375,8 @@ class Membre implements UserInterface
         $roles =[ $this->role];
         if($this->role=="Admin")
             $roles[] = 'ROLE_ADMIN';
+        else if($this->role=="Coach")
+            $roles[] = 'ROLE_COACH';
         return array_unique($roles);
     }
 
