@@ -172,7 +172,7 @@ $(function () {
     options: salesChartOptions
   })
 
-  // Donut Chart
+ /* // Donut Chart
   var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
   var pieData = {
     labels: [
@@ -201,7 +201,7 @@ $(function () {
     type: 'doughnut',
     data: pieData,
     options: pieOptions
-  })
+  })*/
 
   // Sales graph chart
   var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d')

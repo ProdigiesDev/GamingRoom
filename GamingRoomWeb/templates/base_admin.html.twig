@@ -54,13 +54,11 @@
 
 
             {% include 'aside.html.twig' %}
-<<<<<<< HEAD
+
             <div class="content-wrapper">
                 {% block body %}{% endblock %}
             </div>
 
-
-=======
             
             <div class="content-wrapper">
                 {% for message in app.flashes('errors') %}
@@ -80,7 +78,6 @@
                 {% endfor %}
                 {% block bodyy %}{% endblock %}
             </div>
->>>>>>> e836aeabd74b53b630e8d79788656ec99dd09d59
             
             <footer class="main-footer">
                 <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
@@ -131,4 +128,6 @@
     <script src="{{asset('assets/dist/js/demo.js')}}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{asset('assets/dist/js/pages/dashboard.js')}}"></script>
+{% block scripts %}
+{% endblock %}
 </html>

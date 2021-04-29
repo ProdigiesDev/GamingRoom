@@ -24,11 +24,22 @@
                                             <a href="#"><button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button></a> <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>CSV</span></button> <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button> <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button> <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button"><span>Print</span></button> <div class="btn-group"><button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" aria-controls="example1" type="button" aria-haspopup="true" aria-expanded="false"><span>Column visibility</span></button></div> </div></div><div class="col-sm-12 col-md-6"><div id="example1_filter" class="dataTables_filter">
                                             <label>Rechercher:
 
-                                                    <input type="search" style="width:180px" class="form-control form-control-sm" placeholder="Email ou role" aria-controls="example1"  id="myInput" onkeyup="myFunction()">
+                                                    <input type="search" style="width:180px" class="form-control form-control-sm" placeholder="Email" aria-controls="example1"  id="myInput" onkeyup="myFunction()">
 
                                             </label>
+                                            <label>
 
-                                           <a href="{{ path('index_ordered') }}"> <button type="button" style="height:50px;width:180px" class="btn btn-block bg-gradient-warning"><i class="fas fa-sort-numeric-down"></i></i> Order by Id </button></a>
+                                                <input type="search" style="width:180px" class="form-control form-control-sm" placeholder="Role" aria-controls="example1"  id="myInput2" onkeyup="myFunction2()">
+
+                                            </label>
+                                            <table>
+                                            <td>
+                                            <a href="{{ path('index_ordered') }}"> <button type="button" style="height:50px;width:180px" class="btn btn-block bg-gradient-warning"><i class="fas fa-sort-numeric-down"></i></i> Order by Id </button></a>
+                                            </td>
+                                             <td>
+                                            <a href="{{ path('name_ordered') }}"> <button type="button" style="height:50px;width:180px" class="btn btn-block bg-gradient-warning"><i class="fas fa-sort-numeric-down"></i></i> Order by NOM </button></a>
+                                             </td>
+                                            </table>
                                         </div></div></div><div class="row"><div class="col-sm-12"><table id="affichage_membre" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 
                                             <thead>
@@ -60,16 +71,6 @@
                                                     <td>{{ membre.lastTimeban ? membre.lastTimeban|date('Y-m-d H:i:s') : '' }}</td>
                                                     <td>
                                                         <a href="{{ path('membre_show', {'id': membre.id}) }}"> <button type="button"  class="btn btn-block btn-outline-info" > Afficher</button></a>
-                                                      <!--  {% if membre.active == 1  %}
-                                                            <form action="{{ path('membre_desactiver' , {'id':membre.id}) }}">
-                                                                <button class="btn btn-block btn-outline-danger" >Desactiver</button>
-                                                            </form>
-                                                        {% endif %}
-                                                        {% if membre.active == 0   %}
-                                                            <form action="{{ path('membre_desactiver' , {'id':membre.id}) }}">
-                                                                <button class="btn btn-block btn-outline-danger" >Desactiver</button>
-                                                            </form>
-                                                        {% endif %}-->
                                                         {% if membre.active == 0 and membre.role=='Coach' and membre.banDuration==0 %}
                                                             <form action="{{ path('membre_activer' , {'id':membre.id}) }}">
                                                                 <button class="btn btn-block btn-outline-success" >Activer</button>
@@ -79,6 +80,13 @@
                                                                 <button class="btn btn-block btn-outline-danger">Refuser</button>
                                                             </form>
                                                         {% endif %}
+                                                        {% if membre.active == 1  %}
+                                                            <form action="{{ path('membre_desactiver' , {'id':membre.id}) }}">
+                                                                <button class="btn btn-block btn-outline-danger" >Ban</button>
+                                                            </form>
+                                                        {% endif %}
+
+
                                                       <!--  <a href="{{ path('membre_edit', {'id': membre.id}) }}">edit</a> -->
                                                     </td>
                                                 </tr>
@@ -90,13 +98,47 @@
 
                                             {% endfor %}
                                             </tbody>
-                                        </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination">{{ knp_pagination_render(membres) }}</ul></div></div></div></div>
+                                        </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example1_info" role="status" aria-live="polite"></div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination">{{ knp_pagination_render(membres) }}</ul></div></div></div></div>
+
+                                <!-- doughutChart -->
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-chart-pie mr-1"></i>
+                                        Membres
+                                    </h3>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills ml-auto">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#sales-chart" data-card-widget="collapse">Statistique</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="tab-content p-0">
+                                        <!-- Morris chart - Sales -->
+
+                                        <div class="chart tab-pane active" id="sales-chart" style="position: relative; height: 300px;">
+                                            <canvas id="sales-chart-canvas-pie" height="300" style="height: 300px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div><!-- /.card-body -->
+                            </div>
+                                <!-- End -->
+
                         </div>
                         <!-- /.card-body -->
                     </div>
+                <!-- /.card-body -->
 
 
-                </div></div></div></section>
+
+                </div>
+
+            </div></div></section>
     <script>
         function myFunction() {
             var input, filter, table, tr, td, i, txtValue;
@@ -116,6 +158,63 @@
                 }
             }
         }
+    </script>
+
+    <script>
+        function myFunction2() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput2");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("affichage_membre");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[5];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+{% endblock %}
+{%  block scripts %}
+    <script>
+        // Donut Chart
+        var pieChartCanvas = $('#sales-chart-canvas-pie').get(0).getContext('2d')
+        var pieData = {
+            labels: [
+                {% for count in counts %}
+                "{{ count.role }}",
+                {% endfor %}
+            ],
+            datasets: [
+                {
+                    data: [{% for count in counts %}
+                        {{ count.number }},
+                        {% endfor %}],
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+                }
+            ]
+        }
+        var pieOptions = {
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+            responsive: true
+        }
+        // Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        // eslint-disable-next-line no-unused-vars
+        var pieChart = new Chart(pieChartCanvas, { // lgtm[js/unused-local-variable]
+            type: 'doughnut',
+            data: pieData,
+            options: pieOptions
+        })
     </script>
 {% endblock %}
 

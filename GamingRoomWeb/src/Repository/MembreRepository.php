@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Membre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -33,6 +35,24 @@ class MembreRepository extends ServiceEntityRepository
         ;
     }
 
+    public function countMember(){
+        return $this->createQueryBuilder('m')
+            ->select( 'count(m.id) as number', 'm.role as role')
+            ->groupBy('m.role')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function  selectLastRow() : ?int{
+        try {
+            return $this->createQueryBuilder('m')
+                ->select('MAX(m.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+    }
 
     /*
     public function findOneBySomeField($value): ?Membre

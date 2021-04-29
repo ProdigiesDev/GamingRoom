@@ -130,6 +130,8 @@ class Membre implements UserInterface
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=50, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\File(mimeTypes={ "image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml"})
      */
     private $image;
 

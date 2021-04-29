@@ -19,7 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
 
-class MembreType extends AbstractType
+class MembreTypeEdit extends AbstractType
 
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -44,7 +44,6 @@ class MembreType extends AbstractType
             ])
             ->add('numeroTel')
             ->add('email',EmailType::class)
-            ->add('password',PasswordType::class)
             ->add('image', FileType::class,['data_class'=>null],[
                 'label' => 'Image(jpg,png,jpeg)',
 
@@ -65,14 +64,8 @@ class MembreType extends AbstractType
                     ])
                 ],
             ])
-            ->add('role',ChoiceType::class,[
-                'choices'  => [
-                    'Membre' => 'Membre',
-                    'Coach' => 'Coach'
-                ],
-            ])
-            ->add('description',TextareaType::class)
-            ->add('captcha', CaptchaType::class)
+
+
         ;
     }
 

@@ -17,10 +17,10 @@
             </tr>
         </tbody>
     </table>
-
+    <a href="{{ path('categorie_edit', {'idcat': categorie.idcat}) }}"><button class="btn btn-block bg-gradient-secondary">Modifier </button></a>
 
     <a href="{{ path('categorie_index') }}">
         <button class="btn btn-block bg-gradient-primary">Retour </button></a>
 
-    <a href="{{ path('categorie_edit', {'idcat': categorie.idcat}) }}"><button class="btn btn-block bg-gradient-secondary">Modifier </button></a>
+
 {% endblock %}
