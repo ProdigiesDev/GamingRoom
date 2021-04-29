@@ -19,13 +19,13 @@ class EvenementType extends AbstractType
     {
         $builder
             ->add('nomevent')
-            ->add('datedeb', DateTimeType::class,[
+            ->add('datedeb', DateType::class,[
                 'empty_data' => null,
                 'attr'=>['class'=>'form-controller js-datepicker'],
                 'widget'=>'single_text',
                 'html5'=>FALSE
             ])
-            ->add('datefin', DateTimeType::class,[
+            ->add('datefin', DateType::class,[
                 'empty_data' => null,
                 'attr'=>['class'=>'form-controller js-datepicker'],
                     'widget'=>'single_text',

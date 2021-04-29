@@ -45,7 +45,7 @@ class Evenement
      *
      * @ORM\Column(name="datefin", type="date", nullable=false)
      * @Assert\NotBlank(message="veuillez saisir une date")
-     *@Assert\GreaterThan("today")
+     * @Assert\GreaterThan("today")
      */
     private $datefin;
 
@@ -77,10 +77,7 @@ class Evenement
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      * @Assert\NotBlank(message="Description requise")
-     * @Assert\Regex(
-     * pattern = "/^[a-z]+$/i",
-     *htmlPattern = "^[a-zA-Z]+$",
-     *message="'{{ value }}' doit etre une chaine de caractère"
+     *
     )
      */
     private $description;
@@ -91,7 +88,7 @@ class Evenement
      * @ORM\Column(name="lieu", type="string", length=255, nullable=true, options={"default"="NULL"})
      * @Assert\NotBlank(message="lieu requis")
      */
-    private $lieu = 'NULL';
+    private $lieu;
 
     /**
      * @var string|null
@@ -102,7 +99,7 @@ class Evenement
      *    message = "The url '{{ value }}' is not a valid url",
      * )
      */
-    private $lienyoutube = 'NULL';
+    private $lienyoutube ;
 
     /**
      * @var \Categorie
@@ -226,6 +223,7 @@ class Evenement
 
         return $this;
     }
+
 
 
 }

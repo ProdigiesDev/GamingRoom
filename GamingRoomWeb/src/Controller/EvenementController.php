@@ -3,13 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\Membre;
+use App\Entity\Participant;
+use App\Entity\Reactionev;
 use App\Form\EvenementType;
+use App\Form\ReactionevType;
 use App\Repository\EvenementRepository;
+use App\Repository\ReactionevRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/evenement")
@@ -19,12 +25,95 @@ class EvenementController extends AbstractController
     /**
      * @Route("/", name="evenement_index", methods={"GET"})
      */
-    public function index(EvenementRepository $evenementRepository): Response
+    public function index(EvenementRepository $evenementRepository,Request $request,PaginatorInterface $paginator): Response
     {
+
+        $evenement = $paginator->paginate(
+        // Doctrine Query, not results
+            $evenementRepository->findAll(),
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+        );
         return $this->render('evenement/index.html.twig', [
-            'evenements' => $evenementRepository->findAll(),
+            'evenements' => $evenement,
         ]);
     }
+
+    /**
+     * @Route("/testMap", name="testMap", methods={"GET"})
+     */
+    public function testMap(EvenementRepository $evenementRepository,Request $request,PaginatorInterface $paginator): Response
+    {
+
+
+        return $this->render('evenement/testMap.html.twig', [
+        ]);
+    }
+
+    /**
+     * @Route("/showEventFront/{id}", name="show_EventFront")
+     */
+    public function showEventFront($id,Request $request): Response
+    {
+
+        $evenement=$this->getDoctrine()->getRepository(Evenement::class)->find($id);
+        //dd($this->getDoctrine()->getRepository(Reactionev::class)->findBy(array("evenement"=>$evenement)));
+        $nbParticipants=$this->getDoctrine()->getRepository(Evenement::class)->getNBParticipants($evenement);
+        $NBLikes=$this->getDoctrine()->getRepository(Reactionev::class)->getNBLikes($evenement);
+        $NBDislikes=$this->getDoctrine()->getRepository(Reactionev::class)->getNBDislikes($evenement);
+        $Commentaires=$this->getDoctrine()->getRepository(Reactionev::class)->getCommentaires($evenement);
+        //TODO get This user $m
+        $m=$this->getDoctrine()->getRepository(Membre::class)->find(8);
+        $isLikedByUser=(($this->getDoctrine()->getRepository(Reactionev::class)->isLikedByUser($m,$evenement))[0])[1]>0;
+        $isDislikedByUser=(($this->getDoctrine()->getRepository(Reactionev::class)->isDislikedByUser($m,$evenement))[0])[1]>0;
+
+        /***commentaire*/
+        $reactionev = new Reactionev();
+        $form = $this->createForm(ReactionevType::class, $reactionev);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            //TODO:$m
+            $reactionev->setMembre($m);
+            $reactionev->setEvenement($evenement);
+            $reactionev->setInteraction(0);
+            $entityManager->persist($reactionev);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('show_EventFront',['id'=>$id]);
+        }
+
+
+        /***maches*/
+        $maches=$this->getDoctrine()->getRepository(Participant::class)->eventParts($id);
+        $distMachesResultset=$this->getDoctrine()->getRepository(Participant::class)->distEventParts($id);
+        $i=0;
+        $distMaches=array();
+        while ($i<sizeof($distMachesResultset)/2){
+            $distMaches[$i]=$distMachesResultset[$i];
+            $i++;
+        }
+        /*****/
+
+        return $this->render('evenement/showEventFront.html.twig', [
+            'evenement' => $evenement,
+            'nbP'=>($nbParticipants[0])[1],
+            'NBLikes'=>($NBLikes[0])[1],
+            'NBDislikes'=>($NBDislikes[0])[1],
+            'Commentaires'=>$Commentaires,
+            'isLikedByUser'=>$isLikedByUser,
+            'isDislikedByUser'=>$isDislikedByUser,
+            'reactionev' => $reactionev,
+            'form' => $form->createView(),
+            'maches'=>$maches,
+            'distMaches'=>$distMaches
+
+        ]);
+    }
+
 
     /**
      * @Route("/new", name="evenement_new", methods={"GET","POST"})
@@ -102,6 +191,123 @@ class EvenementController extends AbstractController
         }
     }
     */
+
+    /**
+     * @Route("/showEventFront/5/{id}/like", name="evenement_like")
+     */
+    public function evenement_like($id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        //TODO: $m
+        //$m=$this->getUser();
+        $mC=true;
+        if(!$mC){
+            return $this->json(['code'=>403, 'message'=>'Unauthorized'],403);
+        }
+        //$this->getDoctrine()->getRepository(Reactionev::class)->unlikeEvent($m,$e);
+        //TODO: $m
+        $m=$this->getDoctrine()->getRepository(Membre::class)->find(8);
+        $e=$this->getDoctrine()->getRepository(Evenement::class)->find($id);
+
+
+        if((($this->getDoctrine()->getRepository(Reactionev::class)->isLikedByUser($m,$e))[0])[1]>0){
+            $event=$this->getDoctrine()->getRepository(Reactionev::class)->findOneBy(array("membre"=>$m,"evenement"=>$e,"interaction"=>1));
+
+            $entityManager->remove($event);
+            $entityManager->flush();
+            return $this->json(['code'=>200,
+                'message'=>'like bien supprimé',
+                'likes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>1)),
+                'dislikes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>-1))],
+                200);
+
+        }
+
+        if((($this->getDoctrine()->getRepository(Reactionev::class)->isDislikedByUser($m,$e))[0])[1]>0){
+            $event=$this->getDoctrine()->getRepository(Reactionev::class)->dislikeEvent($m,$e);
+
+            return $this->json(['code'=>200,
+                'message'=>'dislike bien modifié en like',
+                'likes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>1)),
+                'dislikes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>-1))],
+                200);
+
+        }
+
+        $like=new Reactionev();
+        $like->setEvenement($e);
+        $like->setMembre($m);
+        $like->setInteraction(1);
+
+        $entityManager->persist($like);
+        $entityManager->flush();
+
+        return $this->json(['code'=>200,
+            'message'=>'Like bien ajouté',
+            'likes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>1)),
+            'dislikes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>-1))],
+            200);
+    }
+
+    /**
+     * @Route("/showEventFront/5/{id}/disLike", name="evenement_disLike")
+     */
+    public function evenement_disLike($id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        //TODO: $m
+        //$m=$this->getUser();
+        $mC=true;
+        if(!$mC){
+            return $this->json(['code'=>403, 'message'=>'Unauthorized'],403);
+        }
+        //$this->getDoctrine()->getRepository(Reactionev::class)->unlikeEvent($m,$e);
+        //TODO: $m
+        $m=$this->getDoctrine()->getRepository(Membre::class)->find(8);
+        $e=$this->getDoctrine()->getRepository(Evenement::class)->find($id);
+        if((($this->getDoctrine()->getRepository(Reactionev::class)->isDislikedByUser($m,$e))[0])[1]>0){
+            $event=$this->getDoctrine()->getRepository(Reactionev::class)->findOneBy(array("membre"=>$m,"evenement"=>$e,"interaction"=>-1));
+
+            $entityManager->remove($event);
+            $entityManager->flush();
+            return $this->json(['code'=>200,
+                'message'=>'disLike bien supprimé',
+                'likes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>1)),
+                'dislikes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>-1))],
+                200);
+
+        }
+
+        if((($this->getDoctrine()->getRepository(Reactionev::class)->isLikedByUser($m,$e))[0])[1]>0){
+            $event=$this->getDoctrine()->getRepository(Reactionev::class)->likeEvent($m,$e);
+
+            return $this->json(['code'=>200,
+                'message'=>'like bien modifié en dislike',
+                'likes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>1)),
+                'dislikes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>-1))],
+                200);
+
+        }
+
+        $dislike=new Reactionev();
+        $dislike->setEvenement($e);
+        $dislike->setMembre($m);
+        $dislike->setInteraction(-1);
+
+        $entityManager->persist($dislike);
+        $entityManager->flush();
+
+        return $this->json(['code'=>200,
+            'message'=>'disLike bien ajouté',
+            'likes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>1)),
+            'dislikes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>-1))],
+            200);
+    }
+
+
+
+
+
 
     /**
      * @Route("/{idevent}", name="evenement_show", methods={"GET"})
