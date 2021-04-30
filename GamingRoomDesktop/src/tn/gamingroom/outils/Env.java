@@ -14,6 +14,7 @@ public class Env {
     private static String dossierImageUtilEventPath ="D:\\ProdigiesDev\\GamingRoomWeb\\public\\images\\evenement\\";
     private static final String youtubeApiKey = "AIzaSyA_8Z1_SB9rtueiZXM3kMLKHlV5kOqTGSY";
     private static String dossierImagePath = "D:\\ProdigiesDev\\GamingRoomWeb\\public\\images\\";
+    private static String assetsEvenement = "D:\\ProdigiesDev\\assetsEvenement\\";
 
     private static final int port = 8087;
 
@@ -36,4 +37,9 @@ public class Env {
     public static int getPort() {
         return port;
     }
+
+    public static String getAssetsEvenement() {
+        return assetsEvenement;
+    }
+
 }

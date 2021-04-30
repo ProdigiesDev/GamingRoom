@@ -219,9 +219,10 @@ public class ListeEvenementController implements Initializable {
         CategorieServices cs = new CategorieServices();
         List<EvenementImage> lIm = new ArrayList<EvenementImage>();
         es.listerEvenement().forEach(e -> {
-
+                
             try {
-                File f = new File(Env.getImagePath()+e.getImage());
+                System.out.println(Env.getDossierImageUtilEventPath()+e.getImage());
+                File f = new File(Env.getDossierImageUtilEventPath()+e.getImage());
                 Image img = new Image(f.toURI().toURL().toExternalForm());
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);

@@ -223,7 +223,7 @@ public class ModifierEvenementController implements Initializable {
                 selectedFile.setText("Selected File::" + image);
                 Image imageForFile = new Image(f.toURI().toURL().toExternalForm());
                 imV.setImage(imageForFile);
-                imageNameTodb = Env.getImagePath() + imageForFile;
+                imageNameTodb = Env.getDossierImageUtilEventPath() + imageForFile;
                 File dest = new File(imageNameTodb);
                 Files.copy(f.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 

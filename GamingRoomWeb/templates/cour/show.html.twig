@@ -3,10 +3,6 @@
 {% block title %}Cours{% endblock %}
 
 {% block body %}
-<div style="
-    margin-top: 100px;
-    height:50px;
-"></div>
     {% for message in app.flashes('info') %}
         <div class="alert alert-success">
             {{ message }}
