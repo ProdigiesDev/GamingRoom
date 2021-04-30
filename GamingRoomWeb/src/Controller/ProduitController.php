@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Entity\RechercheProd;
+use App\Entity\Membre;
 use App\Form\ProduitType;
 use App\Form\RechercheproduitType;
 use App\Repository\ProduitRepository;
@@ -19,12 +20,11 @@ use Dompdf\Options;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ProduitController extends AbstractController
 {
     /**
-     * @Route("/produit_index", name="produit_index")
+     * @Route("/admin/produit_index", name="produit_index")
      */
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
@@ -76,7 +76,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="produit_new", methods={"GET","POST"})
+     * @Route("/admin/new", name="produit_new", methods={"GET","POST"})
      */
     public function new(Request $request,MailerInterface $mailer): Response
     {
@@ -85,8 +85,8 @@ class ProduitController extends AbstractController
         $form->handleRequest($request); // aabit l formulaire w bech nabaathou
 
         //recuperer tt les membre inscrit
-        //$em=$this->getDoctrine()->getManager();
-       // $membre=$em->getRepository(Membre::class)->findAll();
+        $em=$this->getDoctrine()->getManager();
+    $membre=$em->getRepository(Membre::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('image')->getData();
@@ -98,19 +98,19 @@ class ProduitController extends AbstractController
             $entityManager->persist($produit);
             $entityManager->flush();
                       // email
-           // foreach ($membre as $m )
-           //{
+          foreach ($membre as $m )
+           {
             $email = (new Email())
                 ->from('Gamingroom.prodigiesDev@gmail.com')
-               // ->to($m->getEmail())
-                ->to('yasmine.manita@esprit.tn')
+               ->to($m->getEmail())
+               // ->to('yasmine.manita@esprit.tn')
                 ->priority(Email::PRIORITY_HIGH)
                 ->subject('[GamingRoom] Traitement d ajout !')
                 //->text('Sending emails is fun again!')
                 ->html('<p>Bonjour cher(e) Mr/Mme </p><br>
                    <p>un nouveau produit a été ajouté  ');
             $mailer->send($email);
-      //  }
+        }
             return $this->redirectToRoute('produit_index');
         }
 
@@ -121,7 +121,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/{idprod}/show", name="produit_show", methods={"GET"})
+     * @Route("/admin/{idprod}/show", name="produit_show", methods={"GET"})
      */
     public function show(Produit $produit): Response
     {
@@ -131,7 +131,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/{idprod}/edit", name="produit_edit", methods={"GET","POST"})
+     * @Route("/admin/{idprod}/edit", name="produit_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Produit $produit): Response
     {
@@ -158,7 +158,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/{idprod}/delete", name="produit_delete", methods={"POST"})
+     * @Route("/admin/{idprod}/delete", name="produit_delete", methods={"POST"})
      */
     public function delete(Request $request, Produit $produit): Response
     {
@@ -175,7 +175,7 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @Route("/listp", name="produit_list", methods={"GET"})
+     * @Route("/admin/listp", name="produit_list", methods={"GET"})
      */
     public  function  listp (ProduitRepository $produitRepository):Response{
 
@@ -210,7 +210,7 @@ class ProduitController extends AbstractController
 }
 
     /**
-     * @Route("/rechprod", name="rechprod")
+     * @Route("/admin/rechprod", name="rechprod")
      */
     public function rechercherProd(Request $request,ProduitRepository $produitRepository): Response
 
@@ -247,7 +247,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/StatProduit", name="StatProduit")
+     * @Route("/admin/StatProduit", name="StatProduit")
      */
     public function StatProduit(): Response
     {
@@ -267,7 +267,7 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @Route("/sort", name="sort")
+     * @Route("/admin/sort", name="sort")
      */
     public function tri(): Response{
         $prod = $this->getDoctrine()->getRepository(Produit::class)->sortLibelle();
@@ -280,7 +280,7 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @Route("/sortprix", name="sortprix")
+     * @Route("/admin/sortprix", name="sortprix")
      */
     public function triprix(): Response{
         $prod = $this->getDoctrine()->getRepository(Produit::class)->sortPrix();
@@ -294,19 +294,10 @@ class ProduitController extends AbstractController
      * @Route("/front", name="front")
      */
 
-    public function affichageFront(SessionInterface $session): Response{
-        $panier = $session->get('panier',[]);
-        $total= 0;
-
-        foreach($panier as $item){
-            $totalitem = $item ['produit'] -> getPrix() * $item['quantity'];
-            $total += $totalitem;
-        }
+    public function affichageFront(): Response{
         $prod = $this->getDoctrine()->getRepository(Produit::class)->findAll();
         return $this->render('produit/front.html.twig', [
             'prod' => $prod,
-            'items' => $panier,
-            'total'=> $total
         ]);
     }
 }

@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="583.0" fitWidth="972.0" layoutY="-22.0" pickOnBounds="true" visible="false">
          <image>
-            <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/images/AjoutEvenement.jpg" />
+            <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/AjoutEvenement.jpg" />
          </image>
       </ImageView>
       <TableView fx:id="tbCours" layoutX="121.0" layoutY="142.0" onMouseClicked="#getSelect" prefHeight="322.0" prefWidth="744.0" stylesheets="@Jeux/listJeux.css">

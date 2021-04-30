@@ -12,11 +12,10 @@
             <div class="container">
                 <ul>
                     <li class="active"><a href="{{ path('profil', {'id': user.id}) }}">Profile</a></li>
-                    <li><a href="user-activity.html">Activity</a></li>
-                    <li><a href="user-messages.html">Messages <span class="badge">6</span></a></li>
+                    {% if app.user.role == 'Coach' %}
+                    <li><a href="{{path('cour_new_admin')}}">Cours</a></li>
+                    {% endif %}
                     <li><a href="{{ path('membre_edit' , {'id' :user.id} )}}">Settings</a></li>
-                    <li><a href="#">Groups</a></li>
-                    <li><a href="#">Forums</a></li>
                 </ul>
             </div>
         </div>

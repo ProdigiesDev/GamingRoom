@@ -176,21 +176,13 @@ public class CoursDetailsController implements Initializable {
             membre = UserSession.getInstance().getUser();
 
         }
-<<<<<<< Updated upstream
 
-        idate.valueProperty().addListener((ov, oldValue, newValue) -> {
-            verifdate.setVisible(false);
-        });
-        ServiceCours sc = new ServiceCours();
-        String[] possibleWords = {};
-=======
            
            idate.valueProperty().addListener((ov, oldValue, newValue) -> {
             verifdate.setVisible(false);
 });
            ServiceCours sc= new ServiceCours();
         String[] possibleWords ={};
->>>>>>> Stashed changes
         TextFields.bindAutoCompletion(search, sc.AutocompleteSearch());
         //getVideoDetails("https://www.youtube.com/watch?v=gbt6cTZSKgo");
         inom.setStyle("-fx-text-fill: white; ");

@@ -36,13 +36,23 @@
                 Evenements
                 
             </a></li>
+                      <li class=" dropdown dropdown-hover">
+            <a href="{{path('cour_index')}}" >
+                Cours
+                
+            </a></li>
         <li class=" dropdown dropdown-hover">
-            <a href="store-1.html" >
+            <a href="{{path('front')}}" >
                 Store
                 
                 <span class="label">games</span>
             </a>
         </li>
+                      <li class=" dropdown dropdown-hover">
+            <a href="{{path('adminaddReclamtion')}}" >
+                Reclamation
+                
+            </a></li>
                 </ul>
             
 
@@ -92,22 +102,6 @@
                 </a>
             {% endif %}
         </li>
-        <li>
-            <a href="user-messages.html">
-                Messages
-                <span class="badge bg-default">8</span>
-                
-                
-            </a>
-        </li>
-        <li>
-            <a href="user-messages-compose.html">
-                Messages Compose
-                
-                
-                
-            </a>
-        </li>
                     {% if app.user %}
                         {% if app.user.role != 'Admin' %}
         <li>
@@ -120,22 +114,7 @@
         </li>
                             {% endif %}
                     {% endif %}
-        <li>
-            <a href="https://nkdev.info/docs/youplay-html/">
-                Documentation
-                
-                
-                
-            </a>
-        </li>
-        <li>
-            <a href="https://themeforest.net/item/youplay-game-template-based-on-bootstrap/11306207?ref=_nK">
-                Purchase
-                
-                
-                
-            </a>
-        </li>
+        
                     {% if app.user %}
                     {% if app.user.role=="Admin" %}
                         <li>
@@ -173,49 +152,12 @@
                     </li>
                 
 
-                
-                    <li class="dropdown dropdown-hover dropdown-cart">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <li>
+                        <a  href="{{path('panier')}}">
                             <i class="fa fa-shopping-cart"></i>
                         </a>
-                        <div class="dropdown-menu">
-                        
-    {% if items|length > 0 %}
-    
-                {% for item in items %}
-                            <div class="row youplay-side-news">
-                                <div class="col-xs-3 col-md-4">
-                                    <a href="#" class="angled-img">
-                                        <div class="img">
-                                            
-                                                <img src="{{asset('images/produits/')}}{{ item.produit.image }}" alt="">
-                                                
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-xs-9 col-md-8">
-                                    <a href="#" class="pull-right mr-10"><i class="fa fa-times"></i></a>
-                                    
-                                        <h4 class="ellipsis"><a href="#">{{ item.produit.libelle }}</a></h4>
-                                        
-                                    <span class="quantity">{{ item.quantity }} × <span class="amount">{{ item.produit.Prix }}DT</span></span>
-                                </div>
-                            </div>
-
-                {% endfor %}
-
-                            <div class="ml-20 mr-20 pull-right"><strong>Subtotal:</strong> <span class="amount">{{total}}DT</span></div>
-
-                            <div class="btn-group pull-right m-15">
-                                <a href="{{path('panier')}}" class="btn btn-default btn-sm">View Cart</a>
-                                <a href="{{path('checkout')}}" class="btn btn-default btn-sm">Checkout</a>
-                            </div>
-                        </div>
-                        
-    {% else %}
-        <p>Surprise, c'est vide !</p>
-    {% endif %}
                     </li>
+            
                 
 
                 

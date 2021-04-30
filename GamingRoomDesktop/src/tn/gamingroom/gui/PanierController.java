@@ -245,13 +245,8 @@ public class PanierController implements Initializable {
         int a = JOptionPane.showConfirmDialog(f, "Êtes-vous sûr?");
         if (a == JOptionPane.YES_OPTION) {
             CommandService commandService = new CommandService();
-<<<<<<< HEAD
-            int memberId = 3;
-            double totale=0; 
-=======
             int memberId = membre.getId();
             double totale = 0;
->>>>>>> 1afa99f867d5375ff9eb0198d446b37f994dbf67
             for (int i = 0; i < listTable.getItems().size(); i++) {
 
                 totale += listTable.getItems().get(i).getPrix();

@@ -9,14 +9,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+use Symfony\Component\Security\Core\Security;
 use App\Entity\Membre;
 use App\Entity\Avis;
 use App\Form\AvisType;
 class HomeController extends AbstractController
 {
     private $client;
-    public function __construct(HttpClientInterface $client)
+    private $security;
+
+    public function __construct(Security $security,HttpClientInterface $client)
     {
+        $this->security = $security;
         $this->client = $client;
     }
     /**
@@ -30,8 +34,12 @@ class HomeController extends AbstractController
         
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $id=6;
-            $avis->setMembre($this->getDoctrine()->getRepository(Membre::class)->find($id));
+            $user=$this->security->getUser();
+            
+            if(!$user){
+                return $this->redirect('/login');
+            }
+            $avis->setMembre($user);
             $response = $this->client->request(
                 'GET',
                 "https://api.meaningcloud.com/sentiment-2.1?verbose=y&key=".$_ENV['keyMeaningcloudApi']."&lang=en&txt=".$avis->getAvis()."&model=general"

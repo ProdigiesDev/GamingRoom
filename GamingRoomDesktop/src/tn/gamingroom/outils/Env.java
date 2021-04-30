@@ -11,9 +11,9 @@ package tn.gamingroom.outils;
  */
 public class Env {
      public static final String keyMeaningcloudApi = "fb2edfd3397580535796144ef45588eb";
-    private static String dossierImageUtilEventPath ="C:\\Users\\Dah\\Desktop\\ProdigiesDev\\assetsEvenement\\";
+    private static String dossierImageUtilEventPath ="D:\\ProdigiesDev\\GamingRoomWeb\\public\\images\\evenement\\";
     private static final String youtubeApiKey = "AIzaSyA_8Z1_SB9rtueiZXM3kMLKHlV5kOqTGSY";
-    private static String dossierImagePath = "C:\\Users\\yasmine\\Desktop\\pidev\\images\\";
+    private static String dossierImagePath = "D:\\ProdigiesDev\\GamingRoomWeb\\public\\images\\";
 
     private static final int port = 8087;
 
