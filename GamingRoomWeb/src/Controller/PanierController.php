@@ -12,8 +12,16 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Membre;
 use App\Entity\Panier;
 use App\Entity\Produit;
+use Twilio\Rest\Client;
+
+
 class PanierController extends AbstractController
 {
+    private $twilio;
+
+    public function  __construct(Client $twilio) {
+        $this->twilio = $twilio;
+    }
 
     /**
      * @Route("/panier", name="panier")
@@ -23,6 +31,8 @@ class PanierController extends AbstractController
      */
     public function index(SessionInterface $session, ProduitRepository $produitRepository): Response
     {
+        
+
         $panier = $session->get('panier',[]);
         $total= 0;
 
@@ -58,6 +68,15 @@ class PanierController extends AbstractController
 
             $name=$request->query->get('billing_firstname');
             $last=$request->query->get('billing_lastname');
+            $sender = $this->getParameter('twilio_number');
+                $message = $this->twilio->messages->create(
+                    '+21653204330', // Send text to this number
+                    array(
+                    'from' => $sender, // My Twilio phone number
+                    'body' => 'Bonjour  '. $name.', votre commande est en cours de traitment.
+                    GamingRoom ' 
+                    )
+                );
 
 
             $mem=$this->getDoctrine()->getRepository(Membre::class)->find(6);
@@ -80,7 +99,7 @@ class PanierController extends AbstractController
             
             $panier = $session->set('panier',[]);
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('successpanier');
             
         }
         if($total==0){
@@ -93,6 +112,29 @@ class PanierController extends AbstractController
         ]);
 
     }
+     /**
+     * @Route("/payment", name="payment")
+     * @param SessionInterface $session
+     * @param ProduitRepository $produitRepository
+     * @return Response
+     */
+    public function payment(Request $request,SessionInterface $session, ProduitRepository $produitRepository): Response
+    {
+        //$panier = $session->get('panier',[]);
+
+        $panier = $session->get('panier',[]);
+        $total= 0;
+
+        foreach($panier as $item){
+            $totalitem = $item ['produit'] -> getPrix() * $item['quantity'];
+            $total += $totalitem;
+        }
+        return $this-> render('panier/payment.html.twig' , [
+            'items' => $panier,
+            'total'=> $total
+        ]);
+
+    }
 
     /**
      * @Route("/panier/updateProdPanier/{id}/{nb}", name="updateProdPanier")
@@ -100,14 +142,36 @@ class PanierController extends AbstractController
      * @param SessionInterface $session
      */
 
-    public function updateProdPanier($id, $nb,SessionInterface $session, ProduitRepository $produitRepository) {
+    public function updateProdPanier($id, $nb,Request $req,SessionInterface $session, ProduitRepository $produitRepository) {
 
+       
+        
         $panier = $session->get('panier',[]);
         $produit=$produitRepository->find($id);
         if(!$produit){
             return $this->redirectToRoute('panier');
         }
        // dd($panier[$id]['produit']->getIdprod());
+       if($req->get('qt')){
+        $nb=intval($req->get('qt'));
+        if($nb<0)
+            $nb=0;
+        if (!empty($panier[$id])) {
+
+            $panier[$id]= [
+                'produit' => $produitRepository->find($id),
+                'quantity'=> $nb
+            ];
+
+        }else {
+            $panier[$id] =[
+                'produit' => $produitRepository->find($id),
+                'quantity'=>$nb
+            ];
+        }
+        $session -> set('panier',$panier);
+        return $this->redirectToRoute('panier');
+       }
         if (!empty($panier[$id])) {
             $newqt=$panier[$id]['quantity']+intval($nb);
             if($newqt<0)
@@ -130,8 +194,31 @@ class PanierController extends AbstractController
         
         $session -> set('panier',$panier);
 
-        return $this->redirectToRoute('panier');
+        return $this->redirectToRoute('front');
 
+    }
+
+    /**
+     * @Route("/success-payment", name="successpanier")
+     * @param SessionInterface $session
+     * @param ProduitRepository $produitRepository
+     * @return Response
+     */
+    public function success(SessionInterface $session): Response
+    {
+        
+        $panier = $session->get('panier',[]);
+        $total= 0;
+
+        foreach($panier as $item){
+            $totalitem = $item ['produit'] -> getPrix() * $item['quantity'];
+            $total += $totalitem;
+        }
+        
+        return $this-> render('panier/success.html.twig' , [
+            'items' => $panier,
+            'total'=> $total
+        ]);
     }
 
     /**
@@ -164,5 +251,6 @@ class PanierController extends AbstractController
         return $this->redirectToRoute("panier");
 
     }
+
 
 }

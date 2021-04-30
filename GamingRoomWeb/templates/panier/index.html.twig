@@ -1,12 +1,11 @@
 {% extends 'base_clientSide.html.twig' %}
 
-
 {% block body %}
-    <div class="bg-light p-3">
-        <h1>Votre panier</h1>
-    </div>
 
-    {% if items|length > 0 %}
+        
+    <section class="youplay-content container" style="margin:50px auto;">
+        <h2 class="mt-0">Votre panier</h2>
+        {% if items|length > 0 %}
         <table class="table">
             <thead>
                 <tr>
@@ -15,18 +14,29 @@
                     <th>Prix Unitaire</th>
                     <th>Quantité</th>
                     <th>Prix</th>
+                    <th>Modifier QT</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in items %}
                  <tr>
-                    <td><img src="{{asset('images/panier/')}}{{ item.produit.image }}"  width="200" height="200" /></td>
+                    <td><img src="{{asset('images/produits/')}}{{ item.produit.image }}"  width="200" height="150" /></td>
                     <td>{{ item.produit.libelle }}</td>
                     <td>{{ item.produit.Prix }}</td>
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.produit.Prix * item.quantity }}</td>
                     <td>
+                        <form action="{{path('updateProdPanier', {id: item.produit.idProd,nb:-1})}}">
+                        
+                            <div class="youplay-input" >
+                            <input type='text' name='qt' />
+                            </div>
+                            <button type='submit' class="btn btn-m">Modifier</button>
+                        </form>
+
+                    </td>
+                    <td class="text-right">
                         <a href="{{ path('panier_supprime', {'id': item.produit.idprod}) }}" class="btn btn-danger btn-sm">
                             <i class="fas fa-trash"></i>
                         </a>
@@ -39,11 +49,18 @@
                     <td colspan="4" class="text-right">Total:
                     </td>
                     <td>{{ total }}</td>
-                    <td colspan="4" class="align-right">
-                         <button type="submit" class="btn btn-lg">Passer une commande</button>
+                    
+                    <td >
+                        <a href="{{ path('emptypanier')}}"  > <button type="submit" class="btn btn-lg">Vider Panier</button>
+                        </a>
+                    </td>
+                    <td >
+                        <a href = "{{ path('checkout') }}" > <button type="submit" class="btn btn-lg">Passer une commande</button>
+                        </a>
                     </td>
                 </tr>
         </table>
+    </section>
     {% else %}
         <p>Votre panier est vide! </p>
     {% endif %}

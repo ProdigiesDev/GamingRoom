@@ -45,5 +45,17 @@ class Categorie
         return $this;
     }
 
+    public function getCategorie(): ?string
+    {
+        return $this->nomcategorie;
+    }
+
+    public function setCategorie(string $nomcategorie): self
+    {
+        $this->nomcategorie = $nomcategorie;
+
+        return $this;
+    }
+
 
 }

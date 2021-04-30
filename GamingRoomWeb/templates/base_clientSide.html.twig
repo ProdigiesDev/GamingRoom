@@ -56,6 +56,9 @@
 
         <!-- jQuery -->
         <script src="{{asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+        
+        <!-- START: Scripts -->
+        <script src="https://js.stripe.com/v3/"></script>
 
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
@@ -66,20 +69,15 @@
         {% endblock %}
     </head>
     <body>
-        
         {% include 'base_header.html.twig' %}
-
         {% block body %}{% endblock %}
 
         {% include 'base_footer.html.twig' %}
 
     </body>
-    
-    
-    <!-- START: Scripts -->
 
     <!-- Object Fit Polyfill -->
-    <script src="{{asset('assets/vendor/object-fit-images/dist/ofi.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/object-fit-images/dist/ofi.min.js') }}"></script>
 
     <!-- jQuery -->
     <script src="{{asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>

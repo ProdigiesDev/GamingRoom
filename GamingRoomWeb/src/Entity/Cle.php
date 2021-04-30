@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Cle
  *
  * @ORM\Table(name="cle", indexes={@ORM\Index(name="fk_produit_id", columns={"produit_id"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\CleRepository")
  */
 class Cle
 {
@@ -23,14 +26,15 @@ class Cle
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="code", type="string", length=50, nullable=false)
      */
     private $code;
 
     /**
      * @var int
-     *
+
+     * @Assert\NotBlank()
      * @ORM\Column(name="produit_id", type="integer", nullable=false)
      */
     private $produitId;
