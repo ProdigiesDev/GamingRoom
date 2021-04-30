@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54865b7d4caa9cf00d7227e75bd5a935",
+    "content-hash": "812589d21cb1e09559ade7349ff5dd42",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -763,12 +763,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "c800380457948e65bbd30ba92cc17cda108bf8c9"
+                "reference": "a8cf0edb93a77ebb3bec851b8c4df62d5cc8451c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/c800380457948e65bbd30ba92cc17cda108bf8c9",
-                "reference": "c800380457948e65bbd30ba92cc17cda108bf8c9",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/a8cf0edb93a77ebb3bec851b8c4df62d5cc8451c",
+                "reference": "a8cf0edb93a77ebb3bec851b8c4df62d5cc8451c",
                 "shasum": ""
             },
             "require": {
@@ -862,7 +862,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-17T17:30:19+00:00"
+            "time": "2021-04-29T16:46:26+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -8691,12 +8691,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-core.git",
-                "reference": "54f7375d0506dce78db8e90c3f25a58efad35c61"
+                "reference": "a85c6a1288ada19f29748a687fc0434517c6fde2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-core/zipball/54f7375d0506dce78db8e90c3f25a58efad35c61",
-                "reference": "54f7375d0506dce78db8e90c3f25a58efad35c61",
+                "url": "https://api.github.com/repos/symfony/security-core/zipball/a85c6a1288ada19f29748a687fc0434517c6fde2",
+                "reference": "a85c6a1288ada19f29748a687fc0434517c6fde2",
                 "shasum": ""
             },
             "require": {
@@ -8769,7 +8769,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-08T07:40:10+00:00"
+            "time": "2021-04-29T18:10:21+00:00"
         },
         {
             "name": "symfony/security-csrf",
@@ -10292,6 +10292,60 @@
                 }
             ],
             "time": "2021-04-15T10:09:30+00:00"
+        },
+        {
+            "name": "twilio/sdk",
+            "version": "6.22.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twilio/twilio-php.git",
+                "reference": "b24040f9bcd2237e4210dcafd9a287fad9759a8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/b24040f9bcd2237e4210dcafd9a287fad9759a8a",
+                "reference": "b24040f9bcd2237e4210dcafd9a287fad9759a8a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^6.3 || ^7.0",
+                "phpunit/phpunit": ">=4.5",
+                "theseer/phpdox": "^0.12.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twilio\\": "src/Twilio/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twilio API Team",
+                    "email": "api@twilio.com"
+                }
+            ],
+            "description": "A PHP wrapper for Twilio's API",
+            "homepage": "http://github.com/twilio/twilio-php",
+            "keywords": [
+                "api",
+                "sms",
+                "twilio"
+            ],
+            "support": {
+                "issues": "https://github.com/twilio/twilio-php/issues",
+                "source": "https://github.com/twilio/twilio-php/tree/6.22.0"
+            },
+            "time": "2021-04-21T19:45:05+00:00"
         },
         {
             "name": "webmozart/assert",

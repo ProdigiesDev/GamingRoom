@@ -17,6 +17,7 @@
                         <div class="col-xs-9 col-md-8">
                             <h4 class="ellipsis"><a href="store-product-1.html" title="Bloodborne">{{ p.libelle }}</a></h4>
                             <span class="price">{{ p.prix}}</span>
+                            <a href="{{path('updateProdPanier', {id: p.idProd,nb:1})}}"><button  class="btn btn-lg">Ajouter au panier</button></a>
                         </div>
                     </div>
 

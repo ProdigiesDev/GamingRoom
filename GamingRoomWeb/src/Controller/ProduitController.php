@@ -19,6 +19,7 @@ use Dompdf\Options;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ProduitController extends AbstractController
 {
@@ -293,10 +294,19 @@ class ProduitController extends AbstractController
      * @Route("/front", name="front")
      */
 
-    public function affichageFront(): Response{
+    public function affichageFront(SessionInterface $session): Response{
+        $panier = $session->get('panier',[]);
+        $total= 0;
+
+        foreach($panier as $item){
+            $totalitem = $item ['produit'] -> getPrix() * $item['quantity'];
+            $total += $totalitem;
+        }
         $prod = $this->getDoctrine()->getRepository(Produit::class)->findAll();
         return $this->render('produit/front.html.twig', [
             'prod' => $prod,
+            'items' => $panier,
+            'total'=> $total
         ]);
     }
 }

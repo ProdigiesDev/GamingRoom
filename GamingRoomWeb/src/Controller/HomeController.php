@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use App\Entity\Membre;
 use App\Entity\Avis;
@@ -21,7 +22,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request): Response
+    public function index(Request $request,SessionInterface $session): Response
     {
         $avis= new Avis();
         $listAvis=$this->getDoctrine()->getRepository(Avis::class)->findAll();
@@ -52,9 +53,21 @@ class HomeController extends AbstractController
             $form = $this->createForm(AvisType::class, $avis);
         }
 
+        $panier = $session->get('panier',[]);
+        $total= 0;
+
+        foreach($panier as $item){
+            $totalitem = $item ['produit'] -> getPrix() * $item['quantity'];
+            $total += $totalitem;
+        }
+        
+
+
         return $this->render('home/index.html.twig', [
             'form' => $form->createView(),
-            'listAvis' => $listAvis
+            'listAvis' => $listAvis,
+            'items'=> $panier,
+            'total'=> $total
         ]);
     }
 }
