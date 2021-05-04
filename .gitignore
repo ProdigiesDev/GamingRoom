@@ -39,3 +39,5 @@ nbdist/
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans,java
 /nbproject/private/
+/GamingRoomDesktop/src/tn/gamingroom/outils/Env.java
+/netbeans/
