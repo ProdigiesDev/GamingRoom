@@ -359,4 +359,5 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('evenement_index');
     }
+
 }
