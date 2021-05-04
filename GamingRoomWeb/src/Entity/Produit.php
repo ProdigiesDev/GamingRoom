@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+//use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Produit
@@ -20,6 +20,7 @@ class Produit
      * @var int
      *
      * @ORM\Column(name="idprod", type="integer", nullable=false)
+
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -27,6 +28,7 @@ class Produit
 
     /**
      * @var string
+
      * @Assert\NotBlank()
      * @Assert\File(mimeTypes={ "image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml"})
      * @ORM\Column(name="image", type="string", length=150, nullable=false)
@@ -35,6 +37,7 @@ class Produit
 
     /**
      * @var string
+
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern     = "/^[a-z]+$/i",
@@ -46,6 +49,7 @@ class Produit
 
     /**
      * @var float
+
      * @Assert\NotBlank()
      * * @Assert\Type(
      *     type="float",
@@ -61,6 +65,7 @@ class Produit
 
     /**
      * @var string
+
      * @Assert\NotBlank()
 
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
@@ -69,6 +74,7 @@ class Produit
 
     /**
      * @var \Categorie
+
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Categorie")
      * @ORM\JoinColumns({

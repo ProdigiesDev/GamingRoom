@@ -19,7 +19,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-
+//use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
 class ProduitController extends AbstractController
 {
@@ -84,8 +84,7 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request); // aabit l formulaire w bech nabaathou
 
-        //recuperer tt les membre inscrit
-
+        //recuperer tt les membre inscri
       $em=$this->getDoctrine()->getManager();
        $membre=$em->getRepository(Membre::class)->findAll();
 
@@ -98,7 +97,8 @@ class ProduitController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($produit);
             $entityManager->flush();
-                      // email
+
+            // email
         foreach ($membre as $m )
           {
             $email = (new Email())
@@ -180,30 +180,30 @@ class ProduitController extends AbstractController
      */
     public  function  listp (ProduitRepository $produitRepository):Response{
 
-    // Configure Dompdf according to your needs
+
     $pdfOptions = new Options();
     $pdfOptions->set('defaultFont', 'Arial');
 
-    // Instantiate Dompdf with our options
+
     $dompdf = new Dompdf($pdfOptions);
 
     $produits= $produitRepository->findAll();
 
 
-    // Retrieve the HTML generated in our twig file
     $html = $this->renderView('produit/listeP.html.twig',['produits'=>$produits,
     ]);
 
-    // Load HTML to Dompdf
+
     $dompdf->loadHtml($html);
 
-    // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+
     $dompdf->setPaper('A4', 'portrait');
 
-    // Render the HTML as PDF
+
+   // Rendre le HTML au format PDF
     $dompdf->render();
 
-    // Output the generated PDF to Browser (force download)
+    // Sortie du PDF généré dans le navigateur (téléchargement forcé)
     $dompdf->stream("mypdf.pdf", [
         "Attachment" => true
     ]);
