@@ -57,7 +57,7 @@ class EvenementType extends AbstractType
             ->add('lienyoutube')
             ->add('categorie',EntityType::class,[
                 'class'=>Categorie::class,
-                'choice_label'=>'Ctegorie',
+                'choice_label'=>'nomcategorie',
                 'multiple'=>false,
                 'expanded'=>false
             ])

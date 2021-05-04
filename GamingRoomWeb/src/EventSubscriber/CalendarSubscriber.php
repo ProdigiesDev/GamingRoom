@@ -8,18 +8,22 @@ use CalendarBundle\Entity\Event;
 use CalendarBundle\Event\CalendarEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Security;
 
 class CalendarSubscriber implements EventSubscriberInterface
 {
     private $evenementRepository;
     private $router;
+    private $security;
 
     public function __construct(
+        Security $security,
         EvenementRepository $evenementRepository,
         UrlGeneratorInterface $router
     ) {
         $this->evenementRepository = $evenementRepository;
         $this->router = $router;
+        $this->security = $security;
     }
 
     public static function getSubscribedEvents()
@@ -46,7 +50,7 @@ class CalendarSubscriber implements EventSubscriberInterface
             ->getResult()
         ;*/
         //TODO: get id from current connected member
-        $idM=8;
+        $idM=$this->security->getUser()->getId();
         $evenements = $this->evenementRepository->getEventPart($idM,$start,$end);
 
         foreach ($evenements as $evenement) {

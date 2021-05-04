@@ -13,14 +13,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<?import javafx.scene.control.ScrollPane?>
 <ScrollPane prefHeight="2000.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Accueil.AccueilController">
 <content>
-<AnchorPane id="AnchorPane" fx:id="parentControl" prefHeight="2000.0" prefWidth="1350.0" styleClass="body" stylesheets="@accueil.css">
+<AnchorPane id="AnchorPane" fx:id="parentControl" prefHeight="2000.0" prefWidth="1350.0" styleClass="body" stylesheets="file:/D:/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css">
    <children>
       <ImageView fitHeight="308.0" fitWidth="1350.0" pickOnBounds="true">
                <image>
-                  <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/images/banner-bg.jpg" />
+                  <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/banner-bg.jpg" />
                </image>
       </ImageView>
           <fx:include fx:id="header" source="../Shared/Header.fxml" />
@@ -43,32 +42,16 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="420.0" prefWidth="700.0" BorderPane.alignment="CENTER">
                      <children>
                         <Pane opacity="0.11" prefHeight="1001.0" prefWidth="998.0" style="-fx-background-color: black;" />
-                        <Pane fx:id="paneEvent" layoutX="100.0" layoutY="550.0" opacity="0.57" prefHeight="320.0" prefWidth="840.0">
-                           <children>
-                              <ImageView fitHeight="319.0" fitWidth="295.0" layoutX="6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
-                              <TextFlow layoutX="320.0" layoutY="28.0" prefHeight="200.0" prefWidth="414.0" />
-                              <JFXButton layoutX="658.0" layoutY="258.0" onAction="#goEvent" styleClass="btnMore" text="En savoir plus">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </JFXButton>
-                           </children>
-                        </Pane>
-                        <Label fx:id="notFoundEvent" layoutX="150.0" layoutY="550.0" text="Il n'y a aucun événement pour le moment" visible="false">
-                           <font>
-                              <Font size="40.0" />
-                           </font>
-                        </Label>
-                        <JFXButton alignment="CENTER" layoutX="830.0" layoutY="365.0" styleClass="btnMore" text="En savoir plus" textFill="WHITE">
+                        <JFXButton alignment="CENTER" layoutX="830.0" layoutY="650.0" styleClass="btnMore" text="En savoir plus" textFill="WHITE">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </JFXButton>
-                        <Pane fx:id="bestProduct1" layoutX="100.0" layoutY="150.0" prefHeight="200.0" prefWidth="207.0">
+                        <Pane fx:id="bestProduct1" layoutX="100.0" layoutY="400.0" prefHeight="200.0" prefWidth="207.0">
                            <children>
                               <ImageView fitHeight="202.0" fitWidth="206.0" pickOnBounds="true" preserveRatio="true" scaleY="1.5">
                                  <image>
-                                    <Image url="file:/C:/Users/Dah/Desktop/demo/images/game-half-life-3-500x375.jpg" />
+                                    <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/game-half-life-3-500x375.jpg" />
                                  </image>
                               </ImageView>
                               <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="163.0" opacity="0.6" prefHeight="30.0" prefWidth="205.0" styleClass="cardLabel" text="The Dragon" textFill="WHITE">
@@ -78,11 +61,11 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane fx:id="bestProduct2" layoutX="400.0" layoutY="150.0" prefHeight="200.0" prefWidth="207.0">
+                        <Pane fx:id="bestProduct2" layoutX="400.0" layoutY="400.0" prefHeight="200.0" prefWidth="207.0">
                            <children>
                               <ImageView fitHeight="202.0" fitWidth="206.0" pickOnBounds="true" preserveRatio="true" scaleY="1.5">
                                  <image>
-                                    <Image url="file:/C:/Users/Dah/Desktop/demo/images/game-half-life-3-500x375.jpg" />
+                                    <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/game-half-life-3-500x375.jpg" />
                                  </image>
                               </ImageView>
                               <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="163.0" opacity="0.6" prefHeight="30.0" prefWidth="205.0" style="-fx-background-color: black; -fx-font-weight: bolder; -fx-font-family: fantasy;" text="The Dragon" textFill="WHITE">
@@ -92,11 +75,11 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane fx:id="bestProduct3" layoutX="700.0" layoutY="150.0" prefHeight="200.0" prefWidth="207.0">
+                        <Pane fx:id="bestProduct3" layoutX="700.0" layoutY="400.0" prefHeight="200.0" prefWidth="207.0">
                            <children>
                               <ImageView fitHeight="202.0" fitWidth="206.0" pickOnBounds="true" preserveRatio="true" scaleY="1.5">
                                  <image>
-                                    <Image url="file:/C:/Users/Dah/Desktop/demo/images/game-half-life-3-500x375.jpg" />
+                                    <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/game-half-life-3-500x375.jpg" />
                                  </image>
                               </ImageView>
                               <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="163.0" opacity="0.6" prefHeight="30.0" prefWidth="205.0" style="-fx-background-color: black; -fx-font-weight: bolder; -fx-font-family: fantasy;" text="The Dragon" textFill="WHITE">
@@ -106,12 +89,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Label layoutX="100.0" layoutY="450.0" text="Évent le plus proche" textFill="WHITE">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="100.0" layoutY="20.0" text="Produit le plus vendu" textFill="WHITE">
+                        <Label layoutX="100.0" layoutY="250.0" prefHeight="45.0" prefWidth="306.0" text="Produit le plus vendu" textFill="WHITE">
                            <font>
                               <Font size="30.0" />
                            </font>

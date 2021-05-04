@@ -7414,6 +7414,9 @@ footer .social .icons a i::after {
 footer .social .icons a span {
     display: block;
 }
+#hide{
+    display: none;
+}
 
 footer .social .icons a:hover i::after {
     background: rgba(8, 3, 37, 0.4);

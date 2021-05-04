@@ -15,7 +15,7 @@
    <children>
       <ImageView fitHeight="737.0" fitWidth="1286.0" layoutX="-50.0" layoutY="-22.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/Farah/Desktop/Esprit/3eme/sem2/PIDEV/Sprint1/AjoutEvenement.jpg" />
+            <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/AjoutEvenement.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="48.0" layoutY="11.0" opacity="0.78" prefHeight="559.0" prefWidth="1152.0" style="-fx-background-color: black;">
@@ -25,7 +25,7 @@
                   <Font name="Yu Gothic Regular" size="19.0" />
                </font>
             </Label>
-            <TableView fx:id="listeEvents" layoutX="34.0" layoutY="82.0" onMouseClicked="#getSelected" prefHeight="383.0" prefWidth="1085.0" style="-fx-background-color: black; -fx-border-color: #6f1075;" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
+            <TableView fx:id="listeEvents" layoutX="34.0" layoutY="82.0" onMouseClicked="#getSelected" prefHeight="383.0" prefWidth="1085.0" style="-fx-background-color: black; -fx-border-color: #6f1075;" stylesheets="file:/D:/ProdigiesDev//GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
               <columns>
                 <TableColumn fx:id="imL" prefWidth="79.0" />
                 <TableColumn fx:id="dateDL" prefWidth="116.99996948242188" text="Date début" />

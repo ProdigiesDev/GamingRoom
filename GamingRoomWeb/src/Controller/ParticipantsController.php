@@ -16,9 +16,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class ParticipantsController extends AbstractController
 {
+
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
     /**
      * @Route("/calendar", name="particpant_calendar", methods={"GET"})
@@ -40,7 +48,7 @@ class ParticipantsController extends AbstractController
     }
 
     /**
-     * @Route("/listerPAdmin", name="listerPAdmin")
+     * @Route("/admin/listerPAdmin", name="listerPAdmin")
      */
     public function listerPAdmin(): Response
     {
@@ -51,7 +59,7 @@ class ParticipantsController extends AbstractController
     }
 
     /**
-     * @Route("/rechreche",name="rechrecheEvent")
+     * @Route("/event/rechreche",name="rechrecheEvent")
      */
     public function rechreche(Request $request, NormalizerInterface $Normalizer)
     {
@@ -95,15 +103,21 @@ class ParticipantsController extends AbstractController
         foreach ($evenements as $e){
 
             //TODO: get id from current connected member
-            $idM=8;
-            $m=$this->getDoctrine()->getRepository(Membre::class)->find($idM);
-            if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findOneByME($e,$m)))<=0){
+            if(!$this->security->getUser()){
                 $isParticpant[$i]="Inscription";
             }
             else{
-                $isParticpant[$i]="Annuler";
-            }
 
+                $idM=$this->security->getUser()->getId();
+                $m=$this->getDoctrine()->getRepository(Membre::class)->find($idM);
+                if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findOneByME($e,$m)))<=0){
+                    $isParticpant[$i]="Inscription";
+                }
+                else{
+                    $isParticpant[$i]="Annuler";
+                }
+    
+            }
             //get nbPaticipant
             $nbPart=($this->getDoctrine()->getRepository(Evenement::class)->getNBParticipants($e)[0])[1];
             $nbParticipants[$i]=$nbPart;
@@ -141,13 +155,19 @@ class ParticipantsController extends AbstractController
         foreach ($evenements as $e){
 
             //TODO: get id from current connected member
-            $idM=8;
-            $m=$this->getDoctrine()->getRepository(Membre::class)->find($idM);
-            if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findOneByME($e,$m)))<=0){
+            if(!$this->security->getUser()){
                 $isParticpant[$i]="Inscription";
             }
             else{
-                $isParticpant[$i]="Annuler";
+
+                $idM=$this->security->getUser()->getId();
+                $m=$this->getDoctrine()->getRepository(Membre::class)->find($idM);
+                if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findOneByME($e,$m)))<=0){
+                    $isParticpant[$i]="Inscription";
+                }
+                else{
+                    $isParticpant[$i]="Annuler";
+                }
             }
 
             //get nbPaticipant
@@ -187,13 +207,19 @@ class ParticipantsController extends AbstractController
         foreach ($evenements as $e){
 
             //TODO: get id from current connected member
-            $idM=8;
-            $m=$this->getDoctrine()->getRepository(Membre::class)->find($idM);
-            if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findOneByME($e,$m)))<=0){
+            if(!$this->security->getUser()){
                 $isParticpant[$i]="Inscription";
             }
             else{
-                $isParticpant[$i]="Annuler";
+
+                $idM=$this->security->getUser()->getId();
+                $m=$this->getDoctrine()->getRepository(Membre::class)->find($idM);
+                if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findOneByME($e,$m)))<=0){
+                    $isParticpant[$i]="Inscription";
+                }
+                else{
+                    $isParticpant[$i]="Annuler";
+                }
             }
 
             //get nbPaticipant
@@ -221,7 +247,10 @@ class ParticipantsController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $e=$this->getDoctrine()->getRepository(Evenement::class)->find($id);
         //TODO: get id from current connected member
-        $idM=8;
+        if(!$this->security->getUser()){
+            return $this->redirect("/login");
+        }
+        $idM=$this->security->getUser()->getId();
         $m=$this->getDoctrine()->getRepository(Membre::class)->find($idM);
         if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findOneByME($e,$m)))<=0){
             if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findBy(array('evenement'=>$e))))< $e->getNbremaxParticipant()){
@@ -281,7 +310,7 @@ class ParticipantsController extends AbstractController
 
 
     /**
-     * @Route("/updateRound/{id}", name="updateRound")
+     * @Route("/admin/updateRound/{id}", name="updateRound")
      */
     public function updateRound($id): Response
     {

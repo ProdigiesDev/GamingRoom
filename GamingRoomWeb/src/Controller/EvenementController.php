@@ -16,14 +16,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Security\Core\Security;
 
-/**
- * @Route("/evenement")
- */
 class EvenementController extends AbstractController
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     /**
-     * @Route("/", name="evenement_index", methods={"GET"})
+     * @Route("/admin/evenement", name="evenement_index", methods={"GET"})
      */
     public function index(EvenementRepository $evenementRepository,Request $request,PaginatorInterface $paginator): Response
     {
@@ -41,19 +45,9 @@ class EvenementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/testMap", name="testMap", methods={"GET"})
-     */
-    public function testMap(EvenementRepository $evenementRepository,Request $request,PaginatorInterface $paginator): Response
-    {
-
-
-        return $this->render('evenement/testMap.html.twig', [
-        ]);
-    }
 
     /**
-     * @Route("/showEventFront/{id}", name="show_EventFront")
+     * @Route("/evenement/showEventFront/{id}", name="show_EventFront")
      */
     public function showEventFront($id,Request $request): Response
     {
@@ -65,7 +59,7 @@ class EvenementController extends AbstractController
         $NBDislikes=$this->getDoctrine()->getRepository(Reactionev::class)->getNBDislikes($evenement);
         $Commentaires=$this->getDoctrine()->getRepository(Reactionev::class)->getCommentaires($evenement);
         //TODO get This user $m
-        $m=$this->getDoctrine()->getRepository(Membre::class)->find(8);
+        $m= $this->security->getUser();
         $isLikedByUser=(($this->getDoctrine()->getRepository(Reactionev::class)->isLikedByUser($m,$evenement))[0])[1]>0;
         $isDislikedByUser=(($this->getDoctrine()->getRepository(Reactionev::class)->isDislikedByUser($m,$evenement))[0])[1]>0;
 
@@ -77,6 +71,9 @@ class EvenementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             //TODO:$m
+            if(!$m){
+                return $this->redirect('/login');
+            }
             $reactionev->setMembre($m);
             $reactionev->setEvenement($evenement);
             $reactionev->setInteraction(0);
@@ -97,9 +94,11 @@ class EvenementController extends AbstractController
             $i++;
         }
         /*****/
-
+        
+        $urlId=substr($evenement->getLienyoutube(),strrpos($evenement->getLienyoutube(),'/')+1);
         return $this->render('evenement/showEventFront.html.twig', [
             'evenement' => $evenement,
+            'urlId'=>$urlId,
             'nbP'=>($nbParticipants[0])[1],
             'NBLikes'=>($NBLikes[0])[1],
             'NBDislikes'=>($NBDislikes[0])[1],
@@ -116,7 +115,7 @@ class EvenementController extends AbstractController
 
 
     /**
-     * @Route("/new", name="evenement_new", methods={"GET","POST"})
+     * @Route("/admin/evenement/new", name="evenement_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -193,20 +192,18 @@ class EvenementController extends AbstractController
     */
 
     /**
-     * @Route("/showEventFront/5/{id}/like", name="evenement_like")
+     * @Route("/evenement/showEventFront/5/{id}/like", name="evenement_like")
      */
     public function evenement_like($id): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         //TODO: $m
-        //$m=$this->getUser();
-        $mC=true;
-        if(!$mC){
+        $m= $this->security->getUser();
+        if(!$m){
             return $this->json(['code'=>403, 'message'=>'Unauthorized'],403);
         }
         //$this->getDoctrine()->getRepository(Reactionev::class)->unlikeEvent($m,$e);
         //TODO: $m
-        $m=$this->getDoctrine()->getRepository(Membre::class)->find(8);
         $e=$this->getDoctrine()->getRepository(Evenement::class)->find($id);
 
 
@@ -250,20 +247,18 @@ class EvenementController extends AbstractController
     }
 
     /**
-     * @Route("/showEventFront/5/{id}/disLike", name="evenement_disLike")
+     * @Route("/evenement/showEventFront/5/{id}/disLike", name="evenement_disLike")
      */
     public function evenement_disLike($id): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         //TODO: $m
-        //$m=$this->getUser();
-        $mC=true;
-        if(!$mC){
+        $m=$this->security->getUser();
+        if(!$m){
             return $this->json(['code'=>403, 'message'=>'Unauthorized'],403);
         }
         //$this->getDoctrine()->getRepository(Reactionev::class)->unlikeEvent($m,$e);
         //TODO: $m
-        $m=$this->getDoctrine()->getRepository(Membre::class)->find(8);
         $e=$this->getDoctrine()->getRepository(Evenement::class)->find($id);
         if((($this->getDoctrine()->getRepository(Reactionev::class)->isDislikedByUser($m,$e))[0])[1]>0){
             $event=$this->getDoctrine()->getRepository(Reactionev::class)->findOneBy(array("membre"=>$m,"evenement"=>$e,"interaction"=>-1));
@@ -310,7 +305,7 @@ class EvenementController extends AbstractController
 
 
     /**
-     * @Route("/{idevent}", name="evenement_show", methods={"GET"})
+     * @Route("/admin/evenement/{idevent}", name="evenement_show", methods={"GET"})
      */
     public function show(Evenement $evenement): Response
     {
@@ -320,7 +315,7 @@ class EvenementController extends AbstractController
     }
 
     /**
-     * @Route("/{idevent}/edit", name="evenement_edit", methods={"GET","POST"})
+     * @Route("/admin/evenement/{idevent}/edit", name="evenement_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Evenement $evenement): Response
     {
@@ -347,7 +342,7 @@ class EvenementController extends AbstractController
     }
 
     /**
-     * @Route("/{idevent}", name="evenement_delete", methods={"POST"})
+     * @Route("/admin/evenement/{idevent}", name="evenement_delete", methods={"POST"})
      */
     public function delete(Request $request, Evenement $evenement): Response
     {

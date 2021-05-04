@@ -10,10 +10,12 @@ package tn.gamingroom.outils;
  * @author Dah
  */
 public class Env {
-    private static final String dossierImagePath="C:\\Users\\Dah\\Desktop\\ProdigiesDev\\images\\";
-    public static final String keyMeaningcloudApi = "fb2edfd3397580535796144ef45588eb";
-    private static String dossierImageUtilEventPath ="C:\\Users\\Dah\\Desktop\\ProdigiesDev\\assetsEvenement\\";
+     public static final String keyMeaningcloudApi = "fb2edfd3397580535796144ef45588eb";
+    private static String dossierImageUtilEventPath ="D:\\ProdigiesDev\\GamingRoomWeb\\public\\images\\evenement\\";
     private static final String youtubeApiKey = "AIzaSyA_8Z1_SB9rtueiZXM3kMLKHlV5kOqTGSY";
+    private static String dossierImagePath = "D:\\ProdigiesDev\\GamingRoomWeb\\public\\images\\";
+    private static String assetsEvenement = "D:\\ProdigiesDev\\assetsEvenement\\";
+
     private static final int port = 8087;
 
     public static String getImagePath() {
@@ -35,4 +37,9 @@ public class Env {
     public static int getPort() {
         return port;
     }
+
+    public static String getAssetsEvenement() {
+        return assetsEvenement;
+    }
+
 }

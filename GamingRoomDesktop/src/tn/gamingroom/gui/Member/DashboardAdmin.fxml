@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="900.0" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Member/dashboard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.DashboardAdminController">
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="900.0" stylesheets="file:/D:/ProdigiesDev//GamingRoomDesktop/src/tn/gamingroom/gui/Member/dashboard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Member.DashboardAdminController">
    <children>
       <ImageView fitHeight="675.0" fitWidth="1442.0" layoutX="-491.0" pickOnBounds="true" preserveRatio="true" />
       <TabPane layoutX="25.0" layoutY="14.0" prefHeight="605.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
@@ -25,7 +25,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="559.0" prefWidth="942.0">
                      <children>
-                        <TableView fx:id="table_memb" layoutX="13.0" layoutY="286.0" onMouseClicked="#getSelectedMember" prefHeight="264.0" prefWidth="876.0" style="-fx-background-color: #D5C4F4;" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
+                        <TableView fx:id="table_memb" layoutX="13.0" layoutY="286.0" onMouseClicked="#getSelectedMember" prefHeight="264.0" prefWidth="876.0" style="-fx-background-color: #D5C4F4;" stylesheets="file:/D:/ProdigiesDev//GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
                           <columns>
                             <TableColumn fx:id="colonne_id" prefWidth="41.0" text="ID" />
                             <TableColumn fx:id="colonne_name" prefWidth="75.0" text="NOM" />
@@ -83,7 +83,7 @@
                         <JFXTextField fx:id="textcatname" focusColor="#c41ed0" labelFloat="true" layoutX="133.0" layoutY="244.0" prefHeight="25.0" prefWidth="225.0" unFocusColor="#c41ed0" />
                         <JFXButton fx:id="btnaddCat" layoutX="173.0" layoutY="316.0" onAction="#ajouterCategorie" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="Ajouter" textFill="WHITE" />
                         <JFXButton fx:id="btnupdateCat" layoutX="174.0" layoutY="360.0" onAction="#modifierCategorie" prefHeight="32.0" prefWidth="104.0" style="-fx-background-color: #9F7EF7;" text="Modifier" textFill="WHITE" />
-                        <TableView fx:id="tableCat" layoutX="507.0" layoutY="144.0" onMouseClicked="#getSelectedCat" prefHeight="258.0" prefWidth="247.0" style="-fx-background-color: #D5C4F4;" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
+                        <TableView fx:id="tableCat" layoutX="507.0" layoutY="144.0" onMouseClicked="#getSelectedCat" prefHeight="258.0" prefWidth="247.0" style="-fx-background-color: #D5C4F4;" stylesheets="file:/D:/ProdigiesDev//GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
                           <columns>
                             <TableColumn fx:id="colonne_idcat" prefWidth="99.0" text="ID" />
                             <TableColumn fx:id="colonne_namecat" prefWidth="147.0" text="Nom catégorie" />

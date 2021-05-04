@@ -56,6 +56,9 @@
 
         <!-- jQuery -->
         <script src="{{asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+        
+        <!-- START: Scripts -->
+        <script src="https://js.stripe.com/v3/"></script>
 
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
@@ -64,16 +67,69 @@
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
+        
+        <script src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
+        <script src="{{ asset('bundles/goswebsocket/js/websocket.min.js') }}"></script>
+        
+        <link rel="stylesheet" href="{{asset('assets/css/chat.css')}}">
+        <script src="{{asset('assets/js/chat.js')}}"></script>
     </head>
     <body>
+        {% block content %}{% endblock %}
+        {% include 'base_header.html.twig' %}
+        {% block bannertop %}
+
+        {% endblock %}
+
+        <div id="body"> 
+        
+        <div id="chat-circle" class="btn btn-raised">
+                <div id="chat-overlay"></div>
+                    <i class="fas fa-comments"></i>
+            </div>
+        
+        <div class="chat-box">
+            <div class="chat-box-header">
+            GamingRoom Chat Box
+            <span class="chat-box-toggle"><i class="fas fa-times"></i></span>
+            </div>
+            <div class="chat-box-body">
+            <div class="chat-box-overlay">   
+            </div>
+            <div class="chat-logs">
+            
+            </div><!--chat-log -->
+            </div>
+            <div class="chat-input">      
+            <form>
+            {% if app.user %}
+                <input type="text" id="chat-input" placeholder="Send a message..."/>
+                <button type="submit" class="chat-submit" id="chat-submit"><i class="fas fa-paper-plane"></i></button>
+                
+            {% else %}
+                 <a href="/login" class="loginbtn">login</a> 
+            {% endif %}
+            </form>      
+            </div>
+        </div>
+
+        </div>
         {% block body %}{% endblock %}
+        {% block contentfin %} {% endblock %}
+        {% include 'base_footer.html.twig' %}
+        
+        {% if app.user %}
+            <input type="hidden" id="userName" value="{{app.user.prenom}}" />
+            <input type="hidden" id="idUser" value="{{app.user.id}}" />
+        {% endif %}
+
+
+
+
     </body>
-    
-    
-    <!-- START: Scripts -->
 
     <!-- Object Fit Polyfill -->
-    <script src="{{asset('assets/vendor/object-fit-images/dist/ofi.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/object-fit-images/dist/ofi.min.js') }}"></script>
 
     <!-- jQuery -->
     <script src="{{asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
@@ -120,7 +176,7 @@
     <script src="{{asset('assets/vendor/social-likes/dist/social-likes.min.js')}}"></script>
 
     <!-- Youplay -->
-    <script src="{{asset('assets/js/youplay.min.js')}}"></script>
+    <script src="{{asset('assets/js/youplay.js')}}"></script>
     <script src="{{asset('assets/js/youplay-init.js')}}"></script>
 
 
@@ -128,3 +184,4 @@
     <!-- END: Scripts -->
 
 </html>
+

@@ -124,7 +124,7 @@ public class ChercherListEvController implements Initializable {
         es.chercherEvenement(rech).forEach(e -> {
 
             try {
-                File f = new File(e.getImage());
+                File f = new File(Env.getDossierImageUtilEventPath()+e.getImage());
                 Image img = new Image(f.toURI().toURL().toExternalForm());
                 ImageView i = new ImageView(img);
                 i.setFitHeight(50);
@@ -166,7 +166,7 @@ public class ChercherListEvController implements Initializable {
 
                         try {
 
-                            File f = new File(Env.getDossierImageUtilEventPath() + "like.png");
+                            File f = new File(Env.getAssetsEvenement() + "like.png");
 
                             Image img = new Image(f.toURI().toURL().toExternalForm());
                             ImageView view = new ImageView(img);
@@ -243,7 +243,7 @@ public class ChercherListEvController implements Initializable {
 
                         try {
 
-                            File f = new File(Env.getDossierImageUtilEventPath() + "dislike.png");
+                            File f = new File(Env.getAssetsEvenement() + "dislike.png");
 
                             Image img = new Image(f.toURI().toURL().toExternalForm());
                             ImageView view = new ImageView(img);

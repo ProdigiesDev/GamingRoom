@@ -1319,6 +1319,7 @@ function initMagnificPopup() {
         type: 'image'
     }, mpOptions));
 
+    console.log("!!!!!",mpOptions);
     // video popup
     $('.video-popup').magnificPopup($.extend({
         type: 'iframe'

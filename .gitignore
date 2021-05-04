@@ -26,15 +26,16 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-
 ### NetBeans ###
-GamingRoomDesktop/nbproject/private/
-GamingRoomDesktop/nbproject/Makefile-*.mk
-GamingRoomDesktop/nbproject/Package-*.bash
-GamingRoomDesktop/build/
-GamingRoomDesktop/nbbuild/
-GamingRoomDesktop/dist/
-GamingRoomDesktop/nbdist/
-GamingRoomDesktop/.nb-gradle/
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans,java
+/nbproject/private/
