@@ -122,46 +122,17 @@ public class AccueilController implements Initializable {
             try {
                 ((ImageView) list.get(0)).setImage(new Image(new File(Env.getImagePath() + "\\produits\\" + produitses.get(0).getImage()).toURI().toURL().toExternalForm()));
                 ((Label) list.get(1)).setText(produitses.get(0).getLibelle());
-
                 ((ImageView) list2.get(0)).setImage(new Image(new File(Env.getImagePath() + "\\produits\\" + produitses.get(1).getImage()).toURI().toURL().toExternalForm()));
                 ((Label) list2.get(1)).setText(produitses.get(1).getLibelle());
 
                 ((ImageView) list3.get(0)).setImage(new Image(new File(Env.getImagePath() + "\\produits\\" + produitses.get(2).getImage()).toURI().toURL().toExternalForm()));
                 ((Label) list3.get(1)).setText(produitses.get(2).getLibelle());
+                
             } catch (MalformedURLException ex) {
                 Logger.getLogger(AccueilController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        EvenementService evenementService = new EvenementService();
-        Evenement evenement = evenementService.closestEvenement();
-        if (evenement != null) {
-
-            try {
-                System.out.println(Env.getImagePath() + "\\" + evenement.getImage());
-                ((ImageView) paneEvent.getChildren().get(0)).setImage(new Image(new File(evenement.getImage()).toURI().toURL().toExternalForm()));
-
-                ObservableList list = ((TextFlow) paneEvent.getChildren().get(1)).getChildren();
-                List<String> listreviw = Arrays.asList(evenement.getDescription().split("(?<=\\G.{20})"));
-                list.clear();
-                listreviw.forEach(reviewSub -> {
-                    Text text1 = new Text(reviewSub);
-
-                    //Setting font to the text 
-                    text1.setFont(new Font(20));
-
-                    //Setting color to the text  
-                    text1.setFill(Color.WHITE);
-
-                    list.add(text1);
-                });
-            } catch (MalformedURLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        else{
-            paneEvent.setVisible(false);
-            notFoundEvent.setVisible(true);
-        }
+        
         
         AvisService avisService = new AvisService();
         listAvis = avisService.getPostivesAvis();

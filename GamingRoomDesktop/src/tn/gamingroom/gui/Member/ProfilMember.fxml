@@ -17,7 +17,7 @@
    <children>
       <ImageView fitHeight="900.0" fitWidth="1400.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/images/198677.jpg" />
+            <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/198677.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="18.0" layoutY="27.0" opacity="0.56" prefHeight="189.0" prefWidth="587.0" style="-fx-background-color: #000000;">

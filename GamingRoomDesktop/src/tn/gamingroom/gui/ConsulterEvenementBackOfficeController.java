@@ -35,6 +35,7 @@ import javax.swing.JOptionPane;
 import tn.gamingroom.entities.CommentaireReact;
 import tn.gamingroom.entities.Evenement;
 import static tn.gamingroom.gui.ConsulterEventFrontOfficeController.browser;
+import tn.gamingroom.outils.Env;
 import tn.gamingroom.services.EvenementService;
 import tn.gamingroom.services.MembreServices;
 
@@ -125,7 +126,7 @@ public class ConsulterEvenementBackOfficeController implements Initializable {
             EvenementService es = new EvenementService();
             this.id = idE;
             Evenement e = es.findById(idE);
-            File f = new File(e.getImage());
+            File f = new File(Env.getDossierImageUtilEventPath()+e.getImage());
             Image img = new Image(f.toURI().toURL().toExternalForm());
             imageC.setSmooth(true);
             imageC.setImage(img);

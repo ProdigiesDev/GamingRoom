@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Produit;
 use App\Entity\Membre;
 use App\Entity\RechercheProd;
+
 use App\Form\ProduitType;
 use App\Form\RechercheproduitType;
 use App\Repository\ProduitRepository;
@@ -24,7 +25,7 @@ use Symfony\Component\Mime\Email;
 class ProduitController extends AbstractController
 {
     /**
-     * @Route("/produit_index", name="produit_index")
+     * @Route("/admin/produit_index", name="produit_index")
      */
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
@@ -76,7 +77,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="produit_new", methods={"GET","POST"})
+     * @Route("/admin/new", name="produit_new", methods={"GET","POST"})
      */
     public function new(Request $request,MailerInterface $mailer): Response
     {
@@ -122,7 +123,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/{idprod}/show", name="produit_show", methods={"GET"})
+     * @Route("/admin/{idprod}/show", name="produit_show", methods={"GET"})
      */
     public function show(Produit $produit): Response
     {
@@ -132,7 +133,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/{idprod}/edit", name="produit_edit", methods={"GET","POST"})
+     * @Route("/admin/{idprod}/edit", name="produit_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Produit $produit): Response
     {
@@ -159,7 +160,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/{idprod}/delete", name="produit_delete", methods={"POST"})
+     * @Route("/admin/{idprod}/delete", name="produit_delete", methods={"POST"})
      */
     public function delete(Request $request, Produit $produit): Response
     {
@@ -176,7 +177,7 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @Route("/listp", name="produit_list", methods={"GET"})
+     * @Route("/admin/listp", name="produit_list", methods={"GET"})
      */
     public  function  listp (ProduitRepository $produitRepository):Response{
 
@@ -211,7 +212,7 @@ class ProduitController extends AbstractController
 }
 
     /**
-     * @Route("/rechprod", name="rechprod")
+     * @Route("/admin/rechprod", name="rechprod")
      */
     public function rechercherProd(Request $request,ProduitRepository $produitRepository): Response
 
@@ -248,7 +249,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/StatProduit", name="StatProduit")
+     * @Route("/admin/StatProduit", name="StatProduit")
      */
     public function StatProduit(): Response
     {
@@ -268,7 +269,7 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @Route("/sort", name="sort")
+     * @Route("/admin/sort", name="sort")
      */
     public function tri(): Response{
         $prod = $this->getDoctrine()->getRepository(Produit::class)->sortLibelle();
@@ -281,7 +282,7 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @Route("/sortprix", name="sortprix")
+     * @Route("/admin/sortprix", name="sortprix")
      */
     public function triprix(): Response{
         $prod = $this->getDoctrine()->getRepository(Produit::class)->sortPrix();

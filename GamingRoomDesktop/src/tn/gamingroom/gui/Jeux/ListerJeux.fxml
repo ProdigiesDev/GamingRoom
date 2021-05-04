@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="398.0" prefWidth="744.0" stylesheets="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Jeux.ListerJeuxController">
+<AnchorPane id="AnchorPane" prefHeight="398.0" prefWidth="744.0" stylesheets="file:/D:/ProdigiesDev//GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.Jeux.ListerJeuxController">
      <children>
       <TableView fx:id="listJeux" layoutX="6.0" layoutY="94.0" onMouseClicked="#editJeux" opacity="0.59" prefHeight="296.0" prefWidth="735.0">
         <columns>

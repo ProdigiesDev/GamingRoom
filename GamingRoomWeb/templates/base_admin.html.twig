@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}GamingRoom Admin Panel{% endblock %}</title>
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}GamingRoom Admin Panel{% endblock %}</title>
+    {% block stylesheets %}
+        {#{{ encore_entry_link_tags('app') }}#}
+    {% endblock %}
 
         
         <!-- Google Font: Source Sans Pro -->
@@ -17,6 +17,8 @@
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Tempusdominus Bootstrap 4 -->
         <link rel="stylesheet" href="{{asset('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+        <script src="{{asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js')}}"></script>
+
         <!-- iCheck -->
         <link rel="stylesheet" href="{{asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
         <!-- JQVMap -->
@@ -29,27 +31,69 @@
         <link rel="stylesheet" href="{{asset('assets/plugins/daterangepicker/daterangepicker.css')}}">
         <!-- summernote -->
         <link rel="stylesheet" href="{{asset('assets/plugins/summernote/summernote-bs4.min.css')}}">
-
+        <style>
+               .alert {
+                    width: fit-content;
+                    position: relative;
+                    top: 10px;
+                    right: 15px;
+                    float: right;
+                }
+        </style>
+        
+    <!-- jQuery -->
+        <script src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
+        <script src="{{ asset('bundles/goswebsocket/js/websocket.min.js') }}"></script>
+    <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+       
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
     
         <div class="wrapper">
-
-            <!-- Preloader -->
-            <div class="preloader flex-column justify-content-center align-items-center">
-                <img class="animation__shake" src="{{asset('assets/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
-            </div>
-
-            {% include 'navbar.html.twig' %}
+<!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="{{asset('assets/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
+    </div>
+    {% include 'navbar.html.twig' %}
 
 
             {% include 'aside.html.twig' %}
+            
             <div class="content-wrapper">
+                {% for message in app.flashes('errors') %}
+                <div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                 
+                  <i class="icon fas fa-ban"></i> {{message}}
+                </div>
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+               
+                  
+                   <i class="icon fas fa-check"></i>  {{message}}
+                   
+                </div>
+                {% if message == 'Jeu Ajouté avec succès' %}
+                 <script >
+
+           
+                var webSocket = WS.connect("ws://127.0.0.1:1337");
+                        webSocket.on("socket/connect", function (session) {
+                                    //session is an AutobahnJS WAMP session.
+                                    //the callback function in "subscribe" is called everytime an event is published in that channel.
+                                
+                            const obj2={user:'Admin',msg:"Hello Gamers:<a href='/jeux' target='_blank' > check new game has been added to the platform  </a> ",type:'info'};
+                            session.publish("acme/channel", obj2);
+
+                        })
+
+                </script>
+                {% endif %}
+                {% endfor %}
                 {% block body %}{% endblock %}
             </div>
-
-
-          
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Control sidebar content goes here -->
@@ -58,8 +102,9 @@
         </div>
     </body>
         
-    <!-- jQuery -->
-    <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+<!-- jQuery -->
+<script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+
     <!-- jQuery UI 1.11.4 -->
     <script src="{{asset('assets/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -92,8 +137,12 @@
     <script src="{{asset('assets/dist/js/demo.js')}}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{asset('assets/dist/js/pages/dashboard.js')}}"></script>
-
+    <script src="{{asset('assets/plugins/overlayScrollbars/js/jquery.adminlte.min.js')}}"></script>
     {% block javascripts %}
         {#{{ encore_entry_script_tags('app') }}#}
     {% endblock %}
+
+
+{% block scripts %}
+{% endblock %}
 </html>

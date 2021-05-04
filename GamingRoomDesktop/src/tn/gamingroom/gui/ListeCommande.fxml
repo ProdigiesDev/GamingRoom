@@ -27,7 +27,7 @@
       </Pane>
       <ImageView fx:id="backIm" fitHeight="477.0" fitWidth="1011.0" layoutX="2.0" layoutY="151.0" opacity="0.55" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/C:/Users/Dah/Desktop/ProdigiesDev/GamingRoomDesktop/src/tn/gamingroom/gui/AjoutEvenement.jpg" />
+            <Image url="file:/D:/ProdigiesDev//GamingRoomDesktop/src/tn/gamingroom/gui/AjoutEvenement.jpg" />
          </image>
          <effect>
             <Bloom threshold="0.5" />

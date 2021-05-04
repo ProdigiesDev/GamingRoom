@@ -75,7 +75,7 @@ public class ListeEvenementsUtilisateurController implements Initializable {
                 vBoxEv.setSpacing(30);
                 paneEv.setPrefWidth(200);
                 paneEv.setPrefHeight(200);
-                ImageView evImage = new ImageView(new Image(new File(ev.getImage()).toURI().toURL().toExternalForm()));
+                ImageView evImage = new ImageView(new Image(new File(Env.getDossierImageUtilEventPath()+ev.getImage()).toURI().toURL().toExternalForm()));
                 Pane paneEv2 = new Pane();
                 paneEv.setStyle("-fx-background-color: rgba(0, 100, 100, 0.5);");
                 System.out.println("im " + evImage.getImage());

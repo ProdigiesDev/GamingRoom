@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
- * @Route("/cle")
+ * @Route("/admin/cle")
  */
 class CleController extends AbstractController
 {

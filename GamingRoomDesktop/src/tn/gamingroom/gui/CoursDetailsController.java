@@ -177,11 +177,12 @@ public class CoursDetailsController implements Initializable {
 
         }
 
-        idate.valueProperty().addListener((ov, oldValue, newValue) -> {
+           
+           idate.valueProperty().addListener((ov, oldValue, newValue) -> {
             verifdate.setVisible(false);
-        });
-        ServiceCours sc = new ServiceCours();
-        String[] possibleWords = {};
+});
+           ServiceCours sc= new ServiceCours();
+        String[] possibleWords ={};
         TextFields.bindAutoCompletion(search, sc.AutocompleteSearch());
         //getVideoDetails("https://www.youtube.com/watch?v=gbt6cTZSKgo");
         inom.setStyle("-fx-text-fill: white; ");
@@ -713,13 +714,13 @@ public class CoursDetailsController implements Initializable {
         System.out.println(id);
         try {
             HashMap<String, String> headers = new HashMap();
-            HttpURLConnection conn = ApiCall.callApi("https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=" + id + "&key=" + Env.getYoutubeApiKey(), headers);
-            if (conn.getResponseCode() != 200) {
+            HttpURLConnection conn = ApiCall.callApi("https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=" + id + "&key=" + Env.getYoutubeApiKey(), headers);//khdhé lkey
+            if (conn.getResponseCode() != 200) {//si response 200 cv// 500 erreur serveur/400 erreur 
                 throw new RuntimeException("Failed : HTTP Error code : "
                         + conn.getResponseCode());
             }
             InputStreamReader in = new InputStreamReader(conn.getInputStream());
-            BufferedReader br = new BufferedReader(in);
+            BufferedReader br = new BufferedReader(in);//na9raw beha in steram feha les donnés nhothom f jason
             String objctDetails = br.lines().collect(Collectors.joining(" "));
             JSONObject obj = new JSONObject(objctDetails);
             JSONArray details = obj.getJSONArray("items");
