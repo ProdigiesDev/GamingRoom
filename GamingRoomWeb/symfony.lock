@@ -1,4 +1,21 @@
 {
+    "api-platform/api-pack": {
+        "version": "dev-main"
+    },
+    "api-platform/core": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "a93061567140e386f107be75340ac2aee3f86cbf"
+        },
+        "files": [
+            "./config/packages/api_platform.yaml",
+            "./config/routes/api_platform.yaml",
+            "./src/Entity/.gitignore"
+        ]
+    },
     "captcha-com/captcha": {
         "version": "4.x-dev"
     },
@@ -16,6 +33,9 @@
     },
     "evenement/evenement": {
         "version": "v3.0.1"
+    },
+    "fig/link-util": {
+        "version": "1.1.2"
     },
     "friendsofsymfony/ckeditor-bundle": {
         "version": "2.0",
@@ -67,6 +87,18 @@
     },
     "lcobucci/jwt": {
         "version": "4.0.x-dev"
+    },
+    "nelmio/cors-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "6bea22e6c564fba3a1391615cada1437d0bde39c"
+        },
+        "files": [
+            "./config/packages/nelmio_cors.yaml"
+        ]
     },
     "nesbot/carbon": {
         "version": "2.x-dev"
@@ -173,10 +205,19 @@
             "./config/packages/mercure.yaml"
         ]
     },
+    "symfony/orm-pack": {
+        "version": "dev-main"
+    },
+    "symfony/serializer-pack": {
+        "version": "dev-main"
+    },
     "twilio/sdk": {
         "version": "6.22.0"
     },
     "vlucas/phpdotenv": {
         "version": "4.2.x-dev"
+    },
+    "willdurand/negotiation": {
+        "version": "3.0-dev"
     }
 }
