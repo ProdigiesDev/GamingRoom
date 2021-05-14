@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.gamingroom.entities;
+package com.esprit.gamingroom.entities;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  *
- * @author Asus
+ * @author Farah
  */
 public class Evenement {
     private int idevent;
@@ -24,27 +25,6 @@ public class Evenement {
     private String lienYoutube;
 
     public Evenement() {
-    }
-
-    public Evenement(String nomEvent, String image, int categorie_id, int nbreMax_participant, String description, String lienYoutube) {
-        this.nomEvent = nomEvent;
-        this.image = image;
-        this.categorie_id = categorie_id;
-        this.nbreMax_participant = nbreMax_participant;
-        this.description = description;
-        this.lienYoutube = lienYoutube;
-    }
-
-    public Evenement(String nomEvent, Date dateDeb, Date dateFin, String image, int categorie_id, int nbreMax_participant, String description, String lieu, String lienYoutube) {
-        this.nomEvent = nomEvent;
-        this.dateDeb = dateDeb;
-        this.dateFin = dateFin;
-        this.image = image;
-        this.categorie_id = categorie_id;
-        this.nbreMax_participant = nbreMax_participant;
-        this.description = description;
-        this.lieu = lieu;
-        this.lienYoutube = lienYoutube;
     }
 
     public Evenement(int idevent, String nomEvent, Date dateDeb, Date dateFin, String image, int categorie_id, int nbreMax_participant, String description, String lieu, String lienYoutube) {
@@ -144,7 +124,6 @@ public class Evenement {
     public String toString() {
         return "Evenement{" + "idevent=" + idevent + ", nomEvent=" + nomEvent + ", dateDeb=" + dateDeb + ", dateFin=" + dateFin + ", image=" + image + ", categorie_id=" + categorie_id + ", nbreMax_participant=" + nbreMax_participant + ", description=" + description + ", lieu=" + lieu + ", lienYoutube=" + lienYoutube + '}';
     }
-
     
     
     

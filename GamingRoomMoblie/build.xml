@@ -5,8 +5,8 @@
     To learn more about Codename One go to https://www.codenameone.com/
     -->
         
-    <project name="GamingRoomMoblie" default="default" basedir=".">
-    <description>Builds, tests, and runs the project GamingRoomMoblie.</description>
+    <project name="CodenameOness" default="default" basedir=".">
+    <description>Builds, tests, and runs the project CodenameOness.</description>
     <import file="nbproject/build-impl.xml"/>
     <property file="codenameone_settings.properties"/>
     <property name="automated" value="false" />
