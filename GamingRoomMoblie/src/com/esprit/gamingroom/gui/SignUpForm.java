@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esprit.gamingroom.utils;
+package com.esprit.gamingroom.gui;
+
+import com.codename1.ui.Form;
 
 /**
  *
  * @author Sonia
  */
-public class Statics {
+public class SignUpForm extends Form {
     
-    public static final String BASE_URL ="http://127.0.0.1:8000";
 }

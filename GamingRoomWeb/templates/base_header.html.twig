@@ -79,25 +79,19 @@
                     </span>
                 {% endif %}
             </a><div class="dropdown-menu"><ul role="menu">
-                            
-        <li>
-            <a href="user-activity.html">
-                Activity
-                
-                
-                
-            </a>
-        </li>
+       
         <li>
             {% if app.user %}
                 {% if app.user.role != 'Admin' %}
                 <a href="{{ path('profil', {'id': app.user.id}) }}">
+                    <i class="far fa-user"></i>
                     Profile
                 </a>
                 {% endif%}
             {% endif %}
             {% if app.user == false %}
                 <a href="{{ path('app_login') }}">
+                    <i class="far fa-user"></i>
                     Profile
                 </a>
             {% endif %}
@@ -106,6 +100,7 @@
                         {% if app.user.role != 'Admin' %}
         <li>
             <a href="{{ path('membre_edit' , {'id' :app.user.id} )}}">
+                <i class="fas fa-cogs"></i>
                 Settings
                 
                 
@@ -132,6 +127,7 @@
                     {% if app.user %}
                         <li>
                             <a href="{{path('app_logout')}}" onclick="return confirm('Êtes-vous sûr?')">
+                                <i class="fas fa-sign-out-alt"></i>
                                 Logout
 
 
