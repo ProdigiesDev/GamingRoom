@@ -4,7 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-//use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * Produit
@@ -23,6 +24,7 @@ class Produit
 
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"produit"})
      */
     private $idprod;
 
@@ -32,6 +34,7 @@ class Produit
      * @Assert\NotBlank()
      * @Assert\File(mimeTypes={ "image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml"})
      * @ORM\Column(name="image", type="string", length=150, nullable=false)
+     *  @Groups({"produit"})
      */
     private $image;
 
@@ -44,6 +47,7 @@ class Produit
      *     htmlPattern = "[a-zA-Z]+"
      * )
      * @ORM\Column(name="libelle", type="string", length=50, nullable=false)
+     *  @Groups({"produit"})
      */
     private $libelle;
 
@@ -60,6 +64,7 @@ class Produit
      * @Assert\Positive(message ="the numbre should be positive")
 
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
+     *  @Groups({"produit"})
      */
     private $prix;
 
@@ -69,6 +74,7 @@ class Produit
      * @Assert\NotBlank()
 
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
+     *  @Groups({"produit"})
      */
     private $description;
 
@@ -80,6 +86,7 @@ class Produit
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_cat", referencedColumnName="idcat")
      * })
+     * @Groups({"produit"})
      */
     private $idCat;
 
