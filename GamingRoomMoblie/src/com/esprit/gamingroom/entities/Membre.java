@@ -7,7 +7,6 @@
 package com.esprit.gamingroom.entities;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.sql.Timestamp;
 
 /**
