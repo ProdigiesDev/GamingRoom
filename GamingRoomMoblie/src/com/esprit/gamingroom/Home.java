@@ -55,7 +55,7 @@ public class Home {
         Form hi = new Form("Hi World", BoxLayout.y());
         hi.add(new Label("Hi World"));
         hi.show();*/
-       new SignInForm().show();
+       new SignInForm(theme).show();
     }
 
     public void stop() {

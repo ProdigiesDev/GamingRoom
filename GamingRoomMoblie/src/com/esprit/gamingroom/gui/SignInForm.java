@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.esprit.gamingroom.gui;
+import com.codename1.ui.util.Resources;
 
 import com.codename1.ui.Form;
 
@@ -12,7 +13,7 @@ import com.codename1.ui.Form;
  * @author Sonia
  */
 public class SignInForm extends Form {
-    public SignInForm(){
+    public SignInForm(Resources res){
         this.setTitle("SignIn");
     }
     
