@@ -47,12 +47,15 @@
     "gos/websocket-client": {
         "version": "1.x-dev"
     },
+<<<<<<< HEAD
     "gregwar/captcha": {
         "version": "v1.1.9"
     },
     "gregwar/captcha-bundle": {
         "version": "v2.1.5"
     },
+=======
+>>>>>>> origin/main
     "guzzlehttp/psr7": {
         "version": "1.x-dev"
     },
@@ -65,9 +68,12 @@
     "illuminate/support": {
         "version": "6.x-dev"
     },
+<<<<<<< HEAD
     "jbafford/password-strength-bundle": {
         "version": "dev-master"
     },
+=======
+>>>>>>> origin/main
     "laravel/dusk": {
         "version": "v5.11.0"
     },
@@ -149,6 +155,18 @@
     "react/stream": {
         "version": "v1.1.1"
     },
+<<<<<<< HEAD
+=======
+    "symfony/google-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
+        }
+    },
+>>>>>>> origin/main
     "symfony/mercure": {
         "version": "0.5.x-dev"
     },
