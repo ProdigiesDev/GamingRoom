@@ -13,7 +13,7 @@ import com.codename1.ui.Form;
  * @author Sonia
  */
 public class SignInForm extends Form {
-    public SignInForm(Resources res){
+    public SignInForm(Form f){
         this.setTitle("SignIn");
     }
     
