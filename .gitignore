@@ -41,3 +41,5 @@ nbdist/
 /nbproject/private/
 /GamingRoomDesktop/src/tn/gamingroom/outils/Env.java
 /GamingRoomMoblie/Versions.properties
+/GamingRoomWeb/nbproject/
+/GamingRoomWeb/.idea/
