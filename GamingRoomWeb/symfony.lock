@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "api-platform/api-pack": {
         "version": "dev-main"
     },
@@ -15,6 +16,10 @@
             "./config/routes/api_platform.yaml",
             "./src/Entity/.gitignore"
         ]
+=======
+    "bacon/bacon-qr-code": {
+        "version": "2.0.3"
+>>>>>>> origin/main
     },
     "captcha-com/captcha": {
         "version": "4.x-dev"
@@ -28,15 +33,29 @@
     "craue/formflow-bundle": {
         "version": "3.4.x-dev"
     },
+<<<<<<< HEAD
     "dompdf/dompdf": {
         "version": "v1.0.2"
+=======
+    "dasprid/enum": {
+        "version": "1.0.3"
+    },
+    "endroid/qr-code": {
+        "version": "4.x-dev"
+    },
+    "endroid/qr-code-bundle": {
+        "version": "4.x-dev"
+>>>>>>> origin/main
     },
     "evenement/evenement": {
         "version": "v3.0.1"
     },
+<<<<<<< HEAD
     "fig/link-util": {
         "version": "1.1.2"
     },
+=======
+>>>>>>> origin/main
     "friendsofsymfony/ckeditor-bundle": {
         "version": "2.0",
         "recipe": {
@@ -58,12 +77,15 @@
     "gos/websocket-client": {
         "version": "1.x-dev"
     },
+<<<<<<< HEAD
     "gregwar/captcha": {
         "version": "v1.1.9"
     },
     "gregwar/captcha-bundle": {
         "version": "v2.1.5"
     },
+=======
+>>>>>>> origin/main
     "guzzlehttp/psr7": {
         "version": "1.x-dev"
     },
@@ -76,9 +98,12 @@
     "illuminate/support": {
         "version": "6.x-dev"
     },
+<<<<<<< HEAD
     "jbafford/password-strength-bundle": {
         "version": "dev-master"
     },
+=======
+>>>>>>> origin/main
     "laravel/dusk": {
         "version": "v5.11.0"
     },
@@ -88,6 +113,7 @@
     "lcobucci/jwt": {
         "version": "4.0.x-dev"
     },
+<<<<<<< HEAD
     "nelmio/cors-bundle": {
         "version": "1.5",
         "recipe": {
@@ -100,18 +126,23 @@
             "./config/packages/nelmio_cors.yaml"
         ]
     },
+=======
+>>>>>>> origin/main
     "nesbot/carbon": {
         "version": "2.x-dev"
     },
     "nyholm/nsa": {
         "version": "1.2.1"
     },
+<<<<<<< HEAD
     "phenx/php-font-lib": {
         "version": "0.5.2"
     },
     "phenx/php-svg-lib": {
         "version": "0.3-dev"
     },
+=======
+>>>>>>> origin/main
     "php-translation/common": {
         "version": "3.x-dev"
     },
@@ -178,9 +209,12 @@
     "react/stream": {
         "version": "v1.1.1"
     },
+<<<<<<< HEAD
     "sabberworm/php-css-parser": {
         "version": "8.3.1"
     },
+=======
+>>>>>>> origin/main
     "symfony/google-mailer": {
         "version": "4.4",
         "recipe": {
@@ -205,19 +239,48 @@
             "./config/packages/mercure.yaml"
         ]
     },
+<<<<<<< HEAD
     "symfony/orm-pack": {
         "version": "dev-main"
     },
     "symfony/serializer-pack": {
         "version": "dev-main"
+=======
+    "tattali/calendar-bundle": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.1",
+            "ref": "0c643e17b5340747b35c2c75e11727fa31bfa9bb"
+        },
+        "files": [
+            "./config/routes/calendar.yaml"
+        ]
+    },
+    "toiba/fullcalendar-bundle": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "6.2",
+            "ref": "43c9033fa6f75f9325f9ac21787c8e8acb086934"
+        },
+        "files": [
+            "./config/routes/fullcalendar.yaml"
+        ]
+>>>>>>> origin/main
     },
     "twilio/sdk": {
         "version": "6.22.0"
     },
     "vlucas/phpdotenv": {
         "version": "4.2.x-dev"
+<<<<<<< HEAD
     },
     "willdurand/negotiation": {
         "version": "3.0-dev"
+=======
+>>>>>>> origin/main
     }
 }
