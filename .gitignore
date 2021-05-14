@@ -24,6 +24,7 @@
 *.tar.gz
 *.rar
 
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 ### NetBeans ###
@@ -37,8 +38,8 @@ nbdist/
 .nb-gradle/
 /netbeans/
 
-
 # End of https://www.toptal.com/developers/gitignore/api/netbeans,java
 /nbproject/private/
 /GamingRoomDesktop/src/tn/gamingroom/outils/Env.java
 /netbeans/
+/GamingRoomMoblie/Versions.properties
