@@ -12,5 +12,7 @@ import com.codename1.ui.Form;
  * @author Sonia
  */
 public class SignUpForm extends Form {
-    
+    public SignUpForm(Form f){
+        this.setTitle("SignUp");
+    }
 }
