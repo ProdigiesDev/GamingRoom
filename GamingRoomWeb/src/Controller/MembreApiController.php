@@ -28,11 +28,13 @@ class MembreApiController extends AbstractController
         if($user && $user->getRole() != 'Admin'){
             if($user->getRole() == 'Coach' && $user->getActive()==0 && $user->getBanDuration()==0 && $user->getLastTimeban()==null)
             {
-                return new Response("votre compte est enregistré veuillez attendre l'activation de l'admin");
+                //return new Response("votre compte est enregistré veuillez attendre l'activation de l'admin");
+                return new Response("200");
             }
             elseif ($user->getActive()==0 && $user->getBanDuration()>0 &&  $user->getLastTimeban()!=null)
             {
-                return new Response("votre compte est désactivé ");
+                //return new Response("votre compte est désactivé ");
+                return new Response("451");
             }
             elseif(password_verify($password,$user->getPassword())) {
                 $serializer = new Serializer([new ObjectNormalizer()]);
@@ -40,11 +42,13 @@ class MembreApiController extends AbstractController
                 return new JsonResponse($formatted);
             }
             else{
-                return new Response("password not found");
+                //return new Response("password not found");
+                return new Response("400");
             }
         }
         else{
-            return new Response("email not found");
+            //return new Response("email not found");
+            return new Response("404");
         }
 
 
