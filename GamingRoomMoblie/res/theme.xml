@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource majorVersion="1" minorVersion="11" useXmlUI="false">
+    <image name="defaultBack"  />
+    <image name="loginBack"  />
+    <theme name="Theme">
+        <val key="@includeNativeBool" value="true" />
+        <val key="CreateNewAccountButton.align" value="4" />
+        <val key="CreateNewAccountButton.bgColor" value="ffffff" />
+        <val key="CreateNewAccountButton.fgColor" value="ffffff" />
+        <font key="CreateNewAccountButton.font" type="ttf" face="0" style="0" size="0" name="native:MainRegular" family="native:MainRegular" sizeSettings="3" actualSize="2.5" />
+        <val key="CreateNewAccountButton.margin" value="4.0,0.0,0.0,0.0" />
+        <val key="CreateNewAccountButton.textDecoration" value="1" />
+        <val key="CreateNewAccountButton.transparency" value="0" />
+        <val key="LoginButton.align" value="4" />
+        <val key="LoginButton.bgColor" value="990099" />
+        <val key="LoginButton.fgColor" value="ffffff" />
+        <font key="LoginButton.font" type="ttf" face="0" style="0" size="0" name="native:MainBlack" family="native:MainBlack" sizeSettings="3" actualSize="3.5" />
+        <val key="LoginButton.margin" value="30.0,19.5,100.0,100.0" />
+        <val key="LoginButton.padding" value="2.0,2.0,2.0,2.0" />
+        <val key="LoginButton.transparency" value="255" />
+        <val key="SignInForm.bgColor" value="0" />
+        <val key="SignInForm.bgImage" value="defaultBack" />
+        <val key="SignInForm.bgType" value="1" />
+        <val key="SignInForm.fgColor" value="0" />
+        <val key="SignInForm.transparency" value="255" />
+    </theme>
+</resource>
