@@ -41,4 +41,10 @@ nbdist/
 /nbproject/private/
 /GamingRoomDesktop/src/tn/gamingroom/outils/Env.java
 /netbeans/
+<<<<<<< HEAD
 /GamingRoomMoblie/Versions.properties
+=======
+/GamingRoomMoblie/Versions.properties
+/GamingRoomWeb/nbproject/
+/GamingRoomWeb/.idea/
+>>>>>>> origin/main

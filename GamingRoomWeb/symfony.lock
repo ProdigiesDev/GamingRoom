@@ -8,6 +8,12 @@
     "captcha-com/symfony-captcha-bundle": {
         "version": "4.x-dev"
     },
+<<<<<<< HEAD
+=======
+    "cboden/ratchet": {
+        "version": "v0.4.3"
+    },
+>>>>>>> origin/main
     "craue/formflow-bundle": {
         "version": "3.4.x-dev"
     },
@@ -20,6 +26,36 @@
     "endroid/qr-code-bundle": {
         "version": "4.x-dev"
     },
+<<<<<<< HEAD
+=======
+    "evenement/evenement": {
+        "version": "v3.0.1"
+    },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "8eb1cd0962ded6a6d6e1e5a9b6d3e888f9f94ff6"
+        },
+        "files": [
+            "./config/packages/fos_ckeditor.yaml"
+        ]
+    },
+    "gos/pubsub-router-bundle": {
+        "version": "2.x-dev"
+    },
+    "gos/web-socket-bundle": {
+        "version": "3.x-dev"
+    },
+    "gos/websocket-client": {
+        "version": "1.x-dev"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.x-dev"
+    },
+>>>>>>> origin/main
     "illuminate/console": {
         "version": "6.x-dev"
     },
@@ -32,6 +68,15 @@
     "laravel/dusk": {
         "version": "v5.11.0"
     },
+<<<<<<< HEAD
+=======
+    "lcobucci/clock": {
+        "version": "2.1.x-dev"
+    },
+    "lcobucci/jwt": {
+        "version": "4.0.x-dev"
+    },
+>>>>>>> origin/main
     "nesbot/carbon": {
         "version": "2.x-dev"
     },
@@ -68,12 +113,48 @@
     "phpoption/phpoption": {
         "version": "1.7-dev"
     },
+<<<<<<< HEAD
+=======
+    "psr/http-message": {
+        "version": "1.0.x-dev"
+    },
+>>>>>>> origin/main
     "psr/simple-cache": {
         "version": "1.0.x-dev"
     },
     "pugx/autocompleter-bundle": {
         "version": "1.x-dev"
     },
+<<<<<<< HEAD
+=======
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
+    },
+    "ratchet/rfc6455": {
+        "version": "v0.3"
+    },
+    "react/cache": {
+        "version": "v1.1.1"
+    },
+    "react/dns": {
+        "version": "v1.5.0"
+    },
+    "react/event-loop": {
+        "version": "v1.1.1"
+    },
+    "react/promise": {
+        "version": "2.x-dev"
+    },
+    "react/promise-timer": {
+        "version": "v1.6.0"
+    },
+    "react/socket": {
+        "version": "v1.6.0"
+    },
+    "react/stream": {
+        "version": "v1.1.1"
+    },
+>>>>>>> origin/main
     "symfony/google-mailer": {
         "version": "4.4",
         "recipe": {
@@ -83,6 +164,24 @@
             "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
         }
     },
+<<<<<<< HEAD
+=======
+    "symfony/mercure": {
+        "version": "0.5.x-dev"
+    },
+    "symfony/mercure-bundle": {
+        "version": "0.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "0.3",
+            "ref": "d1cdff3ae53bf6a5cbfb088c82f26032bdc14cc3"
+        },
+        "files": [
+            "./config/packages/mercure.yaml"
+        ]
+    },
+>>>>>>> origin/main
     "tattali/calendar-bundle": {
         "version": "1.1",
         "recipe": {
