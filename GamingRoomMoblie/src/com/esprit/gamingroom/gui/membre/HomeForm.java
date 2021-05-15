@@ -9,7 +9,9 @@ import com.codename1.ui.Button;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.util.Resources;
 import com.esprit.gamingroom.gui.SignInForm;
+import com.esprit.gamingroom.gui.SignUpForm;
 
 /**
  *
@@ -17,16 +19,19 @@ import com.esprit.gamingroom.gui.SignInForm;
  */
 public class HomeForm extends Form {
     Form current;
+    Resources theme;
     
     public HomeForm(){
         current = this;
         setTitle("Home");
         setLayout(BoxLayout.y());
         add(new Label("Choisir une option"));
-        Button btnListTasks = new Button("Sign In");
-        btnListTasks.addActionListener(e -> new SignInForm(current).show());
+        Button btnSignIn = new Button("Sign In");
+        Button btnSignUp = new Button("Sign Up");
+        btnSignIn.addActionListener(e -> new SignInForm(theme).show());
+        btnSignUp.addActionListener(e -> new SignUpForm(current).show());
         
-        addAll(btnListTasks);
+        addAll(btnSignIn,btnSignUp);
         
     }
     
