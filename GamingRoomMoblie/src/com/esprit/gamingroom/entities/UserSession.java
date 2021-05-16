@@ -10,7 +10,7 @@ package com.esprit.gamingroom.entities;
  * @author Sonia
  */
 public class UserSession {
-     private static UserSession instance;
+     public static UserSession instance;
 
     private Membre user;
     private Membre.Role role;
