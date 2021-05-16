@@ -14,6 +14,7 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.util.Resources;
 import com.esprit.gamingroom.entities.UserSession;
+import com.esprit.gamingroom.gui.membre.HomeForm;
 import java.io.IOException;
 
 /**
@@ -38,35 +39,36 @@ public abstract class SideMenuBaseForm extends Form {
 
     public void setupSideMenu(Resources res) throws IOException {
      
-        Image logo = res.getImage("logo.png");
-      
-        ImageViewer im =new ImageViewer(logo);
-        Container sidemenuTop = BorderLayout.center(im);
-        sidemenuTop.setUIID("SidemenuTop");
-
-        getToolbar().addComponentToSideMenu(sidemenuTop);
-        getToolbar().addMaterialCommandToSideMenu("  Home", FontImage.MATERIAL_HOME, e -> showOtherForm(res));
-         getToolbar().addMaterialCommandToSideMenu("  Profile", FontImage.MATERIAL_PERSON, e -> showOtherForm(res));
-        getToolbar().addMaterialCommandToSideMenu("  Shop", FontImage.MATERIAL_SHOP, e -> {
-//            try {
-//                new ShopForm(res).show();
-//            } catch (IOException ex) {
+//        Image logo = res.getImage("sidemenu2.jpg");
+//      
+//        ImageViewer im =new ImageViewer(logo);
+//        Container sidemenuTop = BorderLayout.center(im);
+//        sidemenuTop.setUIID("SidemenuTop");
 //
-//            }
-            
-        });
-        getToolbar().addMaterialCommandToSideMenu("  Events", FontImage.MATERIAL_EVENT, e -> showOtherForm(res));
-        getToolbar().addMaterialCommandToSideMenu("  Competitions", FontImage.MATERIAL_TRENDING_UP, e -> {
-//            try {
-//                new CompetitionsForm(res).show();
-//            } catch (IOException ex) {
-//               
-//            }
-        });
-        getToolbar().addMaterialCommandToSideMenu("  News", FontImage.MATERIAL_LIST, e -> showOtherForm(res));
-        getToolbar().addMaterialCommandToSideMenu("  Reviews", FontImage.MATERIAL_THUMB_UP, e -> showOtherForm(res));
+//        getToolbar().addComponentToSideMenu(sidemenuTop);
+        getToolbar().addMaterialCommandToSideMenu("  Home", FontImage.MATERIAL_HOME, e -> new HomeForm().show());
+//         getToolbar().addMaterialCommandToSideMenu("  Profile", FontImage.MATERIAL_PERSON, e -> showOtherForm(res));
+//        getToolbar().addMaterialCommandToSideMenu("  Shop", FontImage.MATERIAL_SHOP, e -> {
+////            try {
+////                new ShopForm(res).show();
+////            } catch (IOException ex) {
+////
+////            }
+//            
+//        });
+//        getToolbar().addMaterialCommandToSideMenu("  Events", FontImage.MATERIAL_EVENT, e -> showOtherForm(res));
+//        getToolbar().addMaterialCommandToSideMenu("  Competitions", FontImage.MATERIAL_TRENDING_UP, e -> {
+////            try {
+////                new CompetitionsForm(res).show();
+////            } catch (IOException ex) {
+////               
+////            }
+//        });
+//        getToolbar().addMaterialCommandToSideMenu("  News", FontImage.MATERIAL_LIST, e -> showOtherForm(res));
+//        getToolbar().addMaterialCommandToSideMenu("  Reviews", FontImage.MATERIAL_THUMB_UP, e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> {new SignInForm(res).show();
         UserSession.instance.cleanUserSession();});
+        
     }
 
     protected abstract void showOtherForm(Resources res);

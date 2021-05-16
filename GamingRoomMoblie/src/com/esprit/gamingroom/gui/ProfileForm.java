@@ -12,6 +12,8 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -20,7 +22,7 @@ import java.io.IOException;
  */
 public class ProfileForm extends SideMenuBaseForm {
     
-    public ProfileForm(Resources res )throws IOException{
+    public ProfileForm(Resources res ){
          super(BoxLayout.y());
         Toolbar tb = getToolbar();
         tb.setTitleCentered(false);
@@ -29,7 +31,11 @@ public class ProfileForm extends SideMenuBaseForm {
         FontImage.setMaterialIcon(menuButton, FontImage.MATERIAL_MENU);
         menuButton.addActionListener(e -> getToolbar().openSideMenu());
         
-        setupSideMenu(res);
+        try {
+            setupSideMenu(res);
+        } catch (IOException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     protected void showOtherForm(Resources res) {
      //   new StatsForm(res).show();

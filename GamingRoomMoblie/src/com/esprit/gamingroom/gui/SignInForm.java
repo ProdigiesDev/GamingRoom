@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.esprit.gamingroom.gui;
+import com.codename1.components.ImageViewer;
 import com.codename1.ui.Button;
 import com.codename1.ui.Command;
 import static com.codename1.ui.Component.LEFT;
@@ -19,6 +20,8 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BorderLayout;
 import com.esprit.gamingroom.services.MembreService;
 import com.codename1.ui.Container;
+import com.codename1.ui.Image;
+import com.codename1.ui.layouts.FlowLayout;
 
 /**
  *
@@ -32,6 +35,10 @@ public class SignInForm extends Form {
         setUIID("SignInForm");
 
         getTitleArea().setUIID("Container");
+         Image logo = theme.getImage("sidemenu2.jpg");
+        ImageViewer logoViewer = new ImageViewer(logo);
+        Container im = FlowLayout.encloseCenter(logoViewer);
+        im.getAllStyles().setMarginTop(200);
 
         
         TextField email = new TextField("", "Email", 50, TextField.EMAILADDR);

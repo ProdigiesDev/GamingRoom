@@ -2,7 +2,7 @@
 
 <resource majorVersion="1" minorVersion="11" useXmlUI="false">
     <image name="defaultBack"  />
-    <image name="loginBack"  />
+    <image name="sidemenu2.jpg"  />
     <theme name="Theme">
         <val key="@includeNativeBool" value="true" />
         <val key="CreateNewAccountButton.align" value="4" />
@@ -10,6 +10,12 @@
         <val key="CreateNewAccountButton.fgColor" value="ffffff" />
         <font key="CreateNewAccountButton.font" type="ttf" face="0" style="0" size="0" name="native:MainRegular" family="native:MainRegular" sizeSettings="3" actualSize="2.5" />
         <val key="CreateNewAccountButton.margin" value="4.0,0.0,0.0,0.0" />
+        <val key="CreateNewAccountButton.press#align" value="4" />
+        <val key="CreateNewAccountButton.press#bgColor" value="ffffff" />
+        <val key="CreateNewAccountButton.press#fgColor" value="3399ff" />
+        <font key="CreateNewAccountButton.press#font" type="ttf" face="0" style="0" size="0" name="native:MainRegular" family="native:MainRegular" sizeSettings="3" actualSize="2.5" />
+        <val key="CreateNewAccountButton.press#margin" value="4.0,0.0,0.0,0.0" />
+        <val key="CreateNewAccountButton.press#textDecoration" value="1" />
         <val key="CreateNewAccountButton.textDecoration" value="1" />
         <val key="CreateNewAccountButton.transparency" value="0" />
         <val key="LoginButton.align" value="4" />
@@ -18,11 +24,36 @@
         <font key="LoginButton.font" type="ttf" face="0" style="0" size="0" name="native:MainBlack" family="native:MainBlack" sizeSettings="3" actualSize="3.5" />
         <val key="LoginButton.margin" value="30.0,19.5,100.0,100.0" />
         <val key="LoginButton.padding" value="2.0,2.0,2.0,2.0" />
+        <val key="LoginButton.press#align" value="4" />
+        <val key="LoginButton.press#bgColor" value="821496" />
+        <val key="LoginButton.press#fgColor" value="ffffff" />
+        <font key="LoginButton.press#font" type="ttf" face="0" style="0" size="0" name="native:MainBlack" family="native:MainBlack" sizeSettings="3" actualSize="3.5" />
+        <val key="LoginButton.press#margin" value="30.0,19.5,100.0,100.0" />
+        <val key="LoginButton.press#padding" value="2.0,2.0,2.0,2.0" />
+        <val key="LoginButton.press#transparency" value="255" />
+        <val key="LoginButton.sel#align" value="4" />
+        <val key="LoginButton.sel#bgColor" value="9c5ebc" />
+        <val key="LoginButton.sel#fgColor" value="f7eff1" />
+        <font key="LoginButton.sel#font" type="ttf" face="0" style="0" size="0" name="native:MainRegular" family="native:MainRegular" sizeSettings="3" actualSize="3.5" />
+        <val key="LoginButton.sel#margin" value="30.0,19.5,100.0,100.0" />
+        <val key="LoginButton.sel#padUnit" value="2,2,2,2" />
+        <val key="LoginButton.sel#padding" value="2.0,2.0,2.0,2.0" />
+        <val key="LoginButton.sel#transparency" value="255" />
         <val key="LoginButton.transparency" value="255" />
+        <val key="SidemenuTop.bgImage" value="sidemenu2.jpg" />
+        <val key="SidemenuTop.bgType" value="1" />
+        <val key="SidemenuTop.margin" value="0.0,0.0,0.0,0.0" />
+        <val key="SidemenuTop.padUnit" value="2,2,2,2" />
+        <val key="SidemenuTop.padding" value="20.0,2.0,2.0,2.0" />
         <val key="SignInForm.bgColor" value="0" />
         <val key="SignInForm.bgImage" value="defaultBack" />
         <val key="SignInForm.bgType" value="1" />
         <val key="SignInForm.fgColor" value="0" />
         <val key="SignInForm.transparency" value="255" />
+        <val key="Title.fgColor" value="ffffff" />
+        <font key="Title.font" type="ttf" face="0" style="0" size="0" name="native:MainLight" family="native:MainLight" sizeSettings="3" actualSize="4.5" />
+        <val key="Title.margin" value="0.0,0.0,0.0,0.0" />
+        <val key="Title.padUnit" value="2,2,2,2" />
+        <val key="Title.padding" value="1.0,0.0,1.0,1.0" />
     </theme>
 </resource>
