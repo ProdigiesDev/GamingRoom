@@ -34,7 +34,7 @@ class Produit
      * @Assert\NotBlank()
      * @Assert\File(mimeTypes={ "image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml"})
      * @ORM\Column(name="image", type="string", length=150, nullable=false)
-     *  @Groups({"produit"})
+     * @Groups({"produit"})
      */
     private $image;
 
@@ -87,6 +87,7 @@ class Produit
      *   @ORM\JoinColumn(name="id_cat", referencedColumnName="idcat")
      * })
      * @Groups({"produit"})
+
      */
     private $idCat;
 
