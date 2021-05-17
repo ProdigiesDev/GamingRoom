@@ -26,6 +26,7 @@ import com.codename1.ui.Container;
  */
 public class SignInForm extends Form {
     MembreService us;
+    
     public SignInForm(Resources theme){
           super(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
         this.us = MembreService.getInstance();
@@ -69,7 +70,10 @@ public class SignInForm extends Form {
 //        } else {
 //            spaceLabel = new Label(" ");
 //        }
-
+        Button forgotPass = new Button("Forgot password ?");
+        forgotPass.setUIID("CreateNewAccountButton");
+        forgotPass.addActionListener(e -> new ForgotPasswordForm(theme).show());
+        
         Container by = BoxLayout.encloseY(
 //                spaceLabel,
                 BorderLayout.center(email).
@@ -77,7 +81,8 @@ public class SignInForm extends Form {
                 BorderLayout.center(password).
                         add(BorderLayout.WEST, passwordIcon),
                 loginButton,
-                createNewAccount
+                createNewAccount,
+                forgotPass
         );
         add(BorderLayout.CENTER, by);
 
