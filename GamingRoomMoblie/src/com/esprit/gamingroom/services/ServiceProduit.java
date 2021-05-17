@@ -69,7 +69,8 @@ public class ServiceProduit {
            float prix=Float.parseFloat(obj.get("prix").toString());
                String description=obj.get("description").toString();
                pr.setIdprod((int)idprod);
-               pr.setImage(image);
+                     pr.setImage(obj.get("image").toString());
+              // pr.setImage(image);
                pr.setLibelle(libelle);
                pr.setPrix(prix);
                pr.setDescription(description);
