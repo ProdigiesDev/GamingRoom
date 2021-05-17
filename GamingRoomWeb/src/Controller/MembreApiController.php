@@ -23,7 +23,7 @@ class MembreApiController extends AbstractController
         $password = $request->query->get('password');
 
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(Membre::class)->findOneBy(['email'=>$email]);//nlawej ala user b email
+        $user = $em->getRepository(Membre::class)->findOneBy(['email'=>$email]);
         //kan lkitah fl base
         if($user && $user->getRole() != 'Admin'){
 
@@ -40,7 +40,7 @@ class MembreApiController extends AbstractController
                     //return $this->json(['code'=>451,'message'=>'votre compte est désactivé'],451);
                     return new Response("Cdesactive");
                 }
-                
+
                 $serializer = new Serializer([new ObjectNormalizer()]);
                 $formatted = $serializer->normalize($user);
                 return new JsonResponse($formatted);
@@ -58,6 +58,33 @@ class MembreApiController extends AbstractController
 
 
 
+    }
+
+    /**
+     * @Route("/membre/api/fpass", name="membre_fpass")
+     */
+
+    public function forgotPassword(Request $request,UserPasswordEncoderInterface $encoder): Response
+    {
+        $email = $request->get('email');
+        $password = $request->query->get('password');
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(Membre::class)->findOneBy(['email' => $email]);
+
+        if ($user) {
+            $user->setPassword($encoder->encodePassword($user, $password));
+            try {
+                $em->persist($user);
+                $em->flush();
+                return new JsonResponse("success", 200);
+            } catch (\Exception $ex) {
+                return new Response("fail" . $ex->getMessage());
+            }
+
+        } else {
+            return new Response("ErrorEmail");
+        }
     }
 
 }
