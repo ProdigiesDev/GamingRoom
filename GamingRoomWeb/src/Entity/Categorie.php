@@ -26,7 +26,7 @@ class Categorie
      * @ORM\Column(name="idcat", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     *  @Groups({"categorie"})
+     *  @Groups({"produit:read"})
      */
     private $idcat;
 
@@ -40,7 +40,7 @@ class Categorie
      *     htmlPattern = "^[a-zA-Z]+$",
      *     message="'{{ value }}' doit etre chaine de caractère"
      * )
-
+     *  @Groups({"produit:read"})
      */
     private $nomcategorie;
 

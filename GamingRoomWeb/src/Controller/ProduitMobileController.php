@@ -38,8 +38,8 @@ class ProduitMobileController extends AbstractController
      */
     public function getproduits(Request $request,ProduitRepository  $produitRepository,NormalizerInterface $normalizer):Response{
         $repo = $produitRepository->findAll();
-        //$json = $serializerinterface->serialize($repo,'json',['groups'=>'reservation']);
-        $json = $normalizer->normalize($repo,'json',['groups'=>'produit']);
+
+        $json = $normalizer->normalize($repo,'json',['groups'=>'produit:read']);
 
         return new Response (json_encode($json));
 
