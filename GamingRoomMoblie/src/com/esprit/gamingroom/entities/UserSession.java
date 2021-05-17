@@ -22,11 +22,18 @@ public class UserSession {
         instance=this;
     }
 
-    public static UserSession getInstance() {
-//        if(instance == null) {
-//           return null;
-//        }
+    public static UserSession getInstance(Membre u) {
+         if(instance == null) {
+            instance = new UserSession(u,u.getRole());
+        }
         
+       return instance;
+    }
+    public static UserSession getInstancee() {
+//         if(instance == null) {
+//            instance = new UserSession(u,u.getRole());
+//        }
+//        
        return instance;
     }
 
