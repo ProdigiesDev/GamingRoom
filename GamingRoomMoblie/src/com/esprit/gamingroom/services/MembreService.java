@@ -20,12 +20,16 @@ import com.esprit.gamingroom.entities.Membre;
 import com.esprit.gamingroom.entities.UserSession;
 import com.esprit.gamingroom.gui.ProfileCoachForm;
 import com.esprit.gamingroom.gui.ProfileMembreForm;
+import com.esprit.gamingroom.utils.SendEmail;
 import com.esprit.gamingroom.utils.Statics;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
+import javax.swing.JOptionPane;
 
 
 
@@ -37,6 +41,7 @@ import java.util.logging.Logger;
 public class MembreService {
     public static MembreService instance;
     Resources theme;
+    int randomCode ; 
 
 
     
@@ -65,9 +70,9 @@ public class MembreService {
 
         con.addResponseListener((e)->{
             
-            int result = con.getResponseCode();
-          System.out.println(result+"*******");
-            System.out.println(con.getResponseErrorMessage());
+            //int result = con.getResponseCode();
+         // System.out.println(result+"*******");
+           // System.out.println(con.getResponseErrorMessage());
             
             JSONParser j = new JSONParser();
             
@@ -159,4 +164,71 @@ public class MembreService {
 
         return u;
     }
+     /////////////// forgot password /////////////////////////////
+     public void sendEmail(String email){
+     
+
+        try {
+            Random ran = new Random();
+            randomCode=ran.nextInt(999999);
+            String text = "Hello,"+"\n"+"this is your reset code: "+randomCode+"\n"+"GamingRoom.";
+            boolean b =SendEmail.sendMail(email,"Reseting Code",text);
+            if(b==true){
+ 
+              Dialog.show("Success", "Un code est enoyé à : "+email,new Command("OK"));
+
+            }
+            else{
+
+              Dialog.show("Error", "ERROR! code hasn't been sent to the email",new Command("Cancel"));
+                
+            }
+        } catch (MessagingException ex) {
+            Logger.getLogger(MembreService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+     }
+     public boolean verifCode(String random){
+         System.out.println(randomCode);
+         return random.equals(Integer.toString(randomCode));
+     }
+      public void forgotPaswword(TextField email,TextField password,TextField vpass){
+          
+         
+          String url = Statics.BASE_URL+"/membre/api/fpass?email="+email.getText()+"&password="+password.getText();
+          con = new ConnectionRequest(url,false);
+          
+                 
+            con.addResponseListener((e)->{
+               JSONParser j = new JSONParser();
+            
+            String json = new String(con.getResponseData()) + "";
+             
+             if(json.equals("failed") ){
+                Dialog.show("Erreur", "Email éronné ",new Command("OK"));
+            }
+             else{
+                 if(password.getText().equals(vpass)){
+               
+                     byte[]data = (byte[]) e.getMetaData();
+                     String responseData = new String(data);}
+                 else {
+                                     Dialog.show("Erreur", "vérifier vos champs ",new Command("OK"));
+
+                 }
+                 }
+              
+             
+             
+            
+          }); 
+//           else{
+//                               Dialog.show("Error", "The code that you entered is not correct ",new Command("OK"));
+//
+//           }
+      
+          
+          NetworkManager.getInstance().addToQueueAndWait(con);
+      }
+      //////////////////// fin forgot password //////////////////////////////////
 }
