@@ -10,7 +10,7 @@ import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
-import com.esprit.gamingroom.gui.ProfileForm;
+import com.esprit.gamingroom.gui.ProfileMembreForm;
 import com.esprit.gamingroom.gui.SignInForm;
 import com.esprit.gamingroom.gui.SignUpForm;
 import java.io.IOException;
@@ -34,9 +34,9 @@ public class HomeForm extends Form {
         Button btnSignUp = new Button("Sign Up");
         Button profile = new Button("profile");
         btnSignIn.addActionListener(e -> new SignInForm(theme).show());
-        btnSignUp.addActionListener(e -> new SignUpForm(current).show());
+        btnSignUp.addActionListener(e -> new SignUpForm(theme).show());
         profile.addActionListener(e -> {
-            new ProfileForm(theme).show();
+            new ProfileMembreForm(theme).show();
         });
         addAll(btnSignIn,btnSignUp,profile);
         

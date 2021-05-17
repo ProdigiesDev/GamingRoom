@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.esprit.gamingroom.gui;
-import com.codename1.components.ImageViewer;
 import com.codename1.ui.Button;
 import com.codename1.ui.Command;
 import static com.codename1.ui.Component.LEFT;
@@ -20,8 +19,6 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BorderLayout;
 import com.esprit.gamingroom.services.MembreService;
 import com.codename1.ui.Container;
-import com.codename1.ui.Image;
-import com.codename1.ui.layouts.FlowLayout;
 
 /**
  *
@@ -35,10 +32,7 @@ public class SignInForm extends Form {
         setUIID("SignInForm");
 
         getTitleArea().setUIID("Container");
-         Image logo = theme.getImage("sidemenu2.jpg");
-        ImageViewer logoViewer = new ImageViewer(logo);
-        Container im = FlowLayout.encloseCenter(logoViewer);
-        im.getAllStyles().setMarginTop(200);
+        
 
         
         TextField email = new TextField("", "Email", 50, TextField.EMAILADDR);
@@ -67,17 +61,17 @@ public class SignInForm extends Form {
 
         Button createNewAccount = new Button("CREATE NEW ACCOUNT");
         createNewAccount.setUIID("CreateNewAccountButton");
-
-        // We remove the extra space for low resolution devices so things fit better
-        Label spaceLabel;
-        if (!Display.getInstance().isTablet() && Display.getInstance().getDeviceDensity() < Display.DENSITY_VERY_HIGH) {
-            spaceLabel = new Label();
-        } else {
-            spaceLabel = new Label(" ");
-        }
+        createNewAccount.addActionListener(e -> new SignUpForm(theme).show());
+//        // We remove the extra space for low resolution devices so things fit better
+//        Label spaceLabel;
+//        if (!Display.getInstance().isTablet() && Display.getInstance().getDeviceDensity() < Display.DENSITY_VERY_HIGH) {
+//            spaceLabel = new Label();
+//        } else {
+//            spaceLabel = new Label(" ");
+//        }
 
         Container by = BoxLayout.encloseY(
-                spaceLabel,
+//                spaceLabel,
                 BorderLayout.center(email).
                         add(BorderLayout.WEST, loginIcon),
                 BorderLayout.center(password).

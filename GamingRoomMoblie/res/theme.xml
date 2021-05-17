@@ -45,13 +45,15 @@
         <val key="SidemenuTop.margin" value="0.0,0.0,0.0,0.0" />
         <val key="SidemenuTop.padUnit" value="2,2,2,2" />
         <val key="SidemenuTop.padding" value="20.0,2.0,2.0,2.0" />
-        <val key="SignInForm.bgColor" value="0" />
+        <val key="SignInForm.bgColor" value="ffffff" />
         <val key="SignInForm.bgImage" value="defaultBack" />
         <val key="SignInForm.bgType" value="1" />
-        <val key="SignInForm.fgColor" value="0" />
+        <val key="SignInForm.fgColor" value="ffffff" />
         <val key="SignInForm.transparency" value="255" />
-        <val key="Title.fgColor" value="ffffff" />
-        <font key="Title.font" type="ttf" face="0" style="0" size="0" name="native:MainLight" family="native:MainLight" sizeSettings="3" actualSize="4.5" />
+        <val key="SignUpForm.bgImage" value="defaultBack" />
+        <val key="SignUpForm.bgType" value="1" />
+        <val key="Title.fgColor" value="cc00cc" />
+        <font key="Title.font" type="ttf" face="0" style="0" size="0" name="native:MainBlack" family="native:MainBlack" sizeSettings="3" actualSize="5.0" />
         <val key="Title.margin" value="0.0,0.0,0.0,0.0" />
         <val key="Title.padUnit" value="2,2,2,2" />
         <val key="Title.padding" value="1.0,0.0,1.0,1.0" />

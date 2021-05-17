@@ -13,6 +13,7 @@ import com.codename1.ui.Image;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.util.Resources;
+import com.esprit.gamingroom.entities.Membre;
 import com.esprit.gamingroom.entities.UserSession;
 import com.esprit.gamingroom.gui.membre.HomeForm;
 import java.io.IOException;
@@ -38,7 +39,8 @@ public abstract class SideMenuBaseForm extends Form {
     }
 
     public void setupSideMenu(Resources res) throws IOException {
-     
+    UserSession us = UserSession.getInstancee();
+        Membre m = us.getUser();
 //        Image logo = res.getImage("sidemenu2.jpg");
 //      
 //        ImageViewer im =new ImageViewer(logo);
@@ -47,6 +49,12 @@ public abstract class SideMenuBaseForm extends Form {
 //
 //        getToolbar().addComponentToSideMenu(sidemenuTop);
         getToolbar().addMaterialCommandToSideMenu("  Home", FontImage.MATERIAL_HOME, e -> new HomeForm().show());
+        if (m.getRole()== Membre.Role.Membre){
+            getToolbar().addMaterialCommandToSideMenu("  Profile : "+m.getPrenom()+" "+m.getNom(), FontImage.MATERIAL_PERSON,e -> new ProfileMembreForm(res).showBack());
+        }
+        else if(m.getRole()== Membre.Role.Coach){
+            getToolbar().addMaterialCommandToSideMenu("  Profile : "+m.getPrenom()+" "+m.getNom(), FontImage.MATERIAL_PERSON,e -> new ProfileCoachForm(res).showBack());
+        }
 //         getToolbar().addMaterialCommandToSideMenu("  Profile", FontImage.MATERIAL_PERSON, e -> showOtherForm(res));
 //        getToolbar().addMaterialCommandToSideMenu("  Shop", FontImage.MATERIAL_SHOP, e -> {
 ////            try {
