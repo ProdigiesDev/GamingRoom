@@ -26,19 +26,21 @@ class MembreApiController extends AbstractController
         $user = $em->getRepository(Membre::class)->findOneBy(['email'=>$email]);//nlawej ala user b email
         //kan lkitah fl base
         if($user && $user->getRole() != 'Admin'){
-            if($user->getRole() == 'Coach' && $user->getActive()==0 && $user->getBanDuration()==0 && $user->getLastTimeban()==null)
-            {
-                //return new Response("votre compte est enregistré veuillez attendre l'activation de l'admin");
-                //return $this->json(['code'=>406,'message'=>'votre compte est enregistré veuillez attendre l activation de l admin'],406);
-                return new Response("coach");
-            }
-            elseif ($user->getActive()==0 && $user->getBanDuration()>0 &&  $user->getLastTimeban()!=null)
-            {
-                //return new Response("votre compte est désactivé ");
-                //return $this->json(['code'=>451,'message'=>'votre compte est désactivé'],451);
-                return new Response("Cdesactive");
-            }
-            elseif(password_verify($password,$user->getPassword())) {
+
+            if(password_verify($password,$user->getPassword())) {
+                if($user->getRole() == 'Coach' && $user->getActive()==0 && $user->getBanDuration()==0 && $user->getLastTimeban()==null)
+                {
+                    //return new Response("votre compte est enregistré veuillez attendre l'activation de l'admin");
+                    //return $this->json(['code'=>406,'message'=>'votre compte est enregistré veuillez attendre l activation de l admin'],406);
+                    return new Response("coach");
+                }
+                elseif ($user->getActive()==0 && $user->getBanDuration()>0 &&  $user->getLastTimeban()!=null)
+                {
+                    //return new Response("votre compte est désactivé ");
+                    //return $this->json(['code'=>451,'message'=>'votre compte est désactivé'],451);
+                    return new Response("Cdesactive");
+                }
+                
                 $serializer = new Serializer([new ObjectNormalizer()]);
                 $formatted = $serializer->normalize($user);
                 return new JsonResponse($formatted);
