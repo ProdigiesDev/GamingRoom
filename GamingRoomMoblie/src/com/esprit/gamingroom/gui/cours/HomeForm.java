@@ -19,14 +19,15 @@ public class HomeForm extends Form {
         this.setTitle("Cours de Gaming");
         this.setLayout(BoxLayout.y());
         
-       // Button addTaskBtn = new Button("Add Task");
+        Button addTaskBtn = new Button("Add Cours");
         Button listTasksBtn = new Button("Liste des Cours");
         
         
-       //addTaskBtn.addActionListener(e -> new AddTaskForm().show());
-        listTasksBtn.addActionListener(x-> new ListCoursForm().show());
+         addTaskBtn.addActionListener(e -> new AddCoursForm().show());
+        listTasksBtn.addActionListener(x->new ListCoursForm(this).show());
         
-       this.addAll( listTasksBtn);
+        
+       this.addAll( listTasksBtn,addTaskBtn);
         
     }
     

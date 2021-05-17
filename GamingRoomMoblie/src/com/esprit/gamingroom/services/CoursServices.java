@@ -10,13 +10,17 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.l10n.ParseException;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.gamingroom.entities.Cours;
 import com.esprit.gamingroom.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+
 
 /**
  *
@@ -26,8 +30,10 @@ public class CoursServices {
      //var
     boolean resultOK;
     ConnectionRequest req;
-    static CoursServices instance;
-    ArrayList<Cours> cours = new ArrayList<>();
+    public ArrayList<Cours> courses;
+    public Cours cours;
+    public static CoursServices instance = null;
+
     
     
     //constructor
@@ -44,82 +50,155 @@ public class CoursServices {
         
         return instance;
     }
-    
-//    //ADD TASK 
-//    public boolean addTaskAction(Cours c){
-//        
-//        String url = Statics.BASE_URL + "/cour/api/"+ c.getId()+ "/" + c.getNomCours()+ "/" +c.getDescription()+ "/" +c.getNb_participants()
-//                + "/" +c.getMembre_id()+ "/" +c.getDate_creation()+ "/" +c.getTags()+ "/" +c.getImage()+"/"+c.getCategorie_id()+ "/" +c.getLienYoutube();
-//        req.setUrl(url);
-//        req.setPost(false);
-//        req.addResponseListener((evt) -> {
-//            resultOK = req.getResponseCode()==200;
-//        });
-//        
-//        NetworkManager.getInstance().addToQueueAndWait(req);
-//        return resultOK;
-//    }
+   
+    //ADD Cours
+    public boolean addCoursAction(Cours c){
+        
+        String url = Statics.BASE_URL + "/cour/api/add?" + c.getNomCours()+ "&" +c.getDescription()+
+                "&" +c.getNb_participants()  + "&" +c.getMembre_id()+"&"+c.getDate_creation()+ "&" 
+                +c.getTags()+ "&" +c.getImage()+"&"+c.getCategorie_id()+ "&" +c.getLienYoutube();
+        req.setUrl(url);
+        System.out.println(url);
+        //req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);   
+           }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    } 
      //PARSE Cours JSON : convert JSON to java objects
-    public ArrayList<Cours> parseJSONAction(String textJson){
-        
-        JSONParser j = new JSONParser();
-        
+     public ArrayList<Cours> parseCourses(String jsonText) {
         try {
-            
-            Map<String, Object> coursListJson = j.parseJSON(new CharArrayReader(textJson.toCharArray()));
-            ArrayList<Map<String,Object>> CoursList = (ArrayList<Map<String,Object>>) coursListJson.get("root");
-            
-            for (Map<String, Object> obj : CoursList) {
-                
+            courses = new ArrayList<>();
+            JSONParser j = new JSONParser();
+
+            Map<String, Object> eventsListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+
+            List<Map<String, Object>> list = (List<Map<String, Object>>) eventsListJson.get("root");
+
+            for (Map<String, Object> obj : list) {
+                System.out.println("obj " + obj);
                 Cours c = new Cours();
-                
-           
-                   
                 float id = Float.parseFloat(obj.get("id").toString());
-                c.setId((int) id);
-                c.setNomCours(obj.get("nomcours").toString());
-                c.setDescription(obj.get("description").toString());
+               c.setId((int) id);
+                c.setNomCours((String)obj.get("nomcours"));
+                c.setDescription((String)obj.get("description"));
                 c.setNb_participants((int) Float.parseFloat(obj.get("nbParticipant").toString()));
+//                try {
                 //c.setMembre_id((int) Float.parseFloat(obj.get("membre").toString()));
                 //c.setDate_creation((Date)(obj.get("dateCreation")));
-                c.setTags(obj.get("tags").toString());
-                c.setImage(obj.get("imagecours").toString());//lezem nrodha image file
+                //c.setDescription(obj.get("dateCreation").toString());
+//                    c.setDate_creation((new SimpleDateFormat("yyyy-mm-dd").parse(((String) (obj.get("dateCreation"))).substring(0, 10))));
+//                } catch (ParseException ex) {
+//                    Logger.getLogger(CoursServices.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+                String DataConverter = obj.get("dateCreation").toString();
+                c.setDate_creation(DataConverter);
+                c.setTags((String)obj.get("tags"));
+                c.setImage((String)obj.get("imagecours"));//lezem nrodha image file
                 //c.setCategorie_id((int) Float.parseFloat(obj.get("categorie").toString()));
-                c.setLienYoutube(obj.get("lienyoutube").toString());
+                c.setLienYoutube((String)obj.get("lienyoutube"));
 
-                
-                cours.add(c);
-
+                courses.add(c);
             }
-            
-            
+
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+            System.out.println(ex.getMessage());
         }
-        
-        return cours;  
+        return courses;
+    }
+    //parse from farah
+     public Cours parsecours(String jsonText) {
+        Cours c = new Cours();
+        try {
+            
+            JSONParser j = new JSONParser();
+
+            Map<String, Object> obj = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+
+            System.out.println("eventJson "+obj);
+            
+                float id = Float.parseFloat(obj.get("id").toString());
+                c.setId((int) id);
+                c.setNomCours((String)obj.get("nomcours"));
+                c.setDescription((String)obj.get("description"));
+                c.setNb_participants((int) Float.parseFloat(obj.get("nbParticipant").toString()));
+//                try {
+                //c.setMembre_id((int) Float.parseFloat(obj.get("membre").toString()));
+                //c.setDate_creation((Date)(obj.get("dateCreation")));
+                //c.setDescription(obj.get("dateCreation").toString());
+//                    c.setDate_creation((new SimpleDateFormat("yyyy-mm-dd").parse(((String) (obj.get("dateCreation"))).substring(0, 10))));
+//                } catch (ParseException ex) {
+//                    Logger.getLogger(CoursServices.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+                String DataConverter = obj.get("dateCreation").toString();
+                c.setDate_creation(DataConverter);
+                c.setTags((String)obj.get("tags"));
+                c.setImage((String)obj.get("imagecours"));//lezem nrodha image file
+                //c.setCategorie_id((int) Float.parseFloat(obj.get("categorie").toString()));
+                c.setLienYoutube((String)obj.get("lienyoutube"));
+
+            
+
+        } catch (IOException ex) {
+            System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+            System.out.println(ex.getMessage());
+        }
+        return c;
     }
 
+ 
 
-
-    //GET COURS
-    public ArrayList<Cours> getCours(){
-        
-         String url = Statics.BASE_URL+"/cour/api/";
-         System.out.println(url);
-         ConnectionRequest request = new ConnectionRequest(url);
-         request.setPost(false);
-         request.addResponseListener(new ActionListener<NetworkEvent>() {
-             @Override
-             public void actionPerformed(NetworkEvent evt) {
-                 
-             cours = parseJSONAction(new String(request.getResponseData()));
-             request.removeResponseListener((ActionListener<NetworkEvent>) this);
-             }
-         });
-       
-        NetworkManager.getInstance().addToQueueAndWait(request);
+    //GET ALL COURS
+   public ArrayList<Cours> getAllCours() {
+        String url = Statics.BASE_URL + "/cour/api/";
+        System.out.println("url " + url);
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                courses = parseCourses(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return courses;
+    }
+     //GET ONE COURS
+    public Cours getOneCours(int id) {
+        String url = Statics.BASE_URL + "/cour/api/"+id;
+        System.out.println("url " + url);
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                cours= parsecours(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
         return cours;
+    }
+    
+    
+     public boolean deleteCours(int id){
+        String url = Statics.BASE_URL+"/cour/api/delete/"+id;
+        req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+            return resultOK;                      
     }
     
 
