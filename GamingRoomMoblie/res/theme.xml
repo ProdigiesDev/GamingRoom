@@ -2,7 +2,7 @@
 
 <resource majorVersion="1" minorVersion="11" useXmlUI="false">
     <image name="defaultBack"  />
-    <image name="sidemenu2.jpg"  />
+    <image name="loading.gif"  />
     <theme name="Theme">
         <val key="@includeNativeBool" value="true" />
         <val key="CreateNewAccountButton.align" value="4" />
@@ -40,7 +40,7 @@
         <val key="LoginButton.sel#padding" value="2.0,2.0,2.0,2.0" />
         <val key="LoginButton.sel#transparency" value="255" />
         <val key="LoginButton.transparency" value="255" />
-        <val key="SidemenuTop.bgImage" value="sidemenu2.jpg" />
+        <val key="SidemenuTop.bgImage" value="defaultBack" />
         <val key="SidemenuTop.bgType" value="1" />
         <val key="SidemenuTop.margin" value="0.0,0.0,0.0,0.0" />
         <val key="SidemenuTop.padUnit" value="2,2,2,2" />
