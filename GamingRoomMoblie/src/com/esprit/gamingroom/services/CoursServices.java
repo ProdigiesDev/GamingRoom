@@ -51,15 +51,21 @@ public class CoursServices {
         return instance;
     }
    
-    //ADD Cours
-    public boolean addCoursAction(Cours c){
+    //add
+ public boolean addCoursAction(Cours c){
         
-        String url = Statics.BASE_URL + "/cour/api/add?" + c.getNomCours()+ "&" +c.getDescription()+
-                "&" +c.getNb_participants()  + "&" +c.getMembre_id()+"&"+c.getDate_creation()+ "&" 
-                +c.getTags()+ "&" +c.getImage()+"&"+c.getCategorie_id()+ "&" +c.getLienYoutube();
+        String url = Statics.BASE_URL + "/cour/api/add/?nomcours="+ c.getNomCours()
+                + "&description=" +c.getDescription()+
+                "&nbParticipant=" +c.getNb_participants()  
+                + "&member_id=" +c.getMembre_id()
+                +"&tags=" 
+                +c.getTags()+ "&imagecours=" 
+                +c.getImage()+"&idcat="+
+                c.getCategorie_id()
+                + "&lienyoutube=" +c.getLienYoutube();
         req.setUrl(url);
-        System.out.println(url);
-        //req.setPost(false);
+        System.out.println("url"+url);
+        req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -70,6 +76,7 @@ public class CoursServices {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     } 
+
      //PARSE Cours JSON : convert JSON to java objects
      public ArrayList<Cours> parseCourses(String jsonText) {
         try {
@@ -100,8 +107,14 @@ public class CoursServices {
                 c.setDate_creation(DataConverter);
                 c.setTags((String)obj.get("tags"));
                 c.setImage((String)obj.get("imagecours"));//lezem nrodha image file
-                //c.setCategorie_id((int) Float.parseFloat(obj.get("categorie").toString()));
+               // c.setCategorie_id((int) Float.parseFloat(obj.get("categorie").getClass().toString()));
+                Map<String, Object> idcat= (Map<String, Object>)(obj.get("categorie"));
+                c.setCategorie_id((int) Float.parseFloat(idcat.get("idcat").toString()));
+                Map<String, Object> idmem= (Map<String, Object>)(obj.get("membre"));
+                c.setCategorie_id((int) Float.parseFloat(idmem.get("id").toString()));
                 c.setLienYoutube((String)obj.get("lienyoutube"));
+                System.out.println("hohoho"+obj);
+                System.out.println("KAKA"+ c);
 
                 courses.add(c);
             }
@@ -141,6 +154,10 @@ public class CoursServices {
                 c.setTags((String)obj.get("tags"));
                 c.setImage((String)obj.get("imagecours"));//lezem nrodha image file
                 //c.setCategorie_id((int) Float.parseFloat(obj.get("categorie").toString()));
+                Map<String, Object> idcat= (Map<String, Object>)(obj.get("categorie"));
+                c.setCategorie_id((int) Float.parseFloat(idcat.get("idcat").toString()));
+                Map<String, Object> idmem= (Map<String, Object>)(obj.get("membre"));
+                c.setCategorie_id((int) Float.parseFloat(idmem.get("id").toString()));
                 c.setLienYoutube((String)obj.get("lienyoutube"));
 
             
@@ -200,7 +217,27 @@ public class CoursServices {
         NetworkManager.getInstance().addToQueueAndWait(req);
             return resultOK;                      
     }
-    
-
-    
+     
+     public boolean updateCours(Cours c,int id) {
+ String url = Statics.BASE_URL + "/cour/api/update/"+id+"?"+ c.getNomCours()
+                + "&description=" +c.getDescription()+
+                "&nbParticipant=" +c.getNb_participants()  
+                + "&member_id=" +c.getMembre_id()
+                +"&tags=" 
+                +c.getTags()+ "&imagecours=" 
+                +c.getImage()+"&idcat="+
+                c.getCategorie_id()
+                + "&lienyoutube=" +c.getLienYoutube();           System.out.println(url);
+        req.setUrl(url);// Insertion de l'URL de notre demande de connexion
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this); //Supprimer cet actionListener                
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
 }
+

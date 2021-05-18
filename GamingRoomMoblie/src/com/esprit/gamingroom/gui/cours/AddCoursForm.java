@@ -23,7 +23,7 @@ import com.esprit.gamingroom.services.CoursServices;
  */
 public class AddCoursForm extends Form{
      public AddCoursForm(){
-        this.setTitle("Add Cours");
+        this.setTitle("Ajouter un cours");
         this.setLayout(BoxLayout.y());
         
         

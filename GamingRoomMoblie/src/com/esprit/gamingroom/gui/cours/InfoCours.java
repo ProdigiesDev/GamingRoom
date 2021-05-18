@@ -4,10 +4,17 @@
  * and open the template in the editor.
  */
 package com.esprit.gamingroom.gui.cours;
-
+import com.codename1.capture.Capture;
 import com.codename1.components.ImageViewer;
+import com.codename1.components.MultiButton;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.WebBrowser;
+import com.codename1.io.FileSystemStorage;
+import com.codename1.io.Log;
+import com.codename1.io.Util;
+import com.codename1.l10n.SimpleDateFormat;
+import com.codename1.media.Media;
+import com.codename1.media.MediaManager;
 import com.codename1.ui.Button;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
@@ -18,16 +25,19 @@ import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
+import com.codename1.ui.plaf.UIManager;
 import com.esprit.gamingroom.entities.Cours;
 import com.esprit.gamingroom.services.CoursServices;
 import com.esprit.gamingroom.utils.Statics;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  *
@@ -122,6 +132,18 @@ public class InfoCours extends Form {
 //                    }
 //                });
 
+//btn mofifier
+Button btnmodifier = new Button("Modifier");
+            btnmodifier.getAllStyles().setFont(Font.createTrueTypeFont(Font.NATIVE_ITALIC_LIGHT, 2f));
+            btnmodifier.getAllStyles().setBorder(Border.createDoubleBorder(2, 0x5C246E));
+            btnmodifier.getAllStyles().setTextDecoration(Style.TEXT_DECORATION_UNDERLINE);
+                btnmodifier.addPointerPressedListener(e5 -> {
+             new UpdateCoursForm(current,c,id).show();  }
+            );
+                
+                
+
+//like
             Label like = new Label("0");
             like.setUIID("NewsTopLine");
             Style likeStyle = new Style(supp.getUnselectedStyle());
@@ -130,8 +152,59 @@ public class InfoCours extends Form {
             like.setIcon(likeImage);
             like.setTextPosition(RIGHT);
             // FontImage like=FontImage.createMaterial(FontImage.MATERIAL_ACCESS_TIME, suppStyle);
-
-            addAll(ivE,player, titre, description, date, tags, lien, supp, btnInscrip, like);
+////api
+//Form hi = new Form("Capture", BoxLayout.y());
+//hi.setToolbar(new Toolbar());
+//Style s = UIManager.getInstance().getComponentStyle("Title");
+//FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_MIC, s);
+//FileSystemStorage fs = FileSystemStorage.getInstance();
+//String recordingsDir = fs.getAppHomePath() + "recordings/";
+//fs.mkdir(recordingsDir);
+//try {
+//    for(String file : fs.listFiles(recordingsDir)) {
+//        MultiButton mb = new MultiButton(file.substring(file.lastIndexOf("/") + 1));
+//        mb.addActionListener((e) -> {
+//            try {
+//                Media m = MediaManager.createMedia(recordingsDir + file, false);
+//                m.play();
+//            } catch(IOException err) {
+//                Log.e(err);
+//            }
+//        });
+//        hi.add(mb);
+//    }
+//
+//    hi.getToolbar().addCommandToRightBar("", icon, (ev) -> {
+//        try {
+//            String file = Capture.captureAudio();
+//            if(file != null) {
+//                SimpleDateFormat sd = new SimpleDateFormat("yyyy-MMM-dd-kk-mm");
+//                String fileName =sd.format(new Date());
+//                String filePath = recordingsDir + fileName;
+//                Util.copy(fs.openInputStream(file), fs.openOutputStream(filePath));
+//                MultiButton mb = new MultiButton(fileName);
+//                mb.addActionListener((e) -> {
+//                    try {
+//                        Media m = MediaManager.createMedia(filePath, false);
+//                        m.play();
+//                    } catch(IOException err) {
+//                        Log.e(err);
+//                    }
+//                });
+//                hi.add(mb);
+//                hi.revalidate();
+//            }
+//        } catch(IOException err) {
+//            Log.e(err);
+//        }
+//    });
+//} catch(IOException err) {
+//    Log.e(err);
+//}
+//
+//hi.show();
+/////
+            addAll(ivE,player, titre, description, date, tags, lien, supp, btnInscrip,btnmodifier, like);
 //            Media video = MediaManager.createMedia(e.getLienYoutube(), true);
 //            System.out.println("player "+video);
 //            add(new MediaPlayer(video));
