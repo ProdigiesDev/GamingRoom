@@ -167,7 +167,15 @@ public class MembreService {
     }
      /////////////// forgot password /////////////////////////////
      public void sendEmail(String email){
-     
+     String url = Statics.BASE_URL+"/membre/api/verifEmail?email="+email;
+      
+        con = new ConnectionRequest(url,false);
+        con.addResponseListener((e)->{
+            JSONParser j = new JSONParser();
+            
+            String json = new String(con.getResponseData()) + "";
+            System.out.println(json);
+            if(json.equals("true")){
 
         try {
             Random ran = new Random();
@@ -179,15 +187,19 @@ public class MembreService {
               Dialog.show("Success", "Un code est enoyé à : "+email,new Command("OK"));
 
             }
-            else{
+            else if(json.equals("false")){
 
               Dialog.show("Error", "ERROR! code hasn't been sent to the email",new Command("Cancel"));
                 
             }
         } catch (MessagingException ex) {
             Logger.getLogger(MembreService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+        }}
+            else{
+                Dialog.show("Error", "Email erroné",new Command("Cancel"));
+            }
+        });
+         NetworkManager.getInstance().addToQueueAndWait(con);
      }
      public boolean verifCode(String random){
          System.out.println(randomCode);
