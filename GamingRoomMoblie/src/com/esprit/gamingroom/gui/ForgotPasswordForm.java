@@ -35,11 +35,16 @@ public class ForgotPasswordForm extends Form {
         TextField code = new TextField("","code",6 , TextField.NUMERIC);
         TextField password = new TextField("", "Password", 15, TextField.PASSWORD);
         TextField vpassworField = new TextField("", "Repeat Password", 15, TextField.PASSWORD);
+        Button validerButton = new Button("Valider");
+        Label text = new Label();
+        
         email.getAllStyles().setMargin(LEFT, 0);
         code.getAllStyles().setMargin(LEFT, 0);
 
-        password.setEditable(false);
-        vpassworField.setEditable(false);
+        password.setVisible(false);
+        vpassworField.setVisible(false);
+        text.setVisible(false);
+        
         Button sendButton = new Button("Send Email");
         sendButton.setUIID("LoginButton");
          sendButton.addActionListener(e -> {
@@ -51,7 +56,7 @@ public class ForgotPasswordForm extends Form {
                     }
 
          });
-         Label text = new Label();
+         
          text.setText("After code verifiation :");
          Button verifButton = new Button("Verifier");
         verifButton.setUIID("LoginButton");
@@ -61,18 +66,27 @@ public class ForgotPasswordForm extends Form {
             boolean response = MembreService.getInstance().verifCode(code.getText());
             if(response){
                  Dialog.show("Success", "Vous pouvez changez votre mot de passe", new Command("OK"));
-                   password.setEditable(true);
-                vpassworField.setEditable(true);
+                 email.setEditable(false);
+                 text.setVisible(true);
+                   password.setVisible(true);
+                vpassworField.setVisible(true);
+                validerButton.setVisible(true);
                 System.out.println(response);
                 System.out.println(code.getText());
                
             }
             else{
                 Dialog.show("Error", "Code invalide", new Command("OK"));
+                 password.setVisible(false);
+                vpassworField.setVisible(false);
+                validerButton.setVisible(false);
+                text.setVisible(false);
+                
             }
         });
         
-        Button validerButton = new Button("Valider");
+        
+        validerButton.setVisible(false);
         validerButton.setUIID("LoginButton");
          validerButton.addActionListener(e -> {
              if ((password.getText().length() == 0) || (vpassworField.getText().length() == 0)) {
