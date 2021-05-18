@@ -20,6 +20,7 @@ import com.esprit.gamingroom.entities.Membre;
 import com.esprit.gamingroom.entities.UserSession;
 import com.esprit.gamingroom.gui.ProfileCoachForm;
 import com.esprit.gamingroom.gui.ProfileMembreForm;
+import com.esprit.gamingroom.gui.SignInForm;
 import com.esprit.gamingroom.utils.SendEmail;
 import com.esprit.gamingroom.utils.Statics;
 import java.io.IOException;
@@ -208,10 +209,13 @@ public class MembreService {
                 Dialog.show("Erreur", "Email éronné ",new Command("OK"));
             }
              else{
-                 if(password.getText().equals(vpass)){
+                 if(password.getText().equals(vpass.getText())){
                
                      byte[]data = (byte[]) e.getMetaData();
-                     String responseData = new String(data);}
+                     String responseData = new String(data);
+                     Dialog.show("Success", "Mot de passe modifié ",new Command("OK"));
+                     new SignInForm(theme).show();
+                 }
                  else {
                                      Dialog.show("Erreur", "vérifier vos champs ",new Command("OK"));
 

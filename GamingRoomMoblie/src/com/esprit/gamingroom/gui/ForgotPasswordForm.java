@@ -60,15 +60,30 @@ public class ForgotPasswordForm extends Form {
       
             boolean response = MembreService.getInstance().verifCode(code.getText());
             if(response){
+                 Dialog.show("Success", "Vous pouvez changez votre mot de passe", new Command("OK"));
                    password.setEditable(true);
                 vpassworField.setEditable(true);
                 System.out.println(response);
                 System.out.println(code.getText());
+               
             }
             else{
-                Dialog.show("Error", "Code incorrect", new Command("OK"));
+                Dialog.show("Error", "Code invalide", new Command("OK"));
             }
         });
+        
+        Button validerButton = new Button("Valider");
+        validerButton.setUIID("LoginButton");
+         validerButton.addActionListener(e -> {
+             if ((password.getText().length() == 0) || (vpassworField.getText().length() == 0)) {
+                Dialog.show("Alert", "Please fill all fields", new Command("OK"));
+            } 
+             else{
+                 MembreService.getInstance().forgotPaswword(email, password, vpassworField);
+                 System.out.println("done");
+                 
+             }
+         });
          
         Container by = BoxLayout.encloseY(
 //                spaceLabel,
@@ -79,7 +94,8 @@ public class ForgotPasswordForm extends Form {
                 verifButton,
                 text,
                 password,
-                vpassworField
+                vpassworField,
+                validerButton
                
                 
         );

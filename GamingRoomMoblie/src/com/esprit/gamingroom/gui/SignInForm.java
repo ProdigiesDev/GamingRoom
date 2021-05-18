@@ -55,6 +55,7 @@ public class SignInForm extends Form {
                 Dialog.show("Alert", "Please fill all fields", new Command("OK"));
             } 
              else {
+                
                     MembreService.getInstance().signIn(email.getText().toString(), password.getText().toString());
                     }
 
