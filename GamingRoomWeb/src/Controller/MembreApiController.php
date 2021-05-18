@@ -87,4 +87,21 @@ class MembreApiController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/membre/api/verifEmail", name="membre_vemail")
+     */
+
+    public function VerifierEmail(Request $request,UserPasswordEncoderInterface $encoder): Response
+    {
+        $email = $request->get('email');
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(Membre::class)->findOneBy(['email' => $email]);
+        if ($user) {
+            return new Response("true");
+        }
+        else{
+            return new Response("false");
+        }
+    }
+
 }
