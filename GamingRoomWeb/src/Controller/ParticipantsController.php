@@ -253,7 +253,9 @@ class ParticipantsController extends AbstractController
         $idM=$this->security->getUser()->getId();
         $m=$this->getDoctrine()->getRepository(Membre::class)->find($idM);
         if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findOneByME($e,$m)))<=0){
-            if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findBy(array('evenement'=>$e))))< $e->getNbremaxParticipant()){
+            if((sizeof($this->getDoctrine()->getRepository(Participant::class)->findBy(array('evenement'=>$e))))< $e->getNbremaxParticipant()) {
+
+                $entityManager = $this->getDoctrine()->getManager();
                 $participant = new Participant();
                 $participant->setEvenement($e);
                 $participant->setMember($m);
@@ -263,37 +265,41 @@ class ParticipantsController extends AbstractController
                 $entityManager->persist($participant);
                 $entityManager->flush();
 
-                //Metier: repartition des duels aleatoirment
-                $listeParticipants=$this->getDoctrine()->getRepository(Participant::class)->eventParts($e);
-                $memberListe=array();
-                foreach ($listeParticipants as $value){
-                    array_push($memberListe,$value->getMember());
-                }
 
-
-                $memberListeSize=sizeof($memberListe);
-                $randomValues=array();
-                $char ='A';
-                $i=1;
-
-                while ($memberListe){
-                    $randIndex = array_rand($memberListe);
-                    $randomElement=$memberListe[$randIndex];
-                    $randomValues[$randomElement->getId()]=$char;
-                    unset($memberListe[$randIndex]);
-                    if($i %2 ==0){
-                        $char++;
-                    }
-                    $i++;
-                }
-
-                foreach( $randomValues as $key => $value ){
-
-                    $m=$this->getDoctrine()->getRepository(Membre::class)->find($key);
-                    $this->getDoctrine()->getRepository(Participant::class)->repartitionDual($m,$value,$e);
-                }
-            }else{
+            }else {
                 $this->addFlash('danger', 'saturée');
+                if (($this->getDoctrine()->getRepository(Participant::class)->findBy(array('evenement'=>$e)))[0]->getDuel()==null) {
+                    //Metier: repartition des duels aleatoirment
+                    $listeParticipants = $this->getDoctrine()->getRepository(Participant::class)->eventParts($e);
+                    $memberListe = array();
+                    foreach ($listeParticipants as $value) {
+                        array_push($memberListe, $value->getMember());
+                    }
+
+
+                    $memberListeSize = sizeof($memberListe);
+                    $randomValues = array();
+                    $char = 'A';
+                    $i = 1;
+
+                    while ($memberListe) {
+                        $randIndex = array_rand($memberListe);
+                        $randomElement = $memberListe[$randIndex];
+                        $randomValues[$randomElement->getId()] = $char;
+                        unset($memberListe[$randIndex]);
+                        if ($i % 2 == 0) {
+                            $char++;
+                        }
+                        $i++;
+                    }
+
+                    foreach ($randomValues as $key => $value) {
+
+                        $m = $this->getDoctrine()->getRepository(Membre::class)->find($key);
+                        $this->getDoctrine()->getRepository(Participant::class)->repartitionDual($m, $value, $e);
+
+                    }
+                }
             }
 
         }
