@@ -18,7 +18,7 @@ public class Evenement {
     private Date dateDeb;
     private Date dateFin;
     private String image;
-    private int categorie_id;
+    private Categorie categorie_id;
     private int nbreMax_participant;
     private String description;
     private String lieu;
@@ -27,7 +27,7 @@ public class Evenement {
     public Evenement() {
     }
 
-    public Evenement(int idevent, String nomEvent, Date dateDeb, Date dateFin, String image, int categorie_id, int nbreMax_participant, String description, String lieu, String lienYoutube) {
+    public Evenement(int idevent, String nomEvent, Date dateDeb, Date dateFin, String image, Categorie categorie_id, int nbreMax_participant, String description, String lieu, String lienYoutube) {
         this.idevent = idevent;
         this.nomEvent = nomEvent;
         this.dateDeb = dateDeb;
@@ -80,11 +80,11 @@ public class Evenement {
         this.image = image;
     }
 
-    public int getCategorie_id() {
+    public Categorie getCategorie_id() {
         return categorie_id;
     }
 
-    public void setCategorie_id(int categorie_id) {
+    public void setCategorie_id(Categorie categorie_id) {
         this.categorie_id = categorie_id;
     }
 
