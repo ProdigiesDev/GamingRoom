@@ -9,33 +9,65 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use App\Entity\Avis;
 use App\Repository\MembreRepository;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
 * @Route("/api/avis")
 */
 class AvisApiController extends AbstractController
 {
+    private $client;
+
+    public function __construct(HttpClientInterface $client)
+    {
+        $this->client = $client;
+    }
+
     /**
      * @Route("/", name="avis_api",methods={"GET"})
      */
     public function index(AvisRepository $avisRep,NormalizerInterface $nor): Response
     {
         $avis=$avisRep->findAll();
-        $avisJson=$nor->normalize($avis,'json',['groups'=>'listAvis']);
+        $avisJson=$nor->normalize($avis,'json');
 
         return new Response(json_encode($avisJson));
     }
 
     /**
-    * @Route("/",name="add_avis",methods={"POST"})
+     * @Route("/delete/{id}", name="avis_deletebyid",methods={"GET"})
+     */
+    public function deleteById(Avis $avis): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($avis);
+        $entityManager->flush();
+        
+        return $this->json(['message'=>'avis deleted'],200);
+    }
+
+    /**
+    * @Route("/addavis",name="add_avis",methods={"GET"})
     */
     public function add(Request $request,MembreRepository $memRep){
 
         $en=$this->getDoctrine()->getManager();
         $avis=new Avis();
-        $avis->setAvis($request->get('avis'));
-        $avis->setSentiment($request->get('sentiment'));
-        $avis->setMembre($memRep->find($request->get('member_id')));
+        $avis->setAvis($request->query->get('avis'));
+        $avis->setMembre($memRep->find($request->query->get('member_id')));
+
+        $response = $this->client->request(
+            'GET',
+            "https://api.meaningcloud.com/sentiment-2.1?verbose=y&key=".$_ENV['keyMeaningcloudApi']."&lang=en&txt=".$avis->getAvis()."&model=general"
+        );
+
+        $statusCode = $response->getStatusCode();
+        
+        if($statusCode==200){
+            // $statusCode = 200
+            $content = $response->toArray();
+            $avis->setSentiment($content['score_tag']);
+        }
 
         $en->persist($avis);
         $en->flush();
@@ -44,41 +76,4 @@ class AvisApiController extends AbstractController
     }
 
     
-    /**
-    * @Route("/update",name="update_avis",methods={"POST"})
-    */
-    public function update(Request $request,AvisRepository $avisRep){
-
-        $en=$this->getDoctrine()->getManager();
-        
-        $avis=$avisRep->find($request->get('id'));
-
-        $a=$request->get('avis');
-        if(strlen($a) < 5 ){
-            return new Response($this->json(['code'=>400, 'message'=>'avis doit etre  > 5'],400));    
-        }
-
-        $avis->setAvis($request->get('avis'));
-        $avis->setSentiment($request->get('sentiment'));
-
-        $en->persist($avis);
-        $en->flush();
-
-        return new Response($this->json(['code'=>201, 'message'=>'avis modifier'],201));
-    }
-
-    /**
-    * @Route("/delete",methods={"POST"})
-    */
-    public function delete(Request $request,AvisRepository $avisRep)
-    {  
-        $en=$this->getDoctrine()->getManager();
-        
-        $avis=$avisRep->find($request->get('id'));
-
-        $en->remove($avis);
-        $en->flush();
-        
-        return new Response($this->json(['code'=>200, 'message'=>'avis deleted'],200));
-    }
 }

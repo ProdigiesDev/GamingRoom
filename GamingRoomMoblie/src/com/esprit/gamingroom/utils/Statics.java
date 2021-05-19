@@ -12,4 +12,5 @@ package com.esprit.gamingroom.utils;
 public class Statics {
     
     public static final String BASE_URL ="http://127.0.0.1:8000";
+    public static final String WEBSOCKET_URL ="ws://127.0.0.1:9090/cn1-websocket-demo-server/chat";
 }
