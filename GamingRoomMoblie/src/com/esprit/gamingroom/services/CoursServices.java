@@ -12,6 +12,8 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
+import com.codename1.messaging.Message;
+import com.codename1.ui.Display;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.gamingroom.entities.Cours;
 import com.esprit.gamingroom.utils.Statics;
@@ -73,8 +75,15 @@ public class CoursServices {
                 req.removeResponseListener(this);   
            }
         });
+        
         NetworkManager.getInstance().addToQueueAndWait(req);
+        Message m = new Message("Cher Admin j'ai le plaisir de vous informer que j'ai ajouté un "
+                + "nouveau cours nommé  "+c.getNomCours()+"");
+//m.getAttachments().put(textAttachmentUri, "text/plain");
+//m.getAttachments().put(imageAttachmentUri, "image/png");
+Display.getInstance().sendMessage(new String[] {"eya.trifi@esprit.tn"}, "Ajout d'un nouveau cours",m);
         return resultOK;
+        
     } 
 
      //PARSE Cours JSON : convert JSON to java objects
@@ -111,7 +120,7 @@ public class CoursServices {
                 Map<String, Object> idcat= (Map<String, Object>)(obj.get("categorie"));
                 c.setCategorie_id((int) Float.parseFloat(idcat.get("idcat").toString()));
                 Map<String, Object> idmem= (Map<String, Object>)(obj.get("membre"));
-                c.setCategorie_id((int) Float.parseFloat(idmem.get("id").toString()));
+                c.setMembre_id((int) Float.parseFloat(idmem.get("id").toString()));
                 c.setLienYoutube((String)obj.get("lienyoutube"));
                 System.out.println("hohoho"+obj);
                 System.out.println("KAKA"+ c);
@@ -157,7 +166,7 @@ public class CoursServices {
                 Map<String, Object> idcat= (Map<String, Object>)(obj.get("categorie"));
                 c.setCategorie_id((int) Float.parseFloat(idcat.get("idcat").toString()));
                 Map<String, Object> idmem= (Map<String, Object>)(obj.get("membre"));
-                c.setCategorie_id((int) Float.parseFloat(idmem.get("id").toString()));
+                c.setMembre_id((int) Float.parseFloat(idmem.get("id").toString()));
                 c.setLienYoutube((String)obj.get("lienyoutube"));
 
             
@@ -214,30 +223,75 @@ public class CoursServices {
                 req.removeResponseListener(this);
             }
         });
+        
         NetworkManager.getInstance().addToQueueAndWait(req);
             return resultOK;                      
     }
      
-     public boolean updateCours(Cours c,int id) {
- String url = Statics.BASE_URL + "/cour/api/update/"+id+"?"+ c.getNomCours()
-                + "&description=" +c.getDescription()+
-                "&nbParticipant=" +c.getNb_participants()  
-                + "&member_id=" +c.getMembre_id()
-                +"&tags=" 
-                +c.getTags()+ "&imagecours=" 
-                +c.getImage()+"&idcat="+
-                c.getCategorie_id()
-                + "&lienyoutube=" +c.getLienYoutube();           System.out.println(url);
-        req.setUrl(url);// Insertion de l'URL de notre demande de connexion
+//     public boolean updateCours(Cours c,int id) {
+// String url = Statics.BASE_URL + "/cour/api/update/"+id+"?"+"&nomcours="+ c.getNomCours()
+//                + "&description=" +c.getDescription()+
+//                "&nbParticipant=" +c.getNb_participants()  
+//                + "&member_id=" +c.getMembre_id()
+//                +"&tags=" 
+//                +c.getTags()+ "&imagecours=" 
+//                +c.getImage()+"&idcat="+
+//                c.getCategorie_id()
+//                + "&lienyoutube=" +c.getLienYoutube();         
+// System.out.println(url);
+//        req.setUrl(url);// Insertion de l'URL de notre demande de connexion
+//        req.addResponseListener(new ActionListener<NetworkEvent>() {
+//            @Override
+//            public void actionPerformed(NetworkEvent evt) {
+//                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+//                req.removeResponseListener(this); //Supprimer cet actionListener                
+//            }
+//        });
+//        NetworkManager.getInstance().addToQueueAndWait(req);
+//        return resultOK;
+//    }
+     public boolean modifierCours(Cours c) {
+        req.setUrl(Statics.BASE_URL + "/cour/api/update");
+        req.addArgument("id", String.valueOf(c.getId()));
+        req.addArgument("nomcours", c.getNomCours());
+        req.addArgument("description", c.getDescription());
+        req.addArgument("nbParticipant", String.valueOf(c.getNb_participants()));
+        req.addArgument("member_id", String.valueOf(c.getMembre_id()));
+        req.addArgument("tags", c.getTags());
+        req.addArgument("imagecours", c.getImage());
+        req.addArgument("idcat", String.valueOf(c.getCategorie_id()));
+        req.addArgument("lienyoutube", c.getLienYoutube());
+        
+
+       
+
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
-                req.removeResponseListener(this); //Supprimer cet actionListener                
+                resultOK = req.getResponseCode()==200;
+                req.removeResponseListener(this);
+
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
+     
+//     public  void sendemail2()
+//     {
+//         Message m = new Message("Body of message");
+//m.getAttachments().put("bien", "text/plain");
+//Display.getInstance().sendMessage(new String[] {"eya.trifi@esprit.tn"}, " Date de formation finie", m);
+//     }
+////               void sendFileViaEmail(String hi2, String file) {
+////    Message m = new Message("Test message");
+////    //m.getAttachments().put(file, "image/jpeg");
+////    m.setAttachment(hi2);
+////    m.setAttachmentMimeType(Message.MIME_IMAGE_JPG);
+////    //m.setMimeType(Message.MIME_IMAGE_JPG);
+////    //m.getAttachments().put(imageAttachmentUri, "image/png");
+////    Display.getInstance().sendMessage(new String[] {"mohamedamine.turki@esprit.tn"}, "test message cn1", m);
+//}
+//    
 }
 

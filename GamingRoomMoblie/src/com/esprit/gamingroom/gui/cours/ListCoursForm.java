@@ -44,11 +44,17 @@ public class ListCoursForm extends Form {
     Container imageCont;
     String imagePath = Statics.dossierImagePath;
     Form current;
+      Container buttonadd;
 
     public ListCoursForm(Form previous) {
+        
         setTitle("Liste des cours");
         current = this;
         ArrayList<Cours> ls = CoursServices.getInstance().getAllCours();
+//         Button addTaskBtn = new Button("Add Cours");
+//     addTaskBtn.addActionListener(e -> new AddCoursForm().show());
+//      
+//       add(buttonadd);
         for (Cours c : ls) {
             try {
                 EncodedImage enc = EncodedImage.create("/loading.gif");
@@ -100,11 +106,14 @@ public class ListCoursForm extends Form {
                 System.out.println(ex.getMessage());
             }
         }
+      
+       
+
 //search tbadel 3onwen tool bar
 //prepare field
 TextField searchField;
-searchField = new TextField( "Chercher un cours");
-//searchField.getHintLabel().setUIID("Title");
+searchField = new TextField( "","Chercher un cours");
+searchField.getHintLabel().setUIID("Title");
 searchField.setUIID("Title");
 getToolbar().setTitleComponent(searchField);
 //if field content changed
@@ -128,9 +137,13 @@ cmp.setVisible(show);
 }
 getContentPane().animateLayout(250);
 });
+
+
+        
+        
+        
         getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e -> previous.showBack());
     }
 
     
-
 }

@@ -9,6 +9,7 @@ import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.WebBrowser;
+
 import com.codename1.io.FileSystemStorage;
 import com.codename1.io.Log;
 import com.codename1.io.Util;
@@ -120,11 +121,11 @@ public class InfoCours extends Form {
             }
             );
 
-            //btn inscription
-            Button btnInscrip = new Button("Inscription");
-            btnInscrip.getAllStyles().setFont(Font.createTrueTypeFont(Font.NATIVE_ITALIC_LIGHT, 2f));
-            btnInscrip.getAllStyles().setBorder(Border.createDoubleBorder(2, 0x5C246E));
-            btnInscrip.getAllStyles().setTextDecoration(Style.TEXT_DECORATION_UNDERLINE);
+//            //btn inscription
+//            Button btnInscrip = new Button("Inscription");
+//            btnInscrip.getAllStyles().setFont(Font.createTrueTypeFont(Font.NATIVE_ITALIC_LIGHT, 2f));
+//            btnInscrip.getAllStyles().setBorder(Border.createDoubleBorder(2, 0x5C246E));
+//            btnInscrip.getAllStyles().setTextDecoration(Style.TEXT_DECORATION_UNDERLINE);
 //                btnInscrip.addPointerPressedListener(new ActionListener() {
 //                    @Override
 //                    public void actionPerformed(ActionEvent evt) {
@@ -132,25 +133,25 @@ public class InfoCours extends Form {
 //                    }
 //                });
 
-//btn mofifier
-Button btnmodifier = new Button("Modifier");
-            btnmodifier.getAllStyles().setFont(Font.createTrueTypeFont(Font.NATIVE_ITALIC_LIGHT, 2f));
-            btnmodifier.getAllStyles().setBorder(Border.createDoubleBorder(2, 0x5C246E));
-            btnmodifier.getAllStyles().setTextDecoration(Style.TEXT_DECORATION_UNDERLINE);
-                btnmodifier.addPointerPressedListener(e5 -> {
-             new UpdateCoursForm(current,c,id).show();  }
-            );
+////btn mofifier
+//Button btnmodifier = new Button("Modifier");
+//            btnmodifier.getAllStyles().setFont(Font.createTrueTypeFont(Font.NATIVE_ITALIC_LIGHT, 2f));
+//            btnmodifier.getAllStyles().setBorder(Border.createDoubleBorder(2, 0x5C246E));
+//            btnmodifier.getAllStyles().setTextDecoration(Style.TEXT_DECORATION_UNDERLINE);
+//                btnmodifier.addPointerPressedListener(e5 -> {
+//             new UpdateCoursForm(current,c,id).show();  }
+//            );
                 
                 
 
-//like
-            Label like = new Label("0");
-            like.setUIID("NewsTopLine");
-            Style likeStyle = new Style(supp.getUnselectedStyle());
-            suppStyle.setFgColor(0xf21f1f);
-            FontImage likeImage = FontImage.createMaterial(FontImage.MATERIAL_10K, suppStyle);
-            like.setIcon(likeImage);
-            like.setTextPosition(RIGHT);
+////like
+//            Label like = new Label("0");
+//            like.setUIID("NewsTopLine");
+//            Style likeStyle = new Style(supp.getUnselectedStyle());
+//            suppStyle.setFgColor(0xf21f1f);
+//            FontImage likeImage = FontImage.createMaterial(FontImage.MATERIAL_10K, suppStyle);
+//            like.setIcon(likeImage);
+//            like.setTextPosition(RIGHT);
             // FontImage like=FontImage.createMaterial(FontImage.MATERIAL_ACCESS_TIME, suppStyle);
 ////api
 //Form hi = new Form("Capture", BoxLayout.y());
@@ -204,7 +205,7 @@ Button btnmodifier = new Button("Modifier");
 //
 //hi.show();
 /////
-            addAll(ivE,player, titre, description, date, tags, lien, supp, btnInscrip,btnmodifier, like);
+            addAll(ivE,player, titre, description, date, tags, lien, supp);
 //            Media video = MediaManager.createMedia(e.getLienYoutube(), true);
 //            System.out.println("player "+video);
 //            add(new MediaPlayer(video));
