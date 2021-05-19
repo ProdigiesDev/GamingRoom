@@ -74,6 +74,11 @@ public class ChatControllerForm extends Form{
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (sock.getReadyState() == WebSocketState.OPEN) {
+                    if(Statics.containsBadWords(tf.getText())){
+                        
+                        Dialog.show("", "Ce message ne respecte pas nos standards de la communauté en matière de contenus indésirables", "OK", null);
+                        return;
+                    }
                     if(!sendUserName){
                         
                         sock.send("Dah");
