@@ -6,9 +6,7 @@
 
 package com.esprit.gamingroom.entities;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  *
@@ -40,7 +38,7 @@ public class Membre {
     private String description;
     private boolean active;
     private int ban_duration;
-    private Timestamp last_timeban;
+    private Date last_timeban;
 
     public Membre() {
     }
@@ -62,7 +60,7 @@ public class Membre {
     
     
 
-    public Membre(int id, int point, boolean active, int ban_duration, Timestamp last_timeban) {
+    public Membre(int id, int point, boolean active, int ban_duration, Date last_timeban) {
         this.id = id;
         this.point = point;
         this.active = active;
@@ -85,7 +83,7 @@ public class Membre {
     }
     
 
-    public Membre(int id, String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, int point, String description, boolean active, int ban_duration, Timestamp last_timeban) {
+    public Membre(int id, String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, int point, String description, boolean active, int ban_duration, Date last_timeban) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -103,7 +101,7 @@ public class Membre {
         this.last_timeban = last_timeban;
     }
 
-    public Membre(String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, int point, String description, boolean active, int ban_duration, Timestamp last_timeban) {
+    public Membre(String nom, String prenom, Date date_naissance, Genre genre, String tel, String email, String password, String image, Role role, int point, String description, boolean active, int ban_duration, Date last_timeban) {
         this.nom = nom;
         this.prenom = prenom;
         this.date_naissance = date_naissance;
@@ -268,7 +266,7 @@ public class Membre {
         return ban_duration;
     }
 
-    public Timestamp getLast_timeban() {
+    public Date getLast_timeban() {
         return last_timeban;
     }
 
@@ -329,7 +327,7 @@ public class Membre {
         this.ban_duration = ban_duration;
     }
 
-    public void setLast_timeban(Timestamp last_timeban) {
+    public void setLast_timeban(Date last_timeban) {
         this.last_timeban = last_timeban;
     }
 

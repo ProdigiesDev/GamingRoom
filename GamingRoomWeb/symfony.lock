@@ -8,9 +8,12 @@
     "captcha-com/symfony-captcha-bundle": {
         "version": "4.x-dev"
     },
+<<<<<<< HEAD
+=======
     "cboden/ratchet": {
         "version": "v0.4.3"
     },
+>>>>>>> origin/main
     "craue/formflow-bundle": {
         "version": "3.4.x-dev"
     },
@@ -23,6 +26,8 @@
     "endroid/qr-code-bundle": {
         "version": "4.x-dev"
     },
+<<<<<<< HEAD
+=======
     "evenement/evenement": {
         "version": "v3.0.1"
     },
@@ -50,6 +55,7 @@
     "guzzlehttp/psr7": {
         "version": "1.x-dev"
     },
+>>>>>>> origin/main
     "illuminate/console": {
         "version": "6.x-dev"
     },
@@ -62,12 +68,15 @@
     "laravel/dusk": {
         "version": "v5.11.0"
     },
+<<<<<<< HEAD
+=======
     "lcobucci/clock": {
         "version": "2.1.x-dev"
     },
     "lcobucci/jwt": {
         "version": "4.0.x-dev"
     },
+>>>>>>> origin/main
     "nesbot/carbon": {
         "version": "2.x-dev"
     },
@@ -104,15 +113,20 @@
     "phpoption/phpoption": {
         "version": "1.7-dev"
     },
+<<<<<<< HEAD
+=======
     "psr/http-message": {
         "version": "1.0.x-dev"
     },
+>>>>>>> origin/main
     "psr/simple-cache": {
         "version": "1.0.x-dev"
     },
     "pugx/autocompleter-bundle": {
         "version": "1.x-dev"
     },
+<<<<<<< HEAD
+=======
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
@@ -140,6 +154,7 @@
     "react/stream": {
         "version": "v1.1.1"
     },
+>>>>>>> origin/main
     "symfony/google-mailer": {
         "version": "4.4",
         "recipe": {
@@ -149,6 +164,8 @@
             "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
         }
     },
+<<<<<<< HEAD
+=======
     "symfony/mercure": {
         "version": "0.5.x-dev"
     },
@@ -164,6 +181,7 @@
             "./config/packages/mercure.yaml"
         ]
     },
+>>>>>>> origin/main
     "tattali/calendar-bundle": {
         "version": "1.1",
         "recipe": {

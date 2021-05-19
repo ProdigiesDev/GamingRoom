@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Avis
@@ -19,6 +20,7 @@ class Avis
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"listAvis"})
      */
     private $id;
     
@@ -28,12 +30,12 @@ class Avis
      *
      * @ORM\Column(name="avis", type="string", length=255, nullable=false)
      * @Assert\NotBlank(message="Avis requis")
+     * @Groups({"listAvis"})
      * */
     private $avis;
 
     /**
      * @var \Membre
-     *
      * @ORM\ManyToOne(targetEntity="Membre")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="member_id ", referencedColumnName="id")
@@ -46,6 +48,7 @@ class Avis
      * @var string
      *
      * @ORM\Column(name="sentiment", type="string", length=5, nullable=false, options={"default"="'NONE'"})
+     * @Groups({"listAvis"})
      */
     private $sentiment = '\'NONE\'';
 
