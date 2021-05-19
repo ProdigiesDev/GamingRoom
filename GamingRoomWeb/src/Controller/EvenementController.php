@@ -222,7 +222,7 @@ class EvenementController extends AbstractController
 
         if((($this->getDoctrine()->getRepository(Reactionev::class)->isDislikedByUser($m,$e))[0])[1]>0){
             $event=$this->getDoctrine()->getRepository(Reactionev::class)->dislikeEvent($m,$e);
-
+            
             return $this->json(['code'=>200,
                 'message'=>'dislike bien modifié en like',
                 'likes'=>$this->getDoctrine()->getRepository(Reactionev::class)->count(array("evenement"=>$e,"interaction"=>1)),
@@ -354,4 +354,5 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('evenement_index');
     }
+
 }
