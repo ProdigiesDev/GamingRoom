@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -20,61 +21,72 @@ class Produit
      * @var int
      *
      * @ORM\Column(name="idprod", type="integer", nullable=false)
+
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"produit:read"})
      */
     private $idprod;
 
     /**
      * @var string
+
      * @Assert\NotBlank()
      * @Assert\File(mimeTypes={ "image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml"})
-
      * @ORM\Column(name="image", type="string", length=150, nullable=false)
+     * @Groups({"produit:read"})
      */
     private $image;
 
     /**
      * @var string
+
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern     = "/^[a-z]+$/i",
      *     htmlPattern = "[a-zA-Z]+"
      * )
      * @ORM\Column(name="libelle", type="string", length=50, nullable=false)
+     *  @Groups({"produit:read"})
      */
     private $libelle;
 
     /**
      * @var float
+
      * @Assert\NotBlank()
      * * @Assert\Type(
      *     type="float",
      *     message="The value {{ value }} is not a valid {{ type }}."
      * )
 
-
      * @Assert\Positive(message ="the numbre should be positive")
 
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
+     *  @Groups({"produit:read"})
      */
     private $prix;
 
     /**
      * @var string
+
      * @Assert\NotBlank()
 
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
+     *  @Groups({"produit:read"})
      */
     private $description;
 
     /**
-     * @var \Categorie
+
+
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Categorie")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_cat", referencedColumnName="idcat")
      * })
+     * @Groups({"produit:read"})
+
      */
     private $idCat;
 

@@ -18,6 +18,8 @@ import java.util.Scanner;*/
 public class Statics {
     public static final String BASE_URL="http://127.0.0.1:8000";
     public static final String dossierImagePath = "http://localhost/ProdigiesDev/GamingRoomWeb/public/images/evenement/";
+    public static final String UPLOAD_IMAGE ="http://127.0.0.1:8000/images/produits/";
+
     public static String getDossierImagePath() {
         return dossierImagePath;
     }
