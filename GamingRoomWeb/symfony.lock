@@ -1,7 +1,13 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "api-platform/core": {
         "version": "2.5",
+=======
+    "lcobucci/jwt": {
+        "version": "4.0.x-dev"
+    },
+>>>>>>> origin/eya
 =======
     "bacon/bacon-qr-code": {
         "version": "2.0.3"
@@ -160,7 +166,11 @@
         "version": "v1.1.1"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/main
+>>>>>>> origin/eya
     "symfony/google-mailer": {
         "version": "4.4",
         "recipe": {
