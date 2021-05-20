@@ -25,7 +25,7 @@ class MembreApiController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(Membre::class)->findOneBy(['email'=>$email]);
         //kan lkitah fl base
-        if($user && $user->getRole() != 'Admin'){
+        if($user){
 
             if(password_verify($password,$user->getPassword())) {
                 if($user->getRole() == 'Coach' && $user->getActive()==0 && $user->getBanDuration()==0 && $user->getLastTimeban()==null)
@@ -86,6 +86,7 @@ class MembreApiController extends AbstractController
             return new Response("ErrorEmail");
         }
     }
+    /////////////////////////debut resest password ////////////////////
 
     /**
      * @Route("/membre/api/verifEmail", name="membre_vemail")
@@ -103,5 +104,66 @@ class MembreApiController extends AbstractController
             return new Response("false");
         }
     }
+    /////////////////////////fin reset password ////////////////////////
+    /**
+     * @Route("/membre/api/signup", name="user_signup")
+     */
+    public function signUp(Request $request,UserPasswordEncoderInterface $encoder ): Response
+    {
+        $nom = $request->query->get('nom');
+        $prenom = $request->query->get('prenom');
+        $date = $request->query->get('dateNaissance');
+        $genre = $request->query->get('genre');
+        $numero = $request->query->get('numeroTel');
+        $email = $request->query->get('email');
+        $pass = $request->query->get('password');
+        $image = $request->query->get('image');
+        $role = $request->query->get('role');
+        $desc = $request->query->get('description');
+
+        $em = $this->getDoctrine()->getManager();
+        $membre = $em->getRepository(Membre::class)->findOneBy(['email'=>$email]);
+
+
+        //test addresse lazm bl @
+        if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+            return new Response("email invalide");
+        }
+        if($membre){
+            return new Response("email existe");
+        }
+        $user = new Membre();
+        $user->setNom($nom);
+        $user->setPrenom($prenom);
+        $user->setDateNaissance(new \DateTime($date));
+        $user->setGenre($genre);
+        $user->setNumeroTel($numero);
+        $user->setEmail($email);
+        $user->setPassword($encoder->encodePassword($user, $pass));
+        $user->setImage($image);
+        $user->setRole($role);
+        $user->setDescription($desc);
+        $user->setLastTimeban(null);
+        $user->setBanDuration(0);
+
+        if($user->getRole()=="Coach"){
+            $user->setActive(0);
+        }
+        if($user->getRole()=="Membre") {
+            $user->setActive(1);
+        }
+
+        try{
+
+            $em->persist($user);
+            $em->flush();
+
+            return new JsonResponse("compte cree",200);
+        }catch (\Exception $ex){
+            return new Response("exception".$ex->getMessage());
+        }
+    }
+
+
 
 }
