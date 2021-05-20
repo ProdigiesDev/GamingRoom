@@ -7,6 +7,7 @@ package com.esprit.gamingroom.gui.cours;
 
 import com.codename1.components.ImageViewer;
 import com.codename1.components.SpanLabel;
+import com.codename1.ui.AutoCompleteTextField;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
@@ -21,6 +22,7 @@ import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.list.DefaultListModel;
 import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.esprit.gamingroom.entities.Cours;
@@ -137,7 +139,28 @@ cmp.setVisible(show);
 }
 getContentPane().animateLayout(250);
 });
-
+//autocoplete
+//final DefaultListModel<String> options = new DefaultListModel<>();
+//Cours c = new Cours();
+//                AutoCompleteTextField ac = new AutoCompleteTextField(options) {
+//                    @Override
+//                    protected boolean filter(String text) {
+//                        if (text.length() == 0) {
+//                            return false;
+//                        }
+//                        String[] l = {c.getNomCours()};//lehné thot lista mta3 lhajet eli theb atml alehom recherche
+//                        if (l == null || l.length == 0) {
+//                            return false;
+//                        }
+//
+//                        options.removeAll();
+//                        for (String s : l) {
+//                            options.addItem(s);
+//                        }
+//                        return true;
+//                    }
+//                };
+//                ac.setMinimumElementsShownInPopup(5);
 
         
         

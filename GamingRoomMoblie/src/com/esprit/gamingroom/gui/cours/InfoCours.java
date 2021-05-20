@@ -83,15 +83,32 @@ public class InfoCours extends Form {
             System.out.println("omg " + imagePath + c.getImage());
 
             ImageViewer ivE = new ImageViewer(imgE);
-            ivE.setImage(imgE.scaled(400, 400));
+            ivE.setImage(imgE.scaled(1100, 400));
             //video
+            //
+            Button fileVideo = new Button("Visualiser la video ");
+         fileVideo.addActionListener(e -> {
+       FileSystemStorage fss = FileSystemStorage.getInstance();
+       String fileName =c.getLienYoutube();
+             System.out.println(fileName);
+        if (!fss.exists(fileName)) {
+          Util.downloadUrlToFile(c.getLienYoutube(), fileName, true);
+        
+            } 
+            Display.getInstance().execute(fileName);
+       
+         });
+      //  current.add(back);
+      
+      //this.add(fileVideo);
+            //
             WebBrowser player = new WebBrowser();
             
             String integrationCode = "<iframe src=\"" + c.getLienYoutube() + "\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen style=\"width: 100%;height:800px\" </iframe>";
 
             player.setPage(integrationCode, null);
             System.out.println("lien" + player.getPage());
-            //add(player);
+            add(player);
             titre = new SpanLabel();
             description = new SpanLabel();
             date = new SpanLabel();
@@ -225,31 +242,31 @@ public class InfoCours extends Form {
 /////
 
 //video api
-final Form hi = new Form("MediaPlayer", new BorderLayout());
-hi.setToolbar(new Toolbar());
-Style s = UIManager.getInstance().getComponentStyle("Title");
-FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_VIDEO_LIBRARY, s);
-hi.getToolbar().addCommandToRightBar(new Command("", icon) {
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        Display.getInstance().openGallery((e) -> {
-            if(e != null && e.getSource() != null) {
-                String file = (String)e.getSource();
-                try {
-                    Media video = MediaManager.createMedia(file, true);
-                    hi.removeAll();
-                    hi.add(BorderLayout.CENTER, new MediaPlayer(video));
-                    hi.revalidate();
-                } catch(IOException err) {
-                    Log.e(err);
-                } 
-            }
-        }, Display.GALLERY_VIDEO);
-    }
-});
-hi.show();
+//final Form hi = new Form("MediaPlayer", new BorderLayout());
+//hi.setToolbar(new Toolbar());
+//Style s = UIManager.getInstance().getComponentStyle("Title");
+//FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_VIDEO_LIBRARY, s);
+//hi.getToolbar().addCommandToRightBar(new Command("", icon) {
+//    @Override
+//    public void actionPerformed(ActionEvent evt) {
+//        Display.getInstance().openGallery((e) -> {
+//            if(e != null && e.getSource() != null) {
+//                String file = (String)e.getSource();
+//                try {
+//                    Media video = MediaManager.createMedia(file, true);
+//                    hi.removeAll();
+//                    hi.add(BorderLayout.CENTER, new MediaPlayer(video));
+//                    hi.revalidate();
+//                } catch(IOException err) {
+//                    Log.e(err);
+//                } 
+//            }
+//        }, Display.GALLERY_VIDEO);
+//    }
+//});
+//hi.show();
 //
-            addAll(ivE,player, titre, description, date, tags, lien,hi,supp);
+            addAll(ivE, titre, description, date, tags, lien,supp,fileVideo);
 //            Media video = MediaManager.createMedia(e.getLienYoutube(), true);
 //            System.out.println("player "+video);
 //            add(new MediaPlayer(video));
