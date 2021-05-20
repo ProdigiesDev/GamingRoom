@@ -5,6 +5,8 @@
  */
 package com.esprit.gamingroom.entities;
 
+import java.util.Comparator;
+
 /**
  *
  * @author yasmine
@@ -37,6 +39,15 @@ public class Produit {
         this.description = description;
         this.idCat = idCat;
     }
+
+    public Produit(int idprod, String image, String libelle, float prix, String description) {
+        this.idprod = idprod;
+        this.image = image;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.description = description;
+    }
+    
 
     public int getIdprod() {
         return idprod;
@@ -85,5 +96,10 @@ public class Produit {
     public void setIdCat(int idCat) {
         this.idCat = idCat;
     }
-            
+        public static Comparator<Produit> libelleComparator = new Comparator<Produit>() {
+        @Override
+        public int compare(Produit o1, Produit o2) {
+            return (int) (o1.getLibelle().toLowerCase().compareTo(o2.getLibelle().toLowerCase()));
+        }
+    };         
 }

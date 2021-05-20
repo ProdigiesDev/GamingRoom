@@ -13,8 +13,8 @@ import com.codename1.ui.Toolbar;
 import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
-import com.esprit.gamingroom.gui.HomeForm;
-import com.esprit.gamingroom.gui.SignInForm;
+
+import com.esprit.gamingroom.gui.ProduitForm;
 
 
 
@@ -51,14 +51,7 @@ public class Home {
     }
     
     public void start() {
-        if(current != null){
-            current.show();
-            return;
-        }
-//        Form hi = new Form("Hi World", BoxLayout.y());
-//        hi.add(new Label("Hi World"));
-//        hi.show();
-   new HomeForm().show();
+   new ProduitForm().show();
     }
 
     public void stop() {
