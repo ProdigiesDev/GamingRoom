@@ -7,6 +7,7 @@ package com.esprit.gamingroom.gui;
 
 import com.codename1.components.ImageViewer;
 import com.codename1.components.SpanLabel;
+import com.codename1.ui.AutoCompleteTextField;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
@@ -22,6 +23,7 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.list.DefaultListModel;
 import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.esprit.gamingroom.entities.Evenement;
@@ -51,12 +53,17 @@ public class ListEvenetsForm extends Form {
         setTitle("Liste des evenement");
         current = this;
         List<Evenement> ls = ServiceEvenement.getInstance().getAllEvenets();
+        int i=0;
+        String[] l =new String[ls.size()];
+        for (Evenement e : ls) {
+            l[i]=e.getNomEvent();
+            i++;
+        }
         for (Evenement e : ls) {
             try {
                 EncodedImage enc = EncodedImage.create("/loading.gif");
                 Image imgE = URLImage.createToStorage(enc, e.getImage(), imagePath + e.getImage(), URLImage.RESIZE_SCALE);
                 ligne = new Container(BoxLayout.x());
-                System.out.println("ime "+imgE);
                 ImageViewer ivE = new ImageViewer(imgE);
                 imageCont = new Container();
                 x = new Container(BoxLayout.y());
@@ -84,17 +91,40 @@ public class ListEvenetsForm extends Form {
                 });
 
                 /**
-                 * *************************************************************************
+                 * ***********************************************************************
                  */
-                TextField searchField;
-                searchField = new TextField("", "Chercher un événement");
-                searchField.getHintLabel().setUIID("Title");
-                searchField.setUIID("Title");
                 
-                getToolbar().setTitleComponent(searchField);
+                final DefaultListModel<String> options = new DefaultListModel<>();
 
-                searchField.addDataChangeListener((i1, i2) -> {
-                    String t = searchField.getText();
+                AutoCompleteTextField ac = new AutoCompleteTextField(options) {
+                    @Override
+                    protected boolean filter(String text) {
+                        if (text.length() == 0) {
+                            return false;
+                        }
+                        
+                        if (l == null || l.length == 0) {
+                            return false;
+                        }
+
+                        options.removeAll();
+                        for (String s : l) {
+                            options.addItem(s);
+                        }
+                        return true;
+                    }
+                };
+                ac.setMinimumElementsShownInPopup(5);
+                
+                /*TextField searchField;
+                searchField = new TextField("", "Chercher un événement");*/
+//                ac.getHintLabel().setUIID("Title");
+                ac.setUIID("Title");
+
+                getToolbar().setTitleComponent(ac);
+
+                ac.addDataChangeListener((i1, i2) -> {
+                    String t = ac.getText();
                     if (t.length() < 1) {
                         for (Component cmp : getContentPane()) {
                             cmp.setHidden(false);
@@ -113,8 +143,9 @@ public class ListEvenetsForm extends Form {
                     }
                     getContentPane().animateLayout(250);
                 });
+
                 /**
-                 * *************************************************************************************
+                 * ***********************************************************************************
                  */
 
                 x.add(titre);
