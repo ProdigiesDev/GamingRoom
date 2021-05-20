@@ -21,7 +21,7 @@ class Cour
      * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
-     * @Groups("listcour")
+
      * @ORM\Id
 
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -34,7 +34,7 @@ class Cour
      * @var string
      * @Assert\NotBlank()
      * @ORM\Column(name="nomCours", type="string", length=100, nullable=false)
-     *  @Groups("listcour")
+
 
      */
     private $nomcours;
@@ -43,7 +43,7 @@ class Cour
      * @var string
      * @Assert\NotBlank(message="description required")
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
-     *  @Groups("listcour")
+
      */
     private $description;
 
@@ -52,7 +52,7 @@ class Cour
      * @Assert\NotBlank()
      * @Assert\Positive(message="the number should be positive")
      * @ORM\Column(name="nb_participant", type="integer", nullable=false)
-     *  @Groups("listcour")
+
      */
     private $nbParticipant;
 
@@ -60,7 +60,7 @@ class Cour
      * @var \DateTime
      *  @Assert\NotBlank()
      * @ORM\Column(name="date_creation", type="datetime", nullable=false, options={"default"="current_timestamp()"})
-     *  @Groups("listcour")
+
      */
     private $dateCreation = 'current_timestamp()';
 
@@ -68,7 +68,7 @@ class Cour
      * @var string
 
      * @ORM\Column(name="tags", type="string", length=255, nullable=false)
-     *  @Groups("listcour")
+
      */
     private $tags;
 
@@ -77,7 +77,7 @@ class Cour
      * @Assert\NotBlank()
      * @Assert\File(mimeTypes={ "image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml"})
      * @ORM\Column(name="imagecours", type="string", length=250, nullable=false)
-     *  @Groups("listcour")
+
      */
     private $imagecours;
 
@@ -88,7 +88,7 @@ class Cour
      *    message = "The url '{{ value }}' is not a valid url",
      * )
      * @ORM\Column(name="lienYoutube", type="string", length=255, nullable=false)
-     *  @Groups("listcour")
+
      */
     private $lienyoutube;
 
@@ -99,7 +99,7 @@ class Cour
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="categorie_id", referencedColumnName="idcat")
      * })
-     *  @Groups("listcour")
+
      */
     private $categorie;
 
@@ -110,13 +110,13 @@ class Cour
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="membre_id", referencedColumnName="id")
      * })
-     *  @Groups("listcour")
+
      */
     private $membre;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     *  @Groups("listcour")
+
      */
     private $pourcentageLike;
 
