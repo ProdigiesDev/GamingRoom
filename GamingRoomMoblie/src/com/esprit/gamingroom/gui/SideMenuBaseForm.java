@@ -41,13 +41,7 @@ public abstract class SideMenuBaseForm extends Form {
     public void setupSideMenu(Resources res) throws IOException {
     UserSession us = UserSession.getInstancee();
         Membre m = us.getUser();
-//        Image logo = res.getImage("sidemenu2.jpg");
-//      
-//        ImageViewer im =new ImageViewer(logo);
-//        Container sidemenuTop = BorderLayout.center(im);
-//        sidemenuTop.setUIID("SidemenuTop");
-//
-//        getToolbar().addComponentToSideMenu(sidemenuTop);
+        
         getToolbar().addMaterialCommandToSideMenu("  Home", FontImage.MATERIAL_HOME, e -> new HomeForm().show());
         if (m.getRole()== Membre.Role.Membre){
             getToolbar().addMaterialCommandToSideMenu("  Profile : "+m.getPrenom()+" "+m.getNom(), FontImage.MATERIAL_PERSON,e -> new ProfileMembreForm(res).showBack());

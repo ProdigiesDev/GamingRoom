@@ -5,6 +5,7 @@
  */
 package com.esprit.gamingroom.gui;
 import com.codename1.ui.Button;
+import com.codename1.ui.CheckBox;
 import com.codename1.ui.Command;
 import static com.codename1.ui.Component.LEFT;
 import static com.codename1.ui.Component.RIGHT;
@@ -19,6 +20,7 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BorderLayout;
 import com.esprit.gamingroom.services.MembreService;
 import com.codename1.ui.Container;
+import com.codename1.ui.events.ActionEvent;
 
 /**
  *
@@ -34,7 +36,13 @@ public class SignInForm extends Form {
 
         getTitleArea().setUIID("Container");
         
-
+        Label titre = new Label();
+        titre.setText("Sign In");
+        titre.setUIID("Title");
+        
+        Label titre1 = new Label();
+        titre1.setText(" ");
+  
         
         TextField email = new TextField("", "Email", 50, TextField.EMAILADDR);
         TextField password = new TextField("", "Password", 15, TextField.PASSWORD);
@@ -46,6 +54,9 @@ public class SignInForm extends Form {
         passwordIcon.getAllStyles().setMargin(RIGHT, 0);
         FontImage.setMaterialIcon(loginIcon, FontImage.MATERIAL_PERSON_OUTLINE, 4);
         FontImage.setMaterialIcon(passwordIcon, FontImage.MATERIAL_LOCK_OUTLINE, 4);
+        
+
+     
 
         Button loginButton = new Button("LOGIN");
         loginButton.setUIID("LoginButton");
@@ -77,6 +88,8 @@ public class SignInForm extends Form {
         
         Container by = BoxLayout.encloseY(
 //                spaceLabel,
+                titre,
+                titre1,
                 BorderLayout.center(email).
                         add(BorderLayout.WEST, loginIcon),
                 BorderLayout.center(password).

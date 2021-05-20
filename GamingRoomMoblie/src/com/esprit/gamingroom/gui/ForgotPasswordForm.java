@@ -9,6 +9,7 @@ import com.codename1.ui.Button;
 import com.codename1.ui.Command;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
@@ -44,6 +45,12 @@ public class ForgotPasswordForm extends Form {
         password.setVisible(false);
         vpassworField.setVisible(false);
         text.setVisible(false);
+        //////////
+        Label backIcon = new Label("", "TextField");
+        backIcon.getAllStyles().setMargin(RIGHT, 0);
+        FontImage.setMaterialIcon(backIcon, FontImage.MATERIAL_ASSIGNMENT_RETURN, 2);
+
+        //////////////
         
         Button sendButton = new Button("Send Email");
         sendButton.setUIID("LoginButton");
@@ -61,7 +68,10 @@ public class ForgotPasswordForm extends Form {
          Button verifButton = new Button("Verifier");
         verifButton.setUIID("LoginButton");
         verifButton.addActionListener(e -> {
-       
+       if ((code.getText().length() == 0)){
+           Dialog.show("Alert", "Veuillez inserer un code", new Command("OK"));
+       }
+       else{
       
             boolean response = MembreService.getInstance().verifCode(code.getText());
             if(response){
@@ -82,7 +92,7 @@ public class ForgotPasswordForm extends Form {
                 validerButton.setVisible(false);
                 text.setVisible(false);
                 
-            }
+            } }
         });
         
         
@@ -99,6 +109,13 @@ public class ForgotPasswordForm extends Form {
              }
          });
          
+         ///////
+          Button retour = new Button("<< Retour SignIn");
+        retour.setUIID("CreateNewAccountButton");
+        retour.addActionListener(e -> new SignInForm(theme).show());
+        ///////
+
+         
         Container by = BoxLayout.encloseY(
 //                spaceLabel,
                
@@ -109,7 +126,8 @@ public class ForgotPasswordForm extends Form {
                 text,
                 password,
                 vpassworField,
-                validerButton
+                validerButton,
+                retour
                
                 
         );

@@ -11,8 +11,10 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.l10n.ParseException;
+import com.codename1.ui.ComboBox;
 import com.codename1.ui.Command;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
@@ -117,6 +119,10 @@ public class MembreService {
                              new ProfileCoachForm(theme).show();
                              UserSession userSession = new UserSession(m,m.getRole());
                         }
+                        else if (m.getRole() == Membre.Role.Admin){
+                             //  DAAAHHH
+                             UserSession userSession = new UserSession(m,m.getRole());
+                        }
                     } catch (ParseException ex) {
                         Logger.getLogger(MembreService.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -155,6 +161,9 @@ public class MembreService {
             }
             else if(obj.get("role").toString().equals("Membre")){
                 u.setRole(Membre.Role.Membre);
+            }
+            else if(obj.get("role").toString().equals("Admin")){
+                u.setRole(Membre.Role.Admin);
             }
  
             UserSession z = UserSession.getInstance(u);
@@ -247,4 +256,63 @@ public class MembreService {
           NetworkManager.getInstance().addToQueueAndWait(con);
       }
       //////////////////// fin forgot password //////////////////////////////////
+      
+      //////////////////sign up ///////////////////////////////////////
+    
+
+      
+      public void signUp(TextField nom,TextField prenom,Date datenaiss,String genre,TextField numero,TextField email,TextField password , TextField vpassword,String image,String role,TextArea desc){
+          String url = Statics.BASE_URL+"/membre/api/signup?nom="+nom.getText()+"&prenom="+prenom.getText()+"&dateNaissance="+datenaiss+"&genre="+genre+"&numeroTel="+numero.getText()+"&email="+email.getText()+"&password="+password.getText()+"&image="+image+"&role="+role+"&description="+desc.getText();
+          con = new ConnectionRequest(url,false);
+          ///controle de saisie 
+          if((nom.getText().length() == 0) || (prenom.getText().length() == 0) || (numero.getText().length() == 0) || (email.getText().length() == 0) || (password.getText().length() == 0) ){
+             
+              
+                  Dialog.show("Alert", "veuillez remplir tous les champs", new Command("OK"));
+
+          }
+          
+//          else if(role.equals(Membre.Role.Coach.toString())){
+//                  desc.setVisible(true);
+//                  if(desc.getText().length() == 0){
+//                                    Dialog.show("Alert", "Veuillez remplir le champ description", new Command("OK"));
+//
+//              }
+//             }
+          
+          else{
+          /// lorsque on execute l'url
+          con.addResponseListener((e)->{
+               byte[]data = (byte[]) e.getMetaData(); // nhez id mtaa kol text field
+                  String responseData = new String(data); // nhez content
+             
+             
+             if(responseData.equals("email invalide") ){
+                Dialog.show("Erreur", "Email éronné ",new Command("OK"));
+            }
+             else if(responseData.equals("email existe")){
+                  Dialog.show("Erreur", "Email existe déjà ",new Command("OK"));
+             }
+              
+           
+             else{
+                  if(password.getText().equals(vpassword.getText())){
+                 // njib data li hatithom fi form
+                
+                  Dialog.show("Success", "Compte créé avec succés ",new Command("OK"));
+                  System.out.println("data2 ==> "+responseData);
+                   new SignInForm(theme).show();
+             }
+             else{
+                                                          
+                     Dialog.show("Erreur", "vérifier vos champs password ",new Command("OK"));
+
+                     }
+              
+          }});
+                 /// aprés exécution url on attend la réponse du serveur ici 
+                    NetworkManager.getInstance().addToQueueAndWait(con);
+
+      }
+      }
 }
