@@ -6,8 +6,15 @@
 package com.esprit.gamingroom.gui.cours;
 import com.codename1.capture.Capture;
 import com.codename1.components.ImageViewer;
+import com.codename1.components.MediaPlayer;
 import com.codename1.components.MultiButton;
 import com.codename1.components.SpanLabel;
+import com.codename1.components.ToastBar;
+import com.codename1.components.WebBrowser;
+import com.codename1.ui.Display;
+import com.codename1.ui.BrowserComponent;
+import com.codename1.media.MediaManager;
+import com.codename1.media.Media;
 import com.codename1.components.WebBrowser;
 
 import com.codename1.io.FileSystemStorage;
@@ -17,9 +24,11 @@ import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.media.Media;
 import com.codename1.media.MediaManager;
 import com.codename1.ui.Button;
+import com.codename1.ui.Command;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Font;
 import com.codename1.ui.FontImage;
@@ -30,6 +39,7 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
@@ -111,9 +121,17 @@ public class InfoCours extends Form {
                 Dialog dig = new Dialog("delete");
                 if (dig.show("Suppression", "Voulez vous vraiment supprimer ce cours", "Annuler", "oui")) {
                     dig.dispose();
+                    
                 } else {
                     dig.dispose();
                 }
+                ToastBar.getInstance().setPosition(BOTTOM);
+                      ToastBar.Status status = ToastBar.getInstance().createStatus();
+ status.setShowProgressIndicator(true);
+   //status.setIcon(res.getImage("done.png").scaledSmallerRatio(Display.getInstance().getDisplayWidth()/10, Display.getInstance().getDisplayWidth()/15));
+                            status.setMessage("  Suppression effectué  avec succès");
+                     status.setExpires(10000);  
+                      status.show();
                 System.out.println("supp");
                 System.out.println(id);
                 if (CoursServices.getInstance().deleteCours(id));
@@ -205,7 +223,33 @@ public class InfoCours extends Form {
 //
 //hi.show();
 /////
-            addAll(ivE,player, titre, description, date, tags, lien, supp);
+
+//video api
+final Form hi = new Form("MediaPlayer", new BorderLayout());
+hi.setToolbar(new Toolbar());
+Style s = UIManager.getInstance().getComponentStyle("Title");
+FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_VIDEO_LIBRARY, s);
+hi.getToolbar().addCommandToRightBar(new Command("", icon) {
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        Display.getInstance().openGallery((e) -> {
+            if(e != null && e.getSource() != null) {
+                String file = (String)e.getSource();
+                try {
+                    Media video = MediaManager.createMedia(file, true);
+                    hi.removeAll();
+                    hi.add(BorderLayout.CENTER, new MediaPlayer(video));
+                    hi.revalidate();
+                } catch(IOException err) {
+                    Log.e(err);
+                } 
+            }
+        }, Display.GALLERY_VIDEO);
+    }
+});
+hi.show();
+//
+            addAll(ivE,player, titre, description, date, tags, lien,hi,supp);
 //            Media video = MediaManager.createMedia(e.getLienYoutube(), true);
 //            System.out.println("player "+video);
 //            add(new MediaPlayer(video));

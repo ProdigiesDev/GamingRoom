@@ -29,7 +29,7 @@ public class HomeForm extends Form {
        // FloatingActionButton addTaskBtn = FloatingActionButton.createFAB(FontImage.MATERIAL_ADD);
       
                 
-        Button addTaskBtn = new Button("Add Cours");
+        Button addTaskBtn = new Button("Ajouter un Cours");
 //        Stroke borderStroke = new Stroke(2, Stroke.CAP_SQUARE, Stroke.JOIN_MITER, 1);
 //        addTaskBtn.getAllStyles().setFont(Font.createTrueTypeFont(Font.NATIVE_MAIN_LIGHT, 2f));
 //                addTaskBtn.getAllStyles().setBorder(RoundBorder.create(). rectangle(true).
