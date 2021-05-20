@@ -40,6 +40,8 @@ public class ProduitForm extends Form {
         /* *** *YOUR CODE GOES HERE* *** */
         produitArrayList = produitService.AffichageProduit();
         showProduit();
+        
+        
         /* *** *SEARCHBAR* *** */
         getToolbar().addSearchCommand(e -> {
             String text = (String) e.getSource();
@@ -66,7 +68,7 @@ public class ProduitForm extends Form {
             }
         }, 4);
         /* *** *OVERFLOW MENU* *** */
-        getToolbar().addCommandToOverflowMenu("Sort by Name", null, (evt) -> {
+        getToolbar().addCommandToOverflowMenu("Sort by Libelle", null, (evt) -> {
             removeAll();
             Collections.sort(produitArrayList, Produit.libelleComparator);
             showProduit();
