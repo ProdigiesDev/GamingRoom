@@ -21,6 +21,7 @@ public class Statics {
     public static final String UPLOAD_IMAGE ="http://127.0.0.1:8000/images/produits/";
     public static final String dossierCoursImagePath = "http://127.0.0.1:8000/images/cours/";
     public static final String uploadCoursImagePath = "C:\\xampp\\htdocs\\ProdigiesDev\\GamingRoomWeb\\public\\images\\cours\\";
+    public static final String dossierMembreImagePath = "http://127.0.0.1:8000/images/membre/";
     public static String getDossierImagePath() {
         return dossierImagePath;
     }
