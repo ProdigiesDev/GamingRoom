@@ -13,9 +13,9 @@ import com.codename1.ui.Toolbar;
 import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
-import com.esprit.gamingroom.gui.Panier;
 
 import com.esprit.gamingroom.gui.ProduitForm;
+import com.esprit.gamingroom.gui.ShowPanier;
 
 
 
@@ -52,7 +52,7 @@ public class Home {
     }
     
     public void start() {
-   new Panier().show();
+   new ProduitForm().show();
     }
 
     public void stop() {

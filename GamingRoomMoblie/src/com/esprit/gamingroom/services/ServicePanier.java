@@ -12,6 +12,7 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
+import com.codename1.processing.Result;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.gamingroom.entities.Panier;
 import com.esprit.gamingroom.entities.Produit;
@@ -32,7 +33,10 @@ import static jdk.nashorn.internal.objects.NativeArray.map;
 public class ServicePanier {
     public static ServicePanier instance = null ;
     
+    ArrayList<Produit> produitList;
+    
     private ConnectionRequest req;
+    public boolean ResultOk;
     
     public static ServicePanier getInstance(){
         if(instance == null)
@@ -118,6 +122,55 @@ public class ServicePanier {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return result ;
+    }
+    
+    
+    
+public boolean addProduitPanier(int idprod , int idcommande ) { 
+         String url = Statics.BASE_URL + "addPanierJson/"+ idprod +"/" +  idcommande ;
+       
+        req.setUrl(url);
+        req.addResponseListener((e) -> {
+            
+            String str = new String(req.getResponseData());//Reponse json hethi lyrinaha fi navigateur 9bila
+            System.out.println("data == "+str);
+        });
+        
+        try {
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    } catch (Exception e) {
+    }
+        return ResultOk;
+    }
+
+public ArrayList<Produit> findpanierbyproduit(int idprod  ) { 
+         String url = Statics.BASE_URL + "findpanierbyproduit" ;
+       
+        req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                 produitList = new ArrayList<>();
+                
+                JSONParser jsonp = new JSONParser();           
+                try {
+                    Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));
+                    System.out.println(tasks);
+                    List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
+                    for (Map<String, Object> obj : list) {
+                        Produit p = new Produit();
+                        p.setLibelle((String)obj.get("libelle"));
+                        p.setPrix(Float.parseFloat(obj.get("prix").toString()));
+                        produitList.add(p );
+                        
+                    }
+                } catch (IOException ex) {
+                }
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return produitList;
     }
     
          

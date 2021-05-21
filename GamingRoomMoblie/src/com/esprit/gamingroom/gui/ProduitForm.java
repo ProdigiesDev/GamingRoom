@@ -6,6 +6,7 @@
 package com.esprit.gamingroom.gui;
 
 import com.codename1.components.MultiButton;
+import com.codename1.components.ShareButton;
 import com.codename1.ui.Component;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
@@ -31,7 +32,8 @@ public class ProduitForm extends Form {
     Form current;
     ArrayList<Produit> produitArrayList = new ArrayList<>();
     ProduitService produitService = new ProduitService();
-
+//lahdha aw chyodkhol maaya chkkoun irigel hkeyet commande khater lezma matjmch tinseri toul f  panier heni choftha 
+    
     public ProduitForm() {
         /* *** *CONFIG SCREEN* *** */
         current = this;
@@ -89,7 +91,9 @@ public class ProduitForm extends Form {
             multiButton.setEmblem(FontImage.createMaterial(FontImage.MATERIAL_KEYBOARD_ARROW_RIGHT, "", 10.0f));
             multiButton.addActionListener(l -> new ShowProduit(current, produit).show());
             // container.add(multiButton);
-            add(multiButton);
+            ShareButton sb = new ShareButton();
+            sb.setTextToShare("Vien voir : "+produit.getLibelle()+" a "+produit.getPrix()+" DT");
+            addAll(multiButton,sb);
         }
     }
 
