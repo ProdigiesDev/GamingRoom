@@ -24,6 +24,7 @@ package com.esprit.gamingroom;
 import com.codename1.components.InfiniteProgress;
 import com.codename1.components.SpanLabel;
 import com.codename1.io.Log;
+import com.codename1.io.Util;
 import com.codename1.rad.models.Entity;
 import com.codename1.rad.nodes.ActionNode;
 import com.codename1.rad.nodes.ViewNode;
@@ -50,6 +51,10 @@ import com.codename1.ui.Container;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.util.StringUtil;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 public class ChatControllerForm extends Form{
 
     public static WebSocket sock;
@@ -74,7 +79,8 @@ public class ChatControllerForm extends Form{
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (sock.getReadyState() == WebSocketState.OPEN) {
-                    if(Statics.containsBadWords(tf.getText())){
+                    System.err.println(tf.getText());
+                    if(containsBadWords(tf.getText())){
                         
                         Dialog.show("", "Ce message ne respecte pas nos standards de la communauté en matière de contenus indésirables", "OK", null);
                         return;
@@ -204,5 +210,22 @@ public class ChatControllerForm extends Form{
     }
 
     public void destroy() {
+    }
+    private boolean containsBadWords(String msg){
+          try {
+            InputStream is = Display.getInstance().getResourceAsStream(this.getClass(), "/badWords.txt");
+            String s = Util.readToString(is, "UTF-8");
+            List<String> lines=StringUtil.tokenize(s, '\n');
+            List<String> bodyList=Arrays.asList(Statics.split(msg.toLowerCase(), " "));
+            for (int i=0;i<lines.size();i++ ) {
+               if(bodyList.contains(lines.get(i))) { 
+                    return true;
+                }
+            }
+            
+        } catch (IOException ex) {
+               ex.printStackTrace();
+        }
+        return false;
     }
 }
