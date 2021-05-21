@@ -99,7 +99,7 @@ public class SignUpForm extends Form {
         role.addItem(Membre.Role.Coach.toString());
 
         TextArea desc = new TextArea();
-//        desc.setRows(3);
+        desc.setRows(3);
 //        desc.setColumns(10);
 //        desc.setMaxSize(255);
         desc.setHint("Decrivez vous dans le domaine de Gaming ");

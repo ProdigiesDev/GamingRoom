@@ -31,6 +31,12 @@ public class AvisListAdminForm  extends Form{
         getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new AdminHomeForm(res).showBack());
 
         this.addAll(new Label("id"),new Label("Membre"),new Label("Avis"),new Label("Sentiment"),new Label("Action"));
+           if(avises.size()==0){
+            this.add(new Label());
+            this.add(new Label("il n'y a pas de données"));
+            this.add(new Label());
+            this.add(new Label());
+        }
         for (int i = 0; i < avises.size(); i++) {
             Avis a=avises.get(i);
             this.add(new Label(String.valueOf(a.getId())));

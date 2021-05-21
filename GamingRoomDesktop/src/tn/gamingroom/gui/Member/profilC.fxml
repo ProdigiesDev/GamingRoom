@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="522.0" fitWidth="733.0" layoutX="-2.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/198677.jpg" />
+            <Image url="file:/C:/xampp/htdocs//ProdigiesDev/GamingRoomWeb/public/images/198677.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="22.0" layoutY="14.0" opacity="0.56" prefHeight="102.0" prefWidth="366.0" style="-fx-background-color: #000000;">

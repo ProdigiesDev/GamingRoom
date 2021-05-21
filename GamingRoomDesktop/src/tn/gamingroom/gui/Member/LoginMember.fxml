@@ -18,7 +18,7 @@
          <children>
             <ImageView fitHeight="343.0" fitWidth="400.0" layoutX="147.0" layoutY="-65.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/gamingroom.png" />
+                  <Image url="file:/C:/xampp/htdocs//ProdigiesDev/GamingRoomWeb/public/images/gamingroom.png" />
                </image>
             </ImageView>
             <Label layoutX="88.0" layoutY="263.0" prefHeight="48.0" prefWidth="400.0" text="             FIND GAMERS JUST LIKE YOU..." textAlignment="CENTER" textFill="WHITE">
@@ -58,7 +58,7 @@
       </Pane>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="918.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/user.png" />
+            <Image url="file:/C:/xampp/htdocs//ProdigiesDev/GamingRoomWeb/public/images/user.png" />
          </image>
       </ImageView>
       <Label layoutX="907.0" layoutY="281.0" text="WELCOME" textFill="#6239d1">

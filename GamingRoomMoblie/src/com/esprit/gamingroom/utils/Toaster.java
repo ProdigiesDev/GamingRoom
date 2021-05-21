@@ -16,7 +16,6 @@ public class Toaster {
     public static ToastBar.Status showLoading() {
         ToastBar.Status status = ToastBar.getInstance().createStatus();
         status.setMessage("Chargement en cours...");
-        status.setShowProgressIndicator(true);
         status.show(); 
         return status;
     }

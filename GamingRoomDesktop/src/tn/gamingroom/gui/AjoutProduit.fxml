@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="DashProduit" prefHeight="844.0" prefWidth="1335.0" style="-fx-background-color: black;" stylesheets="file:/D:/ProdigiesDev//GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutProduitController">
+<AnchorPane id="AnchorPane" fx:id="DashProduit" prefHeight="844.0" prefWidth="1335.0" style="-fx-background-color: black;" stylesheets="file:/C:/xampp/htdocs//ProdigiesDev//GamingRoomDesktop/src/tn/gamingroom/gui/Accueil/accueil.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gamingroom.gui.AjoutProduitController">
    <children>
-      <TableView fx:id="tvbox" layoutX="610.0" layoutY="125.0" onMouseClicked="#getSelected" prefHeight="480.0" prefWidth="692.0" stylesheets="file:/D:/ProdigiesDev//GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
+      <TableView fx:id="tvbox" layoutX="610.0" layoutY="125.0" onMouseClicked="#getSelected" prefHeight="480.0" prefWidth="692.0" stylesheets="file:/C:/xampp/htdocs//ProdigiesDev//GamingRoomDesktop/src/tn/gamingroom/gui/Jeux/listJeux.css">
         <columns>
           <TableColumn fx:id="colid" prefWidth="52.0" style="-fx-text-fill: black;" text="ID" />
             <TableColumn fx:id="colimage" prefWidth="105.0" text="Image" />

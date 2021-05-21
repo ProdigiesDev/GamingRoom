@@ -83,7 +83,7 @@ class PanierController extends AbstractController
             $last=$request->query->get('billing_lastname');
             $sender = $this->getParameter('twilio_number');
                 $message = $this->twilio->messages->create(
-                    '+21653204330', // Send text to this number
+                    '+21629181857', // Send text to this number
                     array(
                     'from' => $sender, // My Twilio phone number
                     'body' => 'Bonjour  '. $name.', votre commande est en cours de traitment.

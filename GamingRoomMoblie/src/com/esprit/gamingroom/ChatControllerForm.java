@@ -58,6 +58,7 @@ import com.esprit.gamingroom.entities.UserSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import com.codename1.ui.Font;
 public class ChatControllerForm extends Form{
 
     public static WebSocket sock;
@@ -178,7 +179,8 @@ public class ChatControllerForm extends Form{
                         }
                         SpanLabel label = new SpanLabel();
                         label.setText(messageTxt);
-                        label.setUIID("titre2");
+                        label.getTextAllStyles().setFgColor(0xFFFFFF);
+                        label.getTextAllStyles().setFont(Font.createTrueTypeFont(Font.NATIVE_MAIN_REGULAR, 3f));
                         chatContainer.addComponent(label);
                         chatContainer.animateHierarchy(100);
                     }

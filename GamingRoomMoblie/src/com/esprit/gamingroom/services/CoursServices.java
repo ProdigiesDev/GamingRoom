@@ -81,7 +81,7 @@ public class CoursServices {
                 + "nouveau cours nommé  "+c.getNomCours()+"");
 //m.getAttachments().put(textAttachmentUri, "text/plain");
 //m.getAttachments().put(imageAttachmentUri, "image/png");
-Display.getInstance().sendMessage(new String[] {"eya.trifi@esprit.tn"}, "Ajout d'un nouveau cours",m);
+Display.getInstance().sendMessage(new String[] {"mohamedamine.dahwathi@esprit.tn"}, "Ajout d'un nouveau cours",m);
         return resultOK;
         
     } 

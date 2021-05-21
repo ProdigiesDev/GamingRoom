@@ -140,7 +140,7 @@ public class AccueilController implements Initializable {
         review.setLineSpacing(2.0);
 
         bestAvisPage = 0;
-        initReview();
+        //initReview();
     }
 
     private void initReview() {

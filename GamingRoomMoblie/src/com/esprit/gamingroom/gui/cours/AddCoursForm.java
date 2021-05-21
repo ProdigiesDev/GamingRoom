@@ -58,7 +58,7 @@ public class AddCoursForm extends Form{
     }
      
 
-     public AddCoursForm(){
+     public AddCoursForm(Resources res){
         this.setTitle("Ajouter un cours");
         this.setLayout(BoxLayout.y());
        
@@ -226,7 +226,7 @@ public class AddCoursForm extends Form{
         
         //
         this.addAll(tfname, tfdescription,tfnbp,tfdate,tftags,tfcat,tfyoutube, submitTaskBtn,img1);
-        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new ListCoursForm(this).showBack());
+        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new com.esprit.gamingroom.gui.Reaction.HomeForm(res).showBack());
         
         
     }

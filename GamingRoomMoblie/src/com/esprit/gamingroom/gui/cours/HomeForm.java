@@ -49,7 +49,7 @@ public class HomeForm extends Form {
 //                addTaskBtn.getAllStyles().setTextDecoration(Style.TEXT_DECORATION_3D);
         
         
-         addTaskBtn.addActionListener(e -> new AddCoursForm().show());
+         addTaskBtn.addActionListener(e -> new AddCoursForm(null).show());
         listTasksBtn.addActionListener(x->new ListCoursForm(this).show());
         
         

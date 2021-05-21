@@ -171,11 +171,15 @@ public class AjoutEvenementController implements Initializable {
                 selectedFile.setText("Selected File::" + image);
                 Image imageForFile = new Image(f.toURI().toURL().toExternalForm());
                 imV.setImage(imageForFile);
-                imageNameTodb = Env.getDossierImageUtilEventPath() + imageForFile;
+                String fileName = f.getName();
+                int doitIndex = fileName.lastIndexOf(".");
+                String newFileName = fileName.substring(0, doitIndex) + new java.util.Date().getTime() + "." + fileName.substring(doitIndex + 1);
+                   
+                imageNameTodb = Env.getDossierImageUtilEventPath() + newFileName;
                 File dest = new File(imageNameTodb);
 
                 Files.copy(f.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
+                imageNameTodb=newFileName;
             } catch (IOException ex) {
                 Logger.getLogger(AjoutEvenementController.class.getName()).log(Level.SEVERE, null, ex);
             }

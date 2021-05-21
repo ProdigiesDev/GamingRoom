@@ -136,7 +136,7 @@ public class ProfileCoachForm extends SideMenuBaseForm{
          add(ligne);
          Button btnAddCour=new Button("Ajouter un Cours");
          btnAddCour.addActionListener(l->{
-              new AddCoursForm().show();
+              new AddCoursForm(res).show();
          });
          add(btnAddCour);
         } catch (IOException ex) {

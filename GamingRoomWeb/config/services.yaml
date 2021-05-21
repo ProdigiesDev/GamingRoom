@@ -9,9 +9,9 @@ parameters:
     produit_directory: '%kernel.project_dir%/public/images/produits'
     cours_directory: '%kernel.project_dir%/public/images/cours'
     images_directory: '%kernel.project_dir%/public/images/evenement'
-    twilio_sid: ACf2316c30eff2690e38ae96d0093b6073
-    twilio_token: 4fc60f7830c275ead6de48538fc75f92
-    twilio_number: '+16189874470'
+    twilio_sid: AC88c4284fdf275a76b778955293a0d321
+    twilio_token: 55bc85b7f8167b31f025c0e08a5e72b1
+    twilio_number: '+14439935266'
 
 services:
   # default configuration for services in *this* file

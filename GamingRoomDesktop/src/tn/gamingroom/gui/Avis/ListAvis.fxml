@@ -10,7 +10,7 @@
     <children>
       <ImageView fitHeight="600.0" fitWidth="663.0" layoutX="-46.0" layoutY="-4.0" pickOnBounds="true" visible="false">
          <image>
-            <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/713006.jpg" />
+            <Image url="file:/C:/xampp/htdocs//ProdigiesDev/GamingRoomWeb/public/images/713006.jpg" />
          </image>
       </ImageView>
       <TableView fx:id="listRec" layoutX="76.0" layoutY="48.0" opacity="0.59" prefHeight="296.0" prefWidth="502.0" stylesheets="@../Jeux/listJeux.css">

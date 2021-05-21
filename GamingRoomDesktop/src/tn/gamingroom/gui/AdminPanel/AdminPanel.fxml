@@ -16,14 +16,14 @@
             <children>
             <ImageView fitHeight="1000.0" fitWidth="1350.0" pickOnBounds="true" AnchorPane.topAnchor="120.0">
                <image>
-                  <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/AjoutEvenement.jpg" />
+                  <Image url="file:/C:/xampp/htdocs//ProdigiesDev/GamingRoomWeb/public/images/AjoutEvenement.jpg" />
                </image>
             </ImageView>
                 <Pane layoutX="-2.0" layoutY="-3.0" opacity="0.87" prefHeight="125.0" prefWidth="1350.0" style="-fx-background-color: black;">
                     <children>
                         <ImageView fitHeight="67.0" fitWidth="200.0" layoutX="55.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="file:/D:/ProdigiesDev/GamingRoomWeb/public/images/logo.png" />
+                                <Image url="file:/C:/xampp/htdocs//ProdigiesDev/GamingRoomWeb/public/images/logo.png" />
                             </image>
                         </ImageView>
                         <JFXButton fx:id="games" layoutX="433.0" layoutY="35.0" onAction="#openGames" text="Jeux">
