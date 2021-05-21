@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/netbeans,java
 # Edit at https://www.toptal.com/developers/gitignore?templates=netbeans,java
 
@@ -41,3 +40,9 @@ nbdist/
 /nbproject/private/
 /GamingRoomDesktop/src/tn/gamingroom/outils/Env.java
 /netbeans/
+/GamingRoomMoblie/Versions.properties
+/GamingRoomWeb/nbproject/
+/GamingRoomMoblie/nbproject/
+/GamingRoomMoblie/codenameone_settings.properties
+/GamingRoomWeb/.idea/
+/GamingRoomDesktop/nbproject/

@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * Categorie
@@ -24,6 +26,7 @@ class Categorie
      * @ORM\Column(name="idcat", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     *  @Groups({"produit:read"})
      */
     private $idcat;
 
@@ -37,6 +40,7 @@ class Categorie
      *     htmlPattern = "^[a-zA-Z]+$",
      *     message="'{{ value }}' doit etre chaine de caractère"
      * )
+     *  @Groups({"produit:read"})
      */
     private $nomcategorie;
 

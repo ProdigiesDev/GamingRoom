@@ -6,8 +6,8 @@
 package com.esprit.gamingroom.gui;
 
 
-import com.esprit.gamingroom.Entites.Produit;
 import com.esprit.gamingroom.services.ServicePanier;
+import com.esprit.gamingroom.entities.Produit;
 import com.esprit.gamingroom.outils.Statics;
 import com.codename1.components.FloatingActionButton;
 import com.codename1.ui.Button;
@@ -26,33 +26,42 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Border;
+import com.esprit.gamingroom.services.ProduitService;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  *
  * @author elbrh
  */
-public class Panier {
+public class Panier extends  Form{
 
     Container all;
-    Form f2 = new Form(BoxLayout.y());
-    float total = 0;
-    static Map<Produit, Integer> produits;
 
+    float total = 0;
+    static Map<Produit, Integer> produits=new HashMap();
+
+    
     public Panier() {
         //super.setupSideMenu(f2);
         all = new Container(BoxLayout.y());
-        Toolbar tb = f2.getToolbar();
+        Toolbar tb = this.getToolbar();
         tb.setTitle("Panier");
         tb.setTitleCentered(true);
 
         Label tot = new Label("Prix total : " + Float.toString(total));
+        ProduitService panier=new ProduitService();
+        List<Produit> list=panier.AffichageProduit();
+        
+        for (int j = 0; j < list.size(); j++) {
+            produits.put(list.get(j),j+1);
+        }
         if (produits == null || produits.size() == 0) {
             produits = new HashMap<>();
-            Label vide = new Label("Your Basket is Empty");
+            Label vide = new Label("Panier vide!");
             vide.getAllStyles().setAlignment(Label.CENTER);
-            f2.add(vide);
+            this.add(vide);
         } else {
             for (Produit p : produits.keySet()) {
                 Container c1 = new Container(new BoxLayout(BoxLayout.X_AXIS));
@@ -88,7 +97,7 @@ public class Panier {
                         public void actionPerformed(ActionEvent evt) {
                             Panier p = new Panier();
                             try {
-                                p.addToBasket(p, Integer.parseInt(txt.getText()));
+                                //p.addToBasket(p, Integer.parseInt(txt.getText()));
                                 d.dispose();
                                 System.out.println(txt.getText());
                             } catch (NumberFormatException ex) {
@@ -106,7 +115,7 @@ public class Panier {
                     d.add(close);
                     d.showDialog();
                 });
-                Label nom = new Label("Produit: " + p.getNom());
+                Label nom = new Label("Produit: " + p.getLibelle());
                 Label prix = new Label("Prix : " + Float.toString(p.getPrix()));
                 Label Quantite = new Label("Quantite : " + produits.get(p));
                 total = total + (p.getPrix() * produits.get(p));
@@ -131,14 +140,15 @@ public class Panier {
 
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                    Commande c = new Commande();
-                    c.setId_user(ConnectedUser.getUser());
-                    CommandeService cs = new CommandeService();
-                    cs.PassCmd(c, produits);
+//                    Commande c = new Commande();
+//                    c.setId_user(ConnectedUser.getUser());
+//                    CommandeService cs = new CommandeService();
+//                    cs.PassCmd(c, produits);
                 }
             });
             all.add(bt);
-            f2.add(all);
+            this.setLayout(BoxLayout.y());
+            this.add(all);
         }
 
     }
@@ -178,7 +188,7 @@ public class Panier {
     }
 
     public Form getF() {
-        return f2;
+        return this;
     }
 
 }
