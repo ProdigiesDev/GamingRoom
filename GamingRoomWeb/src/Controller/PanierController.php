@@ -6,6 +6,7 @@ use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Commande;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,12 @@ use App\Entity\Produit;
 use Twilio\Rest\Client;
 
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Validator\Constraints\Json;
 class PanierController extends AbstractController
 {
     private $twilio;
@@ -256,7 +262,85 @@ class PanierController extends AbstractController
 
         return $this->redirectToRoute("panier");
 
+    } 
+
+    /***********************************************************************************/
+     /**
+      * @Route("/addprod", name="addprod")
+    
+      */
+
+    public function ajouterProd(Request $request)
+    {
+        $panier = new Panier();
+        $produit = $request->query->get("prodid");
+        $quantitydemande = $request->query->get("quant");
+        $em = $this->getDoctrine()->getManager();
+        
+
+        $panier->setProduit($produit);
+        $panier->setQuantityDemande($quantitydemande);
+        
+
+        $em->persist($panier);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($panier);
+        return new JsonResponse($formatted);
+
     }
+     /**
+      * @Route("/paniermob", name="paniermob")
+      */
+      public function affichePanMob()
+      {
+ 
+          $panier = $this->getDoctrine()->getManager()->getRepository(Panier::class)->findAll();
+          $serializer = new Serializer([new ObjectNormalizer()]);
+          $formatted = $serializer->normalize($panier);
+ 
+          return new JsonResponse($formatted);
+ 
+      }
 
+    
+     /**
+      * @Route("/clearmob", name="emptymob")
+      */
 
+      public function deletePanMob(Request $request) {
+        
+        $id = $request->get("id");
+
+        $em = $this->getDoctrine()->getManager();
+        $panier = $em->getRepository(Panier::class)->find($id);
+        if($panier!=null ) {
+            $em->remove($panier);
+            $em->flush();
+
+            $serialize = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serialize->normalize("Panier a ete vider avec success.");
+            return new JsonResponse($formatted);
+
+        }
+        return new JsonResponse("id panier invalide.");
+    }
+     /**
+     * @Route("/updatepanmob", name="updatepan")
+     */
+    public function modifierQt(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $panier = $this->getDoctrine()->getManager()
+                        ->getRepository(panier::class)
+                        ->find($request->get("id"));
+
+        $panier->setQuantityDemande($request->get("quantite"));
+
+        $em->persist($panier);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($panier);
+        return new JsonResponse("panier a ete modifiee avec success.");
+
+    }
 }

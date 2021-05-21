@@ -7,6 +7,7 @@ package tn.gamingroom.entities;
 
 import java.sql.Date;
 
+
 /**
  *
  * @author Admin

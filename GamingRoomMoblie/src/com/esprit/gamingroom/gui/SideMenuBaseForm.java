@@ -57,6 +57,7 @@ public abstract class SideMenuBaseForm extends Form {
           getToolbar().addMaterialCommandToSideMenu("Magasin", FontImage.MATERIAL_SHOP, e -> new ProduitForm(new HomeForm(res)).show());
           getToolbar().addMaterialCommandToSideMenu("Jeux", FontImage.MATERIAL_GAMES, e -> new Solitaire().show());
         getToolbar().addMaterialCommandToSideMenu("Chat", FontImage.MATERIAL_CHAT, e -> new ChatControllerForm(res).show());
+       getToolbar().addMaterialCommandToSideMenu("Panier", FontImage.MATERIAL_SHOPPING_BAG, e -> new ChatControllerForm(res).show());
       
 //         getToolbar().addMaterialCommandToSideMenu("  Profile", FontImage.MATERIAL_PERSON, e -> showOtherForm(res));
 //        getToolbar().addMaterialCommandToSideMenu("  Shop", FontImage.MATERIAL_SHOP, e -> {
