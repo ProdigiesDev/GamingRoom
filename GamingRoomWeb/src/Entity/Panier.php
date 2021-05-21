@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * Panier
@@ -26,6 +28,7 @@ class Panier
      * @var int
      *
      * @ORM\Column(name="quantityDemande", type="integer", nullable=false)
+     * @Groups({"post:read"})
      */
     private $quantitydemande;
 
@@ -36,6 +39,7 @@ class Panier
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="commande_id", referencedColumnName="idcommande")
      * })
+      * @Groups({"post:read"})
      */
     private $commande;
 
@@ -46,6 +50,8 @@ class Panier
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="produit_id", referencedColumnName="idprod")
      * })
+          * @Groups({"post:read"})
+
      */
     private $produit;
 

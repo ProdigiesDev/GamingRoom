@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\ProduitRepository;
+
+use App\Repository\PanierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -11,12 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Commande;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Membre;
+
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use App\Entity\Panier;
 use App\Entity\Produit;
 use Twilio\Rest\Client;
 
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Security\Core\Security; 
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -148,6 +151,92 @@ class PanierController extends AbstractController
 
     }
 
+
+
+
+  /**
+         * @Route("/UpdateJ/{id}",name="User_updateJ")
+         */
+       public function UpdateJ(NormalizerInterface $normalizer ,ProduitRepository $repo,Request $request,  $idprod) {
+
+
+            $em= $this ->getDoctrine()->getManager();
+            $R=$repo->find($idprod);
+
+            //  $user->setIdentifiant($request->get('identifiant'));
+            $R-> setquantite($request->get('quantite'));  
+            $em->flush();
+            $json=$normalizer->normalize( $R,'json',['groups'=>'post:read']);
+            return new Response("c est bon".json_encode($json));
+
+
+        }
+
+
+
+  /**
+         * @Route("/RemoveJ/{id}",name="User_updateJ")
+         */
+       public  function RemoveJ(NormalizerInterface $NormalizerInterface ,   $id) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $feed = $entityManager-> getRepository(Panier::class ) ->find($id);
+
+            $entityManager->remove($feed);
+            $entityManager->flush();
+            $jsonContent = $NormalizerInterface->normalize($feed, 'json', ['groups' => 'post:read']);
+            return new Response("suppriméé succes") . json_encode($jsonContent);
+        }
+
+
+        
+
+        
+
+    /**
+     * @Route("/addPanierJson/{idprod}/{commandeId}")
+     * @param $id
+     * @param SessionInterface $session
+     */
+
+    public function Addr(NormalizerInterface $normalizer , Request $req,$idprod,$commandeId) {
+
+        
+        $panier = new Panier();
+
+        $panier->setProduit($this->getDoctrine()->getRepository(Produit::class)->find($idprod));
+        $panier->setQuantitydemande(1);
+        $panier->setCommande($this->getDoctrine()->getRepository(Commande::class)->find($commandeId));
+
+     $manager = $this->getDoctrine()->getManager();
+    $manager->persist($panier);
+    $manager->flush();
+    
+    $json =  $normalizer ->normalize ($panier , 'json' , ['groups' => 'post:read']);
+return new Response(json_encode($json));
+
+
+    }
+
+/**
+     * @Route("/findpanierbyproduit")
+     */
+    public function findPanierByProdId(NormalizerInterface $normalizer, Request $request)
+    {
+        $Vars = $this->getDoctrine()->getRepository(Panier::class)->findBy(
+            ['produit' => $this->getDoctrine()->getRepository(Produit::class)->findAll() ]);
+
+            $json= null;
+            $i=0;
+            foreach($Vars as $var){
+                $json[$i]['libelle'] = $var->getProduit()->getLibelle();
+                $json[$i]['prix'] = $var->getProduit()->getPrix();
+                $i++;
+            }
+
+        return new Response(json_encode($json));
+    }
+
     /**
      * @Route("/panier/updateProdPanier/{id}/{nb}", name="updateProdPanier")
      * @param $id
@@ -270,23 +359,21 @@ class PanierController extends AbstractController
     
       */
 
-    public function ajouterProd(Request $request)
+    public function ajouterProd(Request $request , NormalizerInterface $normalizer)
     {
-        $panier = new Panier();
-        $produit = $request->query->get("prodid");
-        $quantitydemande = $request->query->get("quant");
+        
         $em = $this->getDoctrine()->getManager();
+        $p = new produit(); 
+        $R->setlibelle($request->get('libelle'));
         
-
-        $panier->setProduit($produit);
-        $panier->setQuantityDemande($quantitydemande);
+        $R->setprix($request->get('prix'));
         
-
-        $em->persist($panier);
+        $R->setdescription($request->get('description'));
+       
+        $em->persist($R);
         $em->flush();
-        $serializer = new Serializer([new ObjectNormalizer()]);
-        $formatted = $serializer->normalize($panier);
-        return new JsonResponse($formatted);
+        $json = $normalizer->normalize($R, 'json', ['groups' => 'post:read']);
+        return new Response(json_encode($json));
 
     }
      /**
