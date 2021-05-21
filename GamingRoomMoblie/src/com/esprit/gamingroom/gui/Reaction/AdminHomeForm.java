@@ -8,6 +8,7 @@ package com.esprit.gamingroom.gui.Reaction;
 import com.codename1.ui.Button;
 import com.codename1.ui.Form;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.util.Resources;
 import com.esprit.gamingroom.ChatControllerForm;
 /**
  *
@@ -15,23 +16,23 @@ import com.esprit.gamingroom.ChatControllerForm;
  */
 public class AdminHomeForm  extends Form{
 
-    public AdminHomeForm() {
+    public AdminHomeForm(Resources res) {
         this.setTitle("Admin Dashboard");
         this.setLayout(BoxLayout.y());
          Button goAvis=new Button("Avis");
 
         goAvis.addActionListener(l->{
             
-            new AvisListAdminForm().show();
+            new AvisListAdminForm(res).show();
         });
         
         Button goReac=new Button("Reclamation");
         goReac.addActionListener(l->{
-            new ReclamationListAdminForm().show();
+            new ReclamationListAdminForm(res).show();
         });
          Button gochat=new Button("Chat");
         gochat.addActionListener(l->{
-            new ChatControllerForm().show();
+            new ChatControllerForm(res).show();
         });
         
         

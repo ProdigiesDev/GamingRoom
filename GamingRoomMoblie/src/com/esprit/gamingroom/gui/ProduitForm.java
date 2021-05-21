@@ -32,7 +32,7 @@ public class ProduitForm extends Form {
     ArrayList<Produit> produitArrayList = new ArrayList<>();
     ProduitService produitService = new ProduitService();
 
-    public ProduitForm() {
+    public ProduitForm(Form previous) {
         /* *** *CONFIG SCREEN* *** */
         current = this;
         setTitle("Product List");
@@ -42,6 +42,7 @@ public class ProduitForm extends Form {
         showProduit();
         
         
+        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e -> previous.showBack());
         /* *** *SEARCHBAR* *** */
         getToolbar().addSearchCommand(e -> {
             String text = (String) e.getSource();

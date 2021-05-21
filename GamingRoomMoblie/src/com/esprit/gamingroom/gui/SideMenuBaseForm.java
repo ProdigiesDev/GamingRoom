@@ -13,9 +13,12 @@ import com.codename1.ui.Image;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.util.Resources;
+import com.esprit.gamingroom.ChatControllerForm;
 import com.esprit.gamingroom.entities.Membre;
 import com.esprit.gamingroom.entities.UserSession;
-import com.esprit.gamingroom.gui.membre.HomeForm;
+import com.esprit.gamingroom.gui.Reaction.HomeForm;
+import com.esprit.gamingroom.gui.cours.ListCoursForm;
+import com.esprit.gamingroom.gui.solitaire.Solitaire;
 import java.io.IOException;
 
 /**
@@ -42,13 +45,19 @@ public abstract class SideMenuBaseForm extends Form {
     UserSession us = UserSession.getInstancee();
         Membre m = us.getUser();
         
-        getToolbar().addMaterialCommandToSideMenu("  Home", FontImage.MATERIAL_HOME, e -> new HomeForm().show());
+        getToolbar().addMaterialCommandToSideMenu("  Home", FontImage.MATERIAL_HOME, e -> new HomeForm(res).show());
         if (m.getRole()== Membre.Role.Membre){
             getToolbar().addMaterialCommandToSideMenu("  Profile : "+m.getPrenom()+" "+m.getNom(), FontImage.MATERIAL_PERSON,e -> new ProfileMembreForm(res).showBack());
         }
         else if(m.getRole()== Membre.Role.Coach){
             getToolbar().addMaterialCommandToSideMenu("  Profile : "+m.getPrenom()+" "+m.getNom(), FontImage.MATERIAL_PERSON,e -> new ProfileCoachForm(res).showBack());
         }
+         getToolbar().addMaterialCommandToSideMenu("Cours", FontImage.MATERIAL_INFO, e -> new ListCoursForm(new HomeForm(res)).show());
+          getToolbar().addMaterialCommandToSideMenu("Evenements", FontImage.MATERIAL_EVENT, e -> new ListEvenetsForm(new HomeForm(res)).show());
+          getToolbar().addMaterialCommandToSideMenu("Magasin", FontImage.MATERIAL_SHOP, e -> new ProduitForm(new HomeForm(res)).show());
+          getToolbar().addMaterialCommandToSideMenu("Jeux", FontImage.MATERIAL_GAMES, e -> new Solitaire().show());
+        getToolbar().addMaterialCommandToSideMenu("Chat", FontImage.MATERIAL_CHAT, e -> new ChatControllerForm(res).show());
+      
 //         getToolbar().addMaterialCommandToSideMenu("  Profile", FontImage.MATERIAL_PERSON, e -> showOtherForm(res));
 //        getToolbar().addMaterialCommandToSideMenu("  Shop", FontImage.MATERIAL_SHOP, e -> {
 ////            try {

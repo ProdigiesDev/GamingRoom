@@ -11,6 +11,7 @@ import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.GridLayout;
+import com.codename1.ui.util.Resources;
 import  com.esprit.gamingroom.entities.Avis;
 import com.esprit.gamingroom.services.AvisService;
 import com.esprit.gamingroom.utils.Toaster;
@@ -21,7 +22,7 @@ import com.esprit.gamingroom.utils.Toaster;
 public class AvisDetailsForm extends Form{
     private Avis avis;
 
-    public AvisDetailsForm(Avis avis) {
+    public AvisDetailsForm(Avis avis,Resources res) {
         this.avis=avis;
         this.setTitle("Avis Details");
         this.setLayout(new GridLayout(5, 2));
@@ -37,7 +38,7 @@ public class AvisDetailsForm extends Form{
         
         this.add(new Label("Member"));
         this.add(new Label(avis.getMembre().getNom()+" "+avis.getMembre().getPrenom()));
-        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new AvisListAdminForm().showBack());
+        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new AvisListAdminForm(res).showBack());
 
         this.add(new Label(""));
         Button  deleteBtn=new Button("Supprimer");
@@ -45,7 +46,7 @@ public class AvisDetailsForm extends Form{
             if (Dialog.show("Confirm", "Voulez-vous poursuivre?", "OK", "Annuler")) {
                 AvisService as=new AvisService();
                 if(as.delete(avis.getId()))
-                       new AvisListAdminForm().showBack();
+                       new AvisListAdminForm(res).showBack();
                 else
                     Dialog.show("Error", "Erreur est survenue", "OK","");
                 

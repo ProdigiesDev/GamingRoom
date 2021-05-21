@@ -13,6 +13,7 @@ import com.codename1.ui.Label;
 import com.codename1.ui.table.DefaultTableModel;
 import com.codename1.ui.table.TableLayout;
 import com.codename1.ui.table.TableModel;
+import com.codename1.ui.util.Resources;
 import com.esprit.gamingroom.entities.Reclamation;
 import com.esprit.gamingroom.services.AvisService;
 import com.esprit.gamingroom.services.ReclamationService;
@@ -25,12 +26,12 @@ import java.util.ArrayList;
 public class ReclamationListAdminForm extends Form{
     private ArrayList<Reclamation> reclamations;
     private ReclamationService as=new ReclamationService();
-    public ReclamationListAdminForm() {
+    public ReclamationListAdminForm(Resources res) {
         this.setTitle("List Reclamation");
         reclamations=as.getRec();
         this.setLayout(new TableLayout(reclamations.size(),5));
         
-        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new AdminHomeForm().showBack());
+        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new AdminHomeForm(res).showBack());
 
         initTable();
         

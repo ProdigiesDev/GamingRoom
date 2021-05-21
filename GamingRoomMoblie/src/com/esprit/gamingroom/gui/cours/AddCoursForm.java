@@ -29,6 +29,8 @@ import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.util.ImageIO;
 import com.codename1.ui.util.Resources;
 import com.esprit.gamingroom.entities.Cours;
+import com.esprit.gamingroom.entities.Membre;
+import com.esprit.gamingroom.entities.UserSession;
 import com.esprit.gamingroom.services.CoursServices;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -133,9 +135,10 @@ public class AddCoursForm extends Form{
             }else {
                 
                 try {
-               
+                UserSession us = UserSession.getInstancee();
+                Membre m = us.getUser();
                 
-                Cours cours = new Cours( tfname.getText(),tfdescription.getText(),Integer.parseInt(tfnbp.getText()),Integer.parseInt(tfmem.getText()),tftags.getText(),namePic,Integer.parseInt(tfcat.getText()),tfyoutube.getText());
+                Cours cours = new Cours( tfname.getText(),tfdescription.getText(),Integer.parseInt(tfnbp.getText()),m.getId(),tftags.getText(),namePic,Integer.parseInt(tfcat.getText()),tfyoutube.getText());
                     if (CoursServices.getInstance().addCoursAction(cours)) {
                         Dialog.show("Success", "Cours added successfully.",null, "OK");
                     }
@@ -222,8 +225,8 @@ public class AddCoursForm extends Form{
         //upload image
         
         //
-        this.addAll(tfname, tfdescription,tfnbp,tfmem,tfdate,tftags,tfcat,tfyoutube, submitTaskBtn,img1);
-        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new HomeForm().showBack());
+        this.addAll(tfname, tfdescription,tfnbp,tfdate,tftags,tfcat,tfyoutube, submitTaskBtn,img1);
+        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new ListCoursForm(this).showBack());
         
         
     }

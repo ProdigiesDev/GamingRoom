@@ -23,6 +23,7 @@ import com.codename1.ui.list.DefaultListModel;
 import com.codename1.ui.util.Resources;
 import com.esprit.gamingroom.entities.Membre;
 import com.esprit.gamingroom.entities.UserSession;
+import com.esprit.gamingroom.gui.cours.AddCoursForm;
 import com.esprit.gamingroom.services.MembreService;
 import com.esprit.gamingroom.utils.Statics;
 import java.io.IOException;
@@ -133,6 +134,11 @@ public class ProfileCoachForm extends SideMenuBaseForm{
         );
                  ligne.add(by);
          add(ligne);
+         Button btnAddCour=new Button("Ajouter un Cours");
+         btnAddCour.addActionListener(l->{
+              new AddCoursForm().show();
+         });
+         add(btnAddCour);
         } catch (IOException ex) {
            // Logger.getLogger(ProfileCoachForm.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("hiiii");

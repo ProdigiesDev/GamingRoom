@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import com.esprit.gamingroom.entities.Evenement;
+import com.esprit.gamingroom.entities.Membre;
+import com.esprit.gamingroom.entities.UserSession;
 import java.util.Date;
 
 /**
@@ -197,7 +199,10 @@ public class ServiceEvenement {
     
     public boolean getIfInscrit(int id) {
         //to do membre
-        int idMm=62;
+        UserSession us = UserSession.getInstancee();
+        Membre m = us.getUser();
+        
+        int idMm=m.getId();
         String url = Statics.BASE_URL + "/evenement/api/ifInscrit/"+ id + "/" + idMm;
         System.out.println("url " + url);
         req.setUrl(url);
@@ -215,7 +220,10 @@ public class ServiceEvenement {
     
      public Evenement getEvent(int ide) {
         //to do membre
-        int idMm=62;
+        UserSession us = UserSession.getInstancee();
+        Membre m = us.getUser();
+        
+        int idMm=m.getId();
         String url = Statics.BASE_URL + "/evenement/api/getEvent/"+ ide;
         System.out.println("url " + url);
         req.setUrl(url);
@@ -236,7 +244,10 @@ public class ServiceEvenement {
      public String getInscription(int ide) {
           
         //to do membre
-        int idMm=62;
+        UserSession us = UserSession.getInstancee();
+        Membre m = us.getUser();
+        
+        int idMm=m.getId();
         String url = Statics.BASE_URL + "/evenement/api/inscription/"+ ide + "/" + idMm;
         System.out.println("url " + url);
         req.setUrl(url);
@@ -256,7 +267,10 @@ public class ServiceEvenement {
      
       public boolean annulerInscription(int ide) {
         //to do membre
-        int idMm=62;
+        UserSession us = UserSession.getInstancee();
+        Membre m = us.getUser();
+        
+        int idMm=m.getId();
         String url = Statics.BASE_URL + "/evenement/api/inscription/"+ ide + "/" + idMm;
         System.out.println("url " + url);
         req.setUrl(url);

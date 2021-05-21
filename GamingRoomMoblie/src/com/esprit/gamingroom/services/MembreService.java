@@ -23,6 +23,8 @@ import com.esprit.gamingroom.entities.Membre;
 import com.esprit.gamingroom.entities.UserSession;
 import com.esprit.gamingroom.gui.ProfileCoachForm;
 import com.esprit.gamingroom.gui.ProfileMembreForm;
+import com.esprit.gamingroom.gui.Reaction.AdminHomeForm;
+import com.esprit.gamingroom.gui.Reaction.HomeForm;
 import com.esprit.gamingroom.gui.SignInForm;
 import com.esprit.gamingroom.utils.Statics;
 import java.io.IOException;
@@ -108,15 +110,16 @@ public class MembreService {
                         System.out.println("Test"+str);
                         System.out.println("hakouna matata "+m.getRole());
                         if(m.getRole() == Membre.Role.Membre){
-                            new ProfileMembreForm(theme).show();
+                            new HomeForm(theme).show();
                             UserSession userSession = new UserSession(m,m.getRole());
                         }
                         else if (m.getRole() == Membre.Role.Coach){
-                             new ProfileCoachForm(theme).show();
+                             new HomeForm(theme).show();
                              UserSession userSession = new UserSession(m,m.getRole());
                         }
                         else if (m.getRole() == Membre.Role.Admin){
-                             //  DAAAHHH
+                             
+                             new AdminHomeForm(theme).show();
                              UserSession userSession = new UserSession(m,m.getRole());
                         }
                     } catch (ParseException ex) {

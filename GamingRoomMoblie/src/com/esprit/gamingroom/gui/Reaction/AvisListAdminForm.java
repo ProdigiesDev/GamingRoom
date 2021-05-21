@@ -11,6 +11,7 @@ import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.table.TableLayout;
+import com.codename1.ui.util.Resources;
 import com.esprit.gamingroom.services.AvisService;
 import com.esprit.gamingroom.entities.Avis;
 import java.util.ArrayList;
@@ -21,13 +22,13 @@ import java.util.ArrayList;
  */
 public class AvisListAdminForm  extends Form{
 
-    public AvisListAdminForm() {
+    public AvisListAdminForm(Resources res) {
         
         this.setTitle("List Avis");
         AvisService as=new AvisService();
         ArrayList<Avis> avises=as.getAvis();
         this.setLayout(new TableLayout(avises.size(),5));
-        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new AdminHomeForm().showBack());
+        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, ev-> new AdminHomeForm(res).showBack());
 
         this.addAll(new Label("id"),new Label("Membre"),new Label("Avis"),new Label("Sentiment"),new Label("Action"));
         for (int i = 0; i < avises.size(); i++) {
@@ -38,7 +39,7 @@ public class AvisListAdminForm  extends Form{
             this.add(new Label(a.getSentiment()));
             Button b=new Button("Details");
             b.addActionListener(l->{
-                new AvisDetailsForm(a).show();
+                new AvisDetailsForm(a,res).show();
             });
             this.add(b);
         }

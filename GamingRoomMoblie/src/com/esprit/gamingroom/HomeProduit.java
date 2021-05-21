@@ -9,6 +9,7 @@ import com.codename1.io.Log;
 import com.codename1.ui.Toolbar;
 
 import com.esprit.gamingroom.gui.ProduitForm;
+import com.esprit.gamingroom.gui.Reaction.HomeForm;
 
 
 
@@ -44,7 +45,7 @@ public class HomeProduit {
         });
     }
     public void start() {
-   new ProduitForm().show();
+        new ProduitForm(new HomeForm(theme)).show();
     }
 
     public void stop() {

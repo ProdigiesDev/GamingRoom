@@ -4,12 +4,9 @@
  * and open the template in the editor.
  */
 package com.esprit.gamingroom.utils;
-/*
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;*/
+
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -29,24 +26,12 @@ public class Statics {
     
     public static final String WEBSOCKET_URL ="ws://127.0.0.1:9090/cn1-websocket-demo-server/chat";
     
-    public static boolean containsBadWords(String body){
-       /* File file = new File("src/com/esprit/gamingroom/utils/badWords.txt");
-        List<String> bodyList=Arrays.asList(body.toLowerCase().split(" "));
-        
-        try {
-            Scanner scanner = new Scanner(file);
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if(bodyList.contains(line)) { 
-                    return true;
-                }
-            }
-        } catch(FileNotFoundException e) { 
-            e.printStackTrace();
+    public static String[] split(String str,String splitBy) {
+        ArrayList<String> splitArray = new ArrayList<>();
+        StringTokenizer arr = new StringTokenizer(str, splitBy);
+        while (arr.hasMoreTokens()) {
+            splitArray.add(arr.nextToken());
         }
-        
-        return false;*/
-       return false;
+        return splitArray.toArray(new String[splitArray.size()]);
     }
 }
