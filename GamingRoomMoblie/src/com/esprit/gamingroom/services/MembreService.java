@@ -11,28 +11,24 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.l10n.ParseException;
+import com.codename1.messaging.Message;
 import com.codename1.ui.ComboBox;
 import com.codename1.ui.Command;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
 import com.esprit.gamingroom.entities.Membre;
 import com.esprit.gamingroom.entities.UserSession;
 import com.esprit.gamingroom.gui.ProfileCoachForm;
 import com.esprit.gamingroom.gui.ProfileMembreForm;
 import com.esprit.gamingroom.gui.SignInForm;
-import com.esprit.gamingroom.utils.SendEmail;
 import com.esprit.gamingroom.utils.Statics;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.MessagingException;
-import javax.swing.JOptionPane;
 
 
 
@@ -124,11 +120,11 @@ public class MembreService {
                              UserSession userSession = new UserSession(m,m.getRole());
                         }
                     } catch (ParseException ex) {
-                        Logger.getLogger(MembreService.class.getName()).log(Level.SEVERE, null, ex);
+                        ex.printStackTrace();
                     }
                     }
                 } catch (IOException ex) {
-                    Logger.getLogger(MembreService.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
                 }
         }
             
@@ -184,29 +180,19 @@ public class MembreService {
             
             String json = new String(con.getResponseData()) + "";
             System.out.println(json);
-            if(json.equals("true")){
-
-        try {
-            Random ran = new Random();
-            randomCode=ran.nextInt(999999);
-            String text = "Hello,"+"\n"+"this is your reset code: "+randomCode+"\n"+"GamingRoom.";
-            boolean b =SendEmail.sendMail(email,"Reseting Code",text);
-            if(b==true){
- 
-              Dialog.show("Success", "Un code est enoyé à : "+email,new Command("OK"));
-
-            }
-            else if(json.equals("false")){
-
-              Dialog.show("Error", "ERROR! code hasn't been sent to the email",new Command("Cancel"));
+             if(json.equals("404")){ 
+                 Dialog.show("Error", "Email erroné",new Command("Cancel"));
                 
             }
-        } catch (MessagingException ex) {
-            Logger.getLogger(MembreService.class.getName()).log(Level.SEVERE, null, ex);
-        }}
-            else{
-                Dialog.show("Error", "Email erroné",new Command("Cancel"));
-            }
+             else {
+
+            Random ran = new Random();
+            randomCode=Integer.parseInt(json);
+            
+            Dialog.show("Success", "Un code est enoyé à : "+email,new Command("OK"));
+             
+        }
+         
         });
          NetworkManager.getInstance().addToQueueAndWait(con);
      }
